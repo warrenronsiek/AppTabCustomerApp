@@ -36,10 +36,10 @@ const login = ({validationError, networkError, unknownError, loggingIn, email, p
     <Text style={styles.instructions}>
       Please Login below:
     </Text>
-    <TextInput style={styles.textInputBox} defaultValue={email} autoCapitalize='none'
+    <TextInput style={styles.textInputBox} value={email} defaultValue="email address" autoCapitalize='none'
                autoCorrect={false}
                onChangeText={(text) => updateEmail(text)}/>
-    <TextInput style={styles.textInputBox} defaultValue={password} autoCapitalize='none'
+    <TextInput style={styles.textInputBox} value={password} defaultValue="password" autoCapitalize='none'
                autoCorrect={false}
                onChangeText={(text) => updatePassword(text)}/>
     <Button onPress={() => onLogin(email, password)} title="Login"/>
