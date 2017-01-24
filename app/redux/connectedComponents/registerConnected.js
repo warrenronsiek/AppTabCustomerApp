@@ -2,9 +2,9 @@
  * Created by warren on 1/22/17.
  */
 import {connect} from 'react-redux';
-import {updateEmail, updatePassword, updateConfirmPassword, updateName} from '../actions/register';
+import {updateEmail, updatePassword, updateConfirmPassword, updateName} from '../actions/registerActions';
 import Register from '../components/register';
-import registerThunk from '../middleware/register';
+import registerThunk from '../middleware/registerThunk';
 
 const mapStateToProps = (state) => {
   return {

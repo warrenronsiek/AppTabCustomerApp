@@ -11,7 +11,7 @@ import {
   USER_EXISTS_ERROR,
   UNKNOWN_ERROR,
   REGISTERING
-} from '../actions/register';
+} from '../actions/registerActions';
 
 export const registerParams = (state = {name: 'Warren3', email: 'wronsiek@gmail.com', password: 'P@33word', confirmPassword:'P@33word'}, action) => {
   switch (action.type) {

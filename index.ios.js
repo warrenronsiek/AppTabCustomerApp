@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import {AppRegistry, StyleSheet, Text, View} from 'react-native';
 import {Provider, connect} from 'react-redux';
 import {Router, Scene} from 'react-native-router-flux';
-import Login from './app/scenes/login';
+import Login from './app/scenes/loginScene';
 import Placeholder from './app/scenes/placeholder';
-import Register from './app/scenes/register';
+import Register from './app/scenes/registerScene';
 const RouterWithRedux = connect()(Router);
 
 class TabIcon extends Component {

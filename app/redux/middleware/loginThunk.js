@@ -1,8 +1,8 @@
 /**
  * Created by warren on 1/18/17.
  */
-import {updateAuth, loggingIn, unknownError, networkError, validationError} from '../actions/login';
-import loginRequest from '../../api/login';
+import {updateAuth, loggingIn, unknownError, networkError, validationError} from '../actions/loginActions';
+import loginRequest from '../../api/loginApi';
 import {Actions} from 'react-native-router-flux';
 
 export default loginThunk = (email, password) => (dispatch) => {

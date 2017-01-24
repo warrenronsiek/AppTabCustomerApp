@@ -1,10 +1,10 @@
 /**
  * Created by warren on 1/22/17.
  */
-import registerRequest from '../../api/register'
-import loginRequest from '../../api/login';
-import {registering, networkError, userExistsError, unknownError} from '../actions/register';
-import {updateAuth} from '../actions/login';
+import registerRequest from '../../api/registerApi'
+import loginRequest from '../../api/loginApi';
+import {registering, networkError, userExistsError, unknownError} from '../actions/registerActions';
+import {updateAuth} from '../actions/loginActions';
 import {Actions} from 'react-native-router-flux';
 
 export default registerThunk = (name, email, password) => (dispatch) => {

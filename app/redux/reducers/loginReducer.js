@@ -9,7 +9,7 @@ import {
   UNKNOWN_ERROR,
   UPDATE_EMAIL,
   UPDATE_PASSWORD
-} from '../actions/login';
+} from '../actions/loginActions';
 
 export const auth = (state = {}, action) => {
   switch (action.type) {

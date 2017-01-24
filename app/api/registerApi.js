@@ -18,7 +18,7 @@ export default function registerRequest(email, name, password) {
     })
     .then((body) => {
         const resBody = JSON.parse(body);
-        switch (resBody.errorMessage) {
+        switch (resBody.code) {
           case undefined:
             return resBody;
           case 'UsernameExistsException':

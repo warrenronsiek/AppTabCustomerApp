@@ -5,8 +5,8 @@ import {connect} from 'react-redux';
 import {
   updateEmail,
   updatePassword
-} from '../actions/login';
-import loginThunk from '../middleware/login';
+} from '../actions/loginActions';
+import loginThunk from '../middleware/loginThunk';
 import login from '../components/login';
 import {Actions} from 'react-native-router-flux'
 
