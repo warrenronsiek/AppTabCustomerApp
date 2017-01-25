@@ -20,7 +20,7 @@ export default registerThunk = (name, email, password) => (dispatch) => {
       console.log(res);
       return Promise.resolve(dispatch(updateAuth(res.accessToken, res.idToken, res.refreshToken, res.userName, res.clientId)))
     })
-    .then(() => Actions.placeholder())
+    .then(() => Actions.nodes())
     .catch(err => {
       console.log(err);
       switch (err.name) {

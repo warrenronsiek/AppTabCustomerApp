@@ -1,7 +1,7 @@
 /**
  * Created by warren on 1/23/17.
  */
-import React, {PropTypes} from 'react';
+import React, {PropTypes, Component} from 'react';
 import {Text, StyleSheet, View, ListView} from 'react-native';
 import NodeListItem from './nodeListItem';
 
@@ -14,13 +14,9 @@ const styles = StyleSheet.create({
   }
 });
 
-class NodeList extends React.Component {
+class NodeList extends Component {
   static propTypes = {
-    nodeListItems: PropTypes.arrayOf(PropTypes.shape({
-      nodeName: PropTypes.string,
-      nodeId: PropTypes.string.isRequired,
-      nodeDescription: PropTypes.string
-    })).isRequired,
+    nodeListItems: PropTypes.arrayOf(PropTypes.object).isRequired,
     renderNodes: PropTypes.bool.isRequired,
     selectNode: PropTypes.func.isRequired
   };
@@ -43,11 +39,12 @@ class NodeList extends React.Component {
     return (
       <View style={styles.container}>
         {this.props.renderNodes
-          ? <Text>LOADING...</Text>
-          : <ListView dataSource={this.state.dataSource}
-                      renderRow={(item) => <NodeListItem nodeId={item.nodeId} key={item.nodeId} selectNode={this.props.selectNode}
-                                                         name={item.nodeName} description={item.nodeDescription}/>}
-          />}
+          ? <ListView dataSource={this.state.dataSource}
+                      renderRow={(item) => <NodeListItem nodeId={item.nodeId} key={item.nodeId} name={item.nodeName}
+                                                         selectNode={this.props.selectNode}
+                                                         description={item.nodeDescription}/>}/>
+          : <Text>LOADING...</Text>
+        }
       </View>
     )
   }

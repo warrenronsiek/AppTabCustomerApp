@@ -4,10 +4,11 @@
 import React, {Component} from 'react';
 import Nodes from '../redux/connectedComponents/nodeListConnected';
 import {updateNodeApi, updateNodeBle} from '../redux/actions/nodeActions';
-import getNodeInfo from '../api/nodeApi';
+// import getNodeInfo from '../api/nodeApi';
 import BeaconTypeError from '../errors/beaconTypeError';
 import {connect} from 'react-redux';
 import {Buffer} from 'buffer';
+const _ = require('lodash');
 const noble = require('react-native-ble');
 
 function parseIntObject(intObject) {
@@ -26,14 +27,17 @@ function parseIntObject(intObject) {
 
 /**TODO: Make this filter by Eddystone IDs */
 function parseBlePacket(item) {
-  if (item.advertisement.localName === 'Kontakt') {
-    const data = parseIntObject(_.filter(item.advertisement.serviceData, {uuid: 'feaa'})[0].data);
-    const distance = Math.pow(10, ((data.txPower - item.rssi) - 41) / 20.0);
-    const lastSeen = Math.floor(Date.now() / 1000);
-    return {instance: data.instance, namespace: data.namespace, distance, lastSeen}
-  } else {
-    throw new BeaconTypeError("Beacon is not manufactured by Kontakt")
-  }
+  return new Promise((resolve, reject) => {
+      if (item.advertisement.localName === 'Kontakt') {
+        const data = parseIntObject(_.filter(item.advertisement.serviceData, {uuid: 'feaa'})[0].data);
+        const distance = Math.pow(10, ((data.txPower - item.rssi) - 41) / 20.0);
+        const lastSeen = Math.floor(Date.now() / 1000);
+        resolve({instance: data.instance, namespace: data.namespace, distance, lastSeen})
+      } else {
+        reject(new BeaconTypeError('NotKontaktBeacon'))
+      }
+    }
+  );
 }
 
 class NodeScene extends Component {
@@ -66,25 +70,27 @@ class NodeScene extends Component {
   }
 
   _onFound = (item) => {
-    Promise.resolve(parseBlePacket(item))
+    parseBlePacket(item)
       .then(res => {
         return Promise.resolve(this.props.dispatch(updateNodeBle(res.distance, res.namespace, res.instance, res.lastSeen)))
       })
       .catch(err => {
-        switch (err) {
-          case err instanceof TypeError:
+        switch (err.name) {
+          case 'TypeError':
             break;
-          case err instanceof
+          case 'BeaconTypeError':
+            break;
+          default:
+            console.log(err);
         }
       });
   };
 
-render()
-{
-  return (
-    <Nodes/>
-  )
-}
+  render() {
+    return (
+      <Nodes/>
+    )
+  }
 }
 
 export default connect()(NodeScene)

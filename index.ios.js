@@ -6,6 +6,7 @@ import {Router, Scene} from 'react-native-router-flux';
 import Login from './app/scenes/loginScene';
 import Placeholder from './app/scenes/placeholder';
 import Register from './app/scenes/registerScene';
+import Nodes from './app/scenes/nodeScene';
 const RouterWithRedux = connect()(Router);
 
 class TabIcon extends Component {
@@ -26,8 +27,9 @@ export default class AppTabCustomerApp extends Component {
     <Provider store={store()}>
       <RouterWithRedux>
         <Scene key="login" component={Login} title="Login"/>
-        <Scene key="placeholder" component={Placeholder} title="Placeholder"/>
         <Scene key="register" component={Register} title="Register"/>
+        <Scene key="nodes" component={Nodes} title="Node Selection"/>
+        <Scene key="placeholder" component={Placeholder} title="Placeholder"/>
       </RouterWithRedux>
     </Provider>
     );

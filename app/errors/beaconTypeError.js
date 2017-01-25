@@ -1,6 +1,7 @@
 /**
- * Created by warren on 1/23/17.
+ * Created by warren on 1/24/17.
  */
+
 import BasicError from './basicError';
 
 export default class BeaconTypeError extends BasicError {
