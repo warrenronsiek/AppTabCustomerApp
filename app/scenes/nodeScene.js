@@ -4,8 +4,9 @@
 import React, {Component} from 'react';
 import Nodes from '../redux/connectedComponents/nodeListConnected';
 import {updateNodeApi, updateNodeBle} from '../redux/actions/nodeActions';
-// import getNodeInfo from '../api/nodeApi';
+import getNodeInfo from '../api/nodeApi';
 import BeaconTypeError from '../errors/beaconTypeError';
+import GetNodeQueriedError from '../errors/getNodeQueriedError';
 import {connect} from 'react-redux';
 import {Buffer} from 'buffer';
 const _ = require('lodash');
@@ -25,7 +26,7 @@ function parseIntObject(intObject) {
   return {namespace, instance, txPower}
 }
 
-/**TODO: Make this filter by Eddystone IDs */
+//TODO: Make this filter by Eddystone IDs
 function parseBlePacket(item) {
   return new Promise((resolve, reject) => {
       if (item.advertisement.localName === 'Kontakt') {
@@ -74,11 +75,27 @@ class NodeScene extends Component {
       .then(res => {
         return Promise.resolve(this.props.dispatch(updateNodeBle(res.distance, res.namespace, res.instance, res.lastSeen)))
       })
+      .then(res => {
+        const nodeState = _.find(this.context.state.nodes, {nodeId: res.nodeId});
+        if (nodeState.apiQueried === undefined) {
+          return getNodeInfo(res.nodeId)
+        } else {
+          throw new GetNodeQueriedError('GetNode api already queried for this node')
+        }
+      })
+      .then(res => {
+        console.log(res);
+        const node = res.nodeInfo.Item;
+        const nodeId = node.NodeId.S, nodeName = node.NodeName.S, nodeDescription = node.nodeDescription.S;
+        return Promise.resolve(this.props.dispatch(updateNodeApi(nodeId, nodeName, nodeDescription)))
+      })
       .catch(err => {
         switch (err.name) {
           case 'TypeError':
             break;
           case 'BeaconTypeError':
+            break;
+          case 'GetNodeQueriedError':
             break;
           default:
             console.log(err);

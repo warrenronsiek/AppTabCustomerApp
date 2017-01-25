@@ -34,14 +34,16 @@ export const nodes = (state = [], action) => {
         return [...filteredState, {
           nodeId: action.nodeId,
           nodeName: action.nodeName,
-          nodeDescription: action.nodeDescription
+          nodeDescription: action.nodeDescription,
+          apiQueried: true
         }]
       } else {
         updatedNode = {
           ...state[nodeIndex],
           nodeId: action.nodeId,
           nodeName: action.nodeName,
-          nodeDescription: action.nodeDescription
+          nodeDescription: action.nodeDescription,
+          apiQueried: true
         };
         return [...filteredState, updatedNode]
       }
