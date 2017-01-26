@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
 
 const NodeListItem = ({nodeId, nodeName, nodeDescription, selectNode}) => (
   <View style={styles.venueBlock}>
+    <Text>{nodeId.slice(-2)}</Text>
     <Text>{nodeName}</Text>
     <Text>{nodeDescription}</Text>
     <Button onPress={() => selectNode(nodeId)} title="Select"/>

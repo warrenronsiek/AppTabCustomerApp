@@ -40,9 +40,9 @@ class NodeList extends Component {
       <View style={styles.container}>
         {this.props.renderNodes
           ? <ListView dataSource={this.state.dataSource}
-                      renderRow={(item) => <NodeListItem nodeId={item.nodeId} key={item.nodeId} name={item.nodeName}
+                      renderRow={(item) => <NodeListItem nodeId={item.nodeId} key={item.nodeId} nodeName={item.nodeName}
                                                          selectNode={this.props.selectNode}
-                                                         description={item.nodeDescription}/>}/>
+                                                         nodeDescription={item.nodeDescription}/>}/>
           : <Text>LOADING...</Text>
         }
       </View>

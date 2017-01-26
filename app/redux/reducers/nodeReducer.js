@@ -16,16 +16,18 @@ export const nodes = (state = [], action) => {
           distance: action.distance,
           instance: action.instance,
           lastSeen: action.lastSeen,
-          venueId: action.venueId
+          venueId: action.venueId,
+          updatedCount: 1
         }]
       } else {
         updatedNode = {
           ...state[nodeIndex],
           nodeId: action.nodeId,
-          distance: action.distance,
+          distance: action.distance / (state[nodeIndex].updatedCount + 1 ) + state[nodeIndex].distance * (state[nodeIndex].updatedCount / (state[nodeIndex].updatedCount + 1 )),
           instance: action.instance,
           lastSeen: action.lastSeen,
-          venueId: action.venueId
+          venueId: action.venueId,
+          updatedCount: state[nodeIndex].updatedCount + 1
         };
         return [...filteredState, updatedNode]
       }
@@ -52,7 +54,7 @@ export const nodes = (state = [], action) => {
   }
 };
 
-export const activeNode = (state="", action) => {
+export const activeNode = (state = "", action) => {
   switch (action.type) {
     case SET_ACTIVE_NODE:
       return action.nodeId;

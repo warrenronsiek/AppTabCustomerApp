@@ -76,7 +76,7 @@ class NodeScene extends Component {
         return Promise.resolve(this.props.dispatch(updateNodeBle(res.distance, res.namespace, res.instance, res.lastSeen)))
       })
       .then(res => {
-        const nodeState = _.find(this.context.state.nodes, {nodeId: res.nodeId});
+        const nodeState = _.find(this.context.store.getState().nodes, {nodeId: res.nodeId});
         if (nodeState.apiQueried === undefined) {
           return getNodeInfo(res.nodeId)
         } else {
@@ -84,9 +84,8 @@ class NodeScene extends Component {
         }
       })
       .then(res => {
-        console.log(res);
         const node = res.nodeInfo.Item;
-        const nodeId = node.NodeId.S, nodeName = node.NodeName.S, nodeDescription = node.nodeDescription.S;
+        const nodeId = node.NodeId.S, nodeName = node.NodeName.S, nodeDescription = node.NodeDescription.S;
         return Promise.resolve(this.props.dispatch(updateNodeApi(nodeId, nodeName, nodeDescription)))
       })
       .catch(err => {
@@ -99,6 +98,7 @@ class NodeScene extends Component {
             break;
           default:
             console.log(err);
+            break;
         }
       });
   };
