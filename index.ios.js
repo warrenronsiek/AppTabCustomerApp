@@ -7,6 +7,7 @@ import Login from './app/scenes/loginScene';
 import Placeholder from './app/scenes/placeholder';
 import Register from './app/scenes/registerScene';
 import Nodes from './app/scenes/nodeScene';
+import Request from './app/scenes/serviceRequestScene';
 const RouterWithRedux = connect()(Router);
 
 class TabIcon extends Component {
@@ -30,6 +31,7 @@ export default class AppTabCustomerApp extends Component {
         <Scene key="register" component={Register} title="Register"/>
         <Scene key="nodes" component={Nodes} title="Node Selection"/>
         <Scene key="placeholder" component={Placeholder} title="Placeholder"/>
+        <Scene key="request" component={Request} title="Service Request"/>
       </RouterWithRedux>
     </Provider>
     );
