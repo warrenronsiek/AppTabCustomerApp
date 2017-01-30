@@ -20,7 +20,7 @@ export default function getNodeInfo(nodeId) {
         if (resBody.responseMessage === 'GetNodeInfoSuccessful') {
           return resBody
         } else {
-          throw new NodeNotFoundError('NodeId not in Database')
+          throw new NodeNotFoundError('NodeId not in Database: ' + nodeId)
         }
       }
     )

@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import Nodes from '../redux/connectedComponents/nodeListConnected';
-import {updateNodeApi, updateNodeBle} from '../redux/actions/nodeActions';
+import {updateNodeApi, updateNodeBle, setNodeQueried} from '../redux/actions/nodeActions';
 import getNodeInfo from '../api/nodeApi';
 import BeaconTypeError from '../errors/beaconTypeError';
 import GetNodeQueriedError from '../errors/getNodeQueriedError';
@@ -78,6 +78,7 @@ class NodeScene extends Component {
       .then(res => {
         const nodeState = _.find(this.context.store.getState().nodes, {nodeId: res.nodeId});
         if (nodeState.apiQueried === undefined) {
+          this.props.dispatch(setNodeQueried(res.nodeId));
           return getNodeInfo(res.nodeId)
         } else {
           throw new GetNodeQueriedError('GetNode api already queried for this node')

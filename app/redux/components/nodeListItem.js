@@ -5,28 +5,31 @@ import React, {PropTypes} from 'react';
 import {Text, StyleSheet, View, Button} from 'react-native';
 
 const styles = StyleSheet.create({
-  venueBlock: {
+  nodeBlock: {
     flex: 1,
-    flexDirection: "column",
-    backgroundColor: '#f1f1f1',
+    flexDirection: "row",
     borderColor: "black",
     borderWidth: 1,
-    marginBottom: 1,
     padding: 20,
     maxHeight: 120,
     height: 120,
     alignItems: 'center'
   },
-  venueText: {
-    alignItems: 'center'
+  nodeText: {
+    flex: 2,
+    alignItems: 'flex-start',
+    flexDirection: 'column'
   }
+
 });
 
 const NodeListItem = ({nodeId, nodeName, nodeDescription, selectNode}) => (
-  <View style={styles.venueBlock}>
-    <Text>{nodeId.slice(-2)}</Text>
-    <Text>{nodeName}</Text>
-    <Text>{nodeDescription}</Text>
+  <View style={styles.nodeBlock}>
+    <View style={styles.nodeText}>
+      <Text>{nodeId.slice(-2)}</Text>
+      <Text>{nodeName}</Text>
+      <Text>{nodeDescription}</Text>
+    </View>
     <Button onPress={() => selectNode(nodeId)} title="Select"/>
   </View>
 );

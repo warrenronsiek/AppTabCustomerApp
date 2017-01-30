@@ -5,7 +5,6 @@ import React, {PropTypes} from 'react';
 import {View, Button, Text, TextInput, StyleSheet, Dimensions} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import EnytpoIcon from 'react-native-vector-icons/Entypo'
-import EvilIcon from 'react-native-vector-icons/EvilIcons'
 const {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -69,7 +68,7 @@ const register = ({updateName, updateEmail, updatePassword, updateConfirmPasswor
     <View style={styles.textContainer}>
       <View style={styles.iconContainer}>
         <View style={styles.iconSubContainer}>
-          <EvilIcon name="user" size={30}/>
+          <EnytpoIcon name="user" size={30}/>
         </View>
         <View style={styles.iconSubContainer}>
           <MaterialIcon name="email" size={30}/>

@@ -1,7 +1,7 @@
 /**
  * Created by warren on 1/23/17.
  */
-import {UPDATE_NODE_API, UPDATE_NODE_BLE, SET_ACTIVE_NODE} from '../actions/nodeActions';
+import {UPDATE_NODE_API, UPDATE_NODE_BLE, SET_ACTIVE_NODE, SET_NODE_QUERIED} from '../actions/nodeActions';
 const _ = require('lodash');
 
 export const nodes = (state = [], action) => {
@@ -45,6 +45,20 @@ export const nodes = (state = [], action) => {
           nodeId: action.nodeId,
           nodeName: action.nodeName,
           nodeDescription: action.nodeDescription,
+          apiQueried: true
+        };
+        return [...filteredState, updatedNode]
+      }
+    case SET_NODE_QUERIED:
+      if (nodeIndex === -1) {
+        return [...filteredState, {
+          nodeId: action.nodeId,
+          apiQueried: true
+        }]
+      } else {
+        updatedNode = {
+          ...state[nodeIndex],
+          nodeId: action.nodeId,
           apiQueried: true
         };
         return [...filteredState, updatedNode]

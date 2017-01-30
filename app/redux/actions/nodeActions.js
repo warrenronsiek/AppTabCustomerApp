@@ -16,3 +16,9 @@ export const SET_ACTIVE_NODE = 'SET_ACTIVE_NODE';
 export const setActiveNode = (nodeId) => {
     return {type: SET_ACTIVE_NODE, nodeId}
 };
+
+export const SET_NODE_QUERIED = 'SET_NODE_QUERIED';
+export const setNodeQueried = (nodeId) => {
+  return {type: SET_NODE_QUERIED, nodeId}
+};
+
