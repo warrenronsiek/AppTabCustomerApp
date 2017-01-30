@@ -70,6 +70,7 @@ class NodeScene extends Component {
     noble.stopScanning();
   }
 
+  //TODO: move this into middleware
   _onFound = (item) => {
     parseBlePacket(item)
       .then(res => {
