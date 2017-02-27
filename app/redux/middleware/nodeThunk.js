@@ -6,7 +6,7 @@ import {setActiveNode} from '../actions/nodeActions';
 
 const selectNode = (nodeId) => (dispatch) => {
   Promise.resolve(dispatch(setActiveNode(nodeId)))
-    .then(() => Actions.request())
+    .then(() => Actions.tabs())
     .catch(err => console.log(err))
 };
 

@@ -6,58 +6,58 @@ const _ = require('lodash');
 
 export const nodes = (state = [], action) => {
   let updatedNode,
-    nodeIndex = _.findIndex(state, node => node.nodeId === action.nodeId),
+    oldNode = _.find(state, ['nodeId', action.nodeId]),
     filteredState = state.filter((node) => node.nodeId !== action.nodeId);
   switch (action.type) {
     case UPDATE_NODE_BLE:
-      if (nodeIndex === -1) {
+      if (oldNode) {
+        updatedNode = {
+          ...oldNode,
+          nodeId: action.nodeId,
+          distance: action.distance / (oldNode.updatedCount + 1 ) + oldNode.distance * (oldNode.updatedCount / (oldNode.updatedCount + 1 )),
+          instance: action.instance,
+          lastSeen: action.lastSeen,
+          updatedCount: oldNode.updatedCount + 1
+        };
+        return [...filteredState, updatedNode]
+      } else {
         return [...filteredState, {
           nodeId: action.nodeId,
           distance: action.distance,
           instance: action.instance,
           lastSeen: action.lastSeen,
-          venueId: action.venueId,
           updatedCount: 1
         }]
-      } else {
-        updatedNode = {
-          ...state[nodeIndex],
-          nodeId: action.nodeId,
-          distance: action.distance / (state[nodeIndex].updatedCount + 1 ) + state[nodeIndex].distance * (state[nodeIndex].updatedCount / (state[nodeIndex].updatedCount + 1 )),
-          instance: action.instance,
-          lastSeen: action.lastSeen,
-          venueId: action.venueId,
-          updatedCount: state[nodeIndex].updatedCount + 1
-        };
-        return [...filteredState, updatedNode]
       }
     case UPDATE_NODE_API:
-      if (nodeIndex === -1) {
+      if (oldNode) {
         return [...filteredState, {
           nodeId: action.nodeId,
           nodeName: action.nodeName,
           nodeDescription: action.nodeDescription,
+          venueId: action.venueId,
           apiQueried: true
         }]
       } else {
         updatedNode = {
-          ...state[nodeIndex],
+          ...oldNode,
           nodeId: action.nodeId,
           nodeName: action.nodeName,
           nodeDescription: action.nodeDescription,
+          venueId: action.venueId,
           apiQueried: true
         };
         return [...filteredState, updatedNode]
       }
     case SET_NODE_QUERIED:
-      if (nodeIndex === -1) {
+      if (oldNode) {
         return [...filteredState, {
+          ...oldNode,
           nodeId: action.nodeId,
           apiQueried: true
         }]
       } else {
         updatedNode = {
-          ...state[nodeIndex],
           nodeId: action.nodeId,
           apiQueried: true
         };

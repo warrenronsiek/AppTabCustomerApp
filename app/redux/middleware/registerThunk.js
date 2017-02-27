@@ -13,16 +13,13 @@ export default registerThunk = (name, email, password) => (dispatch) => {
       return registerRequest(email, name, password)
     })
     .then(res => {
-      console.log(res);
       return loginRequest(email, password)
     })
     .then(res => {
-      console.log(res);
       return Promise.resolve(dispatch(updateAuth(res.accessToken, res.idToken, res.refreshToken, res.userName, res.clientId)))
     })
     .then(() => Actions.nodes())
     .catch(err => {
-      console.log(err);
       switch (err.name) {
         case 'UserExistsError':
           dispatch(userExistsError());

@@ -9,7 +9,6 @@ export default function registerRequest(email, name, password) {
 
   return fetch(url, {method: 'POST', body: JSON.stringify({password, name, email})})
     .then((res) => {
-      console.log(res);
       if (res.ok) {
         return res._bodyText
       } else {

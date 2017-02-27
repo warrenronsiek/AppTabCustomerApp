@@ -75,7 +75,6 @@ const login = ({validationError, networkError, unknownError, loggingIn, email, p
           <MaterialIcon name="email" size={30}/>
         </View>
         <View style={styles.iconSubContainer}>
-
           <EnytpoIcon name="key" size={30}/>
         </View>
       </View>

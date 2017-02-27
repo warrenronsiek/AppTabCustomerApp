@@ -24,8 +24,12 @@ class ServiceRequestScene extends React.Component {
   }
 
   _serviceRequest = () => {
-    const activeNode = this.context.store.getState().activeNode;
-    serviceRequest({nodeId: activeNode})
+    const state = this.context.store.getState();
+    const
+      activeNode = state.activeNode,
+      userName = state.auth.userName;
+    serviceRequest(activeNode, userName)
+      .catch(err => console.log(err))
   };
 
   render() {

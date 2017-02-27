@@ -3,10 +3,10 @@
  */
 import NetworkError from '../errors/networkError';
 
-export default function serviceRequest(nodeId) {
+export default function serviceRequest(nodeId, userName) {
   const loginUrl = 'https://zapkwgntzh.execute-api.us-west-2.amazonaws.com/dev/service-request';
 
-  return fetch(loginUrl, {method: 'POST', body: JSON.stringify({nodeId})})
+  return fetch(loginUrl, {method: 'POST', body: JSON.stringify({nodeId, userName})})
     .then((res) => {
       if (res.ok) {
         return res._bodyText
@@ -18,5 +18,4 @@ export default function serviceRequest(nodeId) {
         return JSON.parse(body);
       }
     )
-}
-;
+};

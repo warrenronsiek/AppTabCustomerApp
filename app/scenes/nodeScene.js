@@ -74,7 +74,12 @@ class NodeScene extends Component {
   _onFound = (item) => {
     parseBlePacket(item)
       .then(res => {
-        return Promise.resolve(this.props.dispatch(updateNodeBle(res.distance, res.namespace, res.instance, res.lastSeen)))
+        if (res.namespace === 'bc635921402893714ad5') {
+          return Promise.resolve(this.props.dispatch(updateNodeBle(res.distance, res.namespace, res.instance, res.lastSeen)))
+        }
+        else {
+          throw new Error('incorrect namespace')
+        }
       })
       .then(res => {
         const nodeState = _.find(this.context.store.getState().nodes, {nodeId: res.nodeId});
@@ -87,8 +92,8 @@ class NodeScene extends Component {
       })
       .then(res => {
         const node = res.nodeInfo.Item;
-        const nodeId = node.NodeId.S, nodeName = node.NodeName.S, nodeDescription = node.NodeDescription.S;
-        return Promise.resolve(this.props.dispatch(updateNodeApi(nodeId, nodeName, nodeDescription)))
+        const nodeId = node.NodeId.S, nodeName = node.NodeName.S, nodeDescription = node.NodeDescription.S, venueId = node.VenueId.S;
+        return Promise.resolve(this.props.dispatch(updateNodeApi(nodeId, nodeName, nodeDescription, venueId)))
       })
       .catch(err => {
         switch (err.name) {

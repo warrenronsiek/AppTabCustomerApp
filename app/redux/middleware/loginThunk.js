@@ -15,7 +15,6 @@ export default loginThunk = (email, password) => (dispatch) => {
     })
     .then(() => Actions.nodes())
     .catch(err => {
-      console.log(err);
       switch (err.name) {
         case "ValidationError":
           dispatch(validationError());
