@@ -2,11 +2,11 @@
  * Created by warren on 2/27/17.
  */
 import React, {Component} from 'react';
-import DrinkList from '../redux/connectedComponents/drinkListConnected';
-import menuComponentWillMount from '../common/menuComponentWillMount';
+import MainList from '../redux/connectedComponents/mainCourseListConnected';
 import {connect} from 'react-redux';
+import menuComponentWillMount from '../common/menuComponentWillMount';
 
-class DrinkScene extends Component {
+class MainScene extends Component {
   static contextTypes = {
     store: React.PropTypes.object
   };
@@ -17,9 +17,9 @@ class DrinkScene extends Component {
 
   render() {
     return (
-      <DrinkList/>
+      <MainList/>
     )
   }
 };
 
-export default connect()(DrinkScene)
+export default connect()(MainScene)
