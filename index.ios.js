@@ -8,9 +8,10 @@ import Placeholder from './app/scenes/placeholder';
 import Register from './app/scenes/registerScene';
 import Nodes from './app/scenes/nodeScene';
 import Request from './app/scenes/serviceRequestScene';
-import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
+import DrinkScene from './app/scenes/drinkScene';
 import EntypoIcons from 'react-native-vector-icons/Entypo';
 import Ionicon from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const RouterWithRedux = connect()(Router);
 
@@ -25,7 +26,15 @@ class TabIcon extends Component {
 class Cocktail extends Component {
   render() {
     return (
-      <EntypoIcons name="drink" size={30} color={ this.props.selected ? '#6495ED' : 'black'}/>
+      <EntypoIcons name="cocktail" size={30} color={ this.props.selected ? '#6495ED' : 'black'}/>
+    )
+  }
+}
+
+class Drink extends Component {
+  render() {
+    return (
+      <MaterialIcons name="local-drink" size={30} color={ this.props.selected ? '#6495ED' : 'black'}/>
     )
   }
 }
@@ -52,7 +61,7 @@ export default class AppTabCustomerApp extends Component {
         <Scene key="nodes" component={Nodes} title="Node Selection"/>
         <Scene key="tabs" tabs={true} onBack={() => Actions.nodes()}>
           <Scene key="request" component={Request} title="Service Request" icon={Bell} initial={true}/>
-          <Scene key="placeholder" component={Placeholder} title="Placeholder" icon={Cocktail}/>
+          <Scene key="drinks" component={DrinkScene} title="Drinks" icon={Drink}/>
         </Scene>
       </RouterWithRedux>
     </Provider>

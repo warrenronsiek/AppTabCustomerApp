@@ -5,5 +5,6 @@ import {combineReducers} from 'redux';
 import {auth, loginParams, loginState} from './loginReducer'
 import {registerParams, registerState} from './registerReducer'
 import {nodes, activeNode} from './nodeReducer'
+import {menu} from './menuReducer'
 
-export default combineReducers({auth, loginParams, loginState, registerParams, registerState, nodes, activeNode});
+export default combineReducers({auth, loginParams, loginState, registerParams, registerState, nodes, activeNode, menu});
