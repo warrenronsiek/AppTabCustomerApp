@@ -1,7 +1,7 @@
 /**
  * Created by warren on 2/24/17.
  */
-import {UPDATE_MENU_ITEM} from '../actions/menuActions';
+import {UPDATE_MENU_ITEM, MENU_API_QUERY_STATUS} from '../actions/menuActions';
 const _ = require('lodash');
 
 const menu = (state = [], action) => {
@@ -38,4 +38,15 @@ const menu = (state = [], action) => {
   }
 };
 
-export {menu}
+const menuQueryStatus = (state = {}, action) => {
+  switch (action.type) {
+    case MENU_API_QUERY_STATUS:
+      const newState = Object.assign({}, state);
+      newState[action.venueId] = action.time;
+      return newState;
+    default:
+      return state;
+  }
+};
+
+export {menu, menuQueryStatus}
