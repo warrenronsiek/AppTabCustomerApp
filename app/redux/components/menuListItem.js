@@ -2,7 +2,8 @@
  * Created by warren on 2/26/17.
  */
 import React, {PropTypes} from 'react'
-import {View, Text, TextInput, StyleSheet, Button} from 'react-native';
+import {View, Text, TextInput, StyleSheet, Button, TouchableHighlight} from 'react-native';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 const styles = StyleSheet.create({
   container: {
@@ -45,10 +46,15 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     paddingLeft: 3,
     paddingRight: 3
+  },
+  cartContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 
-const menuListItem = ({itemName, itemDescription, itemId, price, tags}) => (
+const menuListItem = ({itemName, itemDescription, itemId, price, tags, addToCart}) => (
   <View style={styles.container}>
     <View style={styles.textContainer}>
       <Text style={styles.nameStyle}>{itemName}</Text>
@@ -66,6 +72,9 @@ const menuListItem = ({itemName, itemDescription, itemId, price, tags}) => (
     <View style={styles.priceContainer}>
       <Text>{price}</Text>
     </View>
+    <View style={styles.cartContainer}>
+      <FontAwesomeIcon name="cart-plus" size={30} onPress={() => addToCart(itemId)}/>
+    </View>
   </View>
 );
 
@@ -74,7 +83,8 @@ menuListItem.propTypes = {
   itemDescription: PropTypes.string.isRequired,
   itemId: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
-  tags: PropTypes.arrayOf(PropTypes.string).isRequired
+  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  addToCart: PropTypes.func.isRequired
 };
 
 export default menuListItem

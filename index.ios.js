@@ -13,6 +13,7 @@ import AlcoholScene from './app/scenes/alcoholScene';
 import MainCourseScene from './app/scenes/mainCourseScene';
 import AppetizerScene from './app/scenes/appetizerScene';
 import DessertScene from './app/scenes/dessertScene';
+import CartScene from './app/scenes/cartScene';
 
 import EntypoIcons from 'react-native-vector-icons/Entypo';
 import Ionicon from 'react-native-vector-icons/Ionicons';
@@ -48,6 +49,8 @@ export default class AppTabCustomerApp extends Component {
             <Scene key="dessert" component={DessertScene} title="Dessert" icon={dessert}/>
             <Scene key="appetizer" component={AppetizerScene} title="Appetizer" icon={carrot}/>
           </Scene>
+          <Scene key="placeholder" component={Placeholder} title="Placeholder"/>
+          <Scene key="cart" component={CartScene} title="Cart"/>
         </RouterWithRedux>
       </Provider>
     );

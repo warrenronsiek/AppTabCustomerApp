@@ -1,9 +1,9 @@
 /**
- * Created by warren on 2/26/17.
+ * Created by warren on 3/1/17.
  */
 import React, {PropTypes, Component} from 'react';
 import {View, ListView, Button, StyleSheet, Text} from 'react-native';
-import MenuListItem from './menuListItem';
+import CartListItem from './cartListItem';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,40 +25,47 @@ const styles = StyleSheet.create({
 
 export default class MenuList extends Component {
   static propTypes = {
-    menuListItems: PropTypes.arrayOf(PropTypes.object).isRequired,
-    addToCart: PropTypes.func.isRequired,
-    checkout: PropTypes.func.isRequired,
+    cartListItems: PropTypes.arrayOf(PropTypes.object).isRequired,
+    incrementCount: PropTypes.func.isRequired,
+    decrementCount: PropTypes.func.isRequired,
+    totalPrice: PropTypes.number.isRequired,
+    checkout: PropTypes.func.isRequired
   };
 
   constructor(props) {
     super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.state = {dataSource: ds.cloneWithRows(this.props.menuListItems)};
+    this.state = {dataSource: ds.cloneWithRows(this.props.cartListItems)};
   }
 
   componentWillReceiveProps(newProps) {
-    this.setState({dataSource: this.state.dataSource.cloneWithRows(newProps.menuListItems)});
+    this.setState({dataSource: this.state.dataSource.cloneWithRows(newProps.cartListItems)});
   }
 
   render() {
     return (
       <View style={styles.container}>
         <View>
-
-          {this.props.menuListItems.length === 0
+          {this.props.cartListItems.length === 0
             ? <Text>Loading...</Text>
             : <ListView dataSource={this.state.dataSource}
-                        renderRow={item => <MenuListItem itemName={item.itemName}
+                        renderRow={item => <CartListItem itemName={item.itemName}
                                                          itemDescription={item.itemDescription}
                                                          itemId={item.itemId}
-                                                         price={item.price} tags={item.tags}
-                                                         addToCart={this.props.addToCart}
+                                                         price={item.price}
+                                                         count={item.count}
+                                                         incrementCount={this.props.incrementCount}
+                                                         decrementCount={this.props.decrementCount}
+
                         />}
             />
           }
         </View>
         <View>
-          <Button onPress={() => this.props.checkout()} title="My Selections"/>
+          <Text>Total: ${this.props.totalPrice}</Text>
+        </View>
+        <View>
+          <Button onPress={() => this.props.chargeButton()} title="Checkout"/>
         </View>
       </View>
     )

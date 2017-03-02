@@ -6,3 +6,13 @@ export const ADD_TO_CART = 'ADD_TO_CART';
 export const addToCart = (itemName, itemDescription, price, tags, category, itemId, venueId) => {
   return {type: ADD_TO_CART, itemName, itemDescription, price, tags, category, itemId, venueId}
 };
+
+export const INCREMENT_COUNT = 'INCREMENT_COUNT';
+export const incrementCount = (itemId) => {
+  return {type: INCREMENT_COUNT, itemId}
+};
+
+export const DECREMENT_COUNT = 'DECREMENT_COUNT';
+export const decrementCount = (itemId) => {
+  return {type: DECREMENT_COUNT, itemId}
+};
