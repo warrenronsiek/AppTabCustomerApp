@@ -61,9 +61,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const cartListItem = ({itemName, itemDescription, itemId, price, count, incrementCount, decrementCount}) => {
-  console.log(count);
-  return (
+const cartListItem = ({itemName, itemDescription, itemId, price, count, incrementCount, decrementCount}) => (
     <View style={styles.container}>
       <View style={styles.textContainer}>
         <Text style={styles.nameStyle}>{itemName}</Text>
@@ -86,8 +84,7 @@ const cartListItem = ({itemName, itemDescription, itemId, price, count, incremen
         </View>
       </View>
     </View>
-  )
-};
+  );
 
 cartListItem.propTypes = {
   itemName: PropTypes.string.isRequired,

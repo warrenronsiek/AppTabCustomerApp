@@ -20,6 +20,14 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     paddingBottom: 30
+  },
+  totalContainer: {
+    flex: 1,
+    alignItems: 'center'
+  },
+  textStyle: {
+    fontSize: 16,
+    fontWeight: 'bold'
   }
 });
 
@@ -61,10 +69,9 @@ export default class MenuList extends Component {
             />
           }
         </View>
-        <View>
-          <Text>Total: ${this.props.totalPrice}</Text>
-        </View>
-        <View>
+        <View style={styles.totalContainer}>
+          <Text style={styles.textStyle}>Total:
+            ${this.props.totalPrice * 100 % 10 === 0 ? this.props.totalPrice + '0' : this.props.totalPrice}</Text>
           <Button onPress={() => this.props.chargeButton()} title="Checkout"/>
         </View>
       </View>

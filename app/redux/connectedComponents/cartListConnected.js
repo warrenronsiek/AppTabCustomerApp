@@ -12,7 +12,7 @@ const mapStateToProps = (state) => {
     currentCart = state.cart.filter(item => item.venueId === venueId);
   return {
     cartListItems: currentCart,
-    totalPrice: _.sum(currentCart.map(item => parseFloat(item.price) * item.count))
+    totalPrice: Math.round(_.sum(currentCart.map(item => parseFloat(item.price) * item.count)) * 100) / 100
   }
 };
 

@@ -8,7 +8,6 @@ const menu = (state = [], action) => {
   const oldItem = _.find(state, ['itemId', action.itemId]);
   switch (action.type) {
     case UPDATE_MENU_ITEM:
-      console.log(action);
       if (oldItem) {
         return [...state.filter(item => item.itemId !== action.itemId),
           {

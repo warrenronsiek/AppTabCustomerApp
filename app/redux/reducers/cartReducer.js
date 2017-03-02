@@ -12,7 +12,7 @@ const cart = (state = [], action) => {
     case ADD_TO_CART:
       if (inCart) {
         newItem = {...inCart, count: inCart.count + 1};
-        return [...filteredState, ...[inCart]]
+        return [...filteredState, newItem]
       }
       return [...state, {
         itemId: action.itemId,

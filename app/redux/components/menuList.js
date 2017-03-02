@@ -28,6 +28,7 @@ export default class MenuList extends Component {
     menuListItems: PropTypes.arrayOf(PropTypes.object).isRequired,
     addToCart: PropTypes.func.isRequired,
     checkout: PropTypes.func.isRequired,
+    selectionsCount: PropTypes.number
   };
 
   constructor(props) {
@@ -58,7 +59,12 @@ export default class MenuList extends Component {
           }
         </View>
         <View>
-          <Button onPress={() => this.props.checkout()} title="My Selections"/>
+          <Button onPress={() => this.props.checkout()}
+                  title={
+                    this.props.selectionsCount > 0
+                      ? "My Selections: " + this.props.selectionsCount.toString()
+                      : "My Selections"}
+          />
         </View>
       </View>
     )
