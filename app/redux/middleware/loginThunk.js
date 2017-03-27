@@ -15,7 +15,8 @@ export default loginThunk = (email, password) => (dispatch, getState) => {
       return Promise.resolve(dispatch(updateAuth(res.accessToken, res.idToken, res.refreshToken, res.userName, res.clientId)))
     })
     .then(() => {
-      return Promise.resolve(getStripeToken(getState().auth.clientId))
+      console.log(getState().auth.clientId);
+      return getStripeToken(getState().auth.clientId)
     })
     .then(res => {
       console.log(res);

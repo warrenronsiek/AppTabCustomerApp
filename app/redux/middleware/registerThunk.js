@@ -19,17 +19,17 @@ export default registerThunk = (name, email, password) => (dispatch, getState) =
     .then(res => {
       return Promise.resolve(dispatch(updateAuth(res.accessToken, res.idToken, res.refreshToken, res.userName, res.clientId)))
     })
-    .then(() => Actions.nodes())
     .then(() => {
       const state = getState();
       return stripeCreateCustomerApi(state.auth.clientId, email)
     })
     .then(res => {
-      return Promise.resolve(dispatch(updateStripeToken(JSON.parse(res.body).stripeToken)))
+      return Promise.resolve(dispatch(updateStripeToken(res.body.stripeToken)))
     })
     .then(() => {
       console.log(getState().stripeToken)
     })
+    .then(() => Actions.nodes())
     .catch(err => {
       switch (err.name) {
         case 'UserExistsError':

@@ -5,7 +5,7 @@
 import NetworkError from '../errors/networkError';
 
 export default getStripeToken = (customerId) => {
-  const url = 'https://zapkwgntzh.execute-api.us-west-2.amazonaws.com/dev/get-stripe-token';
+  const url = 'https://zapkwgntzh.execute-api.us-west-2.amazonaws.com/dev/stripe-get-token';
 
   return fetch(url, {method: 'POST', body: JSON.stringify({customerId})})
     .then((res) => {
