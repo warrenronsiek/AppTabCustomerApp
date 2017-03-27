@@ -8,7 +8,8 @@ import {
   NETWORK_ERROR,
   UNKNOWN_ERROR,
   UPDATE_EMAIL,
-  UPDATE_PASSWORD
+  UPDATE_PASSWORD,
+  UPDATE_STRIPE_TOKEN
 } from '../actions/loginActions';
 
 export const auth = (state = {}, action) => {
@@ -50,5 +51,14 @@ export const loginParams = (state = {email: 'wronsiek@gmail.com', password: 'P@3
       return {...state, password: action.password};
     default:
       return state;
+  }
+};
+
+export const stripeToken = (state = '', action) => {
+  switch (action.type) {
+    case UPDATE_STRIPE_TOKEN:
+      return action.token;
+    default:
+      return state
   }
 };

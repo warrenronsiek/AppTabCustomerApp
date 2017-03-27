@@ -9,8 +9,10 @@
   "dependencies": {
     "jwt-decode": "^2.1.0",
     "lodash": "^4.17.4",
+    "payment": "^2.2.1",
     "react": "15.4.2",
     "react-native": "^0.42.3",
+    "react-native-awesome-card-io": "^0.6.1",
     "react-native-ble": "^1.0.8",
     "react-native-router-flux": "^3.37.0",
     "react-native-vector-icons": "^4.0.0",

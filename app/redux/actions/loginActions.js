@@ -11,7 +11,6 @@ export const updateAuth = (accessToken, idToken, refreshToken, userName, clientI
   return {type: UPDATE_AUTH, accessToken, idToken, refreshToken, userName, clientId}
 };
 
-
 export const VALIDATION_ERROR = 'VALIDATION_ERROR';
 export const validationError = () => {
   return {type: VALIDATION_ERROR}
@@ -41,3 +40,9 @@ export const UPDATE_EMAIL = 'UPDATE_EMAIL';
 export const updateEmail = (email) => {
     return {type: UPDATE_EMAIL, email}
 };
+
+export const UPDATE_STRIPE_TOKEN = 'UPDATE_STRIPE_TOKEN';
+export const updateStripeToken = (token) => {
+  return {type: UPDATE_STRIPE_TOKEN, token}
+};
+

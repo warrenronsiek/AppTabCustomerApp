@@ -10,7 +10,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1,
     paddingTop: 20,
-    paddingBottom: 20
+    paddingBottom: 20,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: 'grey'
   },
   textContainer: {
     flex: 4,
