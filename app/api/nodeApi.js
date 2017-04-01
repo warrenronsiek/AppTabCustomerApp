@@ -17,7 +17,7 @@ export default function getNodeInfo(nodeId) {
     })
     .then((body) => {
         const resBody = JSON.parse(body);
-        if (resBody.responseMessage === 'GetNodeInfoSuccessful') {
+        if (resBody.message === 'GetNodeInfoSuccessful') {
           return resBody
         } else {
           throw new NodeNotFoundError('NodeId not in Database: ' + nodeId)
