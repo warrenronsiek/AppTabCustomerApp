@@ -1,8 +1,6 @@
 /**
  * Created by warren on 2/27/17.
  */
-
-import NodeNotFoundError from '../errors/nodeNotFoundError';
 import NetworkError from '../errors/networkError';
 
 export default function getMenu(venueId) {

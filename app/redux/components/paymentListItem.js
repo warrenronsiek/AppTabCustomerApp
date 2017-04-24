@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 4,
     alignItems: 'center',
-    justifyContent: 'left'
+    justifyContent: 'flex-start'
   },
   checkMarkContainer: {
     flex: 1,

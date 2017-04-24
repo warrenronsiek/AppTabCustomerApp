@@ -25,22 +25,23 @@ class PaymentMethodSelection extends Component {
 
   constructor(props) {
     super(props);
+    console.log(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      dataSource: ds.cloneWithRows(this.props.paymentMethodListItems)
+      dataSource: ds.cloneWithRows(this.props.paymentListItems)
     };
   }
 
   componentWillReceiveProps(newProps) {
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(newProps.paymentMethodListItems)
+      dataSource: this.state.dataSource.cloneWithRows(newProps.paymentListItems)
     });
   }
 
   render() {
     return (
       <View style={styles.container}>
-        {this.props.renderNodes
+        {this.props.paymentListItems.length > 0
           ? <ListView dataSource={this.state.dataSource}
                       renderRow={(item) => <PaymentItem brand={item.brand} isSelected={item.isSelected} last4={item.last4} ccToken={item.ccToken} select={this.props.selectCard}/>}/>
           : <Text>LOADING...</Text>

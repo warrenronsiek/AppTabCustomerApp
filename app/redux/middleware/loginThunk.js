@@ -12,7 +12,6 @@ import {
 import loginRequest from '../../api/loginApi';
 import getStripeToken from '../../api/getStripeToken';
 import {Actions} from 'react-native-router-flux';
-import stripeCreateCard from '../../api/stripeCreateCard';
 
 export default loginThunk = (email, password) => (dispatch, getState) => {
   let clientId;

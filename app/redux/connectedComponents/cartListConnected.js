@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {incrementCount, decrementCount} from '../actions/cartActions';
 import CartList from '../components/cartList';
 import {Actions} from 'react-native-router-flux'
+import checkoutThunk from '../middleware/checkoutThunk'
 const _ = require('lodash');
 
 const mapStateToProps = (state) => {
@@ -20,7 +21,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     incrementCount: itemId => dispatch(incrementCount(itemId)),
     decrementCount: itemId => dispatch(decrementCount(itemId)),
-    checkout: () => Actions.cart()
+    checkout: () => dispatch(checkoutThunk())
   }
 };
 

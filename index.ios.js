@@ -1,23 +1,23 @@
-import store from './app/redux/store';
-import React, {Component} from 'react';
-import {AppRegistry, StyleSheet, Text, View} from 'react-native';
-import {Provider, connect} from 'react-redux';
-import {Router, Scene, Actions} from 'react-native-router-flux';
-import Login from './app/scenes/loginScene';
-import Placeholder from './app/scenes/placeholder';
-import Register from './app/scenes/registerScene';
-import Nodes from './app/scenes/nodeScene';
-import Request from './app/scenes/serviceRequestScene';
-import DrinkScene from './app/scenes/drinkScene';
-import AlcoholScene from './app/scenes/alcoholScene';
-import MainCourseScene from './app/scenes/mainCourseScene';
-import AppetizerScene from './app/scenes/appetizerScene';
-import DessertScene from './app/scenes/dessertScene';
-import CartScene from './app/scenes/cartScene';
-
-import EntypoIcons from 'react-native-vector-icons/Entypo';
-import Ionicon from 'react-native-vector-icons/Ionicons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import store from './app/redux/store'
+import React, {Component} from 'react'
+import {AppRegistry, Text} from 'react-native'
+import {Provider, connect} from 'react-redux'
+import {Router, Scene, Actions} from 'react-native-router-flux'
+import Login from './app/scenes/loginScene'
+import Placeholder from './app/scenes/placeholder'
+import Register from './app/scenes/registerScene'
+import Nodes from './app/scenes/nodeScene'
+import Request from './app/scenes/serviceRequestScene'
+import DrinkScene from './app/scenes/drinkScene'
+import AlcoholScene from './app/scenes/alcoholScene'
+import MainCourseScene from './app/scenes/mainCourseScene'
+import AppetizerScene from './app/scenes/appetizerScene'
+import CheckoutScene from './app/scenes/checkoutScene'
+import DessertScene from './app/scenes/dessertScene'
+import CartScene from './app/scenes/cartScene'
+import EntypoIcons from 'react-native-vector-icons/Entypo'
+import Ionicon from 'react-native-vector-icons/Ionicons'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 const RouterWithRedux = connect()(Router);
 
@@ -51,6 +51,7 @@ export default class AppTabCustomerApp extends Component {
           </Scene>
           <Scene key="placeholder" component={Placeholder} title="Placeholder"/>
           <Scene key="cart" component={CartScene} title="Cart"/>
+          <Scene key="checkout" component={CheckoutScene} title="Checkout"/>
         </RouterWithRedux>
       </Provider>
     );

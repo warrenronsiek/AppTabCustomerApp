@@ -72,7 +72,7 @@ export default class MenuList extends Component {
         <View style={styles.totalContainer}>
           <Text style={styles.textStyle}>Total:
             ${this.props.totalPrice * 100 % 10 === 0 ? this.props.totalPrice + '0' : this.props.totalPrice}</Text>
-          <Button onPress={() => this.props.chargeButton()} title="Checkout"/>
+          <Button onPress={() => this.props.checkout()} title="Checkout"/>
         </View>
       </View>
     )

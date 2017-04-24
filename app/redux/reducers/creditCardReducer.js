@@ -6,27 +6,28 @@ import {handleActions} from 'redux-actions'
 import * as _ from 'lodash'
 
 const creditCard = handleActions({
-  [ccActions.real.update.number]: (state, action) => ({...state, cardNumber: action.cardNumber}),
-  [ccActions.real.update.exp_year]: (state, action) => ({...state, exp_year: action.exp_year}),
-  [ccActions.real.update.exp_month]: (state, action) => ({...state, exp_month: action.exp_month}),
-  [ccActions.real.update.ccv]: (state, action) => ({...state, ccv: action.ccv}),
-  [ccActions.real.update.zip]: (state, action) => ({...state, zip: action.zip}),
+  [ccActions.real.update.number]: (state, action) => ({...state, cardNumber: action.payload.cardNumber}),
+  [ccActions.real.update.exp_year]: (state, action) => ({...state, exp_year: action.payload.exp_year}),
+  [ccActions.real.update.exp_month]: (state, action) => ({...state, exp_month: action.payload.exp_month}),
+  [ccActions.real.update.ccv]: (state, action) => ({...state, ccv: action.payload.ccv}),
+  [ccActions.real.update.zip]: (state, action) => ({...state, zip: action.payload.zip}),
   [ccActions.real.wipe]: (state, action) => ({})
 }, {});
 
 const ccTokens = handleActions({
-  [ccActions.token.add]: (state, action) => [...state, {
-    ccToken: action.ccToken,
-    brand: action.brand,
-    last4: action.last4,
-    exp_month: action.exp_month,
-    exp_year: action.exp_year,
-    active: false
-  }],
-  [ccActions.token.delete]: (state, action) => state.filter(item => item.ccToken !== action.ccToken),
-  [ccActions.token.setActive]: (state, action) => [...state.filter(item => item.ccToken !== action.ccToken).map(item => item.active = false), {
-    ...state.filter(item => item.ccToken !== action.ccToken)[0], active: true
-  }]
-}, [{ccToken: 'asdf', brand: 'visa', last4: '1234', active: false}, {ccToken: 'fdsa', brand: 'amex', last4:'4321', active: true}]);
+    [ccActions.token.add]: (state, action) => [...state, {
+      ccToken: action.payload.ccToken,
+      brand: action.payload.brand,
+      last4: action.payload.last4,
+      exp_month: action.payload.exp_month,
+      exp_year: action.payload.exp_year,
+      isSelected: false
+    }],
+    [ccActions.token.delete]: (state, action) => state.filter(item => item.ccToken !== action.ccToken),
+    [ccActions.token.setActive]: (state, action) => [...state.filter(item => item.ccToken !== action.ccToken).map(item => item.isSelected = false), {
+      ...state.filter(item => item.ccToken !== action.ccToken)[0], isSelected: true
+    }]
+  }, []
+);
 
 export {creditCard, ccTokens}
