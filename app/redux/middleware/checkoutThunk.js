@@ -6,11 +6,17 @@ import ccActions from '../actions/creditCardActions'
 import getCreditCards from '../../api/getCreditCards'
 
 export default checkoutThunk = () => (dispatch, getState) => {
-  const customerId = getState().auth.clientId;
-  return getCreditCards(customerId)
-    .then(res => {
-      return Promise.all(res.Items.map(item => Promise.resolve(dispatch(ccActions.token.add(item.CardId.S, item.Last4.S, item.Brand.S, item.ExpMonth.N, item.ExpYear.N)))))
-    })
-    .then(() => Actions.checkout())
-    .catch(err => console.log(err))
+  const state = getState();
+  const customerId = state.auth.clientId, apiQueried = state.ccTokenApiQueried;
+  if (!apiQueried) {
+    return getCreditCards(customerId)
+      .then(res => {
+        return Promise.all(res.Items.map(item => Promise.resolve(dispatch(ccActions.token.add(item.CardId.S, item.Last4.S, item.Brand.S, item.ExpMonth.N, item.ExpYear.N)))))
+      })
+      .then(res => Promise.resolve(dispatch(ccActions.apiQueried(true))))
+      .then(() => Actions.checkout())
+      .catch(err => console.log(err))
+  } else {
+    return Actions.checkout()
+  }
 };

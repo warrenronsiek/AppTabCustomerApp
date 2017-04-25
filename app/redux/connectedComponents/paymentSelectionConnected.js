@@ -13,7 +13,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    selectCard: () => {}
+    selectCard: (ccToken) => dispatch(ccActions.token.setSelected(ccToken)),
+    addCard: () => {}, //TODO
+    pay: () => {} //TODO
   }
 };
 

@@ -2,7 +2,7 @@
  * Created by warren on 4/1/17.
  */
 import ccActions from '../actions/creditCardActions'
-import {handleActions} from 'redux-actions'
+import {handleActions, handleAction} from 'redux-actions'
 import * as _ from 'lodash'
 
 const creditCard = handleActions({
@@ -24,10 +24,14 @@ const ccTokens = handleActions({
       isSelected: false
     }],
     [ccActions.token.delete]: (state, action) => state.filter(item => item.ccToken !== action.ccToken),
-    [ccActions.token.setActive]: (state, action) => [...state.filter(item => item.ccToken !== action.ccToken).map(item => item.isSelected = false), {
-      ...state.filter(item => item.ccToken !== action.ccToken)[0], isSelected: true
-    }]
+    [ccActions.token.setSelected]: (state, action) =>
+      [
+        ...state.filter(item => item.ccToken !== action.payload).map(item => ({...item, isSelected: false})),
+        {...state.filter(item => item.ccToken === action.payload)[0], isSelected: true}
+      ],
   }, []
 );
 
-export {creditCard, ccTokens}
+const ccTokenApiQueried = handleAction(ccActions.apiQueried, {next: (state=false, action) => action.payload, throw: (state, action) => state}, false);
+
+export {creditCard, ccTokens, ccTokenApiQueried}

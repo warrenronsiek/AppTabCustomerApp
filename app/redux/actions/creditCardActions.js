@@ -17,6 +17,7 @@ export default ccActions = createActions({
   TOKEN: {
     ADD: (ccToken, last4, brand, exp_month, exp_year) => ({ccToken, last4, brand, exp_month, exp_year}),
     DELETE: ccToken => ccToken,
-    SET_ACTIVE: ccToken => ccToken
-  }
+    SET_SELECTED: ccToken => ccToken,
+  },
+  API_QUERIED: bool => bool
 });
