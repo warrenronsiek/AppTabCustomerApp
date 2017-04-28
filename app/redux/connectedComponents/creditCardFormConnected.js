@@ -17,7 +17,7 @@ const validateZip = zip => {
 
 const mapStateToProps = state => {
   return {
-    ccNumber: validator.formatCardNumber(state.creditCard.cardNumber || ''),
+    ccNumber: state.creditCard.cardNumber,
     ccNumberValid: validator.fns.validateCardNumber(state.creditCard.cardNumber || ''),
     expYear: state.creditCard.expYear,
     expMonth: state.creditCard.expMonth,
