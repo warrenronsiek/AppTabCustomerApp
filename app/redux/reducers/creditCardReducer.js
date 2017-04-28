@@ -7,8 +7,8 @@ import * as _ from 'lodash'
 
 const creditCard = handleActions({
   [ccActions.real.update.number]: (state, action) => ({...state, cardNumber: action.payload.cardNumber}),
-  [ccActions.real.update.exp_year]: (state, action) => ({...state, exp_year: action.payload.exp_year}),
-  [ccActions.real.update.exp_month]: (state, action) => ({...state, exp_month: action.payload.exp_month}),
+  [ccActions.real.update.expYear]: (state, action) => ({...state, expYear: action.payload.expYear}),
+  [ccActions.real.update.expMonth]: (state, action) => ({...state, expMonth: action.payload.expMonth}),
   [ccActions.real.update.ccv]: (state, action) => ({...state, ccv: action.payload.ccv}),
   [ccActions.real.update.zip]: (state, action) => ({...state, zip: action.payload.zip}),
   [ccActions.real.wipe]: (state, action) => ({})

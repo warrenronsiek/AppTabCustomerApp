@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    paddingTop: 24,
   },
   highlightContainer: {
     flex: 1
@@ -28,6 +27,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'center'
+  },
+  touchable: {
+    paddingTop: 24
   }
 });
 
@@ -49,7 +51,7 @@ const PaymentImage = ({brand}) => {
 };
 
 const paymentListItem = ({ccToken, brand, last4, isSelected, select}) => (
-  <TouchableHighlight onPress={() => select(ccToken)}>
+  <TouchableHighlight onPress={() => select(ccToken)} style={styles.touchable}>
     <View style={styles.container}>
       <View style={styles.iconContainer}>
         <PaymentImage brand={brand}/>

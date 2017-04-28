@@ -14,6 +14,7 @@ import MainCourseScene from './app/scenes/mainCourseScene'
 import AppetizerScene from './app/scenes/appetizerScene'
 import CheckoutScene from './app/scenes/checkoutScene'
 import DessertScene from './app/scenes/dessertScene'
+import CardFormScene from './app/scenes/creditCardFormScene'
 import CartScene from './app/scenes/cartScene'
 import EntypoIcons from 'react-native-vector-icons/Entypo'
 import Ionicon from 'react-native-vector-icons/Ionicons'
@@ -52,6 +53,7 @@ export default class AppTabCustomerApp extends Component {
           <Scene key="placeholder" component={Placeholder} title="Placeholder"/>
           <Scene key="cart" component={CartScene} title="Cart"/>
           <Scene key="checkout" component={CheckoutScene} title="Checkout"/>
+          <Scene key="cardForm" component={CardFormScene} title="Card Details"/>
         </RouterWithRedux>
       </Provider>
     );
