@@ -7,6 +7,7 @@ import ccActions from '../actions/creditCardActions'
 import {connect} from 'react-redux'
 import {Actions} from 'react-native-router-flux'
 import {addSpaces} from '../middleware/cardValidationThunks'
+import creditCardFormThunk from '../middleware/creditCardFormThunk'
 
 const validateZip = zip => {
   if ('undefined' === typeof zip) {
@@ -38,7 +39,7 @@ const mapDispatchToProps = dispatch => {
     updateExpMonth: expMonth => dispatch(ccActions.real.update.expMonth(expMonth)),
     updateZip: zip => dispatch(ccActions.real.update.zip(zip)),
     updateCCV: ccv => dispatch(ccActions.real.update.ccv(ccv)),
-    submit: () => Actions.pop()
+    submit: (cardNumber, expMonth, expYear, ccv) => dispatch(creditCardFormThunk(cardNumber, expMonth, expYear, ccv))
   }
 };
 

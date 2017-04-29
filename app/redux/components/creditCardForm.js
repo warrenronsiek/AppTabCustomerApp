@@ -141,7 +141,7 @@ const ccForm = ({
       </View>
     </View>
     <View style={styles.buttonContainer}>
-      <Button onPress={() => submit()} title="Done" disabled={!(ccNumberValid && expiryValid && ccvValid)}/>
+      <Button onPress={() => submit(ccNumber, expMonth, expMonth, ccv)} title="Done" disabled={!(ccNumberValid && expiryValid && ccvValid)}/>
     </View>
   </View>
 );
