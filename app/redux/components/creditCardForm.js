@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: 'grey'
+    borderBottomColor: 'grey',
   },
   ccvSubContainer: {
     flex: 2,
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   numberInput: {
     flex: 1,
     paddingLeft: 30,
-    paddingRight: 30
+    paddingRight: 30,
   },
   ccvInput: {
     flex: 1,
@@ -73,56 +73,75 @@ const styles = StyleSheet.create({
   expYearInput: {
     flex: 2,
     paddingRight: 30
+  },
+  numberInputSubContainer: {
+    flex: 4,
+    justifyContent: 'center'
+  },
+  cardTypeContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
 
+/**
+ * @return {null}
+ */
 const PaymentImage = ({brand}) => {
-  switch (brand) {
-    case 'Amex':
+  switch (brand.toLowerCase()) {
+    case 'amex':
       return (<Image source={require('../../assets/images/card_amex.png')}/>);
-    case 'Discover':
+    case 'discover':
       return (<Image source={require('../../assets/images/card_discover.png')}/>);
-    case 'Visa':
+    case 'visa':
       return (<Image source={require('../../assets/images/card_visa.png')}/>);
-    case 'Mastercard':
+    case 'mastercard':
       return (<Image source={require('../../assets/images/card_mastercard.png')}/>);
-    case 'ApplePay':
+    case 'applepay':
       return (<Image source={require('../../assets/images/card_applepay.png')}/>);
     default:
-      return (<OcticonIcon name="credit-card" size={30}/>)
+      return null
   }
 };
 
+
 const ccForm = ({
                   ccNumber, ccNumberValid, updateCCNumber, expYear, updateExpYear, expMonth,
-                  updateMonth, expiryValid, ccv, ccvValid, updateCCV, zip, zipValid, updateZip, brand, submit
+                  updateExpMonth, expiryValid, ccv, ccvValid, updateCCV, zip, zipValid, updateZip, brand, submit
                 }) => (
   <View style={styles.container}>
     <View style={styles.cardImageContainer}>
-      <FontAwesomeIcon name="cc-stripe" size={60}/>
+      <FontAwesomeIcon name="cc-stripe" size={60} style={{color: '#72BCD4'}}/>
     </View>
     <View style={styles.formContainer}>
       <View style={styles.numberInputContainer}>
-        <TextInput style={styles.numberInput} onChangeText={text => updateCCNumber(text)} autoCorrect={false}
-                   value={ccNumber} keyboardType='numeric' placeholder="Card Number"/>
-        {brand ? <PaymentImage brand={brand}/> : null}
+        <View style={styles.numberInputSubContainer}>
+
+          <TextInput style={[styles.numberInput, (ccNumber.length >= 19 && !ccNumber) ? {color: 'red'} : {color: 'black'}]} onChangeText={text => updateCCNumber(text)} autoCorrect={false}
+                     value={ccNumber} keyboardType='numeric' placeholder="Card Number" maxLength={19} />
+        </View>
+        <View style={styles.cardTypeContainer}>
+          {brand ? <PaymentImage brand={brand}/> : null}
+        </View>
       </View>
       <View style={styles.monthYearCCVContainer}>
         <View style={styles.ccvSubContainer}>
           <Image style={{marginLeft: 20}} source={require('../../assets/images/card_cvc.png')}/>
-          <TextInput style={styles.ccvInput} onChangeText={text => updateCCV(text)} placeholder="CCV" value={ccv}/>
+          <TextInput style={styles.ccvInput} onChangeText={text => updateCCV(text)} placeholder="CCV" value={ccv}
+                     maxLength={4} keyboardType='numeric'/>
         </View>
         <View style={styles.expDateSubContainer}>
           <Image style={{marginLeft: 20}} source={require('../../assets/images/card_expiry.png')}/>
-          <TextInput style={styles.expMonthInput} onChangeText={text => updateMonth(text)} placeholder="MM"
-                     value={expMonth} keyboardType='numeric'/>
+          <TextInput style={styles.expMonthInput} onChangeText={text => updateExpMonth(text)} placeholder="MM"
+                     value={expMonth} keyboardType='numeric' maxLength={2}/>
           <TextInput style={styles.expYearInput} onChangeText={text => updateExpYear(text)} placeholder="YYYY"
-                     value={expYear} keyboardType='numeric'/>
+                     value={expYear} keyboardType='numeric' maxLength={4}/>
         </View>
       </View>
     </View>
     <View style={styles.buttonContainer}>
-      <Button onPress={() => submit()} title="Done"/>
+      <Button onPress={() => submit()} title="Done" disabled={!(ccNumberValid && expiryValid && ccvValid)}/>
     </View>
   </View>
 );

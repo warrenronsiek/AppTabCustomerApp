@@ -6,6 +6,7 @@ import validator from 'payment'
 import ccActions from '../actions/creditCardActions'
 import {connect} from 'react-redux'
 import {Actions} from 'react-native-router-flux'
+import {addSpaces} from '../middleware/cardValidationThunks'
 
 const validateZip = zip => {
   if ('undefined' === typeof zip) {
@@ -32,7 +33,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateCCNumber: ccNumber => dispatch(ccActions.real.update.number(ccNumber)),
+    updateCCNumber: ccNumber => dispatch(addSpaces(ccNumber)),
     updateExpYear: expYear => dispatch(ccActions.real.update.expYear(expYear)),
     updateExpMonth: expMonth => dispatch(ccActions.real.update.expMonth(expMonth)),
     updateZip: zip => dispatch(ccActions.real.update.zip(zip)),

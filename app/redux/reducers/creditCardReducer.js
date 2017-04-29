@@ -6,11 +6,11 @@ import {handleActions, handleAction} from 'redux-actions'
 import * as _ from 'lodash'
 
 const creditCard = handleActions({
-  [ccActions.real.update.number]: (state, action) => ({...state, cardNumber: action.payload.cardNumber}),
-  [ccActions.real.update.expYear]: (state, action) => ({...state, expYear: action.payload.expYear}),
-  [ccActions.real.update.expMonth]: (state, action) => ({...state, expMonth: action.payload.expMonth}),
-  [ccActions.real.update.ccv]: (state, action) => ({...state, ccv: action.payload.ccv}),
-  [ccActions.real.update.zip]: (state, action) => ({...state, zip: action.payload.zip}),
+  [ccActions.real.update.number]: (state, action) => ({...state, cardNumber: action.payload}),
+  [ccActions.real.update.expYear]: (state, action) => ({...state, expYear: action.payload}),
+  [ccActions.real.update.expMonth]: (state, action) => ({...state, expMonth: action.payload}),
+  [ccActions.real.update.ccv]: (state, action) => ({...state, ccv: action.payload}),
+  [ccActions.real.update.zip]: (state, action) => ({...state, zip: action.payload}),
   [ccActions.real.wipe]: (state, action) => ({})
 }, {});
 
