@@ -118,7 +118,7 @@ const ccForm = ({
       <View style={styles.numberInputContainer}>
         <View style={styles.numberInputSubContainer}>
 
-          <TextInput style={[styles.numberInput, (ccNumber.length >= 19 && !ccNumber) ? {color: 'red'} : {color: 'black'}]} onChangeText={text => updateCCNumber(text)} autoCorrect={false}
+          <TextInput style={styles.numberInput} onChangeText={text => updateCCNumber(text)} autoCorrect={false}
                      value={ccNumber} keyboardType='numeric' placeholder="Card Number" maxLength={19} />
         </View>
         <View style={styles.cardTypeContainer}>
@@ -141,7 +141,7 @@ const ccForm = ({
       </View>
     </View>
     <View style={styles.buttonContainer}>
-      <Button onPress={() => submit(ccNumber, expMonth, expMonth, ccv)} title="Done" disabled={!(ccNumberValid && expiryValid && ccvValid)}/>
+      <Button onPress={() => submit(ccNumber, expMonth, expYear, ccv)} title="Done" disabled={!(ccNumberValid && expiryValid && ccvValid)}/>
     </View>
   </View>
 );
@@ -150,12 +150,12 @@ ccForm.propTypes = {
   ccNumber: PropTypes.string,
   ccNumberValid: PropTypes.bool,
   updateCCNumber: PropTypes.func.isRequired,
-  expYear: PropTypes.number,
+  expYear: PropTypes.string,
   updateExpYear: PropTypes.func.isRequired,
-  expMonth: PropTypes.number,
+  expMonth: PropTypes.string,
   updateExpMonth: PropTypes.func.isRequired,
   expiryValid: PropTypes.bool,
-  ccv: PropTypes.number,
+  ccv: PropTypes.string,
   ccvValid: PropTypes.bool,
   updateCCV: PropTypes.func.isRequired,
   zip: PropTypes.number,

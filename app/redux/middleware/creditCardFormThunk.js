@@ -25,3 +25,5 @@ const creditCardFormThunk = (cardNumber, expMonth, expYear, ccv) => (dispatch, g
     .then(res => Actions.pop())
     .catch(err => console.log(err))
 };
+
+export default creditCardFormThunk

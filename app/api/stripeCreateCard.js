@@ -8,6 +8,7 @@ import keys from './stripePublicKeys'
 export default stripeCreateCard = (customerId, stripeToken, cardNumber, expMonth, expYear, cvc) => {
   const stripeUrl = 'https://api.stripe.com/v1/tokens';
   const processorUrl = 'https://zapkwgntzh.execute-api.us-west-2.amazonaws.com/dev/stripe-process-card';
+  console.log({customerId, stripeToken, cardNumber, expMonth, expYear, cvc});
 
   const cardDetails = {
     "card[number]": cardNumber,
@@ -44,4 +45,6 @@ export default stripeCreateCard = (customerId, stripeToken, cardNumber, expMonth
       const resBody = JSON.parse(res._bodyText);
       return fetch(processorUrl, stripeProcessorOptions(resBody.id, stripeToken, customerId))
     })
+    .then(res => JSON.parse(res._bodyText))
+    .catch(err => console.log(err))
 };
