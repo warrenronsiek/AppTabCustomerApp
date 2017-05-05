@@ -5,7 +5,6 @@ import {Actions} from 'react-native-router-flux'
 import ccActions from '../actions/creditCardActions'
 import stripeCreateCard from '../../api/stripeCreateCard'
 
-//TODO: validate the arguments
 const creditCardFormThunk = (cardNumber, expMonth, expYear, ccv) => (dispatch, getState) => {
   const state = getState();
   const customerId = state.auth.clientId, stripeToken = state.stripeToken;

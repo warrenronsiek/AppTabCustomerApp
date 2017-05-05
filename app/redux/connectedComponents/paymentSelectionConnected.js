@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import ccActions from '../actions/creditCardActions'
 import {Actions} from 'react-native-router-flux'
 import paymentSelection from '../components/paymentSelection'
+import payThunk from '../middleware/payThunk'
 
 const mapStateToProps = (state) => {
   return {
@@ -16,7 +17,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     selectCard: (ccToken) => dispatch(ccActions.token.setSelected(ccToken)),
     addCard: () => Actions.cardForm(),
-    pay: () => {} //TODO
+    pay: () => dispatch(payThunk())
   }
 };
 
