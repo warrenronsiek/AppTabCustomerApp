@@ -14,9 +14,10 @@ const payThunk = () => (dispatch, getState) => {
     amount = Math.round(_.sum(currentCart.map(item => parseFloat(item.price) * item.count)) * 100),
     stripeToken = state.stripeToken,
     cardToken = state.ccTokens.filter(item => item.isSelected)[0].ccToken,
-    nodeId = state.activeNode;
+    nodeId = state.activeNode,
+    customerId = state.auth.clientId;
 
-  return stripeChargeCard(amount, stripeToken, cardToken, nodeId)
+  return stripeChargeCard(amount, stripeToken, cardToken, nodeId, customerId, currentCart)
     .then(res => {
       if (res.message === 'CreditCardChargeSuccessful') {Actions.placeholder()}
       else {console.log('wrong response')}

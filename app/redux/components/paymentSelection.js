@@ -6,7 +6,6 @@ import {Text, StyleSheet, View, ListView, Image, TouchableHighlight, Button} fro
 import PaymentItem from './paymentListItem'
 import * as _ from 'lodash'
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -24,7 +23,7 @@ const styles = StyleSheet.create({
     borderTopColor: 'grey',
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: 'grey',
-    maxHeight: 270
+    maxHeight: 270,
   },
   buttonContainer: {
     flex: 1,
@@ -39,7 +38,9 @@ class PaymentMethodSelection extends Component {
       brand: PropTypes.string.isRequired,
       last4: PropTypes.string.isRequired,
       ccToken: PropTypes.string.isRequired,
-      isSelected: PropTypes.bool.isRequired
+      isSelected: PropTypes.bool.isRequired,
+      expMonth: PropTypes.string.isRequired,
+      expYear: PropTypes.string.isRequired
     })).isRequired,
     selectCard: PropTypes.func.isRequired,
     addCard: PropTypes.func.isRequired,
@@ -70,6 +71,7 @@ class PaymentMethodSelection extends Component {
             ? <ListView dataSource={this.state.dataSource} automaticallyAdjustContentInsets={false}
                         renderRow={(item) => <PaymentItem brand={item.brand} isSelected={item.isSelected}
                                                           last4={item.last4} ccToken={item.ccToken}
+                                                          expMonth={item.expMonth} expYear={item.expYear}
                                                           select={this.props.selectCard}/>}/>
             : <Text>LOADING...</Text>
           }

@@ -6,10 +6,11 @@ import ccActions from '../actions/creditCardActions'
 import {Actions} from 'react-native-router-flux'
 import paymentSelection from '../components/paymentSelection'
 import payThunk from '../middleware/payThunk'
+import {sortBy} from 'lodash'
 
 const mapStateToProps = (state) => {
   return {
-    paymentListItems: state.ccTokens
+    paymentListItems: sortBy(state.ccTokens, ['expYear', 'expMonth', 'brand', 'last4'])
   }
 };
 

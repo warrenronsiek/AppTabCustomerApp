@@ -19,19 +19,21 @@ const ccTokens = handleActions({
       ccToken: action.payload.ccToken,
       brand: action.payload.brand,
       last4: action.payload.last4,
-      exp_month: action.payload.exp_month,
-      exp_year: action.payload.exp_year,
+      expMonth: action.payload.exp_month,
+      expYear: action.payload.exp_year,
       isSelected: false
     }],
     [ccActions.token.delete]: (state, action) => state.filter(item => item.ccToken !== action.ccToken),
-    [ccActions.token.setSelected]: (state, action) =>
-      [
-        ...state.filter(item => item.ccToken !== action.payload).map(item => ({...item, isSelected: false})),
-        {...state.filter(item => item.ccToken === action.payload)[0], isSelected: true}
-      ],
+    [ccActions.token.setSelected]: (state, action) => [
+      ...state.filter(item => item.ccToken !== action.payload).map(item => ({...item, isSelected: false})),
+      {...state.filter(item => item.ccToken === action.payload)[0], isSelected: true}
+    ],
   }, []
 );
 
-const ccTokenApiQueried = handleAction(ccActions.apiQueried, {next: (state=false, action) => action.payload, throw: (state, action) => state}, false);
+const ccTokenApiQueried = handleAction(ccActions.apiQueried, {
+  next: (state = false, action) => action.payload,
+  throw: (state, action) => state
+}, false);
 
 export {creditCard, ccTokens, ccTokenApiQueried}

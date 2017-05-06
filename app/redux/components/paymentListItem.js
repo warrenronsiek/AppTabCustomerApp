@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   textContainer: {
-    flex: 4,
+    flex: 5,
     alignItems: 'flex-start',
     justifyContent: 'center'
   },
@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   touchable: {
-    paddingTop: 24
+    paddingTop: 12,
+    paddingBottom: 12
   }
 });
 
@@ -50,14 +51,14 @@ const PaymentImage = ({brand}) => {
   }
 };
 
-const paymentListItem = ({ccToken, brand, last4, isSelected, select}) => (
-  <TouchableHighlight onPress={() => select(ccToken)} style={styles.touchable}>
+const paymentListItem = ({ccToken, brand, last4, isSelected, select, expMonth, expYear}) => (
+  <TouchableHighlight onPress={() => select(ccToken)} style={styles.touchable} underlayColor='white'>
     <View style={styles.container}>
       <View style={styles.iconContainer}>
         <PaymentImage brand={brand}/>
       </View>
       <View style={styles.textContainer}>
-        <Text>{brand} ending with {last4}</Text>
+        <Text> Ending with {last4}.     {expMonth}/{expYear}</Text>
       </View>
       <View style={styles.checkMarkContainer}>
         {isSelected
@@ -73,7 +74,9 @@ paymentListItem.propTypes = {
   brand: PropTypes.string.isRequired,
   last4: PropTypes.string.isRequired,
   isSelected: PropTypes.bool.isRequired,
-  select: PropTypes.func.isRequired
+  select: PropTypes.func.isRequired,
+  expMonth: PropTypes.string.isRequired,
+  expYear: PropTypes.string.isRequired
 };
 
 export default paymentListItem

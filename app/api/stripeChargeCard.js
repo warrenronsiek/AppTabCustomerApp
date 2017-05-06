@@ -3,10 +3,10 @@
  */
 import NetworkError from '../errors/networkError';
 
-export default stripeCreateCustomer = (amount, stripeToken, cardToken, nodeId) => {
+export default stripeCreateCustomer = (amount, stripeToken, cardToken, nodeId, customerId, items) => {
   const url = 'https://zapkwgntzh.execute-api.us-west-2.amazonaws.com/dev/stripe-charge-card';
 
-  return fetch(url, {method: 'POST', body: JSON.stringify({amount, customerToken: stripeToken, cardToken, nodeId})})
+  return fetch(url, {method: 'POST', body: JSON.stringify({amount, customerToken: stripeToken, cardToken, nodeId, customerId, transactionItems: items})})
     .then((res) => {
       if (res.ok) {
         return res._bodyText
