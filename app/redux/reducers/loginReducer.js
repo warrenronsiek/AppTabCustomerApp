@@ -9,7 +9,9 @@ import {
   UNKNOWN_ERROR,
   UPDATE_EMAIL,
   UPDATE_PASSWORD,
-  UPDATE_STRIPE_TOKEN
+  UPDATE_STRIPE_TOKEN,
+  LOGIN_COMPLETE,
+  CLEAR_ERRORS
 } from '../actions/loginActions';
 
 export const auth = (state = {}, action) => {
@@ -38,6 +40,10 @@ export const loginState = (state = {}, action) => {
       return {...state, networkError: true};
     case UNKNOWN_ERROR:
       return {...state, unknownError: true};
+    case LOGIN_COMPLETE:
+      return {...state, loggingIn: false};
+    case CLEAR_ERRORS:
+      return {...state, validationError: false, networkError: false, unknownError: false};
     default:
       return state
   }

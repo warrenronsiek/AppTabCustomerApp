@@ -2,9 +2,10 @@
  * Created by warren on 1/22/17.
  */
 import React, {PropTypes} from 'react';
-import {StyleSheet, Text, View, TouchableHighlight, TextInput, AsyncStorage, Button, Dimensions} from 'react-native';
+import {StyleSheet, Text, View, TextInput, Image, Button, Dimensions} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import EnytpoIcon from 'react-native-vector-icons/Entypo'
+import Spinner from '../../common/spinner'
 const {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -12,7 +13,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
   welcome: {
     fontSize: 40,
@@ -20,9 +20,10 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   welcomeContainer: {
-    flex: 3,
+    flex: 2,
+    marginTop: 60,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   instructions: {
     textAlign: 'center',
@@ -30,9 +31,10 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   textContainer: {
-    flex: 1,
+    flex: 2,
     width: width * .6,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    maxHeight: 100
   },
   iconContainer: {
     flexDirection: 'column',
@@ -55,7 +57,10 @@ const styles = StyleSheet.create({
     flex: 1
   },
   buttonContainer: {
-    flex: 2,
+    marginTop: 30,
+    flex: 4,
+    alignItems: 'center',
+    paddingBottom: 120
   }
 });
 
@@ -66,7 +71,7 @@ const login = ({validationError, networkError, unknownError, loggingIn, email, p
         AppTab
       </Text>
       <Text>
-        Alpha 0.1.0
+        Alpha 0.2.0
       </Text>
     </View>
     <View style={styles.textContainer}>
@@ -89,12 +94,12 @@ const login = ({validationError, networkError, unknownError, loggingIn, email, p
       </View>
     </View>
     <View style={styles.buttonContainer}>
-      <Button onPress={() => onLogin(email, password)} title="Login"/>
-      <Button onPress={navToRegister} title="Register"/>
+      {!loggingIn ? <Button onPress={() => onLogin(email, password)} title="Login"/>: null}
+      {!loggingIn ? <Button onPress={navToRegister} title="Register"/> : null}
       {validationError ? <Text>Oops! Wrong username or password!</Text> : null}
       {networkError ? <Text>Networking Error!</Text> : null}
       {unknownError ? <Text>Unknown Error!</Text> : null}
-      {loggingIn ? <Text>Powering up Login Gremlins</Text> : null}
+      {loggingIn ? <Spinner/> : null}
     </View>
   </View>
 );

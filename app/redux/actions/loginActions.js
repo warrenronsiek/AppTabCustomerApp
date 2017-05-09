@@ -6,6 +6,16 @@ export const login = (userName, password) => {
   return {type: LOGIN, userName, password}
 };
 
+export const LOGIN_COMPLETE = 'LOGIN_COMPLETE';
+export const loginComplete = () => {
+  return {type: LOGIN_COMPLETE, }
+};
+
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+export const clearErrors = () => {
+  return {type: CLEAR_ERRORS, }
+};
+
 export const UPDATE_AUTH = 'UPDATE_AUTH';
 export const updateAuth = (accessToken, idToken, refreshToken, userName, clientId) => {
   return {type: UPDATE_AUTH, accessToken, idToken, refreshToken, userName, clientId}
