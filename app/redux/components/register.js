@@ -5,6 +5,7 @@ import React, {PropTypes} from 'react';
 import {View, Button, Text, TextInput, StyleSheet, Dimensions} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import EnytpoIcon from 'react-native-vector-icons/Entypo'
+import Spinner from '../../common/spinner'
 const {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -20,16 +21,18 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   welcomeContainer: {
-    flex: 3,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 60
   },
   textContainer: {
     flex: 2,
     alignItems: 'center',
     justifyContent: 'center',
     width: width * .6,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    maxHeight: 150
   },
   textInputContainer: {
     flex: 4,
@@ -47,13 +50,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   buttonContainer: {
-    flex: 1
+    flex: 3,
+    marginTop: 30,
+    alignItems: 'center',
   },
   textInputBox: {
     flex: 1,
     height: 40
   }
 });
+
+
 
 const register = ({updateName, updateEmail, updatePassword, updateConfirmPassword, name, email, password, confirmPassword, registerUser, networkError, userExistsError, unknownError, registering}) => (
   <View style={styles.container}>
@@ -92,14 +99,16 @@ const register = ({updateName, updateEmail, updatePassword, updateConfirmPasswor
       </View>
     </View>
     <View style={styles.buttonContainer}>
-      <Button onPress={() => registerUser(name, email, password)} title="Register"/>
-      {password === confirmPassword
+      {registering
+        ? <Spinner/>
+        : <Button onPress={() => registerUser(name, email, password)} title="Register"
+                  disabled={password !== confirmPassword}/>}
+      {(password === confirmPassword) && !registering
         ? <Text>Passwords Match!</Text>
         : <Text>Passwords dont match!</Text>}
-      {networkError ? <Text>Networking Error!</Text> : null}
-      {unknownError ? <Text>Unknown Error!</Text> : null}
-      {userExistsError ? <Text>User Exists Error!</Text> : null}
-      {registering ? <Text>Registering you now...</Text> : null}
+      {(networkError && !registering) ? <Text>Networking Error!</Text> : null}
+      {(unknownError && !registering) ? <Text>Unknown Error!</Text> : null}
+      {(userExistsError && !registering) ? <Text>User Exists Error!</Text> : null}
     </View>
   </View>
 );
@@ -119,5 +128,4 @@ register.propTypes = {
   unknownError: PropTypes.bool,
   registering: PropTypes.bool
 };
-
 export default register

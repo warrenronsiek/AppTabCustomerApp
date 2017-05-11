@@ -4,12 +4,13 @@
 import registerRequest from '../../api/registerApi'
 import loginRequest from '../../api/loginApi';
 import stripeCreateCustomerApi from '../../api/stripeCreateCustomerApi';
-import {registering, networkError, userExistsError, unknownError} from '../actions/registerActions';
+import {registering, clearErrors, networkError, userExistsError, registeringFinished, unknownError} from '../actions/registerActions';
 import {updateAuth, updateStripeToken} from '../actions/loginActions';
 import {Actions} from 'react-native-router-flux';
 
 export default registerThunk = (name, email, password) => (dispatch, getState) => {
-  Promise.resolve(dispatch(registering()))
+  Promise.resolve(dispatch(clearErrors()))
+    .then(() => Promise.resolve(dispatch(registering())))
     .then(res => {
       return registerRequest(email, name, password)
     })
@@ -26,11 +27,11 @@ export default registerThunk = (name, email, password) => (dispatch, getState) =
     .then(res => {
       return Promise.resolve(dispatch(updateStripeToken(res.body.stripeToken)))
     })
-    .then(() => {
-      console.log(getState().stripeToken)
-    })
     .then(() => Actions.nodes())
+    .then(() => dispatch(registeringFinished()))
     .catch(err => {
+      dispatch(registeringFinished());
+      console.log(err);
       switch (err.name) {
         case 'UserExistsError':
           dispatch(userExistsError());

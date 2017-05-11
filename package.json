@@ -29,6 +29,8 @@
     "remote-redux-devtools": "^0.5.7"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "setupFiles": ["<rootDir>/jest-setup.js"],
+    "collectCoverage": true
   }
 }

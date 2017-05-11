@@ -1,8 +1,9 @@
 /**
  * Created by warren on 1/20/17.
  */
-import NetworkError from '../errors/networkError';
+import NetworkError from '../errors/networkError'
 import UserExistsError from '../errors/userExistsError'
+import UnknownError from '../errors/unknownError'
 
 export default function registerRequest(email, name, password) {
   const url = 'https://zapkwgntzh.execute-api.us-west-2.amazonaws.com/dev/register';
@@ -22,8 +23,10 @@ export default function registerRequest(email, name, password) {
             return resBody;
           case 'UsernameExistsException':
             throw new UserExistsError('api/register', 26);
+            break;
           default:
-            console.log(resBody)
+            console.log(resBody);
+            throw new UnknownError('unknown registration error', 'api/register', 29)
         }
       }
     )

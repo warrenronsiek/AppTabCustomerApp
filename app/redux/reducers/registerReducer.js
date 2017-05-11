@@ -10,7 +10,9 @@ import {
   NETWORK_ERROR,
   USER_EXISTS_ERROR,
   UNKNOWN_ERROR,
-  REGISTERING
+  REGISTERING,
+  REGISTERING_FINISHED,
+  CLEAR_ERRORS
 } from '../actions/registerActions';
 
 export const registerParams = (state = {name: 'Warren3', email: 'wronsiek@gmail.com', password: 'P@33word', confirmPassword:'P@33word'}, action) => {
@@ -38,6 +40,10 @@ export const registerState = (state = {}, action) => {
       return {...state, unknownError: true};
     case REGISTERING:
       return {...state, registering: true};
+    case REGISTERING_FINISHED:
+      return {...state, registering: false};
+    case CLEAR_ERRORS:
+      return {...state, networkError: false, userExistsError: false, unknownError: false};
     default:
       return state
   }
