@@ -14,7 +14,7 @@ export const nodes = (state = [], action) => {
         updatedNode = {
           ...oldNode,
           nodeId: action.nodeId,
-          distance: action.distance / (oldNode.updatedCount + 1 ) + oldNode.distance * (oldNode.updatedCount / (oldNode.updatedCount + 1 )),
+          distance: action.distance,
           instance: action.instance,
           lastSeen: action.lastSeen,
           updatedCount: oldNode.updatedCount + 1

@@ -2,11 +2,11 @@
  * Created by warren on 1/22/17.
  */
 import registerRequest from '../../api/registerApi'
-import loginRequest from '../../api/loginApi';
-import stripeCreateCustomerApi from '../../api/stripeCreateCustomerApi';
-import {registering, clearErrors, networkError, userExistsError, registeringFinished, unknownError} from '../actions/registerActions';
-import {updateAuth, updateStripeToken} from '../actions/loginActions';
-import {Actions} from 'react-native-router-flux';
+import loginRequest from '../../api/loginApi'
+import stripeCreateCustomerApi from '../../api/stripeCreateCustomerApi'
+import {registering, clearErrors, networkError, userExistsError, registeringFinished, unknownError} from '../actions/registerActions'
+import {updateAuth, updateStripeToken} from '../actions/loginActions'
+import {Actions} from 'react-native-router-flux'
 
 export default registerThunk = (name, email, password) => (dispatch, getState) => {
   Promise.resolve(dispatch(clearErrors()))

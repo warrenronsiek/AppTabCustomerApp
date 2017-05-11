@@ -1,24 +1,37 @@
 /**
  * Created by warren on 1/23/17.
  */
-import React, {PropTypes, Component} from 'react';
-import {Text, StyleSheet, View, ListView} from 'react-native';
-import NodeListItem from './nodeListItem';
+import React, {PropTypes, Component} from 'react'
+import {Text, StyleSheet, View, ListView} from 'react-native'
+import NodeListItem from './nodeListItem'
+import Spinner from '../../common/spinner'
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 70,
-    paddingBottom: 40,
+    marginTop: 60,
     flex: 1,
-    backgroundColor: '#f5fcff'
+    backgroundColor: '#f5fcff',
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: 'grey',
+  },
+  spinnerContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
 
 class NodeList extends Component {
   static propTypes = {
-    nodeListItems: PropTypes.arrayOf(PropTypes.object).isRequired,
+    nodeListItems: PropTypes.arrayOf(PropTypes.shape(
+      {
+        nodeId: PropTypes.string.isRequired,
+        nodeName: PropTypes.string,
+        nodeDescription: PropTypes.string,
+      })).isRequired,
     renderNodes: PropTypes.bool.isRequired,
-    selectNode: PropTypes.func.isRequired
+    selectNode: PropTypes.func.isRequired,
+    activeNode: PropTypes.string.isRequired
   };
 
   constructor(props) {
@@ -42,8 +55,9 @@ class NodeList extends Component {
           ? <ListView dataSource={this.state.dataSource}
                       renderRow={(item) => <NodeListItem nodeId={item.nodeId} key={item.nodeId} nodeName={item.nodeName}
                                                          selectNode={this.props.selectNode}
+                                                         activeNode={this.props.activeNode}
                                                          nodeDescription={item.nodeDescription}/>}/>
-          : <Text>LOADING...</Text>
+          : <View style={styles.spinnerContainer}><Spinner/></View>
         }
       </View>
     )

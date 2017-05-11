@@ -41,7 +41,7 @@ export default class AppTabCustomerApp extends Component {
         <RouterWithRedux>
           <Scene key="login" component={Login} title="Login"/>
           <Scene key="register" component={Register} title="Register"/>
-          <Scene key="nodes" component={Nodes} title="Node Selection"/>
+          <Scene key="nodes" component={Nodes} title="Table Selection"/>
           <Scene key="tabs" tabs={true} onBack={() => Actions.nodes()}>
             <Scene key="request" component={Request} title="Service Request" icon={bell} initial={true}/>
             <Scene key="drinks" component={DrinkScene} title="Drinks" icon={drink}/>
