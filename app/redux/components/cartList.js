@@ -2,8 +2,9 @@
  * Created by warren on 3/1/17.
  */
 import React, {PropTypes, Component} from 'react';
-import {View, ListView, Button, StyleSheet, Text} from 'react-native';
+import {View, ListView, StyleSheet, Text} from 'react-native';
 import CartListItem from './cartListItem';
+import Button from '../../common/button'
 
 const styles = StyleSheet.create({
   container: {
@@ -72,7 +73,7 @@ export default class MenuList extends Component {
         <View style={styles.totalContainer}>
           <Text style={styles.textStyle}>Total:
             ${this.props.totalPrice * 100 % 10 === 0 ? this.props.totalPrice + '0' : this.props.totalPrice}</Text>
-          <Button onPress={() => this.props.checkout()} title="Checkout"/>
+          <Button onPress={() => this.props.checkout()} title="Checkout" style={{width: 100, marginTop: 20}}/>
         </View>
       </View>
     )

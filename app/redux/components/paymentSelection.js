@@ -2,8 +2,9 @@
  * Created by warren on 4/2/17.
  */
 import React, {PropTypes, Component} from 'react';
-import {Text, StyleSheet, View, ListView, Image, TouchableHighlight, Button} from 'react-native';
+import {Text, StyleSheet, View, ListView, Image} from 'react-native';
 import PaymentItem from './paymentListItem'
+import Button from '../../common/button'
 import * as _ from 'lodash'
 
 const styles = StyleSheet.create({
@@ -77,8 +78,8 @@ class PaymentMethodSelection extends Component {
           }
         </View>
         <View style={styles.buttonContainer}>
-          <Button onPress={() => this.props.addCard()} title="Add Card"/>
-          <Button onPress={() => this.props.pay()} title="Pay" disabled={!_.some(this.props.paymentListItems, 'isSelected')}/>
+          <Button onPress={() => this.props.pay()} title="Pay" disabled={!_.some(this.props.paymentListItems, 'isSelected')} style={{marginBottom: 10, width: 110}}/>
+          <Button onPress={() => this.props.addCard()} title="Add Card" style={{ width: 110}}/>
         </View>
       </View>
     )

@@ -2,8 +2,9 @@
  * Created by warren on 2/26/17.
  */
 import React, {PropTypes, Component} from 'react';
-import {View, ListView, Button, StyleSheet, Text} from 'react-native';
+import {View, ListView, StyleSheet, Text} from 'react-native';
 import MenuListItem from './menuListItem';
+import Button from '../../common/button'
 
 const styles = StyleSheet.create({
   container: {
@@ -19,7 +20,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
-    paddingBottom: 30
+    paddingBottom: 30,
+    alignItems: 'center',
   }
 });
 
@@ -58,12 +60,12 @@ export default class MenuList extends Component {
             />
           }
         </View>
-        <View>
+        <View style={styles.buttonContainer}>
           <Button onPress={() => this.props.checkout()}
                   title={
                     this.props.selectionsCount > 0
                       ? "My Selections: " + this.props.selectionsCount.toString()
-                      : "My Selections"}
+                      : "My Selections"} style={{width: 150, marginTop: 10}}
           />
         </View>
       </View>

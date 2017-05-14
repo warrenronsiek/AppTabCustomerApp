@@ -2,10 +2,11 @@
  * Created by warren on 1/22/17.
  */
 import React, {PropTypes} from 'react';
-import {StyleSheet, Text, View, TextInput, Image, Button, Dimensions} from 'react-native';
+import {StyleSheet, Text, View, TextInput, Dimensions} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import EnytpoIcon from 'react-native-vector-icons/Entypo'
 import Spinner from '../../common/spinner'
+import Button from '../../common/button'
 const {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -94,7 +95,7 @@ const login = ({validationError, networkError, unknownError, loggingIn, email, p
       </View>
     </View>
     <View style={styles.buttonContainer}>
-      {!loggingIn ? <Button onPress={() => onLogin(email, password)} title="Login"/>: null}
+      {!loggingIn ? <Button onPress={() => onLogin(email, password)} title="Login" style={{marginBottom:10}}/> : null}
       {!loggingIn ? <Button onPress={navToRegister} title="Register"/> : null}
       {validationError ? <Text>Oops! Wrong username or password!</Text> : null}
       {networkError ? <Text>Networking Error!</Text> : null}
