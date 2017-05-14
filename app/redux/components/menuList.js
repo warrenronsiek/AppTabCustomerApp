@@ -1,10 +1,11 @@
 /**
  * Created by warren on 2/26/17.
  */
-import React, {PropTypes, Component} from 'react';
-import {View, ListView, StyleSheet, Text} from 'react-native';
-import MenuListItem from './menuListItem';
+import React, {PropTypes, Component} from 'react'
+import {View, ListView, StyleSheet, Text} from 'react-native'
+import MenuListItem from './menuListItem'
 import Button from '../../common/button'
+import Spinner from '../../common/spinner'
 
 const styles = StyleSheet.create({
   container: {
@@ -20,8 +21,19 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
-    paddingBottom: 30,
+    marginBottom: 30,
     alignItems: 'center',
+    justifyContent: 'flex-end'
+  },
+  spinnerContainer: {
+    alignItems: 'center',
+    paddingTop: 100,
+    flex: 1
+  },
+  textContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex:1
   }
 });
 
@@ -30,7 +42,8 @@ export default class MenuList extends Component {
     menuListItems: PropTypes.arrayOf(PropTypes.object).isRequired,
     addToCart: PropTypes.func.isRequired,
     checkout: PropTypes.func.isRequired,
-    selectionsCount: PropTypes.number
+    selectionsCount: PropTypes.number,
+    apiQueried: PropTypes.bool.isRequired
   };
 
   constructor(props) {
@@ -46,26 +59,25 @@ export default class MenuList extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View>
-
-          {this.props.menuListItems.length === 0
-            ? <Text>Loading...</Text>
-            : <ListView dataSource={this.state.dataSource}
-                        renderRow={item => <MenuListItem itemName={item.itemName}
-                                                         itemDescription={item.itemDescription}
-                                                         itemId={item.itemId}
-                                                         price={item.price} tags={item.tags}
-                                                         addToCart={this.props.addToCart}
-                        />}
-            />
-          }
-        </View>
+        {!this.props.apiQueried ? <View style={styles.spinnerContainer}><Spinner/></View> : null}
+        {(this.props.menuListItems.length === 0) && (this.props.apiQueried)
+          ? <View style={styles.textContainer}><Text>This kind of item is not on the menu :(</Text></View>
+          : <ListView dataSource={this.state.dataSource}
+                      renderRow={item => <MenuListItem itemName={item.itemName}
+                                                       itemDescription={item.itemDescription}
+                                                       itemId={item.itemId}
+                                                       price={item.price} tags={item.tags}
+                                                       addToCart={this.props.addToCart}
+                      />}
+          />
+        }
         <View style={styles.buttonContainer}>
           <Button onPress={() => this.props.checkout()}
                   title={
                     this.props.selectionsCount > 0
                       ? "My Selections: " + this.props.selectionsCount.toString()
                       : "My Selections"} style={{width: 150, marginTop: 10}}
+                  disabled={this.props.selectionsCount === 0}
           />
         </View>
       </View>

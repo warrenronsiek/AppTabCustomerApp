@@ -12,7 +12,7 @@ export default (component) => {
     getMenu(venueId)
       .then(res => res.Items.forEach(item => component.props.dispatch(updateMenuItem(item.ItemName.S, item.ItemDescription.S, item.Price.N,
         item.Tags.SS, item.Category.S, item.ItemId.S, item.VenueId.S))))
-      .then(() => component.props.dispatch(menuApiQueryStatus(venueId, last)))
+      .then(() => component.props.dispatch(menuApiQueryStatus(venueId, now)))
       .catch(err => console.log(err))
   }
 }

@@ -56,7 +56,7 @@ export default class MenuList extends Component {
       <View style={styles.container}>
         <View>
           {this.props.cartListItems.length === 0
-            ? <Text>Loading...</Text>
+            ? null
             : <ListView dataSource={this.state.dataSource}
                         renderRow={item => <CartListItem itemName={item.itemName}
                                                          itemDescription={item.itemDescription}
@@ -73,7 +73,7 @@ export default class MenuList extends Component {
         <View style={styles.totalContainer}>
           <Text style={styles.textStyle}>Total:
             ${this.props.totalPrice * 100 % 10 === 0 ? this.props.totalPrice + '0' : this.props.totalPrice}</Text>
-          <Button onPress={() => this.props.checkout()} title="Checkout" style={{width: 100, marginTop: 20}}/>
+          <Button onPress={() => this.props.checkout()} title="Checkout" style={{width: 120, marginTop: 20}}/>
         </View>
       </View>
     )

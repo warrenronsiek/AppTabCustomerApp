@@ -22,6 +22,6 @@ class DrinkScene extends Component {
       <DrinkList/>
     )
   }
-};
+}
 
 export default connect()(DrinkScene)

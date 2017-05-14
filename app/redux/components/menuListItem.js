@@ -75,7 +75,7 @@ const menuListItem = ({itemName, itemDescription, itemId, price, tags, addToCart
       <Text>{price}</Text>
     </View>
     <View style={styles.cartContainer}>
-      <FontAwesomeIcon name="cart-plus" size={30} onPress={() => addToCart(itemId)}/>
+      <FontAwesomeIcon.Button name="cart-plus" size={30} onPress={() => addToCart(itemId)} style={{width: 53, marginLeft: 7}} underlayColor="green"/>
     </View>
   </View>
 );

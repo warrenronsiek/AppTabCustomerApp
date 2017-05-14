@@ -12,7 +12,8 @@ const blueprint = (category) => {
     const venueId = _.find(state.nodes, ['nodeId', state.activeNode]).venueId;
     return {
       menuListItems: state.menu.filter(item => item.category === category && item.venueId === venueId),
-      selectionsCount: _.sum(state.cart.map(item => item.count))
+      selectionsCount: _.sum(state.cart.map(item => item.count)),
+      apiQueried: !!state.menuQueryStatus[venueId]
     }
   };
 
