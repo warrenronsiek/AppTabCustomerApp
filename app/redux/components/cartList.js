@@ -37,8 +37,11 @@ export default class MenuList extends Component {
     cartListItems: PropTypes.arrayOf(PropTypes.object).isRequired,
     incrementCount: PropTypes.func.isRequired,
     decrementCount: PropTypes.func.isRequired,
-    totalPrice: PropTypes.number.isRequired,
-    checkout: PropTypes.func.isRequired
+    totalCartCost: PropTypes.number.isRequired,
+    checkout: PropTypes.func.isRequired,
+    tax: PropTypes.number.isRequired,
+    tip: PropTypes.number.isRequired,
+    total: PropTypes.number.isRequired
   };
 
   constructor(props) {

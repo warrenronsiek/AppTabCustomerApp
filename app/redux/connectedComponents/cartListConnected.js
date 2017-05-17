@@ -10,10 +10,16 @@ const _ = require('lodash');
 
 const mapStateToProps = (state) => {
   const venueId = _.find(state.nodes, ['nodeId', state.activeNode]).venueId,
-    currentCart = state.cart.filter(item => item.venueId === venueId);
+    currentCart = _.sortBy(state.cart.filter(item => item.venueId === venueId), ['itemName']),
+    totalCartCost = Math.round(_.sum(currentCart.map(item => parseFloat(item.price) * item.count)) * 100) / 100,
+    tax = totalCartCost * state.additionalCosts.tax,
+    tip = totalCartCost * state.additionalCosts.tip;
   return {
     cartListItems: currentCart,
-    totalPrice: Math.round(_.sum(currentCart.map(item => parseFloat(item.price) * item.count)) * 100) / 100
+    totalCartCost: totalCartCost,
+    tax: state.additionalCosts.tax,
+    tip: state.additionalCosts.tip,
+    total: totalCartCost + tax + tip
   }
 };
 

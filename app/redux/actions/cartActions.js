@@ -16,3 +16,14 @@ export const DECREMENT_COUNT = 'DECREMENT_COUNT';
 export const decrementCount = (itemId) => {
   return {type: DECREMENT_COUNT, itemId}
 };
+
+export const UPDATE_SALES_TAX = 'UPDATE_SALES_TAX';
+export const updateSalesTax = (tax) => {
+  return {type: UPDATE_SALES_TAX, tax}
+};
+
+export const UPDATE_TIP = 'UPDATE_TIP';
+export const updateTip = (tip) => {
+  return {type: UPDATE_TIP, tip}
+};
+
