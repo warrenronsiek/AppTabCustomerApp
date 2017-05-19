@@ -1,10 +1,11 @@
 /**
  * Created by warren on 4/2/17.
  */
-import React, {PropTypes, Component} from 'react';
-import {Text, StyleSheet, View, ListView, Image} from 'react-native';
+import React, {PropTypes, Component} from 'react'
+import {Text, StyleSheet, View, ListView, Image} from 'react-native'
 import PaymentItem from './paymentListItem'
 import Button from '../../common/button'
+import Spinner from '../../common/spinner'
 import * as _ from 'lodash'
 
 const styles = StyleSheet.create({
@@ -30,6 +31,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  spinnerContainer: {
+    alignItems: 'center',
+    paddingTop: 30,
+    justifyContent: 'center',
+    flex: 1
   }
 });
 
@@ -45,7 +52,12 @@ class PaymentMethodSelection extends Component {
     })).isRequired,
     selectCard: PropTypes.func.isRequired,
     addCard: PropTypes.func.isRequired,
-    pay: PropTypes.func.isRequired
+    pay: PropTypes.func.isRequired,
+    paymentStatus: PropTypes.shape({
+      failure: PropTypes.bool,
+      success: PropTypes.bool,
+      processing: PropTypes.bool
+    })
   };
 
   constructor(props) {
@@ -77,10 +89,19 @@ class PaymentMethodSelection extends Component {
             : <Text>LOADING...</Text>
           }
         </View>
-        <View style={styles.buttonContainer}>
-          <Button onPress={() => this.props.pay()} title="Pay" disabled={!_.some(this.props.paymentListItems, 'isSelected')} style={{marginBottom: 10, width: 110}}/>
-          <Button onPress={() => this.props.addCard()} title="Add Card" style={{ width: 110}}/>
-        </View>
+        {this.props.paymentStatus.failure ? <Text>Something went wrong processing your card.</Text> : null}
+        {this.props.paymentStatus.processing ?  <View style={styles.spinnerContainer}><Spinner/></View> : null}
+        {!this.props.paymentStatus.processing && !this.props.paymentStatus.success
+          ? (
+            <View style={styles.buttonContainer}>
+              <Button onPress={() => this.props.pay()} title="Pay"
+                      disabled={!_.some(this.props.paymentListItems, 'isSelected')}
+                      style={{marginBottom: 10, width: 110}}/>
+              <Button onPress={() => this.props.addCard()} title="Add Card" style={{width: 110}}/>
+            </View>
+          )
+          : null
+        }
       </View>
     )
   }

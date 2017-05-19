@@ -2,6 +2,7 @@
  * Created by warren on 5/5/17.
  */
 import stripeChargeCard from '../../api/stripeChargeCard'
+import ccActions from '../actions/creditCardActions'
 import * as _ from 'lodash'
 import {Actions} from 'react-native-router-flux'
 
@@ -11,19 +12,20 @@ const payThunk = () => (dispatch, getState) => {
     venueId = _.find(state.nodes, ['nodeId', state.activeNode]).venueId,
     currentCart = state.cart.filter(item => item.venueId === venueId);
   const
-    amount = Math.round(_.sum(currentCart.map(item => parseFloat(item.price) * item.count)) * 100),
+    cartTotal = Math.round(_.sum(currentCart.map(item => parseFloat(item.price) * item.count)) * 100),
+    tip = Math.round(cartTotal * state.additionalCosts.tip * 100),
+    tax = Math.round(cartTotal * state.additionalCosts.tax * 100),
+    total = cartTotal + tip + tax,
     stripeToken = state.stripeToken,
     cardToken = state.ccTokens.filter(item => item.isSelected)[0].ccToken,
     nodeId = state.activeNode,
     customerId = state.auth.clientId;
 
-  return stripeChargeCard(amount, stripeToken, cardToken, nodeId, customerId, currentCart)
-    .then(res => {
-      if (res.message === 'CreditCardChargeSuccessful') {Actions.placeholder()}
-      else {console.log('wrong response')}
-    })
-    .catch(err => console.log(err))
-
+  return Promise.resolve(dispatch(ccActions.payment.processing()))
+    .then(res => stripeChargeCard(total, stripeToken, cardToken, nodeId, customerId, currentCart))
+    .then(res => dispatch(ccActions.payment.success()))
+    .then(res => Actions.tabs())
+    .catch(err => dispatch(ccActions.payment.failure()))
 };
 
 export default payThunk

@@ -14,8 +14,12 @@ export default stripeCreateCustomer = (amount, stripeToken, cardToken, nodeId, c
         throw new NetworkError('failed to fetch stripeChargeCard', 'api/stripeChargeCard', 17)
       }
     })
-    .then((body) => {
-        return JSON.parse(body);
+    .then((body) => JSON.parse(body))
+    .then(body => {
+      if (body.message === 'CreditCardChargeSuccessful') {
+        return body
+      } else {
+        throw new Error('ChargingCardFailed')
       }
-    )
+    })
 };

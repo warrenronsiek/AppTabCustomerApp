@@ -7,9 +7,23 @@ import {registerParams, registerState} from './registerReducer'
 import {nodes, activeNode} from './nodeReducer'
 import {menu, menuQueryStatus} from './menuReducer'
 import {cart, additionalCosts} from './cartReducer'
-import {creditCard, ccTokens, ccTokenApiQueried} from './creditCardReducer'
+import {creditCard, ccTokens, ccTokenApiQueried, paymentStatus} from './creditCardReducer'
 
 export default combineReducers({
-  auth, loginParams, loginState, registerParams, registerState, nodes, activeNode, menu,
-  menuQueryStatus, cart, stripeToken, creditCard, ccTokens, ccTokenApiQueried, additionalCosts
+  auth,
+  loginParams,
+  loginState,
+  registerParams,
+  registerState,
+  nodes,
+  activeNode,
+  menu,
+  menuQueryStatus,
+  cart,
+  stripeToken,
+  creditCard,
+  ccTokens,
+  ccTokenApiQueried,
+  additionalCosts,
+  paymentStatus
 });

@@ -10,7 +10,8 @@ import {sortBy} from 'lodash'
 
 const mapStateToProps = (state) => {
   return {
-    paymentListItems: sortBy(state.ccTokens, ['expYear', 'expMonth', 'brand', 'last4'])
+    paymentListItems: sortBy(state.ccTokens, ['expYear', 'expMonth', 'brand', 'last4']),
+    paymentStatus: state.paymentStatus
   }
 };
 

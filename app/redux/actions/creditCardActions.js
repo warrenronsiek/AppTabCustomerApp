@@ -19,5 +19,11 @@ export default ccActions = createActions({
     DELETE: ccToken => ccToken,
     SET_SELECTED: ccToken => ccToken,
   },
-  API_QUERIED: bool => bool
+  API_QUERIED: bool => bool,
+  PAYMENT: {
+    PROCESSING: () => ({}),
+    FAILURE: () => ({}),
+    SUCCESS: () => ({}),
+    RESET: () => ({})
+  }
 });

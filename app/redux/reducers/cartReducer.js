@@ -7,9 +7,8 @@ import {
   DECREMENT_COUNT,
   UPDATE_SALES_TAX,
   UPDATE_TIP
-} from '../actions/cartActions';
-
-const _ = require('lodash');
+} from '../actions/cartActions'
+import * as _ from 'lodash'
 
 const cart = (state = [], action) => {
   let inCart = _.find(state, ['itemId', action.itemId]);

@@ -36,4 +36,10 @@ const ccTokenApiQueried = handleAction(ccActions.apiQueried, {
   throw: (state, action) => state
 }, false);
 
-export {creditCard, ccTokens, ccTokenApiQueried}
+const paymentStatus = handleActions({
+  [ccActions.payment.processing]: (state, action) => ({processing: true, failure: null, success: null}),
+  [ccActions.payment.failure]: (state, action) => ({failure: true, success: null, processing: false}),
+  [ccActions.payment.success]: (state, action) => ({success: true, failure: false, processing: false})
+}, {processing: false, success: null, failure: null});
+
+export {creditCard, ccTokens, ccTokenApiQueried, paymentStatus}
