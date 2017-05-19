@@ -1,4 +1,4 @@
-package com.apptabcustomerapp;
+package io.apptab.customerapp;
 
 import com.facebook.react.ReactActivity;
 import com.oblador.vectoricons.VectorIconsPackage;

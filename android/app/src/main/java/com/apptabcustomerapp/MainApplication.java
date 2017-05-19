@@ -1,4 +1,4 @@
-package com.apptabcustomerapp;
+package io.apptab.customerapp;
 
 import android.app.Application;
 

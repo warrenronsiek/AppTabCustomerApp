@@ -45,7 +45,7 @@ const cart = (state = [], action) => {
   }
 };
 
-const additionalCosts = (state = {tip: .15, tax: .0725}, action) => {
+const additionalCosts = (state = {tip: .2, tax: .0725}, action) => {
   switch (action.type) {
     case UPDATE_TIP:
       return {...state, tip: action.tip};

@@ -24,9 +24,38 @@ const styles = StyleSheet.create({
   },
   totalContainer: {
     flex: 1,
-    alignItems: 'center'
+    marginTop: 30,
+    flexDirection: 'row',
   },
   textStyle: {
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
+  tipButtonContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row'
+  },
+  checkoutButtonContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  totalsTextContainer: {
+    flex: 2,
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start'
+  },
+  totalsNumbersContainer: {
+    flex: 2,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start'
+  },
+  totalsFont: {
+    fontSize: 16
+  },
+  totalsFontBold: {
     fontSize: 16,
     fontWeight: 'bold'
   }
@@ -41,7 +70,9 @@ export default class MenuList extends Component {
     checkout: PropTypes.func.isRequired,
     tax: PropTypes.number.isRequired,
     tip: PropTypes.number.isRequired,
-    total: PropTypes.number.isRequired
+    total: PropTypes.number.isRequired,
+    updateTip: PropTypes.func.isRequired,
+    tipPct: PropTypes.number.isRequired
   };
 
   constructor(props) {
@@ -73,9 +104,30 @@ export default class MenuList extends Component {
             />
           }
         </View>
+        <View style={styles.tipButtonContainer}>
+          <Button title="Tip: 0%" onPress={() => this.props.updateTip(0)} style={this.props.tipPct === 0 ? {backgroundColor: 'grey'} : null}/>
+          <Button title="Tip: 10%" onPress={() => this.props.updateTip(.10)} style={[{marginLeft: 10}, this.props.tipPct === .1 ? {backgroundColor: 'grey'} : null]}/>
+          <Button title="Tip: 20%" onPress={() => this.props.updateTip(.20)} style={[{marginLeft: 10}, this.props.tipPct === .2 ? {backgroundColor: 'grey'} : null]}/>
+          <Button title="Tip: 30%" onPress={() => this.props.updateTip(.30)} style={[{marginLeft: 10}, this.props.tipPct === .3 ? {backgroundColor: 'grey'} : null]}/>
+        </View>
         <View style={styles.totalContainer}>
-          <Text style={styles.textStyle}>Total:
-            ${this.props.totalPrice * 100 % 10 === 0 ? this.props.totalPrice + '0' : this.props.totalPrice}</Text>
+          <View/>
+          <View style={styles.totalsTextContainer}>
+            <Text style={styles.totalsFont}>Subtotal: </Text>
+            <Text style={styles.totalsFont}>Tax: </Text>
+            <Text style={styles.totalsFont}>Tip: </Text>
+            <Text style={styles.totalsFontBold}>Total: </Text>
+          </View>
+          <View style={styles.totalsNumbersContainer}>
+            <Text style={styles.totalsFont}>
+              ${this.props.totalCartCost * 100 % 10 === 0 ? this.props.totalCartCost + '0' : this.props.totalCartCost}
+            </Text>
+            <Text style={styles.totalsFont}>${this.props.tax}</Text>
+            <Text style={styles.totalsFont}>${this.props.tip}</Text>
+            <Text style={styles.totalsFontBold}>${this.props.total}</Text>
+          </View>
+        </View>
+        <View style={styles.checkoutButtonContainer}>
           <Button onPress={() => this.props.checkout()} title="Checkout" style={{width: 120, marginTop: 20}}/>
         </View>
       </View>
