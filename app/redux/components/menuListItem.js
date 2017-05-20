@@ -2,8 +2,8 @@
  * Created by warren on 2/26/17.
  */
 import React, {PropTypes} from 'react'
-import {View, Text, TextInput, StyleSheet, Button, TouchableHighlight} from 'react-native';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import {View, Text, StyleSheet} from 'react-native';
+import Button from '../../common/button'
 
 const styles = StyleSheet.create({
   container: {
@@ -75,13 +75,9 @@ const menuListItem = ({itemName, itemDescription, itemId, price, tags, addToCart
       <Text>{price}</Text>
     </View>
     <View style={styles.cartContainer}>
-      <FontAwesomeIcon.Button
-        name="cart-plus"
-        size={30}
-        onPress={() => addToCart(itemId)}
-        style={{width: 53, marginLeft: 7}}
-        activeOpacity={100}
-        underlayColor="red"/>
+      <Button onPress={() => addToCart(itemId)}
+              iconProps={{iconName: 'cart-plus', iconSize: 30, iconLibrary: 'FontAwesome'}}
+              style={{width: 53, marginLeft: 7}} underlayColor="grey" containerStyle={{marginLeft: -2}}/>
     </View>
   </View>
 );

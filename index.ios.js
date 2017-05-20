@@ -2,7 +2,7 @@ import store from './app/redux/store'
 import React, {Component} from 'react'
 import {AppRegistry, Text} from 'react-native'
 import {Provider, connect} from 'react-redux'
-import {Router, Scene, Actions} from 'react-native-router-flux'
+import {Router, Scene, Actions, ActionConst} from 'react-native-router-flux'
 import Login from './app/scenes/loginScene'
 import Placeholder from './app/scenes/placeholder'
 import Register from './app/scenes/registerScene'
@@ -42,7 +42,7 @@ export default class AppTabCustomerApp extends Component {
           <Scene key="login" component={Login} title="Login"/>
           <Scene key="register" component={Register} title="Register"/>
           <Scene key="nodes" component={Nodes} title="Table Selection"/>
-          <Scene key="tabs" tabs={true} onLeft={() => Actions.nodes()} >
+          <Scene key="tabs" tabs={true} onBack={() => Actions.nodes(ActionConst.REPLACE)} renderLeftButton={false}>
             <Scene key="request" component={Request} title="Service Request" icon={bell} initial={true}/>
             <Scene key="drinks" component={DrinkScene} title="Drinks" icon={drink}/>
             <Scene key="main" component={MainCourseScene} title="Main Course" icon={main}/>
