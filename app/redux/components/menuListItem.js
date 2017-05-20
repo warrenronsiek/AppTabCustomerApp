@@ -80,7 +80,8 @@ const menuListItem = ({itemName, itemDescription, itemId, price, tags, addToCart
         size={30}
         onPress={() => addToCart(itemId)}
         style={{width: 53, marginLeft: 7}}
-        activeOpacity={100}/>
+        activeOpacity={100}
+        underlayColor="red"/>
     </View>
   </View>
 );

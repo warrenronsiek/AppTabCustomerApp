@@ -62,7 +62,7 @@ export default class MenuList extends Component {
         {!this.props.apiQueried ? <View style={styles.spinnerContainer}><Spinner/></View> : null}
         {(this.props.menuListItems.length === 0) && (this.props.apiQueried)
           ? <View style={styles.textContainer}><Text>This kind of item is not on the menu :(</Text></View>
-          : <ListView dataSource={this.state.dataSource}
+          : <ListView dataSource={this.state.dataSource} enableEmptySections={true}
                       renderRow={item => <MenuListItem itemName={item.itemName}
                                                        itemDescription={item.itemDescription}
                                                        itemId={item.itemId}
