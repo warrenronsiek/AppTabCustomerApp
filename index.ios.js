@@ -30,6 +30,7 @@ const dessert = ({selected}) => <Ionicon name="ios-ice-cream" size={36} color={s
 const bell = ({selected}) => <Ionicon name="ios-notifications" size={40} color={selected ? '#6495ED' : 'black'}/>;
 const carrot = ({selected}) => <Ionicon name="ios-nutrition" size={40} color={selected ? '#6495ED' : 'black'}/>;
 
+
 export default class AppTabCustomerApp extends Component {
   constructor(props) {
     super(props)
@@ -42,13 +43,13 @@ export default class AppTabCustomerApp extends Component {
           <Scene key="login" component={Login} title="Login"/>
           <Scene key="register" component={Register} title="Register"/>
           <Scene key="nodes" component={Nodes} title="Table Selection"/>
-          <Scene key="tabs" tabs={true} onBack={() => Actions.nodes(ActionConst.REPLACE)} renderLeftButton={false}>
-            <Scene key="request" component={Request} title="Service Request" icon={bell} initial={true}/>
-            <Scene key="drinks" component={DrinkScene} title="Drinks" icon={drink}/>
-            <Scene key="main" component={MainCourseScene} title="Main Course" icon={main}/>
-            <Scene key="alcohol" component={AlcoholScene} title="Alcohol" icon={cocktail}/>
-            <Scene key="dessert" component={DessertScene} title="Dessert" icon={dessert}/>
-            <Scene key="appetizer" component={AppetizerScene} title="Appetizer" icon={carrot}/>
+          <Scene key="tabs" tabs={true} >
+            <Scene key="request" component={Request} title="Service Request" icon={bell} initial={true} onBack={() => Actions.nodes(ActionConst.REPLACE)}/>
+            <Scene key="drinks" component={DrinkScene} title="Drinks" icon={drink} onBack={() => Actions.nodes(ActionConst.REPLACE)}/>
+            <Scene key="main" component={MainCourseScene} title="Main Course" icon={main} onBack={() => Actions.nodes(ActionConst.REPLACE)}/>
+            <Scene key="alcohol" component={AlcoholScene} title="Alcohol" icon={cocktail} onBack={() => Actions.nodes(ActionConst.REPLACE)}/>
+            <Scene key="dessert" component={DessertScene} title="Dessert" icon={dessert} onBack={() => Actions.nodes(ActionConst.REPLACE)}/>
+            <Scene key="appetizer" component={AppetizerScene} title="Appetizer" icon={carrot} onBack={() => Actions.nodes(ActionConst.REPLACE)}/>
           </Scene>
           <Scene key="placeholder" component={Placeholder} title="Placeholder"/>
           <Scene key="cart" component={CartScene} title="Cart"/>

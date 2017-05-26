@@ -4,6 +4,7 @@
 import {Actions} from 'react-native-router-flux'
 import ccActions from '../actions/creditCardActions'
 import getCreditCards from '../../api/getCreditCards'
+import logger from '../../api/loggingApi'
 
 export default checkoutThunk = () => (dispatch, getState) => {
   const state = getState();
@@ -15,7 +16,7 @@ export default checkoutThunk = () => (dispatch, getState) => {
       })
       .then(res => Promise.resolve(dispatch(ccActions.apiQueried(true))))
       .then(() => Actions.checkout())
-      .catch(err => console.log(err))
+      .catch(err => logger(state, 'error checking out', err))
   } else {
     return Actions.checkout()
   }

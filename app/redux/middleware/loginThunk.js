@@ -10,10 +10,11 @@ import {
   updateStripeToken,
   loginComplete,
   clearErrors
-} from '../actions/loginActions';
-import loginRequest from '../../api/loginApi';
-import getStripeToken from '../../api/getStripeToken';
-import {Actions} from 'react-native-router-flux';
+} from '../actions/loginActions'
+import loginRequest from '../../api/loginApi'
+import getStripeToken from '../../api/getStripeToken'
+import {Actions} from 'react-native-router-flux'
+import logger from '../../api/loggingApi'
 
 export default loginThunk = (email, password) => (dispatch, getState) => {
   let clientId;
@@ -23,7 +24,6 @@ export default loginThunk = (email, password) => (dispatch, getState) => {
       return loginRequest(email, password)
     })
     .then(res => {
-      console.log(res);
       return Promise.resolve(dispatch(updateAuth(res.accessToken, res.idToken, res.refreshToken, res.userName, res.clientId)))
     })
     .then(() => {
@@ -37,7 +37,7 @@ export default loginThunk = (email, password) => (dispatch, getState) => {
     .then(() => dispatch(loginComplete()))
     .catch(err => {
       dispatch(loginComplete());
-      console.log(err);
+      logger(getState(), 'error logging in', err);
       switch (err.name) {
         case "ValidationError":
           dispatch(validationError());

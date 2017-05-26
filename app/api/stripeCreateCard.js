@@ -2,13 +2,12 @@
  * Created by warren on 3/31/17.
  */
 
-import keys from './stripePublicKeys'
+import {url, stripePublicKey} from '../vars'
 // invoke with stripeCreateCard(clientId, stripeToken, '4242 4242 4242 4242', '01', '2020', '123')
 
 export default stripeCreateCard = (customerId, stripeToken, cardNumber, expMonth, expYear, cvc) => {
   const stripeUrl = 'https://api.stripe.com/v1/tokens';
-  const processorUrl = 'https://zapkwgntzh.execute-api.us-west-2.amazonaws.com/dev/stripe-process-card';
-  console.log({customerId, stripeToken, cardNumber, expMonth, expYear, cvc});
+  const processorUrl = url + '/stripe-process-card';
 
   const cardDetails = {
     "card[number]": cardNumber,
@@ -29,7 +28,7 @@ export default stripeCreateCard = (customerId, stripeToken, cardNumber, expMonth
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer ' + keys.test
+      'Authorization': 'Bearer ' + stripePublicKey
     },
     body: formBody.join("&")
   };
@@ -41,10 +40,8 @@ export default stripeCreateCard = (customerId, stripeToken, cardNumber, expMonth
 
   return fetch(stripeUrl, stripeFetchOptions)
     .then(res => {
-      console.log(res);
       const resBody = JSON.parse(res._bodyText);
       return fetch(processorUrl, stripeProcessorOptions(resBody.id, stripeToken, customerId))
     })
     .then(res => JSON.parse(res._bodyText))
-    .catch(err => console.log(err))
 };

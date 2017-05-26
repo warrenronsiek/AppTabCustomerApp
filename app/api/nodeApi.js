@@ -3,16 +3,16 @@
  */
 import NodeNotFoundError from '../errors/nodeNotFoundError';
 import NetworkError from '../errors/networkError';
+import {url} from '../vars'
 
 export default function getNodeInfo(nodeId) {
-  const loginUrl = 'https://zapkwgntzh.execute-api.us-west-2.amazonaws.com/dev/get-node-info';
 
-  return fetch(loginUrl, {method: 'POST', body: JSON.stringify({nodeId})})
+  return fetch(url + '/get-node-info', {method: 'POST', body: JSON.stringify({nodeId})})
     .then((res) => {
       if (res.ok) {
         return res._bodyText
       } else {
-        throw new NetworkError('failed to fetch loginUrl', 'api/login', 17)
+        throw new NetworkError('failed to fetch get-node-url', res)
       }
     })
     .then((body) => {
@@ -20,9 +20,8 @@ export default function getNodeInfo(nodeId) {
         if (resBody.message === 'GetNodeInfoSuccessful') {
           return resBody
         } else {
-          throw new NodeNotFoundError('NodeId not in Database: ' + nodeId)
+          throw new NodeNotFoundError('NodeId not found: ' + nodeId, resBody)
         }
       }
     )
-}
-;
+};

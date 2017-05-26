@@ -1,10 +1,12 @@
 /**
  * Created by warren on 1/28/17.
  */
-import React, {Component, PropTypes} from 'react';
+import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {StyleSheet, Text, View, Button} from 'react-native';
-import serviceRequest from '../api/serviceRequestApi';
+import {TouchableHighlight, StyleSheet, Text, View, Button} from 'react-native'
+import serviceRequest from '../api/serviceRequestApi'
+import {Actions} from 'react-native-router-flux'
+import logger from '../api/loggingApi'
 
 const styles = StyleSheet.create({
   container: {
@@ -29,7 +31,7 @@ class ServiceRequestScene extends React.Component {
       activeNode = state.activeNode,
       userName = state.auth.userName;
     serviceRequest(activeNode, userName)
-      .catch(err => console.log(err))
+      .catch(err => logger(state, 'service request error', err))
   };
 
   render() {

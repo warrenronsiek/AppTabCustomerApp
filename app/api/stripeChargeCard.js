@@ -1,17 +1,20 @@
 /**
  * Created by warren on 5/5/17.
  */
-import NetworkError from '../errors/networkError';
+import NetworkError from '../errors/networkError'
+import {url} from '../vars'
 
 export default stripeCreateCustomer = (amount, stripeToken, cardToken, nodeId, customerId, items) => {
-  const url = 'https://zapkwgntzh.execute-api.us-west-2.amazonaws.com/dev/stripe-charge-card';
 
-  return fetch(url, {method: 'POST', body: JSON.stringify({amount, customerToken: stripeToken, cardToken, nodeId, customerId, transactionItems: items})})
+  return fetch(url + '/stripe-charge-card', {
+    method: 'POST',
+    body: JSON.stringify({amount, customerToken: stripeToken, cardToken, nodeId, customerId, transactionItems: items})
+  })
     .then((res) => {
       if (res.ok) {
         return res._bodyText
       } else {
-        throw new NetworkError('failed to fetch stripeChargeCard', 'api/stripeChargeCard', 17)
+        throw new NetworkError('failed to fetch stripeChargeCard', res)
       }
     })
     .then((body) => JSON.parse(body))
@@ -19,7 +22,7 @@ export default stripeCreateCustomer = (amount, stripeToken, cardToken, nodeId, c
       if (body.message === 'CreditCardChargeSuccessful') {
         return body
       } else {
-        throw new Error('ChargingCardFailed')
+        throw new Error('ChargingCardFailed', body)
       }
     })
 };

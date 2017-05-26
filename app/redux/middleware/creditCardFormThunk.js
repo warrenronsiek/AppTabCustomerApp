@@ -4,6 +4,7 @@
 import {Actions} from 'react-native-router-flux'
 import ccActions from '../actions/creditCardActions'
 import stripeCreateCard from '../../api/stripeCreateCard'
+import logger from '../../api/loggingApi'
 
 const creditCardFormThunk = (cardNumber, expMonth, expYear, ccv) => (dispatch, getState) => {
   const state = getState();
@@ -22,7 +23,7 @@ const creditCardFormThunk = (cardNumber, expMonth, expYear, ccv) => (dispatch, g
       return Promise.resolve(dispatch(ccActions.token.setSelected(cardToken)))
     })
     .then(res => Actions.pop())
-    .catch(err => console.log(err))
+    .catch(err => logger(state, 'failed to process credit card', err))
 };
 
 export default creditCardFormThunk

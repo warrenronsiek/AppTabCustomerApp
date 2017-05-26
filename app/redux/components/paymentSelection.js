@@ -62,7 +62,6 @@ class PaymentMethodSelection extends Component {
 
   constructor(props) {
     super(props);
-    console.log(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       dataSource: ds.cloneWithRows(this.props.paymentListItems)

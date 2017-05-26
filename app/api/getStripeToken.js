@@ -3,20 +3,24 @@
  */
 
 import NetworkError from '../errors/networkError';
+import {url} from '../vars'
 
 export default getStripeToken = (customerId) => {
-  const url = 'https://zapkwgntzh.execute-api.us-west-2.amazonaws.com/dev/stripe-get-token';
 
-  return fetch(url, {method: 'POST', body: JSON.stringify({customerId})})
-    .then((res) => {
+  return fetch(url + '/stripe-get-token', {method: 'POST', body: JSON.stringify({customerId})})
+    .then(res => {
       if (res.ok) {
         return res._bodyText
       } else {
-        throw new NetworkError('failed to fetch stripeGetToken', 'api/stripeGetToken', 17)
+        throw new NetworkError('failed to fetch stripeGetToken', res)
       }
     })
-    .then((body) => {
-        return JSON.parse(body);
+    .then(body => {
+        if (body.message === 'GetCustomerTokenSuccessful') {
+          return JSON.parse(body)
+        } else {
+          throw new Error('Failed to get token', res)
+        }
       }
     )
 };

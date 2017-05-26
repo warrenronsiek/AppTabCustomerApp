@@ -5,19 +5,19 @@ import decode from 'jwt-decode'
 import NetworkError from '../errors/networkError'
 import ValidationError from '../errors/validationError'
 import UnknownError from '../errors/unknownError'
+import {url} from '../vars'
 
 export default function loginRequest(email, password) {
-  const loginUrl = 'https://zapkwgntzh.execute-api.us-west-2.amazonaws.com/dev/login';
 
-  return fetch(loginUrl, {method: 'POST', body: JSON.stringify({password: password, email: email})})
-    .then((res) => {
+  return fetch(url + '/login', {method: 'POST', body: JSON.stringify({password: password, email: email})})
+    .then(res => {
       if (res.ok) {
         return res._bodyText
       } else {
         throw new NetworkError('failed to fetch loginUrl', 'api/login', 17)
       }
     })
-    .then((body) => {
+    .then(body => {
         const resBody = JSON.parse(body);
         switch (resBody.code) {
           case undefined:
@@ -30,14 +30,13 @@ export default function loginRequest(email, password) {
               clientId: idVals['sub']
             };
           case 'UserNotFoundException':
-            throw new ValidationError('failed to provide correct credentials', 'api/login', 33);
+            throw new ValidationError('failed to provide correct credentials', body);
             break;
           case 'NotAuthorizedException':
-            throw new ValidationError('failed to provide correct credentials', 'api/login', 36);
+            throw new ValidationError('failed to provide correct credentials', body);
             break;
           default:
-            console.log(body);
-            throw new UnknownError('unknown login error', 'api/login', 40);
+            throw new UnknownError('unknown login error', body);
         }
       }
     )

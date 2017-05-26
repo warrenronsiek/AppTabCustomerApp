@@ -1,15 +1,16 @@
 /**
  * Created by warren on 1/23/17.
  */
-import React, {Component} from 'react';
-import Nodes from '../redux/connectedComponents/nodeListConnected';
-import {updateNodeApi, updateNodeBle, setNodeQueried} from '../redux/actions/nodeActions';
-import getNodeInfo from '../api/nodeApi';
-import BeaconTypeError from '../errors/beaconTypeError';
-import GetNodeQueriedError from '../errors/getNodeQueriedError';
-import {connect} from 'react-redux';
-import {Buffer} from 'buffer';
-const _ = require('lodash');
+import React, {Component} from 'react'
+import Nodes from '../redux/connectedComponents/nodeListConnected'
+import {updateNodeApi, updateNodeBle, setNodeQueried} from '../redux/actions/nodeActions'
+import getNodeInfo from '../api/nodeApi'
+import BeaconTypeError from '../errors/beaconTypeError'
+import GetNodeQueriedError from '../errors/getNodeQueriedError'
+import {connect} from 'react-redux'
+import {Buffer} from 'buffer'
+import logger from '../api/loggingApi'
+import * as _ from 'lodash'
 const noble = require('react-native-ble');
 
 function parseIntObject(intObject) {
@@ -104,7 +105,7 @@ class NodeScene extends Component {
           case 'GetNodeQueriedError':
             break;
           default:
-            console.log(err);
+            logger(this.context.store.getState(), 'error processing node', err);
             break;
         }
       });

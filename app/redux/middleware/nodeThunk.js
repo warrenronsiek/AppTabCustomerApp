@@ -3,11 +3,12 @@
  */
 import {Actions} from 'react-native-router-flux';
 import {setActiveNode} from '../actions/nodeActions';
+import logger from '../../api/loggingApi'
 
-const selectNode = (nodeId) => (dispatch) => {
+const selectNode = (nodeId) => (dispatch, getState) => {
   Promise.resolve(dispatch(setActiveNode(nodeId)))
     .then(() => Actions.tabs())
-    .catch(err => console.log(err))
+    .catch(err => logger(getState(), 'error selecting node', err))
 };
 
 export default selectNode

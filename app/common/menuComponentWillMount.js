@@ -3,6 +3,7 @@
  */
 import {updateMenuItem, menuApiQueryStatus} from '../redux/actions/menuActions';
 import getMenu from '../api/getMenu';
+import logger from '../api/loggingApi'
 
 export default (component) => {
   const state = component.context.store.getState();
@@ -13,6 +14,6 @@ export default (component) => {
       .then(res => res.Items.forEach(item => component.props.dispatch(updateMenuItem(item.ItemName.S, item.ItemDescription.S, item.Price.N,
         item.Tags.SS, item.Category.S, item.ItemId.S, item.VenueId.S))))
       .then(() => component.props.dispatch(menuApiQueryStatus(venueId, now)))
-      .catch(err => console.log(err))
+      .catch(err => logger(state, 'failed to get/process menu', err))
   }
 }

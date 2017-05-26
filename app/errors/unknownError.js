@@ -4,8 +4,8 @@
 import BasicError from './basicError';
 
 export default class UnknownError extends BasicError {
-    constructor(message, fileName, lineNumber) {
-        super(message, fileName, lineNumber);
+    constructor(message, response) {
+        super(message, response);
         this.name = 'UnknownError';
     }
 }
