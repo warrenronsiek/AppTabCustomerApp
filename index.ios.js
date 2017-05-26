@@ -42,14 +42,14 @@ export default class AppTabCustomerApp extends Component {
         <RouterWithRedux>
           <Scene key="login" component={Login} title="Login"/>
           <Scene key="register" component={Register} title="Register"/>
-          <Scene key="nodes" component={Nodes} title="Table Selection"/>
-          <Scene key="tabs" tabs={true} >
-            <Scene key="request" component={Request} title="Service Request" icon={bell} initial={true} onBack={() => Actions.nodes(ActionConst.REPLACE)}/>
-            <Scene key="drinks" component={DrinkScene} title="Drinks" icon={drink} onBack={() => Actions.nodes(ActionConst.REPLACE)}/>
-            <Scene key="main" component={MainCourseScene} title="Main Course" icon={main} onBack={() => Actions.nodes(ActionConst.REPLACE)}/>
-            <Scene key="alcohol" component={AlcoholScene} title="Alcohol" icon={cocktail} onBack={() => Actions.nodes(ActionConst.REPLACE)}/>
-            <Scene key="dessert" component={DessertScene} title="Dessert" icon={dessert} onBack={() => Actions.nodes(ActionConst.REPLACE)}/>
-            <Scene key="appetizer" component={AppetizerScene} title="Appetizer" icon={carrot} onBack={() => Actions.nodes(ActionConst.REPLACE)}/>
+          <Scene key="nodes" component={Nodes} title="Table Selection" type={ActionConst.RESET}/>
+          <Scene key="tabs" tabs={true} type={ActionConst.RESET}>
+            <Scene key="request" component={Request} title="Service Request" icon={bell} initial={true} onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
+            <Scene key="drinks" component={DrinkScene} title="Drinks" icon={drink} onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
+            <Scene key="main" component={MainCourseScene} title="Main Course" icon={main} onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
+            <Scene key="alcohol" component={AlcoholScene} title="Alcohol" icon={cocktail} onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
+            <Scene key="dessert" component={DessertScene} title="Dessert" icon={dessert} onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
+            <Scene key="appetizer" component={AppetizerScene} title="Appetizer" icon={carrot} onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
           </Scene>
           <Scene key="placeholder" component={Placeholder} title="Placeholder"/>
           <Scene key="cart" component={CartScene} title="Cart"/>

@@ -4,11 +4,10 @@
 import {connect} from 'react-redux'
 import selectNode from '../middleware/nodeThunk'
 import NodeList from '../components/nodeList'
-import {sortBy} from 'lodash'
 
 const mapStateToProps = (state) => {
   return {
-    nodeListItems: sortBy(state.nodes, ['nodeId', 'nodeName']),
+    nodeListItems: state.nodes,
     renderNodes: state.nodes.length > 0,
     activeNode: state.activeNode
   }

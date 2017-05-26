@@ -27,3 +27,8 @@ export const updateTip = (tip) => {
   return {type: UPDATE_TIP, tip}
 };
 
+export const CLEAR_CART = 'CLEAR_CART';
+export const clearCart = () => {
+  return {type: CLEAR_CART, }
+};
+

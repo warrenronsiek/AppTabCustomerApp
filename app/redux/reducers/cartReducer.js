@@ -6,7 +6,8 @@ import {
   INCREMENT_COUNT,
   DECREMENT_COUNT,
   UPDATE_SALES_TAX,
-  UPDATE_TIP
+  UPDATE_TIP,
+  CLEAR_CART
 } from '../actions/cartActions'
 import * as _ from 'lodash'
 
@@ -39,6 +40,8 @@ const cart = (state = [], action) => {
         return [newItem, ...filteredState].sort((a, b) => a.itemName.localeCompare(b.itemName));
       }
       return filteredState;
+    case CLEAR_CART:
+      return [];
     default:
       return state
   }

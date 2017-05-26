@@ -3,8 +3,9 @@
  */
 import stripeChargeCard from '../../api/stripeChargeCard'
 import ccActions from '../actions/creditCardActions'
+import {clearCart} from '../actions/cartActions'
 import * as _ from 'lodash'
-import {Actions} from 'react-native-router-flux'
+import {Actions, ActionConst} from 'react-native-router-flux'
 
 const payThunk = () => (dispatch, getState) => {
   const state = getState();
@@ -24,7 +25,9 @@ const payThunk = () => (dispatch, getState) => {
   return Promise.resolve(dispatch(ccActions.payment.processing()))
     .then(res => stripeChargeCard(total, stripeToken, cardToken, nodeId, customerId, currentCart))
     .then(res => dispatch(ccActions.payment.success()))
-    .then(res => Actions.tabs())
+    .then(res => dispatch(clearCart()))
+    .then(res => Actions.tabs(ActionConst.RESET))
+    .then(res => dispatch(ccActions.payment.reset()))
     .catch(err => dispatch(ccActions.payment.failure()))
 };
 

@@ -19,25 +19,25 @@ export const nodes = (state = [], action) => {
           lastSeen: action.lastSeen,
           updatedCount: oldNode.updatedCount + 1
         };
-        return [...filteredState, updatedNode]
+        return _.sortBy([...filteredState, updatedNode], [(item) => item.nodeId.slice(-3), 'nodeName'])
       } else {
-        return [...filteredState, {
+        return _.sortBy([...filteredState, {
           nodeId: action.nodeId,
           distance: action.distance,
           instance: action.instance,
           lastSeen: action.lastSeen,
           updatedCount: 1
-        }]
+        }], [(item) => item.nodeId.slice(-3), 'nodeName'])
       }
     case UPDATE_NODE_API:
       if (oldNode) {
-        return [...filteredState, {
+        return _.sortBy([...filteredState, {
           nodeId: action.nodeId,
           nodeName: action.nodeName,
           nodeDescription: action.nodeDescription,
           venueId: action.venueId,
           apiQueried: true
-        }]
+        }], [(item) => item.nodeId.slice(-3), 'nodeName'])
       } else {
         updatedNode = {
           ...oldNode,
@@ -47,21 +47,21 @@ export const nodes = (state = [], action) => {
           venueId: action.venueId,
           apiQueried: true
         };
-        return [...filteredState, updatedNode]
+        return _.sortBy([...filteredState, updatedNode], [(item) => item.nodeId.slice(-3), 'nodeName'])
       }
     case SET_NODE_QUERIED:
       if (oldNode) {
-        return [...filteredState, {
+        return _.sortBy([...filteredState, {
           ...oldNode,
           nodeId: action.nodeId,
           apiQueried: true
-        }]
+        }], [(item) => item.nodeId.slice(-3), 'nodeName'])
       } else {
         updatedNode = {
           nodeId: action.nodeId,
           apiQueried: true
         };
-        return [...filteredState, updatedNode]
+        return _.sortBy([...filteredState, updatedNode], [(item) => item.nodeId.slice(-3), 'nodeName'])
       }
     default:
       return state
