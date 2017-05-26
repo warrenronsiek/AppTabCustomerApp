@@ -93,7 +93,8 @@ class NodeScene extends Component {
       })
       .then(res => {
         const node = res.nodeInfo.Item;
-        const nodeId = node.NodeId.S, nodeName = node.NodeName.S, nodeDescription = node.NodeDescription.S, venueId = node.VenueId.S;
+        const nodeId = node.NodeId.S, nodeName = node.NodeName.S, nodeDescription = node.NodeDescription.S,
+          venueId = node.VenueId.S;
         return Promise.resolve(this.props.dispatch(updateNodeApi(nodeId, nodeName, nodeDescription, venueId)))
       })
       .catch(err => {
@@ -105,7 +106,7 @@ class NodeScene extends Component {
           case 'GetNodeQueriedError':
             break;
           default:
-            logger(this.context.store.getState(), 'error processing node', err);
+            logger('error processing node', err);
             break;
         }
       });

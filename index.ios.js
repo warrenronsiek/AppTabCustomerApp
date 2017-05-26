@@ -38,7 +38,7 @@ export default class AppTabCustomerApp extends Component {
 
   render() {
     return (
-      <Provider store={store()}>
+      <Provider store={store}>
         <RouterWithRedux>
           <Scene key="login" component={Login} title="Login"/>
           <Scene key="register" component={Register} title="Register"/>

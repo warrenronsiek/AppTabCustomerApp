@@ -4,6 +4,7 @@
 
 import NetworkError from '../errors/networkError';
 import {url} from '../vars'
+import logger from '../api/loggingApi'
 
 export default getStripeToken = (customerId) => {
 
@@ -16,8 +17,9 @@ export default getStripeToken = (customerId) => {
       }
     })
     .then(body => {
-        if (body.message === 'GetCustomerTokenSuccessful') {
-          return JSON.parse(body)
+      const bodyParse = JSON.parse(body);
+        if (bodyParse.message === 'GetCustomerTokenSuccessful') {
+          return bodyParse
         } else {
           throw new Error('Failed to get token', res)
         }

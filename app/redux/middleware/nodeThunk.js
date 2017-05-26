@@ -8,7 +8,7 @@ import logger from '../../api/loggingApi'
 const selectNode = (nodeId) => (dispatch, getState) => {
   Promise.resolve(dispatch(setActiveNode(nodeId)))
     .then(() => Actions.tabs())
-    .catch(err => logger(getState(), 'error selecting node', err))
+    .catch(err => logger('error selecting node', err))
 };
 
 export default selectNode

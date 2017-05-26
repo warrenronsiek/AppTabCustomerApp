@@ -33,11 +33,15 @@ export default loginThunk = (email, password) => (dispatch, getState) => {
     .then(res => {
       return Promise.resolve(dispatch(updateStripeToken(res.stripeToken)))
     })
-    .then(() => Actions.nodes())
-    .then(() => dispatch(loginComplete()))
+    .then(() => {
+      Actions.nodes()
+    })
+    .then(() => {
+      dispatch(loginComplete())
+    })
     .catch(err => {
       dispatch(loginComplete());
-      logger(getState(), 'error logging in', err);
+      logger('error logging in', err);
       switch (err.name) {
         case "ValidationError":
           dispatch(validationError());

@@ -4,7 +4,7 @@
 import {connect} from 'react-redux'
 import selectNode from '../middleware/nodeThunk'
 import NodeList from '../components/nodeList'
-import {sortBy, filter} from 'lodash'
+import {sortBy} from 'lodash'
 
 const mapStateToProps = (state) => {
   return {

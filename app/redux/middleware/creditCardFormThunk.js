@@ -23,7 +23,7 @@ const creditCardFormThunk = (cardNumber, expMonth, expYear, ccv) => (dispatch, g
       return Promise.resolve(dispatch(ccActions.token.setSelected(cardToken)))
     })
     .then(res => Actions.pop())
-    .catch(err => logger(state, 'failed to process credit card', err))
+    .catch(err => logger('failed to process credit card', err))
 };
 
 export default creditCardFormThunk

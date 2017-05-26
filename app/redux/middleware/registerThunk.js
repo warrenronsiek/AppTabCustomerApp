@@ -32,7 +32,7 @@ export default registerThunk = (name, email, password) => (dispatch, getState) =
     .then(() => dispatch(registeringFinished()))
     .catch(err => {
       dispatch(registeringFinished());
-      logger(getState(), 'error registering', err);
+      logger( 'error registering', err);
       switch (err.name) {
         case 'UserExistsError':
           dispatch(userExistsError());

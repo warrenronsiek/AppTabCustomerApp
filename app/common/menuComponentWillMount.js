@@ -14,6 +14,6 @@ export default (component) => {
       .then(res => res.Items.forEach(item => component.props.dispatch(updateMenuItem(item.ItemName.S, item.ItemDescription.S, item.Price.N,
         item.Tags.SS, item.Category.S, item.ItemId.S, item.VenueId.S))))
       .then(() => component.props.dispatch(menuApiQueryStatus(venueId, now)))
-      .catch(err => logger(state, 'failed to get/process menu', err))
+      .catch(err => logger('failed to get/process menu', err))
   }
 }

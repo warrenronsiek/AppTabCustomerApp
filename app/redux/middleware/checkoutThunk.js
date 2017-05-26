@@ -16,7 +16,7 @@ export default checkoutThunk = () => (dispatch, getState) => {
       })
       .then(res => Promise.resolve(dispatch(ccActions.apiQueried(true))))
       .then(() => Actions.checkout())
-      .catch(err => logger(state, 'error checking out', err))
+      .catch(err => logger('error checking out', err))
   } else {
     return Actions.checkout()
   }
