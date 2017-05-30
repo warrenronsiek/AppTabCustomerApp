@@ -3,5 +3,5 @@
  */
 import requester from './requester'
 
-//pass object of shape {customerId: ::customerId::}
+//pass object of shape {customerId: customerId}
 export default requester('/get-credit-cards', 'GetCardsSuccessful', 'Error in getting cards.')

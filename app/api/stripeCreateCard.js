@@ -1,13 +1,13 @@
 /**
  * Created by warren on 3/31/17.
  */
-import {url, stripePublicKey} from '../vars'
+import {stripePublicKey} from '../vars'
 import logger from './loggingApi'
+import requester from './requester'
 // invoke with stripeCreateCard(clientId, stripeToken, '4242 4242 4242 4242', '01', '2020', '123')
 
 export default stripeCreateCard = (customerId, stripeToken, cardNumber, expMonth, expYear, cvc) => {
   const stripeUrl = 'https://api.stripe.com/v1/tokens';
-  const processorUrl = url + '/stripe-process-card';
 
   const cardDetails = {
     "card[number]": cardNumber,
@@ -33,18 +33,16 @@ export default stripeCreateCard = (customerId, stripeToken, cardNumber, expMonth
     body: formBody.join("&")
   };
 
-  const stripeProcessorOptions = (cardToken, customerToken, customerId) => ({
-    method: 'POST',
-    body: JSON.stringify({cardToken, customerToken, customerId})
-  });
-
   return fetch(stripeUrl, stripeFetchOptions)
     .then(res => {
       if (!res.ok) {
         logger('stripe create card url failed', res, 'stripeCreateCard.js')
       }
       const resBody = JSON.parse(res._bodyText);
-      return fetch(processorUrl, stripeProcessorOptions(resBody.id, stripeToken, customerId))
+      return requester('/stripe-process-card', 'CardProcessingSuccessful', 'stripe processor failed')({
+        cardToken: resBody.id,
+        customerToken: stripeToken,
+        customerId: customerId
+      });
     })
-    .then(res => JSON.parse(res._bodyText))
 };

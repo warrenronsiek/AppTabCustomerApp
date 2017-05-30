@@ -13,7 +13,7 @@ export default registerThunk = (name, email, password) => (dispatch, getState) =
   Promise.resolve(dispatch(clearErrors()))
     .then(() => Promise.resolve(dispatch(registering())))
     .then(res => {
-      return registerRequest(email, name, password)
+      return registerRequest({email, name, password})
     })
     .then(res => {
       return loginRequest(email, password)

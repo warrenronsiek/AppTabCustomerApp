@@ -21,7 +21,7 @@ export default loginThunk = (email, password) => (dispatch, getState) => {
   Promise.resolve(dispatch(clearErrors()))
     .then(res => Promise.resolve(dispatch(loggingIn())))
     .then(res => {
-      return loginRequest(email, password)
+      return loginRequest({email, password})
     })
     .then(res => {
       return Promise.resolve(dispatch(updateAuth(res.accessToken, res.idToken, res.refreshToken, res.userName, res.customerId)))

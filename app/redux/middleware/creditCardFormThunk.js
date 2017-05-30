@@ -14,7 +14,7 @@ const creditCardFormThunk = (cardNumber, expMonth, expYear, ccv) => (dispatch, g
   return stripeCreateCard(customerId, stripeToken, cardNumber, expMonth, expYear, ccv)
     .then(res => {
       cardToken = res.cardData.id;
-      return Promise.resolve(dispatch(ccActions.token.add(res.cardData.id, res.cardData.last4, res.cardData.brand, res.cardData.exp_month, res.cardData.exp_year)))
+      return Promise.resolve(dispatch(ccActions.token.add(res.cardData.id, res.cardData.last4, res.cardData.brand, res.cardData.exp_month.toString(), res.cardData.exp_year.toString())))
     })
     .then(res => {
       return Promise.resolve(dispatch(ccActions.real.wipe()))

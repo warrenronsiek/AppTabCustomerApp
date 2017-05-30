@@ -86,7 +86,7 @@ class NodeScene extends Component {
         const nodeState = _.find(this.context.store.getState().nodes, {nodeId: res.nodeId});
         if (nodeState.apiQueried === undefined) {
           this.props.dispatch(setNodeQueried(res.nodeId));
-          return getNodeInfo(res.nodeId)
+          return getNodeInfo({nodeId: res.nodeId})
         } else {
           throw new GetNodeQueriedError('GetNode api already queried for this node')
         }

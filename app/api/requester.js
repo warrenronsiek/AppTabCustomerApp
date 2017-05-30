@@ -5,7 +5,8 @@ import NetworkError from '../errors/networkError'
 import logger from './loggingApi'
 import {url} from '../vars'
 
-const requester = (apiPath, successMessage, errorMessage) => (postBody) => {
+const requester = (apiPath, successMessage, errorMessage, requestProcessor) => (postBody) => {
+
   return fetch(url + apiPath, {method: 'POST', body: JSON.stringify(postBody)})
     .then(res => {
       if (res.ok) {
@@ -18,7 +19,7 @@ const requester = (apiPath, successMessage, errorMessage) => (postBody) => {
     .then(body => {
         const resBody = JSON.parse(body);
         if (resBody.message === successMessage) {
-          return resBody
+          return requestProcessor ? requestProcessor(resBody) : resBody
         } else {
           logger(apiPath + ' wrong response', resBody);
           throw new Error(errorMessage, body)

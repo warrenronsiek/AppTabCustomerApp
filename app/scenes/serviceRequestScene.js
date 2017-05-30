@@ -30,7 +30,7 @@ class ServiceRequestScene extends React.Component {
     const
       activeNode = state.activeNode,
       userName = state.auth.userName;
-    serviceRequest(activeNode, userName)
+    serviceRequest({nodeId: activeNode, userName})
       .catch(err => logger('service request error', err))
   };
 
