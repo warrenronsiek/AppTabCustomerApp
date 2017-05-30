@@ -10,7 +10,7 @@ export default checkoutThunk = () => (dispatch, getState) => {
   const state = getState();
   const customerId = state.auth.clientId, apiQueried = state.ccTokenApiQueried;
   if (!apiQueried) {
-    return getCreditCards(customerId)
+    return getCreditCards({customerId})
       .then(res => {
         return Promise.all(res.Items.map(item => Promise.resolve(dispatch(ccActions.token.add(item.CardId.S, item.Last4.S, item.Brand.S, item.ExpMonth.N, item.ExpYear.N)))))
       })

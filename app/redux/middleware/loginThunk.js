@@ -17,7 +17,7 @@ import {Actions} from 'react-native-router-flux'
 import logger from '../../api/loggingApi'
 
 export default loginThunk = (email, password) => (dispatch, getState) => {
-  let clientId;
+  let customerId;
   Promise.resolve(dispatch(clearErrors()))
     .then(res => Promise.resolve(dispatch(loggingIn())))
     .then(res => {
@@ -27,8 +27,8 @@ export default loginThunk = (email, password) => (dispatch, getState) => {
       return Promise.resolve(dispatch(updateAuth(res.accessToken, res.idToken, res.refreshToken, res.userName, res.clientId)))
     })
     .then(() => {
-      clientId = getState().auth.clientId;
-      return getStripeToken(clientId)
+      customerId = getState().auth.clientId;
+      return getStripeToken({customerId})
     })
     .then(res => {
       return Promise.resolve(dispatch(updateStripeToken(res.stripeToken)))

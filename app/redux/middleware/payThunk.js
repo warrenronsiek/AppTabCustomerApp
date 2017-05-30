@@ -23,7 +23,7 @@ const payThunk = () => (dispatch, getState) => {
     customerId = state.auth.clientId;
 
   return Promise.resolve(dispatch(ccActions.payment.processing()))
-    .then(res => stripeChargeCard(total, stripeToken, cardToken, nodeId, customerId, currentCart))
+    .then(res => stripeChargeCard({total, stripeToken, cardToken, nodeId, customerId, items: currentCart}))
     .then(res => dispatch(ccActions.payment.success()))
     .then(res => dispatch(clearCart()))
     .then(res => Actions.tabs(ActionConst.RESET))

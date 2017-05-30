@@ -10,7 +10,7 @@ export default (component) => {
   const venueId = state.nodes.filter(node => node.nodeId === state.activeNode)[0].venueId;
   const now = Math.floor(Date.now() / (1000 * 60 * 60)), last = state.menuQueryStatus[venueId];
   if (typeof last === 'undefined' || now - last > 1) {
-    getMenu(venueId)
+    getMenu({venueId})
       .then(res => res.Items.forEach(item => component.props.dispatch(updateMenuItem(item.ItemName.S, item.ItemDescription.S, item.Price.N,
         item.Tags.SS, item.Category.S, item.ItemId.S, item.VenueId.S))))
       .then(() => component.props.dispatch(menuApiQueryStatus(venueId, now)))
