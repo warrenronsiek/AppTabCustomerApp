@@ -17,8 +17,8 @@ export const clearErrors = () => {
 };
 
 export const UPDATE_AUTH = 'UPDATE_AUTH';
-export const updateAuth = (accessToken, idToken, refreshToken, userName, clientId) => {
-  return {type: UPDATE_AUTH, accessToken, idToken, refreshToken, userName, clientId}
+export const updateAuth = (accessToken, idToken, refreshToken, userName, customerId) => {
+  return {type: UPDATE_AUTH, accessToken, idToken, refreshToken, userName, customerId}
 };
 
 export const VALIDATION_ERROR = 'VALIDATION_ERROR';

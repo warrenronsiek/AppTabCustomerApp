@@ -28,7 +28,7 @@ export default function loginRequest(email, password) {
               idToken: resBody['authParameters']['IdToken'],
               refreshToken: resBody['authParameters']['RefreshToken'],
               userName: idVals['name'],
-              clientId: idVals['sub']
+              customerId: idVals['sub']
             };
           case 'UserNotFoundException':
             throw new ValidationError('failed to provide correct credentials', body);

@@ -20,7 +20,7 @@ const payThunk = () => (dispatch, getState) => {
     stripeToken = state.stripeToken,
     cardToken = state.ccTokens.filter(item => item.isSelected)[0].ccToken,
     nodeId = state.activeNode,
-    customerId = state.auth.clientId;
+    customerId = state.auth.customerId;
 
   return Promise.resolve(dispatch(ccActions.payment.processing()))
     .then(res => stripeChargeCard({total, stripeToken, cardToken, nodeId, customerId, items: currentCart}))

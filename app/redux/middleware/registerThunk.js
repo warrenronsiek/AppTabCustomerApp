@@ -19,11 +19,11 @@ export default registerThunk = (name, email, password) => (dispatch, getState) =
       return loginRequest(email, password)
     })
     .then(res => {
-      return Promise.resolve(dispatch(updateAuth(res.accessToken, res.idToken, res.refreshToken, res.userName, res.clientId)))
+      return Promise.resolve(dispatch(updateAuth(res.accessToken, res.idToken, res.refreshToken, res.userName, res.customerId)))
     })
     .then(() => {
       const state = getState();
-      return stripeCreateCustomerApi({customerId: state.auth.clientId, email})
+      return stripeCreateCustomerApi({customerId: state.auth.customerId, email})
     })
     .then(res => {
       return Promise.resolve(dispatch(updateStripeToken(res.body.stripeToken)))

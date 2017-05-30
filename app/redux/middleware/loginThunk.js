@@ -24,13 +24,13 @@ export default loginThunk = (email, password) => (dispatch, getState) => {
       return loginRequest(email, password)
     })
     .then(res => {
-      return Promise.resolve(dispatch(updateAuth(res.accessToken, res.idToken, res.refreshToken, res.userName, res.clientId)))
+      return Promise.resolve(dispatch(updateAuth(res.accessToken, res.idToken, res.refreshToken, res.userName, res.customerId)))
     })
     .then(() => {
       Actions.nodes()
     })
     .then(() => {
-      customerId = getState().auth.clientId;
+      customerId = getState().auth.customerId;
       return getStripeToken({customerId})
     })
     .then(res => {

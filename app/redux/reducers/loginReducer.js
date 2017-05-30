@@ -23,7 +23,7 @@ export const auth = (state = {}, action) => {
         idToken: action.idToken,
         refreshToken: action.refreshToken,
         userName: action.userName,
-        clientId: action.clientId
+        customerId: action.customerId
       };
     default:
       return state;

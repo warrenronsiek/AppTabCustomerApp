@@ -8,7 +8,7 @@ import logger from '../../api/loggingApi'
 
 const creditCardFormThunk = (cardNumber, expMonth, expYear, ccv) => (dispatch, getState) => {
   const state = getState();
-  const customerId = state.auth.clientId, stripeToken = state.stripeToken;
+  const customerId = state.auth.customerId, stripeToken = state.stripeToken;
   let cardToken;
 
   return stripeCreateCard(customerId, stripeToken, cardNumber, expMonth, expYear, ccv)

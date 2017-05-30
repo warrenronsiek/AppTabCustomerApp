@@ -8,7 +8,7 @@ import logger from '../../api/loggingApi'
 
 export default checkoutThunk = () => (dispatch, getState) => {
   const state = getState();
-  const customerId = state.auth.clientId, apiQueried = state.ccTokenApiQueried;
+  const customerId = state.auth.customerId, apiQueried = state.ccTokenApiQueried;
   if (!apiQueried) {
     return getCreditCards({customerId})
       .then(res => {
