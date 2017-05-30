@@ -3,6 +3,8 @@
  */
 import NetworkError from '../errors/networkError';
 import {url} from '../vars'
+import logger from './loggingApi'
+import requester from './requester'
 
 export default function getCreditCards(customerId) {
 
@@ -11,6 +13,7 @@ export default function getCreditCards(customerId) {
       if (res.ok) {
         return res._bodyText
       } else {
+        logger('/get-credit-cards failed', res, 'getCreditCards.js');
         throw new NetworkError('Failed to get credit cars. ', res)
       }
     })
@@ -19,8 +22,11 @@ export default function getCreditCards(customerId) {
         if (resBody.message === 'GetCardsSuccessful') {
           return resBody
         } else {
+          logger('/get-credit-cards wrong response', resBody, 'getCreditCards.js');
           throw new Error('Error in getting cards.', body)
         }
       }
     )
-};
+}
+
+// export default requester('/get-credit-cards', 'GetCardsSuccessful', 'Error in getting cards.')

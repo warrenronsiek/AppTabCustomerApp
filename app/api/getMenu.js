@@ -3,6 +3,8 @@
  */
 import NetworkError from '../errors/networkError';
 import {url} from '../vars'
+import logger from './loggingApi'
+import requester from './requester'
 
 export default function getMenu(venueId) {
 
@@ -11,6 +13,7 @@ export default function getMenu(venueId) {
       if (res.ok) {
         return res._bodyText
       } else {
+        logger('/get-menu failed', res, 'getMenu.js');
         throw new NetworkError('failed to fetch Url. ', res)
       }
     })
@@ -19,8 +22,11 @@ export default function getMenu(venueId) {
         if (resBody.message === 'GetMenuSuccessful') {
           return resBody
         } else {
+          logger('/get-menu wrong response', resBody, 'getMenu.js');
           throw new Error('Error in fetching venue.', body)
         }
       }
     )
 };
+
+// export default requester('/get-menu', 'GetMenuSuccessful', 'Error in fetching venue.')

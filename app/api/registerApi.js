@@ -5,6 +5,7 @@ import NetworkError from '../errors/networkError'
 import UserExistsError from '../errors/userExistsError'
 import UnknownError from '../errors/unknownError'
 import {url} from '../vars'
+import logger from './loggingApi'
 
 export default function registerRequest(email, name, password) {
 
@@ -13,6 +14,7 @@ export default function registerRequest(email, name, password) {
       if (res.ok) {
         return res._bodyText
       } else {
+        logger('/register failed', res, 'registerApi.js');
         throw new NetworkError('failed to fetch retUrl', res)
       }
     })
@@ -25,6 +27,7 @@ export default function registerRequest(email, name, password) {
             throw new UserExistsError(body);
             break;
           default:
+            logger('/register wrong response', resBody, 'registerApi.js');
             throw new UnknownError('unknown registration error', body)
         }
       }

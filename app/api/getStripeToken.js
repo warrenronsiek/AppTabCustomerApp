@@ -13,6 +13,7 @@ export default getStripeToken = (customerId) => {
       if (res.ok) {
         return res._bodyText
       } else {
+        logger('/stripe-get-token failed', res, 'getStripeToken.js');
         throw new NetworkError('failed to fetch stripeGetToken', res)
       }
     })
@@ -21,6 +22,7 @@ export default getStripeToken = (customerId) => {
         if (bodyParse.message === 'GetCustomerTokenSuccessful') {
           return bodyParse
         } else {
+          logger('/stripe-get-token wrong response', resBody, 'getStripeToken.js');
           throw new Error('Failed to get token', res)
         }
       }

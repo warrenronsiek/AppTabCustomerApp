@@ -4,7 +4,7 @@
 import NodeNotFoundError from '../errors/nodeNotFoundError';
 import NetworkError from '../errors/networkError';
 import {url} from '../vars'
-
+import logger from './loggingApi'
 export default function getNodeInfo(nodeId) {
 
   return fetch(url + '/get-node-info', {method: 'POST', body: JSON.stringify({nodeId})})
@@ -12,6 +12,7 @@ export default function getNodeInfo(nodeId) {
       if (res.ok) {
         return res._bodyText
       } else {
+        logger('/get-node-info failed', res, 'nodeApi.js');
         throw new NetworkError('failed to fetch get-node-url', res)
       }
     })
@@ -20,6 +21,7 @@ export default function getNodeInfo(nodeId) {
         if (resBody.message === 'GetNodeInfoSuccessful') {
           return resBody
         } else {
+          logger('/get-node-info wrong response', resBody, 'nodeApi.js');
           throw new NodeNotFoundError('NodeId not found: ' + nodeId, resBody)
         }
       }

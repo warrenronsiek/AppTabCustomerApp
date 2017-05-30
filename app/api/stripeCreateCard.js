@@ -1,8 +1,8 @@
 /**
  * Created by warren on 3/31/17.
  */
-
 import {url, stripePublicKey} from '../vars'
+import logger from './loggingApi'
 // invoke with stripeCreateCard(clientId, stripeToken, '4242 4242 4242 4242', '01', '2020', '123')
 
 export default stripeCreateCard = (customerId, stripeToken, cardNumber, expMonth, expYear, cvc) => {
@@ -40,6 +40,9 @@ export default stripeCreateCard = (customerId, stripeToken, cardNumber, expMonth
 
   return fetch(stripeUrl, stripeFetchOptions)
     .then(res => {
+      if (!res.ok) {
+        logger('stripe create card url failed', res, 'stripeCreateCard.js')
+      }
       const resBody = JSON.parse(res._bodyText);
       return fetch(processorUrl, stripeProcessorOptions(resBody.id, stripeToken, customerId))
     })

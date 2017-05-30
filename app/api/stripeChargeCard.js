@@ -3,8 +3,9 @@
  */
 import NetworkError from '../errors/networkError'
 import {url} from '../vars'
+import logger from './loggingApi'
 
-export default stripeCreateCustomer = (amount, stripeToken, cardToken, nodeId, customerId, items) => {
+export default stripeChargeCard = (amount, stripeToken, cardToken, nodeId, customerId, items) => {
 
   return fetch(url + '/stripe-charge-card', {
     method: 'POST',
@@ -14,6 +15,7 @@ export default stripeCreateCustomer = (amount, stripeToken, cardToken, nodeId, c
       if (res.ok) {
         return res._bodyText
       } else {
+        logger('/stripe-charge-card failed', res, 'stripeChargeCard.js');
         throw new NetworkError('failed to fetch stripeChargeCard', res)
       }
     })
@@ -22,6 +24,7 @@ export default stripeCreateCustomer = (amount, stripeToken, cardToken, nodeId, c
       if (body.message === 'CreditCardChargeSuccessful') {
         return body
       } else {
+        logger('/stripe-charge-card wrong response', body, 'stripeChargeCard.js');
         throw new Error('ChargingCardFailed', body)
       }
     })

@@ -23,9 +23,9 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 const RouterWithRedux = connect()(Router);
 
 const textIcon = ({title, selected}) => <Text style={{color: selected ? 'red' : 'black'}}>{title}</Text>;
-const cocktail = ({selected}) => <EntypoIcons name="drink" size={31} color={ selected ? '#6495ED' : 'black'}/>;
-const drink = ({selected}) => <MaterialIcons name="local-drink" size={35} color={ selected ? '#6495ED' : 'black'}/>;
-const main = ({selected}) => <MaterialIcons name="local-dining" size={37} color={ selected ? '#6495ED' : 'black'}/>;
+const cocktail = ({selected}) => <EntypoIcons name="drink" size={31} color={selected ? '#6495ED' : 'black'}/>;
+const drink = ({selected}) => <MaterialIcons name="local-drink" size={35} color={selected ? '#6495ED' : 'black'}/>;
+const main = ({selected}) => <MaterialIcons name="local-dining" size={37} color={selected ? '#6495ED' : 'black'}/>;
 const dessert = ({selected}) => <Ionicon name="ios-ice-cream" size={36} color={selected ? '#6495ED' : 'black'}/>;
 const bell = ({selected}) => <Ionicon name="ios-notifications" size={40} color={selected ? '#6495ED' : 'black'}/>;
 const carrot = ({selected}) => <Ionicon name="ios-nutrition" size={40} color={selected ? '#6495ED' : 'black'}/>;
@@ -44,12 +44,18 @@ export default class AppTabCustomerApp extends Component {
           <Scene key="register" component={Register} title="Register"/>
           <Scene key="nodes" component={Nodes} title="Table Selection" type={ActionConst.RESET}/>
           <Scene key="tabs" tabs={true} type={ActionConst.RESET}>
-            <Scene key="request" component={Request} title="Service Request" icon={bell} initial={true} onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
-            <Scene key="drinks" component={DrinkScene} title="Drinks" icon={drink} onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
-            <Scene key="main" component={MainCourseScene} title="Main Course" icon={main} onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
-            <Scene key="alcohol" component={AlcoholScene} title="Alcohol" icon={cocktail} onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
-            <Scene key="dessert" component={DessertScene} title="Dessert" icon={dessert} onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
-            <Scene key="appetizer" component={AppetizerScene} title="Appetizer" icon={carrot} onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
+            <Scene key="request" component={Request} title="Service Request" icon={bell} initial={true}
+                   onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
+            <Scene key="drinks" component={DrinkScene} title="Drinks" icon={drink}
+                   onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
+            <Scene key="main" component={MainCourseScene} title="Main Course" icon={main}
+                   onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
+            <Scene key="alcohol" component={AlcoholScene} title="Alcohol" icon={cocktail}
+                   onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
+            <Scene key="dessert" component={DessertScene} title="Dessert" icon={dessert}
+                   onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
+            <Scene key="appetizer" component={AppetizerScene} title="Appetizer" icon={carrot}
+                   onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
           </Scene>
           <Scene key="placeholder" component={Placeholder} title="Placeholder"/>
           <Scene key="cart" component={CartScene} title="Cart"/>
