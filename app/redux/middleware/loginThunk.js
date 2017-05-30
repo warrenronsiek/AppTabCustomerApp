@@ -27,6 +27,9 @@ export default loginThunk = (email, password) => (dispatch, getState) => {
       return Promise.resolve(dispatch(updateAuth(res.accessToken, res.idToken, res.refreshToken, res.userName, res.clientId)))
     })
     .then(() => {
+      Actions.nodes()
+    })
+    .then(() => {
       customerId = getState().auth.clientId;
       return getStripeToken({customerId})
     })
@@ -34,14 +37,11 @@ export default loginThunk = (email, password) => (dispatch, getState) => {
       return Promise.resolve(dispatch(updateStripeToken(res.stripeToken)))
     })
     .then(() => {
-      Actions.nodes()
-    })
-    .then(() => {
       dispatch(loginComplete())
     })
     .catch(err => {
-      dispatch(loginComplete());
       logger('error logging in', err);
+      dispatch(loginComplete());
       switch (err.name) {
         case "ValidationError":
           dispatch(validationError());
