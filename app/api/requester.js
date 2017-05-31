@@ -4,10 +4,11 @@
 import NetworkError from '../errors/networkError'
 import logger from './loggingApi'
 import {url} from '../vars'
+import store from '../redux/store'
 
 const requester = (apiPath, successMessage, errorMessage, requestProcessor) => (postBody) => {
-
-  return fetch(url + apiPath, {method: 'POST', body: JSON.stringify(postBody)})
+  const state = store.getState();
+  return fetch(url + apiPath, {method: 'POST', headers: {'Authorization': state.auth.idToken}, body: JSON.stringify(postBody)})
     .then(res => {
       if (res.ok) {
         return res._bodyText
