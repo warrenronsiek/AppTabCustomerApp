@@ -20,4 +20,4 @@ const registerProcessor = (resBody) => {
 };
 
 // invoke with object {email, name, password}
-export default requester('/register', 'UserRegistrationSuccessful', 'RegistrationFailed', registerProcessor)
+export default requester('/register', 'UserRegistrationSuccessful', 'RegistrationFailed', registerProcessor, false)
