@@ -30,4 +30,4 @@ const loginProcessor = (resBody) => {
   }
 };
 
-export default requester('/login', 'LoginSuccessful', 'login failure', loginProcessor)
+export default requester('/login', 'LoginSuccessful', 'login failure', loginProcessor, false)

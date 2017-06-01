@@ -8,7 +8,7 @@ import decode from 'jwt-decode'
 import store from '../redux/store'
 import {updateAuth} from '../redux/actions/loginActions'
 
-const requester = (apiPath, successMessage, errorMessage, requestProcessor) => (postBody) => {
+const requester = (apiPath, successMessage, errorMessage, requestProcessor, allowTokenRefresh = true) => (postBody) => {
     const state = store.getState();
     const desiredFetchParams = {
       method: 'POST', headers: {'Authorization': state.auth.idToken}, body: JSON.stringify(postBody)
@@ -57,10 +57,11 @@ const requester = (apiPath, successMessage, errorMessage, requestProcessor) => (
       })
       .then(res => Promise.resolve(store.dispatch(updateAuth(res.accessToken, res.idToken, res.refreshToken, res.userName, res.customerId))));
 
-    if ((new Date() - state.auth.updateTime) / (60 * 1000) < 50) {
-      return desiredFetch()
-    } else {
+    const timeCondition = (new Date() - state.auth.updateTime) / (60 * 1000) > 30;
+    if (timeCondition && allowTokenRefresh) {
       return tokenRefreshFetch().then(() => desiredFetch())
+    } else {
+      return desiredFetch()
     }
   }
 ;
