@@ -7,6 +7,11 @@ export const updateEmail = (email) => {
   return {type: UPDATE_EMAIL, email}
 };
 
+export const UPDATE_PHONE_NUMBER = 'UPDATE_PHONE_NUMBER';
+export const updatePhoneNumber = (phoneNumber) => {
+  return {type: UPDATE_PHONE_NUMBER, phoneNumber}
+};
+
 export const UPDATE_NAME = 'UPDATE_NAME';
 export const updateName = (name) => {
   return {type: UPDATE_NAME, name}

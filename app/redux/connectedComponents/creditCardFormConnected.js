@@ -5,7 +5,6 @@ import ccForm from '../components/creditCardForm'
 import validator from 'payment'
 import ccActions from '../actions/creditCardActions'
 import {connect} from 'react-redux'
-import {Actions} from 'react-native-router-flux'
 import {addSpaces} from '../middleware/cardValidationThunks'
 import creditCardFormThunk from '../middleware/creditCardFormThunk'
 
@@ -28,7 +27,8 @@ const mapStateToProps = state => {
     ccvValid: validator.fns.validateCardCVC(state.creditCard.ccv || ''),
     zip: state.creditCard.zip,
     zipValid: validateZip(state.creditCard.zip),
-    brand: validator.fns.cardType(state.creditCard.cardNumber || '')
+    brand: validator.fns.cardType(state.creditCard.cardNumber || ''),
+    isTokenizing: state.creditCardTokenizing
   }
 };
 

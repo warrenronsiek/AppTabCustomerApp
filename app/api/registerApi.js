@@ -19,5 +19,5 @@ const registerProcessor = (resBody) => {
   }
 };
 
-// invoke with object {email, name, password}
+// invoke with object {email, name, password, phoneNumber, deviceToken}
 export default requester('/register', 'UserRegistrationSuccessful', 'RegistrationFailed', registerProcessor, false)

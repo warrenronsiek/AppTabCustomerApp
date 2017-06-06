@@ -56,3 +56,8 @@ export const updateStripeToken = (token) => {
   return {type: UPDATE_STRIPE_TOKEN, token}
 };
 
+export const SET_DEVICE_TOKEN = 'SET_DEVICE_TOKEN';
+export const setDeviceToken = (deviceToken) => {
+  return {type: SET_DEVICE_TOKEN, deviceToken}
+};
+

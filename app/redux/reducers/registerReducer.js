@@ -12,10 +12,12 @@ import {
   UNKNOWN_ERROR,
   REGISTERING,
   REGISTERING_FINISHED,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  UPDATE_PHONE_NUMBER
 } from '../actions/registerActions';
 
-export const registerParams = (state = {name: 'Warren3', email: 'wronsiek@gmail.com', password: 'P@33word', confirmPassword:'P@33word'}, action) => {
+
+export const registerParams = (state = {name: 'Warren', email: 'warren@apptab.io', phoneNumber: '(510) 883-4346', password: 'P@33word', confirmPassword: 'P@33word'}, action) => {
   switch (action.type) {
     case UPDATE_NAME:
       return {...state, name: action.name};
@@ -25,6 +27,9 @@ export const registerParams = (state = {name: 'Warren3', email: 'wronsiek@gmail.
       return {...state, confirmPassword: action.confirmPassword};
     case UPDATE_PASSWORD:
       return {...state, password: action.password};
+    case UPDATE_PHONE_NUMBER:
+      console.log(action);
+      return {...state, phoneNumber: action.phoneNumber};
     default:
       return state
   }

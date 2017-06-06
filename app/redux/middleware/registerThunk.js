@@ -8,12 +8,14 @@ import {registering, clearErrors, networkError, userExistsError, registeringFini
 import {updateAuth, updateStripeToken} from '../actions/loginActions'
 import {Actions} from 'react-native-router-flux'
 import logger from '../../api/loggingApi'
+import phoneFormatter from 'phone-formatter'
 
-export default registerThunk = (name, email, password) => (dispatch, getState) => {
+export default registerThunk = (name, email, password, phoneNumber) => (dispatch, getState) => {
+  const deviceToken = getState().deviceToken;
   Promise.resolve(dispatch(clearErrors()))
     .then(() => Promise.resolve(dispatch(registering())))
     .then(res => {
-      return registerRequest({email, name, password})
+      return registerRequest({email, name, password, deviceToken, phoneNumber: '+1' + phoneFormatter.normalize(phoneNumber)})
     })
     .then(res => {
       return loginRequest(email, password)

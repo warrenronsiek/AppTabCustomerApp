@@ -36,6 +36,11 @@ const ccTokenApiQueried = handleAction(ccActions.apiQueried, {
   throw: (state, action) => state
 }, false);
 
+const creditCardTokenizing = handleAction(ccActions.real.tokenizing, {
+  next: (state = false, action) => action.payload,
+  throw: (state, action) => state
+}, false);
+
 const paymentStatus = handleActions({
   [ccActions.payment.processing]: (state, action) => ({processing: true, failure: null, success: null}),
   [ccActions.payment.failure]: (state, action) => ({failure: true, success: null, processing: false}),
@@ -43,4 +48,4 @@ const paymentStatus = handleActions({
   [ccActions.payment.reset]: (state, action) => ({processing: false, success: null, failure: null})
 }, {processing: false, success: null, failure: null});
 
-export {creditCard, ccTokens, ccTokenApiQueried, paymentStatus}
+export {creditCard, ccTokens, ccTokenApiQueried, paymentStatus, creditCardTokenizing}

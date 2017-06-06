@@ -12,7 +12,8 @@ export default ccActions = createActions({
       CCV: number => number,
       ZIP: number => number
     },
-    WIPE: cardNumber => cardNumber
+    WIPE: cardNumber => cardNumber,
+    TOKENIZING: isTokenizing => isTokenizing
   },
   TOKEN: {
     ADD: (ccToken, last4, brand, exp_month, exp_year) => ({ccToken, last4, brand, exp_month, exp_year}),

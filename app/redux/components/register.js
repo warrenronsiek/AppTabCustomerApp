@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   iconSubContainer: {
     flex: 1,
@@ -61,8 +61,11 @@ const styles = StyleSheet.create({
 });
 
 
-
-const register = ({updateName, updateEmail, updatePassword, updateConfirmPassword, name, email, password, confirmPassword, registerUser, networkError, userExistsError, unknownError, registering}) => (
+const register = ({
+                    updatePhoneNumber, phoneNumber, updateName, updateEmail, updatePassword, updateConfirmPassword,
+                    name, email, password, confirmPassword, registerUser, networkError, userExistsError, unknownError,
+                    registering
+                  }) => (
   <View style={styles.container}>
     <View style={styles.welcomeContainer}>
       <Text style={styles.welcome}>
@@ -78,6 +81,9 @@ const register = ({updateName, updateEmail, updatePassword, updateConfirmPasswor
           <EnytpoIcon name="user" size={30}/>
         </View>
         <View style={styles.iconSubContainer}>
+          <MaterialIcon name="phone" size={30}/>
+        </View>
+        <View style={styles.iconSubContainer}>
           <MaterialIcon name="email" size={30}/>
         </View>
         <View style={styles.iconSubContainer}>
@@ -89,21 +95,23 @@ const register = ({updateName, updateEmail, updatePassword, updateConfirmPasswor
       </View>
       <View style={styles.textInputContainer}>
         <TextInput style={styles.textInputBox} onChangeText={text => updateName(text)} autoCapitalize='words'
-                   autoCorrect={false} value={name} defaultValue="your name"/>
+                   autoCorrect={false} value={name} placeholder="your name"/>
+        <TextInput style={styles.textInputBox} onChangeText={text => updatePhoneNumber(text)} autoCapitalize='words'
+                   autoCorrect={false} value={phoneNumber} placeholder="(123) 456-7890" keyboardType='phone-pad'/>
         <TextInput style={styles.textInputBox} onChangeText={text => updateEmail(text)} autoCapitalize='none'
-                   autoCorrect={false} value={email} defaultValue="email"/>
+                   autoCorrect={false} value={email} placeholder="email (optional)"/>
         <TextInput style={styles.textInputBox} onChangeText={text => updatePassword(text)} autoCapitalize='none'
-                   autoCorrect={false} value={password} defaultValue="password"/>
+                   autoCorrect={false} value={password} placeholder="password"/>
         <TextInput style={styles.textInputBox} onChangeText={text => updateConfirmPassword(text)} autoCapitalize='none'
-                   autoCorrect={false} value={confirmPassword} defaultValue="confirm password"/>
+                   autoCorrect={false} value={confirmPassword} placeholder="confirm password"/>
       </View>
     </View>
     <View style={styles.buttonContainer}>
       {registering
         ? <Spinner/>
-        : <Button onPress={() => registerUser(name, email, password)} title="Register"
-                  disabled={password !== confirmPassword}/>}
-      {(password === confirmPassword) && !registering
+        : <Button onPress={() => registerUser(name, email, password, phoneNumber)} title="Register"
+                  disabled={(password !== confirmPassword) || name === undefined || password === undefined || phoneNumber.length !== 14}/>}
+      {(password === confirmPassword) && password !== undefined && !registering
         ? <Text>Passwords Match!</Text>
         : <Text>Passwords dont match!</Text>}
       {(networkError && !registering) ? <Text>Networking Error!</Text> : null}
@@ -126,6 +134,8 @@ register.propTypes = {
   networkError: PropTypes.bool,
   userExistsError: PropTypes.bool,
   unknownError: PropTypes.bool,
-  registering: PropTypes.bool
+  registering: PropTypes.bool,
+  phoneNumber: PropTypes.string,
+  updatePhoneNumber: PropTypes.func.isRequired
 };
 export default register

@@ -2,10 +2,10 @@
  * Created by warren on 4/2/17.
  */
 import React, {PropTypes} from 'react'
-import {View, Text, TextInput, StyleSheet, Button, Image} from 'react-native'
+import {View, Text, TextInput, StyleSheet, Image} from 'react-native'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
-import OcticonIcon from 'react-native-vector-icons/Octicons'
-import validator from 'payment'
+import Spinner from '../../common/spinner'
+import Button from '../../common/button'
 
 const styles = StyleSheet.create({
   container: {
@@ -24,7 +24,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   numberInputContainer: {
     flex: 1,
@@ -108,7 +109,8 @@ const PaymentImage = ({brand}) => {
 
 const ccForm = ({
                   ccNumber, ccNumberValid, updateCCNumber, expYear, updateExpYear, expMonth,
-                  updateExpMonth, expiryValid, ccv, ccvValid, updateCCV, zip, zipValid, updateZip, brand, submit
+                  updateExpMonth, expiryValid, ccv, ccvValid, updateCCV, zip, zipValid, updateZip, brand, submit,
+                  isTokenizing
                 }) => (
   <View style={styles.container}>
     <View style={styles.cardImageContainer}>
@@ -141,7 +143,10 @@ const ccForm = ({
       </View>
     </View>
     <View style={styles.buttonContainer}>
-      <Button onPress={() => submit(ccNumber, expMonth, expYear, ccv)} title="Done" disabled={!(ccNumberValid && expiryValid && ccvValid)}/>
+      {isTokenizing
+        ? <Spinner/>
+        : <Button onPress={() => submit(ccNumber, expMonth, expYear, ccv)} title="Done"
+                  disabled={!(ccNumberValid && expiryValid && ccvValid)}/>}
     </View>
   </View>
 );
@@ -162,7 +167,8 @@ ccForm.propTypes = {
   zipValid: PropTypes.bool,
   updateZip: PropTypes.func.isRequired,
   brand: PropTypes.string,
-  submit: PropTypes.func.isRequired
+  submit: PropTypes.func.isRequired,
+  isTokenizing: PropTypes.bool.isRequired
 };
 
 export default ccForm

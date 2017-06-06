@@ -11,7 +11,8 @@ import {
   UPDATE_PASSWORD,
   UPDATE_STRIPE_TOKEN,
   LOGIN_COMPLETE,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  SET_DEVICE_TOKEN
 } from '../actions/loginActions';
 
 export const auth = (state = {}, action) => {
@@ -69,3 +70,12 @@ export const stripeToken = (state = '', action) => {
       return state
   }
 };
+
+export const deviceToken = (state = '', action) => {
+  switch (action.type) {
+    case SET_DEVICE_TOKEN:
+      return action.token;
+    default:
+      return state
+  }
+}
