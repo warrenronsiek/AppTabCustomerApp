@@ -74,7 +74,7 @@ export const stripeToken = (state = '', action) => {
 export const deviceToken = (state = '', action) => {
   switch (action.type) {
     case SET_DEVICE_TOKEN:
-      return action.token;
+      return action.deviceToken;
     default:
       return state
   }
