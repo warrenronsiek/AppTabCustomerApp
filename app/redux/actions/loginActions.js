@@ -46,9 +46,9 @@ export const updatePassword = (password) => {
     return {type: UPDATE_PASSWORD, password}
 };
 
-export const UPDATE_EMAIL = 'UPDATE_EMAIL';
-export const updateEmail = (email) => {
-    return {type: UPDATE_EMAIL, email}
+export const UPDATE_PHONE_NUMBER = 'UPDATE_PHONE_NUMBER';
+export const updatePhoneNumber = (phoneNumber) => {
+  return {type: UPDATE_PHONE_NUMBER, phoneNumber}
 };
 
 export const UPDATE_STRIPE_TOKEN = 'UPDATE_STRIPE_TOKEN';

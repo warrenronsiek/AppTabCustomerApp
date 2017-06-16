@@ -15,13 +15,14 @@ import loginRequest from '../../api/loginApi'
 import getStripeToken from '../../api/getStripeToken'
 import {Actions} from 'react-native-router-flux'
 import logger from '../../api/loggingApi'
+import phoneFormatter from 'phone-formatter'
 
-export default loginThunk = (email, password) => (dispatch, getState) => {
+export default loginThunk = (phoneNumber, password) => (dispatch, getState) => {
   let customerId;
   Promise.resolve(dispatch(clearErrors()))
     .then(res => Promise.resolve(dispatch(loggingIn())))
     .then(res => {
-      return loginRequest({email, password})
+      return loginRequest({phoneNumber: phoneFormatter.normalize(phoneNumber), password})
     })
     .then(res => {
       return Promise.resolve(dispatch(updateAuth(res.accessToken, res.idToken, res.refreshToken, res.userName, res.customerId)))

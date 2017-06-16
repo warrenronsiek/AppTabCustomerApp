@@ -7,7 +7,7 @@ import {
   VALIDATION_ERROR,
   NETWORK_ERROR,
   UNKNOWN_ERROR,
-  UPDATE_EMAIL,
+  UPDATE_PHONE_NUMBER,
   UPDATE_PASSWORD,
   UPDATE_STRIPE_TOKEN,
   LOGIN_COMPLETE,
@@ -51,10 +51,10 @@ export const loginState = (state = {}, action) => {
   }
 };
 
-export const loginParams = (state = {email: 'wronsiek@gmail.com', password: 'P@33word'}, action) => {
+export const loginParams = (state = {phoneNumber: '(510) 883-4346', password: 'P@33word'}, action) => {
   switch (action.type) {
-    case UPDATE_EMAIL:
-      return {...state, email: action.email};
+    case UPDATE_PHONE_NUMBER:
+      return {...state, phoneNumber: action.phoneNumber};
     case UPDATE_PASSWORD:
       return {...state, password: action.password};
     default:

@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const login = ({validationError, networkError, unknownError, loggingIn, email, password, updateEmail, updatePassword, onLogin, navToRegister}) => (
+const login = ({validationError, networkError, unknownError, loggingIn, phoneNumber, password, updatePhoneNumber, updatePassword, onLogin, navToRegister}) => (
   <View style={styles.container}>
     <View style={styles.welcomeContainer}>
       <Text style={styles.welcome}>
@@ -78,24 +78,24 @@ const login = ({validationError, networkError, unknownError, loggingIn, email, p
     <View style={styles.textContainer}>
       <View style={styles.iconContainer}>
         <View style={styles.iconSubContainer}>
-          <MaterialIcon name="email" size={30}/>
+          <MaterialIcon name="phone" size={30}/>
         </View>
         <View style={styles.iconSubContainer}>
           <EnytpoIcon name="key" size={30}/>
         </View>
       </View>
       <View style={styles.textInputContainer}>
-        <TextInput style={styles.textInputBox} value={email} defaultValue="email address" autoCapitalize='none'
+        <TextInput style={styles.textInputBox} value={phoneNumber} placeholder="(123) 456-7890" autoCapitalize='none'
                    autoCorrect={false}
-                   onChangeText={(text) => updateEmail(text)}/>
+                   onChangeText={(text) => updatePhoneNumber(text)}/>
 
-        <TextInput style={styles.textInputBox} value={password} defaultValue="password" autoCapitalize='none'
+        <TextInput style={styles.textInputBox} value={password} placeholder="password" autoCapitalize='none'
                    autoCorrect={false}
                    onChangeText={(text) => updatePassword(text)}/>
       </View>
     </View>
     <View style={styles.buttonContainer}>
-      {!loggingIn ? <Button onPress={() => onLogin(email, password)} title="Login" style={{marginBottom:10}}/> : null}
+      {!loggingIn ? <Button onPress={() => onLogin(phoneNumber, password)} title="Login" style={{marginBottom:10}}/> : null}
       {!loggingIn ? <Button onPress={navToRegister} title="Register"/> : null}
       {validationError ? <Text>Oops! Wrong username or password!</Text> : null}
       {networkError ? <Text>Networking Error!</Text> : null}
@@ -110,9 +110,9 @@ login.propTypes = {
   networkError: PropTypes.bool,
   unknownError: PropTypes.bool,
   loggingIn: PropTypes.bool,
-  email: PropTypes.string,
+  phoneNumber: PropTypes.string,
   password: PropTypes.string,
-  updateEmail: PropTypes.func.isRequired,
+  updatePhoneNumber: PropTypes.func.isRequired,
   updatePassword: PropTypes.func.isRequired,
   onLogin: PropTypes.func.isRequired,
   navToRegister: PropTypes.func.isRequired

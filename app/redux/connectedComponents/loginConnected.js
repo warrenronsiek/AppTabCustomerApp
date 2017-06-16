@@ -3,7 +3,7 @@
  */
 import {connect} from 'react-redux';
 import {
-  updateEmail,
+  updatePhoneNumber,
   updatePassword
 } from '../actions/loginActions';
 import loginThunk from '../middleware/loginThunk';
@@ -16,16 +16,16 @@ const mapStateToProps = (state) => {
     networkError: state.loginState.networkError,
     unknownError: state.loginState.unknownError,
     loggingIn: state.loginState.loggingIn,
-    email: state.loginParams.email,
+    phoneNumber: state.loginParams.phoneNumber,
     password: state.loginParams.password
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateEmail: (email) => dispatch(updateEmail(email)),
+    updatePhoneNumber: (phoneNumber) => dispatch(updatePhoneNumber(phoneNumber)),
     updatePassword: (password) => dispatch(updatePassword(password)),
-    onLogin: (email, password) => dispatch(loginThunk(email, password)),
+    onLogin: (phoneNumber, password) => dispatch(loginThunk(phoneNumber, password)),
     navToRegister: () => Actions.register()
   }
 };
