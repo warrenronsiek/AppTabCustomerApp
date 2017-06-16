@@ -30,4 +30,5 @@ const loginProcessor = (resBody) => {
   }
 };
 
+// invoke with {phoneNumber, password}
 export default requester('/login', 'LoginSuccessful', 'login failure', loginProcessor, false)

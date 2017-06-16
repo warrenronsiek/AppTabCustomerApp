@@ -13,11 +13,20 @@ import {
   REGISTERING,
   REGISTERING_FINISHED,
   CLEAR_ERRORS,
-  UPDATE_PHONE_NUMBER
+  UPDATE_PHONE_NUMBER,
+  UPDATE_CONFIRMATION_CODE,
+  CONFIRMATION_CODE_PROCESSING,
+  CONFIRMATION_CODE_PROCESSING_FINISHED
 } from '../actions/registerActions';
 
 
-export const registerParams = (state = {name: 'Warren', email: 'warren@apptab.io', phoneNumber: '(510) 883-4346', password: 'P@33word', confirmPassword: 'P@33word'}, action) => {
+export const registerParams = (state = {
+  name: 'Warren',
+  email: 'warren@apptab.io',
+  phoneNumber: '(510) 883-4346',
+  password: 'P@33word',
+  confirmPassword: 'P@33word'
+}, action) => {
   switch (action.type) {
     case UPDATE_NAME:
       return {...state, name: action.name};
@@ -49,6 +58,19 @@ export const registerState = (state = {}, action) => {
       return {...state, registering: false};
     case CLEAR_ERRORS:
       return {...state, networkError: false, userExistsError: false, unknownError: false};
+    case CONFIRMATION_CODE_PROCESSING:
+      return {...state, confirmationCodeProcessing: true};
+    case CONFIRMATION_CODE_PROCESSING_FINISHED:
+      return {...state, confirmationCodeProcessing: false};
+    default:
+      return state
+  }
+};
+
+export const confirmationCode = (state = "", action) => {
+  switch (action.type) {
+    case UPDATE_CONFIRMATION_CODE:
+      return action.confirmationCode;
     default:
       return state
   }

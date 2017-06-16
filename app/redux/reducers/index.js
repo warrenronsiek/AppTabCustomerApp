@@ -3,7 +3,7 @@
  */
 import {combineReducers} from 'redux';
 import {auth, loginParams, loginState, stripeToken, deviceToken} from './loginReducer'
-import {registerParams, registerState} from './registerReducer'
+import {registerParams, registerState, confirmationCode} from './registerReducer'
 import {nodes, activeNode} from './nodeReducer'
 import {menu, menuQueryStatus} from './menuReducer'
 import {cart, additionalCosts} from './cartReducer'
@@ -27,5 +27,6 @@ export default combineReducers({
   ccTokenApiQueried,
   additionalCosts,
   paymentStatus,
-  creditCardTokenizing
+  creditCardTokenizing,
+  confirmationCode
 });

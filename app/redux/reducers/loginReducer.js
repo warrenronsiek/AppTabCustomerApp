@@ -78,4 +78,4 @@ export const deviceToken = (state = '', action) => {
     default:
       return state
   }
-}
+};

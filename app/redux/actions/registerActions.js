@@ -57,5 +57,19 @@ export const clearErrors = () => {
   return {type: CLEAR_ERRORS, }
 };
 
+export const UPDATE_CONFIRMATION_CODE = 'UPDATE_CONFIRMATION_CODE';
+export const updateConfirmationCode = (confirmationCode) => {
+  return {type: UPDATE_CONFIRMATION_CODE, confirmationCode}
+};
+
+export const CONFIRMATION_CODE_PROCESSING = 'CONFIRMATION_CODE_PROCESSING';
+export const confirmationCodeProcessing = () => {
+  return {type: CONFIRMATION_CODE_PROCESSING, }
+};
+
+export const CONFIRMATION_CODE_PROCESSING_FINISHED = 'CONFIRMATION_CODE_PROCESSING_FINISHED';
+export const confirmationCodeProcessingFinished = () => {
+  return {type: CONFIRMATION_CODE_PROCESSING_FINISHED, }
+};
 
 

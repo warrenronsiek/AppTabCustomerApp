@@ -3,5 +3,5 @@
  */
 import requester from './requester'
 
-//pass object of shape {customerId, email}
+//pass object of shape {customerId}
 export default requester('/stripe-create-customer', 'StripeClientCreationSuccessful', 'Stripe failed to create customer')

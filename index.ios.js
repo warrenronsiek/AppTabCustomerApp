@@ -15,6 +15,7 @@ import AppetizerScene from './app/scenes/appetizerScene'
 import CheckoutScene from './app/scenes/checkoutScene'
 import DessertScene from './app/scenes/dessertScene'
 import CardFormScene from './app/scenes/creditCardFormScene'
+import ConfirmCodeScene from './app/scenes/confirmationCodeEntryScene'
 import CartScene from './app/scenes/cartScene'
 import EntypoIcons from 'react-native-vector-icons/Entypo'
 import Ionicon from 'react-native-vector-icons/Ionicons'
@@ -42,6 +43,7 @@ export default class AppTabCustomerApp extends Component {
         <RouterWithRedux>
           <Scene key="login" component={Login} title="Login"/>
           <Scene key="register" component={Register} title="Register"/>
+          <Scene key="code" component={ConfirmCodeScene} title="Confirm Code"/>
           <Scene key="nodes" component={Nodes} title="Table Selection" type={ActionConst.RESET}/>
           <Scene key="tabs" tabs={true} type={ActionConst.RESET}>
             <Scene key="request" component={Request} title="Service Request" icon={bell} initial={true}

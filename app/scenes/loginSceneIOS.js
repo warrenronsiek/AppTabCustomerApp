@@ -16,9 +16,11 @@ class LoginScene extends Component {
   componentWillMount() {
     PushNotificationIOS.requestPermissions();
     PushNotificationIOS.addEventListener('register', (token) => {
-      console.log(token);
       this.props.dispatch(setDeviceToken(token))
     });
+    PushNotificationIOS.addEventListener('notification', (notification) => {
+      console.log(notification);
+    })
   }
 
   render() {
