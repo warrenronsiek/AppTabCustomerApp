@@ -72,4 +72,9 @@ export const confirmationCodeProcessingFinished = () => {
   return {type: CONFIRMATION_CODE_PROCESSING_FINISHED, }
 };
 
+export const WRONG_CONFIRMATION_CODE = 'WRONG_CONFIRMATION_CODE';
+export const wrongConfirmationCode = () => {
+  return {type: WRONG_CONFIRMATION_CODE, }
+};
+
 

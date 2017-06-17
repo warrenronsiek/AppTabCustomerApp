@@ -8,7 +8,15 @@ import {updateAuth, updateStripeToken} from '../actions/loginActions'
 import logger from '../../api/loggingApi'
 import confirmRegistration from '../../api/confirmRegistration'
 import stripeCreateCustomerApi from '../../api/stripeCreateCustomerApi'
-import {confirmationCodeProcessing, confirmationCodeProcessingFinished, registeringFinished} from '../actions/registerActions'
+import {
+  confirmationCodeProcessing,
+  confirmationCodeProcessingFinished,
+  registeringFinished,
+  wrongConfirmationCode,
+  unknownError,
+  networkError,
+  clearErrors
+} from '../actions/registerActions'
 import phoneFormatter from 'phone-formatter'
 
 const confirmCodeThunk = (confirmationCode) => (dispatch, getState) => {
@@ -25,11 +33,24 @@ const confirmCodeThunk = (confirmationCode) => (dispatch, getState) => {
       return stripeCreateCustomerApi({customerId: state.auth.customerId})
     })
     .then(res => Promise.resolve(dispatch(updateStripeToken(res.stripeToken))))
+    .then(() => dispatch(clearErrors()))
     .then(() => Actions.nodes())
     .then(() => dispatch(confirmationCodeProcessingFinished()))
     .then(() => dispatch(registeringFinished()))
     .catch(err => {
-      logger('error in confirmCodeThunk', err)
+      dispatch(confirmationCodeProcessingFinished());
+      switch (err.name) {
+        case 'WrongConfirmationCode':
+          dispatch(wrongConfirmationCode());
+          break;
+        case 'NetworkError':
+          dispatch(networkError());
+          break;
+        default:
+          logger('unknown error in confirmCodeThunk', err);
+          dispatch(unknownError());
+          break;
+      }
     })
 };
 

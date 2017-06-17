@@ -9,7 +9,10 @@ import codeConfirmThunk from '../middleware/codeConfirmThunk'
 
 const mapStateToProps = (state) => ({
   confirmationCode: state.confirmationCode,
-  processing: state.registerState.confirmationCodeProcessing
+  processing: state.registerState.confirmationCodeProcessing,
+  wrongConfirmationCode: state.registerState.wrongConfirmationCode,
+  networkError: state.registerState.networkError,
+  unknownError: state.registerState.unknownError
 });
 
 const mapDispatchToProps = (dispatch) => ({

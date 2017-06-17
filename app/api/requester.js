@@ -25,7 +25,6 @@ const requester = (apiPath, successMessage, errorMessage, responseProcessor, all
 
     const desiredFetch = () => fetch(url + apiPath, desiredFetchParams)
       .then(res => {
-        console.log(res);
         if (res.ok) {
           return res._bodyText
         } else {

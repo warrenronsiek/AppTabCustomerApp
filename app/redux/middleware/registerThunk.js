@@ -14,10 +14,10 @@ export default registerThunk = (name, email, password, phoneNumber) => (dispatch
     .then(res => {
       return registerRequest({email, name, password, deviceToken, phoneNumber: '+1' + phoneFormatter.normalize(phoneNumber)})
     })
+    .then(() => dispatch(clearErrors()))
     .then(res => Actions.code())
     .then(() => dispatch(registeringFinished()))
     .catch(err => {
-      console.log('catching registration error', err);
       dispatch(registeringFinished());
       logger('error registering', err);
       switch (err.name) {

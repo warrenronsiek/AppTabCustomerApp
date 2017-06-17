@@ -16,7 +16,8 @@ import {
   UPDATE_PHONE_NUMBER,
   UPDATE_CONFIRMATION_CODE,
   CONFIRMATION_CODE_PROCESSING,
-  CONFIRMATION_CODE_PROCESSING_FINISHED
+  CONFIRMATION_CODE_PROCESSING_FINISHED,
+  WRONG_CONFIRMATION_CODE
 } from '../actions/registerActions';
 
 
@@ -57,11 +58,13 @@ export const registerState = (state = {}, action) => {
     case REGISTERING_FINISHED:
       return {...state, registering: false};
     case CLEAR_ERRORS:
-      return {...state, networkError: false, userExistsError: false, unknownError: false};
+      return {...state, networkError: false, userExistsError: false, unknownError: false, wrongConfirmationCode: false};
     case CONFIRMATION_CODE_PROCESSING:
       return {...state, confirmationCodeProcessing: true};
     case CONFIRMATION_CODE_PROCESSING_FINISHED:
       return {...state, confirmationCodeProcessing: false};
+    case WRONG_CONFIRMATION_CODE:
+      return {...state, wrongConfirmationCode: true};
     default:
       return state
   }

@@ -11,7 +11,6 @@ const registerErrorProcessor = (resBody) => {
     case undefined:
       return resBody;
     case 'UsernameExistsException':
-      console.log('throwing user exists');
       throw new UserExistsError(resBody);
       break;
     default:

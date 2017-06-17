@@ -27,10 +27,15 @@ const styles = StyleSheet.create({
     width: 70,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: 'grey'
+  },
+  errorMessageContainer: {
+    flex:1,
+    justifyContent: 'flex-start',
+    alignItems: 'center'
   }
 });
 
-const confirmationCodeEntry = ({confirmationCode, updateConfirmationCode, codeEntryComplete, processing}) => (
+const confirmationCodeEntry = ({confirmationCode, updateConfirmationCode, codeEntryComplete, processing, wrongConfirmationCode, networkError, unknownError}) => (
   <View style={styles.container}>
     <View style={styles.textInputContainer}>
       <TextInput value={confirmationCode} placeholder="123456" keyboardType='phone-pad' style={styles.textInputBox}
@@ -41,6 +46,17 @@ const confirmationCodeEntry = ({confirmationCode, updateConfirmationCode, codeEn
         ? <Spinner/>
         : <Button onPress={() => codeEntryComplete(confirmationCode)} title="Finished" style={{marginTop: 30}}/>}
     </View>
+    <View style={styles.errorMessageContainer}>
+      {wrongConfirmationCode
+        ? <Text>Wrong confirmation code. Please try again.</Text>
+        : null}
+      {networkError
+        ? <Text>Network Error. Please try again.</Text>
+        : null}
+      {unknownError
+        ? <Text>AAAAA! PANIC!</Text>
+        : null}
+    </View>
   </View>
 );
 
@@ -48,7 +64,10 @@ confirmationCodeEntry.propTypes = {
   confirmationCode: PropTypes.string,
   updateConfirmationCode: PropTypes.func.isRequired,
   codeEntryComplete: PropTypes.func.isRequired,
-  processing: PropTypes.bool
+  processing: PropTypes.bool,
+  wrongConfirmationCode: PropTypes.bool,
+  networkError: PropTypes.bool,
+  unknownError: PropTypes.bool
 };
 
 export default confirmationCodeEntry
