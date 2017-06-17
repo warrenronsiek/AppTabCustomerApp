@@ -6,18 +6,19 @@ import UnknownError from '../errors/unknownError'
 import logger from './loggingApi'
 import requester from './requester'
 
-const registerProcessor = (resBody) => {
+const registerErrorProcessor = (resBody) => {
   switch (resBody.code) {
     case undefined:
       return resBody;
     case 'UsernameExistsException':
-      throw new UserExistsError(body);
+      console.log('throwing user exists');
+      throw new UserExistsError(resBody);
       break;
     default:
       logger('/register wrong response', resBody, 'registerApi.js');
-      throw new UnknownError('unknown registration error', body)
+      throw new UnknownError('unknown registration error', resBody)
   }
 };
 
 // invoke with object {email, name, password, phoneNumber, deviceToken}
-export default requester('/register', 'UserRegistrationSuccessful', 'RegistrationFailed', registerProcessor, false)
+export default requester('/register', 'UserRegistrationSuccessful', 'RegistrationFailed', null, false, registerErrorProcessor)

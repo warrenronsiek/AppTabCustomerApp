@@ -8,7 +8,7 @@ import decode from 'jwt-decode'
 import store from '../redux/store'
 import {updateAuth} from '../redux/actions/loginActions'
 
-const requester = (apiPath, successMessage, errorMessage, requestProcessor, allowTokenRefresh = true) => (postBody) => {
+const requester = (apiPath, successMessage, errorMessage, responseProcessor, allowTokenRefresh = true, errorProcessor) => (postBody) => {
     const state = store.getState();
     const desiredFetchParams = {
       method: 'POST', headers: {'Authorization': state.auth.idToken}, body: JSON.stringify(postBody)
@@ -25,6 +25,7 @@ const requester = (apiPath, successMessage, errorMessage, requestProcessor, allo
 
     const desiredFetch = () => fetch(url + apiPath, desiredFetchParams)
       .then(res => {
+        console.log(res);
         if (res.ok) {
           return res._bodyText
         } else {
@@ -35,7 +36,9 @@ const requester = (apiPath, successMessage, errorMessage, requestProcessor, allo
       .then(body => {
           const resBody = JSON.parse(body);
           if (resBody.message === successMessage) {
-            return requestProcessor ? requestProcessor(resBody) : resBody
+            return responseProcessor ? responseProcessor(resBody) : resBody
+          } else if (errorProcessor) {
+            return errorProcessor(resBody)
           } else {
             logger(apiPath + ' wrong response', resBody);
             throw new Error(errorMessage, body)
