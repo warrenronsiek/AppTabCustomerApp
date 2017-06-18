@@ -1,6 +1,7 @@
 import store from './app/redux/store'
 import React, {Component} from 'react'
-import {AppRegistry, Text} from 'react-native'
+import {AppRegistry} from 'react-native'
+import BackButton from './app/common/tabBarBackButton'
 import {Provider, connect} from 'react-redux'
 import {Router, Scene, Actions, ActionConst} from 'react-native-router-flux'
 import Login from './app/scenes/loginSceneIOS'
@@ -23,14 +24,12 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 const RouterWithRedux = connect()(Router);
 
-const textIcon = ({title, selected}) => <Text style={{color: selected ? 'red' : 'black'}}>{title}</Text>;
 const cocktail = ({selected}) => <EntypoIcons name="drink" size={31} color={selected ? '#6495ED' : 'black'}/>;
 const drink = ({selected}) => <MaterialIcons name="local-drink" size={35} color={selected ? '#6495ED' : 'black'}/>;
 const main = ({selected}) => <MaterialIcons name="local-dining" size={37} color={selected ? '#6495ED' : 'black'}/>;
 const dessert = ({selected}) => <Ionicon name="ios-ice-cream" size={36} color={selected ? '#6495ED' : 'black'}/>;
 const bell = ({selected}) => <Ionicon name="ios-notifications" size={40} color={selected ? '#6495ED' : 'black'}/>;
 const carrot = ({selected}) => <Ionicon name="ios-nutrition" size={40} color={selected ? '#6495ED' : 'black'}/>;
-
 
 export default class AppTabCustomerApp extends Component {
   constructor(props) {
@@ -47,17 +46,17 @@ export default class AppTabCustomerApp extends Component {
           <Scene key="nodes" component={Nodes} title="Table Selection" type={ActionConst.RESET}/>
           <Scene key="tabs" tabs={true} type={ActionConst.RESET}>
             <Scene key="request" component={Request} title="Service Request" icon={bell} initial={true}
-                   onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
+                   renderBackButton={BackButton}/>
             <Scene key="drinks" component={DrinkScene} title="Drinks" icon={drink}
-                   onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
+                   renderBackButton={BackButton}/>
             <Scene key="main" component={MainCourseScene} title="Main Course" icon={main}
-                   onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
+                   renderBackButton={BackButton}/>
             <Scene key="alcohol" component={AlcoholScene} title="Alcohol" icon={cocktail}
-                   onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
+                   renderBackButton={BackButton}/>
             <Scene key="dessert" component={DessertScene} title="Dessert" icon={dessert}
-                   onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
+                   renderBackButton={BackButton}/>
             <Scene key="appetizer" component={AppetizerScene} title="Appetizer" icon={carrot}
-                   onBack={() => Actions.nodes(ActionConst.REFRESH)}/>
+                   renderBackButton={BackButton}/>
           </Scene>
           <Scene key="placeholder" component={Placeholder} title="Placeholder"/>
           <Scene key="cart" component={CartScene} title="Cart"/>

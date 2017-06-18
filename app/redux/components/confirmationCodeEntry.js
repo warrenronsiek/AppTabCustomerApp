@@ -17,29 +17,39 @@ const styles = StyleSheet.create({
   },
   textInputContainer: {
     flex: 1,
-    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: 'grey',
+    maxHeight: 40,
+    borderBottomColor: 'grey',
+    borderBottomWidth: StyleSheet.hairlineWidth
   },
   textInputBox: {
     height: 40,
     maxHeight: 40,
     flex: 1,
     width: 70,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: 'grey'
+    textAlign: 'center'
   },
   errorMessageContainer: {
     flex:1,
     justifyContent: 'flex-start',
     alignItems: 'center'
+  },
+  paddingBox: {
+    flex: 1
   }
 });
 
 const confirmationCodeEntry = ({confirmationCode, updateConfirmationCode, codeEntryComplete, processing, wrongConfirmationCode, networkError, unknownError}) => (
   <View style={styles.container}>
+    <View style={styles.paddingBox}/>
     <View style={styles.textInputContainer}>
+
       <TextInput value={confirmationCode} placeholder="123456" keyboardType='phone-pad' style={styles.textInputBox}
-                 onChangeText={text => updateConfirmationCode(text)}/>
+                 onChangeText={text => updateConfirmationCode(text)} maxLength={6}/>
     </View>
     <View style={styles.buttonContainer}>
       {processing

@@ -144,7 +144,7 @@ const ccForm = ({
     </View>
     <View style={styles.buttonContainer}>
       {isTokenizing
-        ? <Spinner/>
+        ? <Spinner style={{marginTop: 20}}/>
         : <Button onPress={() => submit(ccNumber, expMonth, expYear, ccv)} title="Done"
                   disabled={!(ccNumberValid && expiryValid && ccvValid)}/>}
     </View>

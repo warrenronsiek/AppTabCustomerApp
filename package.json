@@ -15,7 +15,7 @@
     "react-native": "^0.44.0",
     "react-native-awesome-card-io": "^0.6.1",
     "react-native-ble": "^1.0.8",
-    "react-native-router-flux": "^3.39.1",
+    "react-native-router-flux": "^3.40.1",
     "react-native-vector-icons": "^4.0.0",
     "react-redux": "^5.0.2",
     "redux": "^3.6.0",
