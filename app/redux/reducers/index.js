@@ -8,6 +8,7 @@ import {nodes, activeNode} from './nodeReducer'
 import {menu, menuQueryStatus} from './menuReducer'
 import {cart, additionalCosts} from './cartReducer'
 import {creditCard, ccTokens, ccTokenApiQueried, paymentStatus, creditCardTokenizing} from './creditCardReducer'
+import {passwordResetData, passwordResetStatus} from './passwordResetReducer'
 
 export default combineReducers({
   auth,
@@ -28,5 +29,7 @@ export default combineReducers({
   additionalCosts,
   paymentStatus,
   creditCardTokenizing,
-  confirmationCode
+  confirmationCode,
+  passwordResetData,
+  passwordResetStatus
 });

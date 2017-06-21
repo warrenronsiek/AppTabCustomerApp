@@ -18,6 +18,7 @@ import DessertScene from './app/scenes/dessertScene'
 import CardFormScene from './app/scenes/creditCardFormScene'
 import ConfirmCodeScene from './app/scenes/confirmationCodeEntryScene'
 import CartScene from './app/scenes/cartScene'
+import ResetPasswordScene from './app/scenes/passwordResetScene'
 import EntypoIcons from 'react-native-vector-icons/Entypo'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -40,6 +41,7 @@ export default class AppTabCustomerApp extends Component {
     return (
       <Provider store={store}>
         <RouterWithRedux>
+          <Scene key="passwordreset" component={ResetPasswordScene} title="Reset Password"/>
           <Scene key="login" component={Login} title="Login"/>
           <Scene key="register" component={Register} title="Register"/>
           <Scene key="code" component={ConfirmCodeScene} title="Confirm Code"/>
