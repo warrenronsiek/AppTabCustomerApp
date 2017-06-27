@@ -10,7 +10,12 @@ export default passwordResetActions = createActions({
     USERNAME: userName => userName,
     CODE: code => code
   },
+  STAGE: {
+    PHONE_NUMBER: bool => bool,
+    CODE_PASSWORD: bool => bool
+  },
   PROCESSING: bool => bool,
   COMPLETE: bool => bool,
-  ERROR: bool => bool
+  ERROR: bool => bool,
+  RESET_STATE: bool => bool
 })
