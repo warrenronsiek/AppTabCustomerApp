@@ -10,7 +10,7 @@ import submitCodePasswordThunk from '../middleware/submitCodePasswordThunk'
 const mapStateToProps = (state) => ({
   password: state.passwordResetData.password,
   userName: state.passwordResetData.userName,
-  code: state.passwordResetData.code || '',
+  code: state.passwordResetData.code,
   error: state.passwordResetStatus.error,
   processing: state.passwordResetStatus.processing,
   stage: state.passwordResetStatus.stage

@@ -6,7 +6,7 @@ import sendPasswordResetCode from '../../api/sendResetPasswordCode'
 
 const submitUserNameThunk = (userName) => (dispatch) => {
   Promise.resolve(dispatch(passwordResetActions.processing()))
-    .then(res => sendPasswordResetCode(userName))
+    .then(res => sendPasswordResetCode({userName}))
     .then(res => Promise.resolve(dispatch(passwordResetActions.resetState())))
     .then(res => Promise.resolve(dispatch(passwordResetActions.stage.codePassword())))
     .catch(err => Promise.resolve(dispatch(passwordResetActions.error())))

@@ -60,23 +60,19 @@ const styles = StyleSheet.create({
   }
 });
 
-const buttonDisabled = (stage, code, userName, password) => {
-  console.log(userName, password, code);
+const renderButton = (stage, code, userName, password, submitPhoneNumber, submitCodePassword) => {
   switch (stage) {
     case 'phoneNumber':
-      if (!userName) {
-        return true
-      } else {
-        return (userName.length === 10);
-      }
+      console.log('rendering phone button', userName);
+      return (
+        <Button onPress={() => submitPhoneNumber(userName)} disabled={!userName ? true : userName.length !== 10}
+                title="Done"/>
+      );
     case 'codePassword':
-      if (!code && !password){
-        return true
-      } else {
-        return (code.length === 6) && (password.length > 3);
-      }
-    default:
-      return true
+      return (
+        <Button onPress={() => submitCodePassword(code, userName, password)} title="Done"
+                disabled={(!code && !password) ? true : (code.length === 6) && (password.length > 3)}/>
+      )
   }
 };
 
@@ -136,19 +132,7 @@ const passwordReset = ({
     </View>
     <View style={styles.buttonContainer}>
       {!processing
-        ? <Button onPress={() => {
-          switch (stage) {
-            case 'codePassword':
-              submitCodePassword(code, password, userName);
-              break;
-            case 'phoneNumber':
-              submitPhoneNumber(userName);
-              break;
-            default:
-              submitPhoneNumber(userName);
-              break;
-          }
-        }} disabled={buttonDisabled(stage, code, userName, password)} title="Done"/>
+        ? renderButton(stage, code, userName, password, submitPhoneNumber, submitCodePassword)
         : <Spinner/>}
       {error
         ? <Text>An Error! Ohes noes!</Text>
