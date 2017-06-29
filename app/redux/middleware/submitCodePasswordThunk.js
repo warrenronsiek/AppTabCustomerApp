@@ -7,7 +7,7 @@ import {Actions} from 'react-native-router-flux'
 
 const submitCodePasswordThunk = (confirmationCode, password, userName) => (dispatch, getState) => {
   Promise.resolve(dispatch(passwordResetActions.processing()))
-    .then(res => resetPassword(confirmationCode, password, userName))
+    .then(res => resetPassword({confirmationCode: confirmationCode, password: password, userName: userName}))
     .then(res => dispatch(passwordResetActions.resetState()))
     .then(res => Actions.pop())
 };

@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     flex: 3,
-    backgroundColor: 'green',
     justifyContent: 'center',
     alignItems: 'center',
     width: 200,
@@ -71,7 +70,7 @@ const renderButton = (stage, code, userName, password, submitPhoneNumber, submit
     case 'codePassword':
       return (
         <Button onPress={() => submitCodePassword(code, userName, password)} title="Done"
-                disabled={(!code && !password) ? true : (code.length === 6) && (password.length > 3)}/>
+                disabled={(!code ? true : (code.length !== 6)) && (!password ? true : (password.length < 3))}/>
       )
   }
 };
@@ -79,7 +78,7 @@ const renderButton = (stage, code, userName, password, submitPhoneNumber, submit
 const textInputBar = ({iconName, textValue, placeHolder, onChangeText, maxLength, keyBoardType}) => (
   <View style={[styles.inputContainer]}>
     <View style={styles.iconSubContainer}>
-      <MaterialIcon name={iconName} size={30}/>
+      {iconName !== 'key' ? <MaterialIcon name={iconName} size={30}/> : <EnytpoIcon name={iconName} size={30}/>}
     </View>
     <View style={styles.textInputContainer}>
       <TextInput value={textValue} placeholder={placeHolder} onChangeText={text => onChangeText(text)}
@@ -94,8 +93,16 @@ const passwordReset = ({
                          submitPhoneNumber, submitCodePassword, stage
                        }) => (
   <View style={styles.container}>
-    <Text>Please enter the confirmation code </Text>
-    <Text>that we just sent to your phone</Text>
+    {stage === 'phoneNumber'
+      ? <View style={{alignItems: 'center'}}>
+        <Text>Please enter your phone number</Text>
+        <Text>so we can send you a confirmation sms</Text>
+      </View>
+      : <View style={{alignItems: 'center'}}>
+        <Text>Please enter the confirmation code we sent</Text>
+        <Text>and your new password</Text>
+      </View>}
+
     <View style={styles.textContainer}>
 
       {stage === 'phoneNumber'
