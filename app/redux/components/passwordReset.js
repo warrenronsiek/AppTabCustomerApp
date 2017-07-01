@@ -69,7 +69,7 @@ const renderButton = (stage, code, userName, password, submitPhoneNumber, submit
       );
     case 'codePassword':
       return (
-        <Button onPress={() => submitCodePassword(code, userName, password)} title="Done"
+        <Button onPress={() => submitCodePassword(code, password, userName)} title="Done"
                 disabled={(!code ? true : (code.length !== 6)) && (!password ? true : (password.length < 3))}/>
       )
   }
