@@ -2,7 +2,7 @@
  * Created by warren on 6/16/17.
  */
 import React, {PropTypes} from 'react'
-import {View, Text, TextInput, StyleSheet} from 'react-native'
+import {View, Text, TextInput, StyleSheet, Button as BuiltinButton} from 'react-native'
 import Spinner from '../../common/spinner'
 import Button from '../../common/button'
 
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   errorMessageContainer: {
-    flex:1,
+    flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center'
   },
@@ -43,18 +43,26 @@ const styles = StyleSheet.create({
   }
 });
 
-const confirmationCodeEntry = ({confirmationCode, updateConfirmationCode, codeEntryComplete, processing, wrongConfirmationCode, networkError, unknownError}) => (
+const buttonGenerator = (processing, resendCode, codeEntryComplete, confirmationCode) => {
+  if (processing) {
+    return <Spinner/>
+  }
+  return (
+    <View style={{alignItems: 'center', justifyContent: 'center'}}>
+      <Button onPress={() => codeEntryComplete(confirmationCode)} title="Finished" style={{marginTop: 30, marginBottom: 10}}/>
+      <BuiltinButton onPress={() => resendCode()} title="Resend Code"/>
+    </View>)
+};
+
+const confirmationCodeEntry = ({confirmationCode, updateConfirmationCode, codeEntryComplete, processing, wrongConfirmationCode, networkError, unknownError, resendCode}) => (
   <View style={styles.container}>
     <View style={styles.paddingBox}/>
     <View style={styles.textInputContainer}>
-
       <TextInput value={confirmationCode} placeholder="123456" keyboardType='phone-pad' style={styles.textInputBox}
                  onChangeText={text => updateConfirmationCode(text)} maxLength={6}/>
     </View>
     <View style={styles.buttonContainer}>
-      {processing
-        ? <Spinner/>
-        : <Button onPress={() => codeEntryComplete(confirmationCode)} title="Finished" style={{marginTop: 30}}/>}
+      {buttonGenerator(processing, resendCode, codeEntryComplete, confirmationCode)}
     </View>
     <View style={styles.errorMessageContainer}>
       {wrongConfirmationCode
@@ -77,7 +85,8 @@ confirmationCodeEntry.propTypes = {
   processing: PropTypes.bool,
   wrongConfirmationCode: PropTypes.bool,
   networkError: PropTypes.bool,
-  unknownError: PropTypes.bool
+  unknownError: PropTypes.bool,
+  resendCode: PropTypes.func.isRequired
 };
 
 export default confirmationCodeEntry

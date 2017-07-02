@@ -38,7 +38,6 @@ export const registerParams = (state = {
     case UPDATE_PASSWORD:
       return {...state, password: action.password};
     case UPDATE_PHONE_NUMBER:
-      console.log(action);
       return {...state, phoneNumber: action.phoneNumber};
     default:
       return state

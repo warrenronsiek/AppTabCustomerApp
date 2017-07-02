@@ -2,7 +2,7 @@
  * Created by warren on 6/20/17.
  */
 import React, {PropTypes} from 'react'
-import {View, Text, TextInput, StyleSheet, Dimensions} from 'react-native'
+import {View, Text, TextInput, StyleSheet, Dimensions, Button as BuiltinButton} from 'react-native'
 import Button from '../../common/button'
 import Spinner from '../../common/spinner'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
@@ -71,7 +71,7 @@ const renderButton = (stage, code, userName, password, submitPhoneNumber, submit
       <View>
         <Button onPress={() => submitCodePassword(code, password, userName)} title="Done"
                 disabled={(!code ? true : (code.length !== 6)) && (!password ? true : (password.length < 3))}/>
-        <Button onPress={() => resendCode(userName)} style={{marginTop: 10}} title="Resend"/>
+        <BuiltinButton onPress={() => resendCode(userName)} style={{marginTop: 10}} title="Resend Confirmation Code"/>
       </View>
       )
   }
