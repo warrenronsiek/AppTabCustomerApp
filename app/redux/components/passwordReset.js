@@ -55,22 +55,24 @@ const styles = StyleSheet.create({
     flex: 3,
     justifyContent: 'center',
     alignItems: 'center',
-    width: 200,
+    width: 220,
   }
 });
 
-const renderButton = (stage, code, userName, password, submitPhoneNumber, submitCodePassword) => {
+const renderButton = (stage, code, userName, password, submitPhoneNumber, submitCodePassword, resendCode) => {
   switch (stage) {
     case 'phoneNumber':
-      console.log('rendering phone button', userName);
       return (
         <Button onPress={() => submitPhoneNumber(userName)} disabled={!userName ? true : userName.length !== 10}
                 title="Done"/>
       );
     case 'codePassword':
       return (
+      <View>
         <Button onPress={() => submitCodePassword(code, password, userName)} title="Done"
                 disabled={(!code ? true : (code.length !== 6)) && (!password ? true : (password.length < 3))}/>
+        <Button onPress={() => resendCode(userName)} style={{marginTop: 10}} title="Resend"/>
+      </View>
       )
   }
 };
@@ -90,7 +92,7 @@ const textInputBar = ({iconName, textValue, placeHolder, onChangeText, maxLength
 
 const passwordReset = ({
                          password, userName, code, updatePassword, updateUserName, updateCode, processing, error,
-                         submitPhoneNumber, submitCodePassword, stage
+                         submitPhoneNumber, submitCodePassword, stage, resendCode
                        }) => (
   <View style={styles.container}>
     {stage === 'phoneNumber'
@@ -139,7 +141,7 @@ const passwordReset = ({
     </View>
     <View style={styles.buttonContainer}>
       {!processing
-        ? renderButton(stage, code, userName, password, submitPhoneNumber, submitCodePassword)
+        ? renderButton(stage, code, userName, password, submitPhoneNumber, submitCodePassword, resendCode)
         : <Spinner/>}
       {error
         ? <Text>An Error! Ohes noes!</Text>
@@ -159,7 +161,8 @@ passwordReset.propTypes = {
   error: PropTypes.bool,
   submitPhoneNumber: PropTypes.func.isRequired,
   submitCodePassword: PropTypes.func.isRequired,
-  stage: PropTypes.string
+  stage: PropTypes.string,
+  resendCode: PropTypes.func.isRequired
 };
 
 export default passwordReset

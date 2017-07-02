@@ -1,4 +1,5 @@
 import store from './app/redux/store'
+import passwordResetOnBack from './app/common/passwordResetOnBack'
 import React, {Component} from 'react'
 import {AppRegistry} from 'react-native'
 import BackButton from './app/common/tabBarBackButton'
@@ -41,9 +42,10 @@ export default class AppTabCustomerApp extends Component {
     return (
       <Provider store={store}>
         <RouterWithRedux>
-          <Scene key="passwordreset" component={ResetPasswordScene} title="Reset Password"/>
           <Scene key="login" component={Login} title="Login"/>
           <Scene key="register" component={Register} title="Register"/>
+          <Scene key="passwordreset" component={ResetPasswordScene} title="Reset Password"
+                 onBack={() => passwordResetOnBack()}/>
           <Scene key="code" component={ConfirmCodeScene} title="Confirm Code"/>
           <Scene key="nodes" component={Nodes} title="Table Selection" type={ActionConst.RESET}/>
           <Scene key="tabs" tabs={true} type={ActionConst.RESET}>

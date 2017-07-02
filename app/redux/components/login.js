@@ -2,7 +2,7 @@
  * Created by warren on 1/22/17.
  */
 import React, {PropTypes} from 'react';
-import {StyleSheet, Text, View, TextInput, Dimensions} from 'react-native';
+import {StyleSheet, Text, View, TextInput, Dimensions, Button as BuiltinButton} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import EnytpoIcon from 'react-native-vector-icons/Entypo'
 import Spinner from '../../common/spinner'
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const login = ({validationError, networkError, unknownError, loggingIn, phoneNumber, password, updatePhoneNumber, updatePassword, onLogin, navToRegister}) => (
+const login = ({validationError, networkError, unknownError, loggingIn, phoneNumber, password, updatePhoneNumber, updatePassword, onLogin, navToRegister, navToPasswordReset}) => (
   <View style={styles.container}>
     <View style={styles.welcomeContainer}>
       <Text style={styles.welcome}>
@@ -101,6 +101,7 @@ const login = ({validationError, networkError, unknownError, loggingIn, phoneNum
       {networkError ? <Text>Networking Error!</Text> : null}
       {unknownError ? <Text>Unknown Error!</Text> : null}
       {loggingIn ? <Spinner/> : null}
+      <BuiltinButton onPress={() => navToPasswordReset()} title="Forgot Password"/>
     </View>
   </View>
 );
@@ -115,7 +116,8 @@ login.propTypes = {
   updatePhoneNumber: PropTypes.func.isRequired,
   updatePassword: PropTypes.func.isRequired,
   onLogin: PropTypes.func.isRequired,
-  navToRegister: PropTypes.func.isRequired
+  navToRegister: PropTypes.func.isRequired,
+  navToPasswordReset: PropTypes.func.isRequired
 };
 
 export default login

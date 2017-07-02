@@ -26,7 +26,8 @@ const mapDispatchToProps = (dispatch) => {
     updatePhoneNumber: (phoneNumber) => dispatch(updatePhoneNumber(phoneNumber)),
     updatePassword: (password) => dispatch(updatePassword(password)),
     onLogin: (phoneNumber, password) => dispatch(loginThunk(phoneNumber, password)),
-    navToRegister: () => Actions.register()
+    navToRegister: () => Actions.register(),
+    navToPasswordReset: () => Actions.passwordreset()
   }
 };
 

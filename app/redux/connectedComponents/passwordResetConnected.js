@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import ResetPassword from '../components/passwordReset'
 import submitUserNameThunk from '../middleware/submitUserNameThunk'
 import submitCodePasswordThunk from '../middleware/submitCodePasswordThunk'
+import sendResetPasswordCode from '../../api/sendResetPasswordCode'
 
 const mapStateToProps = (state) => ({
   password: state.passwordResetData.password,
@@ -21,7 +22,8 @@ const mapDispatchToProps = (dispatch) => ({
   updateUserName: name => dispatch(passwordResetActions.update.username(name)),
   updateCode: code => dispatch(passwordResetActions.update.code(code)),
   submitPhoneNumber: userName => dispatch(submitUserNameThunk(userName)),
-  submitCodePassword: (code, password, userName) => dispatch(submitCodePasswordThunk(code, password, userName))
+  submitCodePassword: (code, password, userName) => dispatch(submitCodePasswordThunk(code, password, userName)),
+  resendCode: userName => sendResetPasswordCode({userName})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword)
