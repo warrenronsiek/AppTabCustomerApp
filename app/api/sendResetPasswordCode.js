@@ -3,5 +3,5 @@
  */
 import requester from './requester'
 
-// invoke with {userName}
+// invoke with {phoneNumber}
 export default requester('/send-reset-password-code', 'CallingSendResetPasswordCodeSuccessful', 'ErrorSendingCode')

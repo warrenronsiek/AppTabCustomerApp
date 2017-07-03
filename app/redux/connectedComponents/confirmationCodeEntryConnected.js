@@ -15,7 +15,7 @@ const mapStateToProps = (state) => ({
   wrongConfirmationCode: state.registerState.wrongConfirmationCode,
   networkError: state.registerState.networkError,
   unknownError: state.registerState.unknownError,
-  resendCode: () => resendCode({userName: phoneFormatter.normalize(state.registerParams.phoneNumber)})
+  resendCode: () => resendCode({phoneNumber: phoneFormatter.normalize(state.registerParams.phoneNumber)})
 });
 
 const mapDispatchToProps = (dispatch) => ({

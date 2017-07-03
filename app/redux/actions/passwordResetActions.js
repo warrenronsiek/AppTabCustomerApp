@@ -7,7 +7,7 @@ import {createActions} from 'redux-actions'
 export default passwordResetActions = createActions({
   UPDATE: {
     PASSWORD: password => password,
-    USERNAME: userName => userName,
+    PHONE_NUMBER: phoneNumber => phoneNumber,
     CODE: code => code
   },
   STAGE: {

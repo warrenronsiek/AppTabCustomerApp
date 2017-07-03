@@ -4,13 +4,13 @@
 import passwordResetActions from '../actions/passwordResetActions'
 import {connect} from 'react-redux'
 import ResetPassword from '../components/passwordReset'
-import submitUserNameThunk from '../middleware/submitUserNameThunk'
+import submitUserNameThunk from '../middleware/submitPhoneNumberThunk'
 import submitCodePasswordThunk from '../middleware/submitCodePasswordThunk'
 import sendResetPasswordCode from '../../api/sendResetPasswordCode'
 
 const mapStateToProps = (state) => ({
   password: state.passwordResetData.password,
-  userName: state.passwordResetData.userName,
+  phoneNumber: state.passwordResetData.phoneNumber,
   code: state.passwordResetData.code,
   error: state.passwordResetStatus.error,
   processing: state.passwordResetStatus.processing,
@@ -19,11 +19,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   updatePassword: password => dispatch(passwordResetActions.update.password(password)),
-  updateUserName: name => dispatch(passwordResetActions.update.username(name)),
+  updatePhoneNumber: name => dispatch(passwordResetActions.update.phoneNumber(name)),
   updateCode: code => dispatch(passwordResetActions.update.code(code)),
-  submitPhoneNumber: userName => dispatch(submitUserNameThunk(userName)),
-  submitCodePassword: (code, password, userName) => dispatch(submitCodePasswordThunk(code, password, userName)),
-  resendCode: userName => sendResetPasswordCode({userName})
+  submitPhoneNumber: phoneNumber => dispatch(submitUserNameThunk(phoneNumber)),
+  submitCodePassword: (code, password, phoneNumber) => dispatch(submitCodePasswordThunk(code, password, phoneNumber)),
+  resendCode: phoneNumber => sendResetPasswordCode({phoneNumber})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword)

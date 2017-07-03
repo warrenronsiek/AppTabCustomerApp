@@ -8,7 +8,7 @@ import {handleActions} from 'redux-actions'
 const passwordResetData = handleActions({
   [passwordResetActions.update.password]: (state, action) => ({...state, password: action.payload}),
   [passwordResetActions.update.code]: (state, action) => ({...state, code: action.payload}),
-  [passwordResetActions.update.username]: (state, action) => ({...state, userName: action.payload}),
+  [passwordResetActions.update.phoneNumber]: (state, action) => ({...state, phoneNumber: action.payload}),
   [passwordResetActions.resetState]: (state, action) => ({}),
 }, {});
 

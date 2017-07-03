@@ -59,19 +59,19 @@ const styles = StyleSheet.create({
   }
 });
 
-const renderButton = (stage, code, userName, password, submitPhoneNumber, submitCodePassword, resendCode) => {
+const renderButton = (stage, code, phoneNumber, password, submitPhoneNumber, submitCodePassword, resendCode) => {
   switch (stage) {
     case 'phoneNumber':
       return (
-        <Button onPress={() => submitPhoneNumber(userName)} disabled={!userName ? true : userName.length !== 10}
+        <Button onPress={() => submitPhoneNumber(phoneNumber)} disabled={!phoneNumber ? true : phoneNumber.length !== 10}
                 title="Done"/>
       );
     case 'codePassword':
       return (
-      <View>
-        <Button onPress={() => submitCodePassword(code, password, userName)} title="Done"
+      <View style={{alignItems: 'center', justifyContent: 'center'}}>
+        <Button onPress={() => submitCodePassword(code, password, phoneNumber)} title="Done"
                 disabled={(!code ? true : (code.length !== 6)) && (!password ? true : (password.length < 3))}/>
-        <BuiltinButton onPress={() => resendCode(userName)} style={{marginTop: 10}} title="Resend Confirmation Code"/>
+        <BuiltinButton onPress={() => resendCode(phoneNumber)} style={{marginTop: 10}} title="Resend Confirmation Code"/>
       </View>
       )
   }
@@ -91,7 +91,7 @@ const textInputBar = ({iconName, textValue, placeHolder, onChangeText, maxLength
 );
 
 const passwordReset = ({
-                         password, userName, code, updatePassword, updateUserName, updateCode, processing, error,
+                         password, phoneNumber, code, updatePassword, updatePhoneNumber, updateCode, processing, error,
                          submitPhoneNumber, submitCodePassword, stage, resendCode
                        }) => (
   <View style={styles.container}>
@@ -110,9 +110,9 @@ const passwordReset = ({
       {stage === 'phoneNumber'
         ? textInputBar({
           iconName: 'phone',
-          textValue: userName,
+          textValue: phoneNumber,
           placeHolder: "(123) 456-7890",
-          onChangeText: updateUserName,
+          onChangeText: updatePhoneNumber,
           keyBoardType: 'number-pad',
           maxLength: 10
         })
@@ -141,8 +141,8 @@ const passwordReset = ({
     </View>
     <View style={styles.buttonContainer}>
       {!processing
-        ? renderButton(stage, code, userName, password, submitPhoneNumber, submitCodePassword, resendCode)
-        : <Spinner/>}
+        ? renderButton(stage, code, phoneNumber, password, submitPhoneNumber, submitCodePassword, resendCode)
+        : <Spinner style={{marginTop: 20}}/>}
       {error
         ? <Text>An Error! Ohes noes!</Text>
         : null}
@@ -152,10 +152,10 @@ const passwordReset = ({
 
 passwordReset.propTypes = {
   password: PropTypes.string,
-  userName: PropTypes.string,
+  phoneNumber: PropTypes.string,
   code: PropTypes.string,
   updatePassword: PropTypes.func.isRequired,
-  updateUserName: PropTypes.func.isRequired,
+  updatePhoneNumber: PropTypes.func.isRequired,
   updateCode: PropTypes.func.isRequired,
   processing: PropTypes.bool,
   error: PropTypes.bool,

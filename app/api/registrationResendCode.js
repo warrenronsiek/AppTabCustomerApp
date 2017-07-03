@@ -3,5 +3,5 @@
  */
 import requester from './requester'
 
-// invoke with object of shape {userName}
+// invoke with object of shape {phoneNumber}
 export default requester('/registration-resend-code', 'RegistrationCodeResendSuccessful', 'ResendCodeFailed', null, false)
