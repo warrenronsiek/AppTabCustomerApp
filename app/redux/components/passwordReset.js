@@ -114,7 +114,7 @@ const passwordReset = ({
           placeHolder: "(123) 456-7890",
           onChangeText: updatePhoneNumber,
           keyBoardType: 'number-pad',
-          maxLength: 10
+          maxLength: 14
         })
         : null }
       {stage === 'codePassword'

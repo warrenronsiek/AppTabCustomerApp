@@ -14,6 +14,7 @@ import {
   CLEAR_ERRORS,
   SET_DEVICE_TOKEN
 } from '../actions/loginActions';
+import phoneNumberHandler from '../../common/phoneNumberHandler'
 
 export const auth = (state = {}, action) => {
   switch (action.type) {
@@ -51,10 +52,10 @@ export const loginState = (state = {}, action) => {
   }
 };
 
-export const loginParams = (state = {phoneNumber: '(510) 883-4346', password: 'P@33word'}, action) => {
+export const loginParams = (state = {password: 'P@44word'}, action) => {
   switch (action.type) {
     case UPDATE_PHONE_NUMBER:
-      return {...state, phoneNumber: action.phoneNumber};
+      return {...state, phoneNumber: phoneNumberHandler(action.phoneNumber)};
     case UPDATE_PASSWORD:
       return {...state, password: action.password};
     default:

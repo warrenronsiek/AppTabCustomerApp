@@ -97,7 +97,8 @@ const register = ({
         <TextInput style={styles.textInputBox} onChangeText={text => updateName(text)} autoCapitalize='words'
                    autoCorrect={false} value={name} placeholder="your name"/>
         <TextInput style={styles.textInputBox} onChangeText={text => updatePhoneNumber(text)} autoCapitalize='words'
-                   autoCorrect={false} value={phoneNumber} placeholder="(123) 456-7890" keyboardType='phone-pad'/>
+                   autoCorrect={false} value={phoneNumber} placeholder="(123) 456-7890" keyboardType='phone-pad'
+                   maxLength={14}/>
         <TextInput style={styles.textInputBox} onChangeText={text => updateEmail(text)} autoCapitalize='none'
                    autoCorrect={false} value={email} placeholder="email (optional)"/>
         <TextInput style={styles.textInputBox} onChangeText={text => updatePassword(text)} autoCapitalize='none'

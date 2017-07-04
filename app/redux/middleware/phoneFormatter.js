@@ -2,11 +2,10 @@
  * Created by warren on 6/5/17.
  */
 import {updatePhoneNumber} from '../actions/registerActions'
-import phoneFormatter from 'phone-formatter'
+import phoneNumberHandler from '../../common/phoneNumberHandler'
 
 const formatUpdatePhoneNumber = phoneNumber => (dispatch) => {
-  const formatted = phoneFormatter.format(phoneNumber.replace(/[^0-9]+/g, ''), "(NNN) NNN-NNNN").replace(/N/g, ' ');
-  dispatch(updatePhoneNumber(formatted));
+  dispatch(updatePhoneNumber(phoneNumberHandler(phoneNumber)));
 };
 
 export default formatUpdatePhoneNumber

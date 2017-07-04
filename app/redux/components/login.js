@@ -86,7 +86,7 @@ const login = ({validationError, networkError, unknownError, loggingIn, phoneNum
       </View>
       <View style={styles.textInputContainer}>
         <TextInput style={styles.textInputBox} value={phoneNumber} placeholder="(123) 456-7890" autoCapitalize='none'
-                   autoCorrect={false}
+                   autoCorrect={false} keyboardType='phone-pad'
                    onChangeText={(text) => updatePhoneNumber(text)}/>
 
         <TextInput style={styles.textInputBox} value={password} placeholder="password" autoCapitalize='none'

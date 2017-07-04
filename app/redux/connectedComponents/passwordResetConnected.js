@@ -4,9 +4,10 @@
 import passwordResetActions from '../actions/passwordResetActions'
 import {connect} from 'react-redux'
 import ResetPassword from '../components/passwordReset'
-import submitUserNameThunk from '../middleware/submitPhoneNumberThunk'
+import submitPhoneNumberThunk from '../middleware/submitPhoneNumberThunk'
 import submitCodePasswordThunk from '../middleware/submitCodePasswordThunk'
 import sendResetPasswordCode from '../../api/sendResetPasswordCode'
+import phoneFormatter from 'phone-formatter'
 
 const mapStateToProps = (state) => ({
   password: state.passwordResetData.password,
@@ -21,9 +22,9 @@ const mapDispatchToProps = (dispatch) => ({
   updatePassword: password => dispatch(passwordResetActions.update.password(password)),
   updatePhoneNumber: name => dispatch(passwordResetActions.update.phoneNumber(name)),
   updateCode: code => dispatch(passwordResetActions.update.code(code)),
-  submitPhoneNumber: phoneNumber => dispatch(submitUserNameThunk(phoneNumber)),
+  submitPhoneNumber: phoneNumber => dispatch(submitPhoneNumberThunk(phoneNumber)),
   submitCodePassword: (code, password, phoneNumber) => dispatch(submitCodePasswordThunk(code, password, phoneNumber)),
-  resendCode: phoneNumber => sendResetPasswordCode({phoneNumber})
+  resendCode: phoneNumber => sendResetPasswordCode({phoneNumber: phoneFormatter.normalize(phoneNumber)})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword)
