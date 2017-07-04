@@ -7,17 +7,19 @@ import UnknownError from '../errors/unknownError'
 import logger from './loggingApi'
 import requester from './requester'
 
-const loginProcessor = (resBody) => {
+const loginProcessor = resBody => {
+  const idVals = decode(resBody['authParameters']['IdToken']);
+  return {
+    accessToken: resBody['authParameters']['AccessToken'],
+    idToken: resBody['authParameters']['IdToken'],
+    refreshToken: resBody['authParameters']['RefreshToken'],
+    userName: idVals['name'],
+    customerId: idVals['sub']
+  };
+};
+
+const errorProcessor = resBody => {
   switch (resBody.code) {
-    case undefined:
-      const idVals = decode(resBody['authParameters']['IdToken']);
-      return {
-        accessToken: resBody['authParameters']['AccessToken'],
-        idToken: resBody['authParameters']['IdToken'],
-        refreshToken: resBody['authParameters']['RefreshToken'],
-        userName: idVals['name'],
-        customerId: idVals['sub']
-      };
     case 'UserNotFoundException':
       throw new ValidationError('failed to provide correct credentials', body);
       break;
@@ -31,4 +33,4 @@ const loginProcessor = (resBody) => {
 };
 
 // invoke with {phoneNumber, password}
-export default requester('/login', 'LoginSuccessful', 'login failure', loginProcessor, false)
+export default requester('/login', 'LoginSuccessful', 'login failure', loginProcessor, false, errorProcessor)
