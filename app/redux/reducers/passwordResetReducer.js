@@ -8,6 +8,7 @@ import phoneNumberHandler from '../../common/phoneNumberHandler'
 
 const passwordResetData = handleActions({
   [passwordResetActions.update.password]: (state, action) => ({...state, password: action.payload}),
+  [passwordResetActions.update.confirmPassword]: (state, action) => ({...state, confirmPassword: action.payload}),
   [passwordResetActions.update.code]: (state, action) => ({...state, code: action.payload}),
   [passwordResetActions.update.phoneNumber]: (state, action) => ({...state, phoneNumber: phoneNumberHandler(action.payload)}),
   [passwordResetActions.resetState]: (state, action) => ({}),

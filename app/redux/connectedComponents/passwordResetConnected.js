@@ -15,7 +15,8 @@ const mapStateToProps = (state) => ({
   code: state.passwordResetData.code,
   error: state.passwordResetStatus.error,
   processing: state.passwordResetStatus.processing,
-  stage: state.passwordResetStatus.stage
+  stage: state.passwordResetStatus.stage,
+  confirmPassword: state.passwordResetData.confirmPassword
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -24,7 +25,8 @@ const mapDispatchToProps = (dispatch) => ({
   updateCode: code => dispatch(passwordResetActions.update.code(code)),
   submitPhoneNumber: phoneNumber => dispatch(submitPhoneNumberThunk(phoneNumber)),
   submitCodePassword: (code, password, phoneNumber) => dispatch(submitCodePasswordThunk(code, password, phoneNumber)),
-  resendCode: phoneNumber => sendResetPasswordCode({phoneNumber: phoneFormatter.normalize(phoneNumber)})
+  resendCode: phoneNumber => sendResetPasswordCode({phoneNumber: phoneFormatter.normalize(phoneNumber)}),
+  updateConfirmPassword: confirmPassword => dispatch(passwordResetActions.update.confirmPassword(confirmPassword))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword)
