@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
 const register = ({
                     updatePhoneNumber, phoneNumber, updateName, updateEmail, updatePassword, updateConfirmPassword,
                     name, email, password, confirmPassword, registerUser, networkError, userExistsError, unknownError,
-                    registering
+                    registering, passwordValid
                   }) => (
   <View style={styles.container}>
     <View style={styles.welcomeContainer}>
@@ -111,10 +111,19 @@ const register = ({
       {registering
         ? <Spinner/>
         : <Button onPress={() => registerUser(name, email, password, phoneNumber)} title="Register"
-                  disabled={(password !== confirmPassword) || name === undefined || password === undefined || phoneNumber.length !== 14}/>}
-      {(password === confirmPassword) && password !== undefined && !registering
+                  disabled={(password !== confirmPassword) || name === undefined || !passwordValid || phoneNumber.length !== 14}/>}
+      {(password === confirmPassword) && !registering
         ? <Text>Passwords Match!</Text>
         : <Text>Passwords dont match!</Text>}
+      {!passwordValid
+        ? <View style={{alignItems: 'center', justifyContent: 'center'}}>
+          <Text>Password should contain at least: </Text>
+          <Text>one number</Text>
+          <Text>one uppercase character</Text>
+          <Text>one grammatical symbol</Text>
+          <Text>and be eight characters long</Text>
+        </View>
+        : null}
       {(networkError && !registering) ? <Text>Networking Error!</Text> : null}
       {(unknownError && !registering) ? <Text>Unknown Error!</Text> : null}
       {(userExistsError && !registering) ? <Text>User Exists Error!</Text> : null}
@@ -137,6 +146,7 @@ register.propTypes = {
   unknownError: PropTypes.bool,
   registering: PropTypes.bool,
   phoneNumber: PropTypes.string,
-  updatePhoneNumber: PropTypes.func.isRequired
+  updatePhoneNumber: PropTypes.func.isRequired,
+  passwordValid: PropTypes.bool
 };
 export default register

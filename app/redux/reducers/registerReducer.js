@@ -18,16 +18,16 @@ import {
   CONFIRMATION_CODE_PROCESSING,
   CONFIRMATION_CODE_PROCESSING_FINISHED,
   WRONG_CONFIRMATION_CODE
-} from '../actions/registerActions';
-
+} from '../actions/registerActions'
+import passwordValidator from '../../common/passwordValidator'
 
 export const registerParams = (state = {
   name: 'Warren',
   email: 'warren@apptab.io',
   phoneNumber: '(510) 883-4346',
-  password: 'P@33word',
-  confirmPassword: 'P@33word'
+  passwordValid: false
 }, action) => {
+  console.log(state);
   switch (action.type) {
     case UPDATE_NAME:
       return {...state, name: action.name};
@@ -36,7 +36,7 @@ export const registerParams = (state = {
     case UPDATE_CONFIRM_PASSWORD:
       return {...state, confirmPassword: action.confirmPassword};
     case UPDATE_PASSWORD:
-      return {...state, password: action.password};
+      return {...state, password: action.password, passwordValid: passwordValidator(action.password)};
     case UPDATE_PHONE_NUMBER:
       return {...state, phoneNumber: action.phoneNumber};
     default:

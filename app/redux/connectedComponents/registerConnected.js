@@ -8,6 +8,7 @@ import registerThunk from '../middleware/registerThunk'
 import phoneHandler from '../middleware/phoneFormatter'
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
     name: state.registerParams.name,
     email: state.registerParams.email,
@@ -18,6 +19,7 @@ const mapStateToProps = state => {
     networkError: state.registerState.networkError,
     userExistsError: state.registerState.userExistsError,
     unknownError: state.registerState.unknownError,
+    passwordValid: state.registerParams.passwordValid,
   }
 };
 

@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const renderButton = (stage, code, phoneNumber, password, submitPhoneNumber, submitCodePassword, resendCode, confirmPassword) => {
+const renderButton = (stage, code, phoneNumber, password, submitPhoneNumber, submitCodePassword, resendCode, confirmPassword, passwordValid) => {
   switch (stage) {
     case 'phoneNumber':
       return (
@@ -71,9 +71,21 @@ const renderButton = (stage, code, phoneNumber, password, submitPhoneNumber, sub
       return (
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <Button onPress={() => submitCodePassword(code, password, phoneNumber)} title="Done"
-                  disabled={(!code ? true : (code.length !== 6)) || (!password ? true : (password.length < 3)) || (password !== confirmPassword)}/>
+                  disabled={(!code ? true : (code.length !== 6)) || !passwordValid || (password !== confirmPassword)}/>
           <BuiltinButton onPress={() => resendCode(phoneNumber)} style={{marginTop: 10}}
                          title="Resend Confirmation Code"/>
+          {(passwordValid && (password !== confirmPassword))
+            ? <Text>Passwords don't match.</Text>
+            : <Text>Passwords Match!</Text>}
+          {!passwordValid
+            ? <View style={{alignItems: 'center', justifyContent: 'center'}}>
+              <Text>Password should contain at least: </Text>
+              <Text>one number</Text>
+              <Text>one uppercase character</Text>
+              <Text>one grammatical symbol</Text>
+              <Text>and be eight characters long</Text>
+            </View>
+            : null}
         </View>
       )
   }
@@ -94,7 +106,8 @@ const textInputBar = ({iconName, textValue, placeHolder, onChangeText, maxLength
 
 const passwordReset = ({
                          password, phoneNumber, code, updatePassword, updatePhoneNumber, updateCode, processing, error,
-                         submitPhoneNumber, submitCodePassword, stage, resendCode, confirmPassword, updateConfirmPassword
+                         submitPhoneNumber, submitCodePassword, stage, resendCode, confirmPassword, updateConfirmPassword,
+                         passwordValid
                        }) => (
   <View style={styles.container}>
     {stage === 'phoneNumber'
@@ -153,7 +166,7 @@ const passwordReset = ({
     </View>
     <View style={styles.buttonContainer}>
       {!processing
-        ? renderButton(stage, code, phoneNumber, password, submitPhoneNumber, submitCodePassword, resendCode, confirmPassword)
+        ? renderButton(stage, code, phoneNumber, password, submitPhoneNumber, submitCodePassword, resendCode, confirmPassword, passwordValid)
         : <Spinner style={{marginTop: 20}}/>}
       {error
         ? <Text>An Error! Ohes noes!</Text>
@@ -176,7 +189,8 @@ passwordReset.propTypes = {
   stage: PropTypes.string,
   resendCode: PropTypes.func.isRequired,
   confirmPassword: PropTypes.string,
-  updateConfirmPassword: PropTypes.func.isRequired
+  updateConfirmPassword: PropTypes.func.isRequired,
+  passwordValid: PropTypes.bool,
 };
 
 export default passwordReset

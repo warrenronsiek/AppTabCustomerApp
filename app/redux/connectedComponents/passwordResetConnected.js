@@ -16,7 +16,8 @@ const mapStateToProps = (state) => ({
   error: state.passwordResetStatus.error,
   processing: state.passwordResetStatus.processing,
   stage: state.passwordResetStatus.stage,
-  confirmPassword: state.passwordResetData.confirmPassword
+  confirmPassword: state.passwordResetData.confirmPassword,
+  passwordValid: state.passwordResetData.passwordValid,
 });
 
 const mapDispatchToProps = (dispatch) => ({
