@@ -105,9 +105,9 @@ const textInputBar = ({iconName, textValue, placeHolder, onChangeText, maxLength
 );
 
 const passwordReset = ({
-                         password, phoneNumber, code, updatePassword, updatePhoneNumber, updateCode, processing, error,
+                         password, phoneNumber, code, updatePassword, updatePhoneNumber, updateCode, processing,
                          submitPhoneNumber, submitCodePassword, stage, resendCode, confirmPassword, updateConfirmPassword,
-                         passwordValid
+                         passwordValid, wrongCodeError, unknownError
                        }) => (
   <View style={styles.container}>
     {stage === 'phoneNumber'
@@ -168,8 +168,11 @@ const passwordReset = ({
       {!processing
         ? renderButton(stage, code, phoneNumber, password, submitPhoneNumber, submitCodePassword, resendCode, confirmPassword, passwordValid)
         : <Spinner style={{marginTop: 20}}/>}
-      {error
-        ? <Text>An Error! Ohes noes!</Text>
+      {wrongCodeError
+        ? <Text>Looks like you entered the wrong code!</Text>
+        : null}
+      {unknownError
+        ? <Text>Unknown error. Please try again.</Text>
         : null}
     </View>
   </View>
@@ -183,7 +186,6 @@ passwordReset.propTypes = {
   updatePhoneNumber: PropTypes.func.isRequired,
   updateCode: PropTypes.func.isRequired,
   processing: PropTypes.bool,
-  error: PropTypes.bool,
   submitPhoneNumber: PropTypes.func.isRequired,
   submitCodePassword: PropTypes.func.isRequired,
   stage: PropTypes.string,
@@ -191,6 +193,8 @@ passwordReset.propTypes = {
   confirmPassword: PropTypes.string,
   updateConfirmPassword: PropTypes.func.isRequired,
   passwordValid: PropTypes.bool,
+  wrongCodeError: PropTypes.bool,
+  unknownError: PropTypes.bool
 };
 
 export default passwordReset

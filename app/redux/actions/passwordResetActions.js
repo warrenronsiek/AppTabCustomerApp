@@ -17,6 +17,9 @@ export default passwordResetActions = createActions({
   },
   PROCESSING: bool => bool,
   COMPLETE: bool => bool,
-  ERROR: bool => bool,
+  ERROR: {
+    WRONG_CODE: bool => bool,
+    UNKNOWN: bool => bool,
+  },
   RESET_STATE: bool => bool
 })

@@ -21,14 +21,14 @@ const loginProcessor = resBody => {
 const errorProcessor = resBody => {
   switch (resBody.code) {
     case 'UserNotFoundException':
-      throw new ValidationError('failed to provide correct credentials', body);
+      throw new ValidationError('failed to provide correct credentials', resBody);
       break;
     case 'NotAuthorizedException':
-      throw new ValidationError('failed to provide correct credentials', body);
+      throw new ValidationError('failed to provide correct credentials', resBody);
       break;
     default:
       logger('/login unknownError', resBody, 'loginApi.js');
-      throw new UnknownError('unknown login error', body);
+      throw new UnknownError('unknown login error', resBody);
   }
 };
 

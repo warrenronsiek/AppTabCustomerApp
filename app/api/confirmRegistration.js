@@ -2,7 +2,7 @@
  * Created by warren on 6/16/17.
  */
 import requester from './requester'
-import WrongCodeError from '../errors/wrongConfirmationCodeError'
+import WrongCodeError from '../errors/wrongCodeError'
 import UnknownError from '../errors/unknownError'
 import logger from './loggingApi'
 

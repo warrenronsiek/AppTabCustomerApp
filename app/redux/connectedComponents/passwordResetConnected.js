@@ -13,11 +13,12 @@ const mapStateToProps = (state) => ({
   password: state.passwordResetData.password,
   phoneNumber: state.passwordResetData.phoneNumber,
   code: state.passwordResetData.code,
-  error: state.passwordResetStatus.error,
   processing: state.passwordResetStatus.processing,
   stage: state.passwordResetStatus.stage,
   confirmPassword: state.passwordResetData.confirmPassword,
   passwordValid: state.passwordResetData.passwordValid,
+  wrongCodeError: state.passwordResetStatus.wrongCodeError,
+  unknownError: state.passwordResetStatus.unknownError,
 });
 
 const mapDispatchToProps = (dispatch) => ({
