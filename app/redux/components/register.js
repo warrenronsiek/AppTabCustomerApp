@@ -112,7 +112,8 @@ const register = ({
         ? <Spinner/>
         : <Button onPress={() => registerUser(name, email, password, phoneNumber)} title="Register"
                   disabled={(password !== confirmPassword) || name === undefined || !passwordValid || phoneNumber.length !== 14}/>}
-      {(password === confirmPassword) && !registering
+      {!registering &&
+      (password === confirmPassword)
         ? <Text>Passwords Match!</Text>
         : <Text>Passwords dont match!</Text>}
       {!passwordValid

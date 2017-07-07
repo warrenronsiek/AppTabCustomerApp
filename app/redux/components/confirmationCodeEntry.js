@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
+    marginTop: 20
   },
   textInputContainer: {
     flex: 1,
