@@ -6,7 +6,7 @@ import {auth, loginParams, loginState, stripeToken, deviceToken} from './loginRe
 import {registerParams, registerState, confirmationCode} from './registerReducer'
 import {nodes, activeNode} from './nodeReducer'
 import {menu, menuQueryStatus} from './menuReducer'
-import {cart, additionalCosts} from './cartReducer'
+import {cart, additionalCosts, cartStatus} from './cartReducer'
 import {creditCard, ccTokens, ccTokenApiQueried, paymentStatus, creditCardTokenizing} from './creditCardReducer'
 import {passwordResetData, passwordResetStatus} from './passwordResetReducer'
 
@@ -21,6 +21,7 @@ export default combineReducers({
   menu,
   menuQueryStatus,
   cart,
+  cartStatus,
   stripeToken,
   deviceToken,
   creditCard,

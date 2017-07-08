@@ -32,3 +32,13 @@ export const clearCart = () => {
   return {type: CLEAR_CART, }
 };
 
+export const CHEKING_OUT = 'CHEKING_OUT';
+export const chekingOut = () => {
+  return {type: CHEKING_OUT, }
+};
+
+export const CHECKING_OUT_COMPLETE = 'CHECKING_OUT_COMPLETE';
+export const checkingOutComplete = () => {
+  return {type: CHECKING_OUT_COMPLETE, }
+};
+

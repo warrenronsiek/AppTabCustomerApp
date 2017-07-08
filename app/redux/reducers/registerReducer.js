@@ -27,7 +27,6 @@ export const registerParams = (state = {
   phoneNumber: '(510) 883-4346',
   passwordValid: false
 }, action) => {
-  console.log(state);
   switch (action.type) {
     case UPDATE_NAME:
       return {...state, name: action.name};

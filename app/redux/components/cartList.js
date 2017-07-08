@@ -5,6 +5,7 @@ import React, {PropTypes, Component} from 'react';
 import {View, ListView, StyleSheet, Text} from 'react-native';
 import CartListItem from './cartListItem';
 import Button from '../../common/button'
+import Spinner from '../../common/spinner'
 
 const styles = StyleSheet.create({
   container: {
@@ -72,7 +73,8 @@ export default class MenuList extends Component {
     tip: PropTypes.number.isRequired,
     total: PropTypes.number.isRequired,
     updateTip: PropTypes.func.isRequired,
-    tipPct: PropTypes.number.isRequired
+    tipPct: PropTypes.number.isRequired,
+    checkingOut: PropTypes.bool
   };
 
   constructor(props) {
@@ -105,10 +107,14 @@ export default class MenuList extends Component {
           }
         </View>
         <View style={styles.tipButtonContainer}>
-          <Button title="Tip: 0%" onPress={() => this.props.updateTip(0)} style={this.props.tipPct === 0 ? {backgroundColor: 'grey'} : null}/>
-          <Button title="Tip: 10%" onPress={() => this.props.updateTip(.10)} style={[{marginLeft: 10}, this.props.tipPct === .1 ? {backgroundColor: 'grey'} : null]}/>
-          <Button title="Tip: 20%" onPress={() => this.props.updateTip(.20)} style={[{marginLeft: 10}, this.props.tipPct === .2 ? {backgroundColor: 'grey'} : null]}/>
-          <Button title="Tip: 30%" onPress={() => this.props.updateTip(.30)} style={[{marginLeft: 10}, this.props.tipPct === .3 ? {backgroundColor: 'grey'} : null]}/>
+          <Button title="Tip: 0%" onPress={() => this.props.updateTip(0)}
+                  style={this.props.tipPct === 0 ? {backgroundColor: 'grey'} : null}/>
+          <Button title="Tip: 10%" onPress={() => this.props.updateTip(.10)}
+                  style={[{marginLeft: 10}, this.props.tipPct === .1 ? {backgroundColor: 'grey'} : null]}/>
+          <Button title="Tip: 20%" onPress={() => this.props.updateTip(.20)}
+                  style={[{marginLeft: 10}, this.props.tipPct === .2 ? {backgroundColor: 'grey'} : null]}/>
+          <Button title="Tip: 30%" onPress={() => this.props.updateTip(.30)}
+                  style={[{marginLeft: 10}, this.props.tipPct === .3 ? {backgroundColor: 'grey'} : null]}/>
         </View>
         <View style={styles.totalContainer}>
           <View/>
@@ -128,7 +134,9 @@ export default class MenuList extends Component {
           </View>
         </View>
         <View style={styles.checkoutButtonContainer}>
-          <Button onPress={() => this.props.checkout()} title="Checkout" style={{width: 120, marginTop: 20}}/>
+          {this.props.checkingOut
+            ? <Spinner/>
+            : <Button onPress={() => this.props.checkout()} title="Checkout" style={{width: 120, marginTop: 20}}/>}
         </View>
       </View>
     )

@@ -7,7 +7,9 @@ import {
   DECREMENT_COUNT,
   UPDATE_SALES_TAX,
   UPDATE_TIP,
-  CLEAR_CART
+  CLEAR_CART,
+  CHECKING_OUT_COMPLETE,
+  CHEKING_OUT
 } from '../actions/cartActions'
 import * as _ from 'lodash'
 
@@ -58,4 +60,15 @@ const additionalCosts = (state = {tip: .2, tax: .0725}, action) => {
   }
 };
 
-export {cart, additionalCosts}
+const cartStatus = (state = {}, action) => {
+  switch (action.type) {
+    case CHEKING_OUT:
+      return {checkingOut: true};
+    case CHECKING_OUT_COMPLETE:
+      return {checkingOut: false};
+    default:
+      return state
+  }
+};
+
+export {cart, additionalCosts, cartStatus}

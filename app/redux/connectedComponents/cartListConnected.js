@@ -20,7 +20,8 @@ const mapStateToProps = (state) => {
     tax: tax,
     tip: tip,
     tipPct: state.additionalCosts.tip,
-    total: Math.round((totalCartCost + tax + tip ) * 100) / 100
+    total: Math.round((totalCartCost + tax + tip ) * 100) / 100,
+    checkingOut: state.cartStatus.checkingOut
   }
 };
 
