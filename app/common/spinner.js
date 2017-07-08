@@ -20,7 +20,8 @@ export default class Spinner extends Component {
   static propTypes = {
     width: PropTypes.number,
     height: PropTypes.number,
-    size: PropTypes.number
+    size: PropTypes.number,
+    style: PropTypes.any
   };
 
   constructor(props) {
@@ -42,7 +43,7 @@ export default class Spinner extends Component {
   render() {
     const spin = this.spinValue.interpolate({inputRange: [0,1], outputRange: ['0deg', '360deg']});
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, this.props.style]}>
         <AnimatedIcon name='spinner-2' size={this.props.size ? this.props.size : 60}
                       style={[styles.spinStyle, {transform: [{rotate: spin}]}, {height: this.height, width: this.width}]}/>
       </View>

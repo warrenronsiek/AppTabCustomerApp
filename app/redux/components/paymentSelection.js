@@ -78,14 +78,16 @@ class PaymentMethodSelection extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.cardImageContainer}><Image source={require('../../assets/images/card_front.png')}/></View>
-        <View style={styles.listContainer}>
+        <View style={this.props.paymentListItems.length > 0 ? styles.listContainer : [styles.listContainer, {alignItems: 'center', justifyContent: 'center'}]}>
           {this.props.paymentListItems.length > 0
             ? <ListView dataSource={this.state.dataSource} automaticallyAdjustContentInsets={false}
                         renderRow={(item) => <PaymentItem brand={item.brand} isSelected={item.isSelected}
                                                           last4={item.last4} ccToken={item.ccToken}
                                                           expMonth={item.expMonth} expYear={item.expYear}
                                                           select={this.props.selectCard}/>}/>
-            : <Text>LOADING...</Text>
+            : <View style={{alignItems:'center', justifyContent: 'center'}}>
+              <Text>Please add a credit card. </Text><Text>You can do that by pressing the Add Card button.</Text>
+            </View>
           }
         </View>
         {this.props.paymentStatus.failure ? <Text>Something went wrong processing your card.</Text> : null}
