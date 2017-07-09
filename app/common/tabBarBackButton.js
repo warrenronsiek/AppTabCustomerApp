@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 
 const backButton = () => (
   <TouchableHighlight style={styles.backButton} onPress={() => Actions.nodes(ActionConst.REFRESH)}>
-    <Image style={styles.backButtonImage} source={require('../../node_modules/react-native-router-flux/src/back_chevron.png')}/>
+    <Image style={styles.backButtonImage} source={require('../../node_modules/react-native-router-flux/images/back_chevron.png')}/>
   </TouchableHighlight>
 );
 

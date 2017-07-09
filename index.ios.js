@@ -50,11 +50,11 @@ export default class AppTabCustomerApp extends Component {
           <Scene key="nodes" component={Nodes} title="Table Selection" type={ActionConst.RESET}/>
           <Scene key="tabs" tabs={true} type={ActionConst.RESET}>
             <Scene key="request" component={Request} title="Service Request" icon={bell} initial={true}
-                   renderBackButton={BackButton}/>
+                    renderBackButton={BackButton}/>
             <Scene key="drinks" component={DrinkScene} title="Drinks" icon={drink}
-                   renderBackButton={BackButton}/>
+                    renderBackButton={BackButton}/>
             <Scene key="main" component={MainCourseScene} title="Main Course" icon={main}
-                   renderBackButton={BackButton}/>
+                    renderBackButton={BackButton}/>
             <Scene key="alcohol" component={AlcoholScene} title="Alcohol" icon={cocktail}
                    renderBackButton={BackButton}/>
             <Scene key="dessert" component={DessertScene} title="Dessert" icon={dessert}
