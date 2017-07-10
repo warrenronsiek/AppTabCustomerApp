@@ -8,7 +8,6 @@ import Spinner from '../../common/spinner'
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 60,
     flex: 1,
     backgroundColor: '#f5fcff',
     borderTopWidth: StyleSheet.hairlineWidth,
