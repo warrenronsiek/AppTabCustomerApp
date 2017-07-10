@@ -9,7 +9,6 @@ import Spinner from '../../common/spinner'
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 70,
     paddingBottom: 40,
     flex: 1,
     backgroundColor: '#f5fcff'

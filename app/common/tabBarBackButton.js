@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
 });
 
 const backButton = () => (
-  <TouchableHighlight style={styles.backButton} onPress={() => Actions.nodes(ActionConst.REFRESH)}>
+  <TouchableHighlight style={styles.backButton} onPress={() => Actions.nodes({type: 'refresh'})}>
     <Image style={styles.backButtonImage} source={require('../../node_modules/react-native-router-flux/images/back_chevron.png')}/>
   </TouchableHighlight>
 );
