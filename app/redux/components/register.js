@@ -6,6 +6,7 @@ import {View, Button, Text, TextInput, StyleSheet, Dimensions} from 'react-nativ
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import EnytpoIcon from 'react-native-vector-icons/Entypo'
 import Spinner from '../../common/spinner'
+import PasswordChecklist from './passwordChecklist'
 const {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -15,24 +16,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 40,
-    textAlign: 'center',
-    margin: 10,
-  },
-  welcomeContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 60
-  },
   textContainer: {
-    flex: 2,
+    marginTop: 30,
+    flex: 3,
     alignItems: 'center',
     justifyContent: 'center',
     width: width * .6,
     flexDirection: 'row',
-    maxHeight: 150
+    maxHeight: 200,
+  },
+  checkListContainer: {
+    flex: 2,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   textInputContainer: {
     flex: 4,
@@ -67,14 +63,6 @@ const register = ({
                     registering, passwordValid
                   }) => (
   <View style={styles.container}>
-    <View style={styles.welcomeContainer}>
-      <Text style={styles.welcome}>
-        AppTab
-      </Text>
-      <Text>
-        Alpha 0.1.0
-      </Text>
-    </View>
     <View style={styles.textContainer}>
       <View style={styles.iconContainer}>
         <View style={styles.iconSubContainer}>
@@ -107,24 +95,17 @@ const register = ({
                    autoCorrect={false} value={confirmPassword} placeholder="confirm password"/>
       </View>
     </View>
+    <View style={styles.checkListContainer}>
+      {!registering &&
+      <PasswordChecklist hasLower={passwordValid.hasLower} hasUpper={passwordValid.hasUpper}
+                         hasDigit={passwordValid.hasDigit} hasSymbol={passwordValid.hasSymbol}
+                         hasLength={passwordValid.hasLength} matches={password === confirmPassword}/>}
+    </View>
     <View style={styles.buttonContainer}>
       {registering
         ? <Spinner/>
         : <Button onPress={() => registerUser(name, email, password, phoneNumber)} title="Register"
-                  disabled={(password !== confirmPassword) || name === undefined || !passwordValid || phoneNumber.length !== 14}/>}
-      {!registering &&
-      (password === confirmPassword)
-        ? <Text>Passwords Match!</Text>
-        : <Text>Passwords dont match!</Text>}
-      {!passwordValid
-        ? <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <Text>Password should contain at least: </Text>
-          <Text>one number</Text>
-          <Text>one uppercase character</Text>
-          <Text>one grammatical symbol</Text>
-          <Text>and be eight characters long</Text>
-        </View>
-        : null}
+                  disabled={(password !== confirmPassword) || name === undefined || !passwordValid.isValid || phoneNumber.length !== 14}/>}
       {(networkError && !registering) ? <Text>Networking Error!</Text> : null}
       {(unknownError && !registering) ? <Text>Unknown Error!</Text> : null}
       {(userExistsError && !registering) ? <Text>User Exists Error!</Text> : null}
@@ -148,6 +129,13 @@ register.propTypes = {
   registering: PropTypes.bool,
   phoneNumber: PropTypes.string,
   updatePhoneNumber: PropTypes.func.isRequired,
-  passwordValid: PropTypes.bool
+  passwordValid: PropTypes.shape({
+    hasLower: PropTypes.bool,
+    hasUpper: PropTypes.bool,
+    hasDigit: PropTypes.bool,
+    hasSymbol: PropTypes.bool,
+    hasLength: PropTypes.bool,
+    matches: PropTypes.bool
+  })
 };
 export default register
