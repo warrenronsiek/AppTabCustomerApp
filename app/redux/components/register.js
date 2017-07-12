@@ -3,8 +3,6 @@
  */
 import React, {PropTypes} from 'react';
 import {View, Text, TextInput, StyleSheet, Dimensions} from 'react-native';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import EnytpoIcon from 'react-native-vector-icons/Entypo'
 import Spinner from '../../common/spinner'
 import Button from '../../common/button'
 import PasswordChecklist from './passwordChecklist'
@@ -38,18 +36,6 @@ const styles = StyleSheet.create({
     borderBottomColor: 'grey',
     width: width,
   },
-  iconContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    width: width
-  },
-  iconSubContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   buttonContainer: {
     flex: 3,
     alignItems: 'center',
@@ -60,7 +46,6 @@ const styles = StyleSheet.create({
     paddingLeft: 30
   }
 });
-
 
 const register = ({
                     updatePhoneNumber, phoneNumber, updateName, updateEmail, updatePassword, updateConfirmPassword,

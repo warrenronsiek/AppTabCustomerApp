@@ -5,18 +5,17 @@ import React, {PropTypes} from 'react'
 import {View, Text, TextInput, StyleSheet, Dimensions, Button as BuiltinButton} from 'react-native'
 import Button from '../../common/button'
 import Spinner from '../../common/spinner'
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
-import EnytpoIcon from 'react-native-vector-icons/Entypo'
+import PasswordChecklist from './passwordChecklist'
 const {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 80,
+    marginTop: 20,
     alignItems: 'center',
     justifyContent: 'center'
   },
-  textContainer: {
+  textInputBarContainer: {
     flex: 1,
     flexDirection: 'column',
     marginLeft: width * .3,
@@ -26,7 +25,7 @@ const styles = StyleSheet.create({
     flex: 3,
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   iconContainer: {
     flexDirection: 'column',
@@ -42,21 +41,29 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 20,
-    flex: 3,
+    flex: 2,
     alignItems: 'center',
     justifyContent: 'flex-start'
   },
   textInput: {
     flex: 3,
-    height: 40
+    height: 40,
+    paddingLeft: 40
+  },
+  instructionsContainer: {
+    alignItems: 'center',
+    marginBottom: 40
   },
   inputContainer: {
     flexDirection: 'row',
     flex: 3,
     justifyContent: 'center',
     alignItems: 'center',
-    width: 220,
-  }
+    width: width,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: 'grey',
+    maxHeight: 40,
+  },
 });
 
 const renderButton = (stage, code, phoneNumber, password, submitPhoneNumber, submitCodePassword, resendCode, confirmPassword, passwordValid) => {
@@ -74,35 +81,10 @@ const renderButton = (stage, code, phoneNumber, password, submitPhoneNumber, sub
                   disabled={(!code ? true : (code.length !== 6)) || !passwordValid || (password !== confirmPassword)}/>
           <BuiltinButton onPress={() => resendCode(phoneNumber)} style={{marginTop: 10}}
                          title="Resend Confirmation Code"/>
-          {(passwordValid && (password !== confirmPassword))
-            ? <Text>Passwords don't match.</Text>
-            : <Text>Passwords Match!</Text>}
-          {!passwordValid
-            ? <View style={{alignItems: 'center', justifyContent: 'center'}}>
-              <Text>Password should contain at least: </Text>
-              <Text>one number</Text>
-              <Text>one uppercase character</Text>
-              <Text>one grammatical symbol</Text>
-              <Text>and be eight characters long</Text>
-            </View>
-            : null}
         </View>
       )
   }
 };
-
-const textInputBar = ({iconName, textValue, placeHolder, onChangeText, maxLength, keyBoardType}) => (
-  <View style={[styles.inputContainer]}>
-    <View style={styles.iconSubContainer}>
-      {iconName !== 'key' ? <MaterialIcon name={iconName} size={30}/> : <EnytpoIcon name={iconName} size={30}/>}
-    </View>
-    <View style={styles.textInputContainer}>
-      <TextInput value={textValue} placeholder={placeHolder} onChangeText={text => onChangeText(text)}
-                 autoCapitalize='none' autoCorrect={false} style={styles.textInput} keyboardType={keyBoardType}
-                 maxLength={maxLength}/>
-    </View>
-  </View>
-);
 
 const passwordReset = ({
                          password, phoneNumber, code, updatePassword, updatePhoneNumber, updateCode, processing,
@@ -111,59 +93,55 @@ const passwordReset = ({
                        }) => (
   <View style={styles.container}>
     {stage === 'phoneNumber'
-      ? <View style={{alignItems: 'center'}}>
+      && <View style={styles.instructionsContainer}>
         <Text>Please enter your phone number</Text>
-        <Text>so we can send you a confirmation sms</Text>
-      </View>
-      : <View style={{alignItems: 'center'}}>
-        <Text>Please enter the confirmation code we sent</Text>
-        <Text>and your new password</Text>
+        <Text>so we can send you a confirmation sms.</Text>
       </View>}
 
-    <View style={styles.textContainer}>
+    <View style={styles.textInputBarContainer}>
 
-      {stage === 'phoneNumber'
-        ? textInputBar({
-          iconName: 'phone',
-          textValue: phoneNumber,
-          placeHolder: "(123) 456-7890",
-          onChangeText: updatePhoneNumber,
-          keyBoardType: 'number-pad',
-          maxLength: 14
-        })
-        : null }
-      {stage === 'codePassword'
-        ? textInputBar({
-          iconName: 'sms',
-          textValue: code,
-          placeHolder: '123456',
-          onChangeText: updateCode,
-          keyBoardType: 'number-pad',
-          maxLength: 6
-        })
-        : null}
-      {stage === 'codePassword'
-        ? textInputBar({
-          iconName: 'key',
-          textValue: password,
-          placeHolder: 'enter new password',
-          onChangeText: updatePassword,
-          keyBoardType: 'default',
-          maxLength: 30
-        })
-        : null}
-      {stage === 'codePassword'
-        ? textInputBar({
-          iconName: 'key',
-          textValue: confirmPassword,
-          placeHolder: 'confirm password',
-          onChangeText: updateConfirmPassword,
-          keyBoardType: 'default',
-          maxLength: 30
-        })
-        : null}
-
+      {stage === 'phoneNumber' && (
+        <View style={[styles.inputContainer, {borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: 'grey'}]}>
+          <View style={styles.textInputContainer}>
+            <TextInput value={phoneNumber} placeholder="(123) 456-7890" onChangeText={text => updatePhoneNumber(text)}
+                       autoCapitalize='none' autoCorrect={false} style={[styles.textInput, {textAlign: 'center', paddingLeft: 0}]} keyboardType='number-pad'
+                       maxLength={14}/>
+          </View>
+        </View>
+      )}
+      {stage === 'codePassword' && (
+        <View style={[styles.inputContainer,  {borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: 'grey'}]}>
+          <View style={[styles.textInputContainer]}>
+            <TextInput value={code} placeholder="123456 (the code from the sms)" onChangeText={text => updateCode(text)}
+                       autoCapitalize='none' autoCorrect={false} style={styles.textInput} keyboardType='number-pad'
+                       maxLength={6}/>
+          </View>
+        </View>
+      )}
+      {stage === 'codePassword' && (
+        <View style={[styles.inputContainer]}>
+          <View style={[styles.textInputContainer]}>
+            <TextInput value={password} placeholder="enter new password" onChangeText={text => updatePassword(text)}
+                       autoCapitalize='none' autoCorrect={false} style={styles.textInput} keyboardType='default'
+                       maxLength={30}/>
+          </View>
+        </View>
+      )}
+      {stage === 'codePassword' && (
+        <View style={[styles.inputContainer]}>
+          <View style={[styles.textInputContainer]}>
+            <TextInput value={confirmPassword} placeholder="confirm password" onChangeText={text => updateConfirmPassword(text)}
+                       autoCapitalize='none' autoCorrect={false} style={styles.textInput} keyboardType='default'
+                       maxLength={30}/>
+          </View>
+        </View>
+      )}
     </View>
+    {stage === 'codePassword' &&
+    <PasswordChecklist matches={confirmPassword && (password === confirmPassword)} hasLength={passwordValid.hasLength}
+                       hasSymbol={passwordValid.hasSymbol} hasDigit={passwordValid.hasDigit}
+                       hasUpper={passwordValid.hasUpper} hasLower={passwordValid.hasLower}/>
+    }
     <View style={styles.buttonContainer}>
       {!processing
         ? renderButton(stage, code, phoneNumber, password, submitPhoneNumber, submitCodePassword, resendCode, confirmPassword, passwordValid)
@@ -192,7 +170,14 @@ passwordReset.propTypes = {
   resendCode: PropTypes.func.isRequired,
   confirmPassword: PropTypes.string,
   updateConfirmPassword: PropTypes.func.isRequired,
-  passwordValid: PropTypes.bool,
+  passwordValid: PropTypes.shape({
+    hasLower: PropTypes.bool,
+    hasUpper: PropTypes.bool,
+    hasDigit: PropTypes.bool,
+    hasSymbol: PropTypes.bool,
+    hasLength: PropTypes.bool,
+    matches: PropTypes.bool
+  }),
   wrongCodeError: PropTypes.bool,
   unknownError: PropTypes.bool
 };

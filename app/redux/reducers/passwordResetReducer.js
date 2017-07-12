@@ -13,7 +13,7 @@ const passwordResetData = handleActions({
   [passwordResetActions.update.code]: (state, action) => ({...state, code: action.payload}),
   [passwordResetActions.update.phoneNumber]: (state, action) => ({...state, phoneNumber: phoneNumberHandler(action.payload)}),
   [passwordResetActions.resetState]: (state, action) => ({}),
-}, {});
+}, {passwordValid: {}});
 
 const passwordResetStatus = handleActions({
   [passwordResetActions.complete]: (state, action) => ({...state, complete: true, error: false, processing: false}),
