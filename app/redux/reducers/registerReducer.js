@@ -22,10 +22,7 @@ import {
 import passwordValidator from '../../common/passwordValidator'
 
 export const registerParams = (state = {
-  name: 'Warren',
-  email: 'warren@apptab.io',
-  phoneNumber: '(510) 883-4346',
-  passwordValid: false
+  passwordValid: {}
 }, action) => {
   switch (action.type) {
     case UPDATE_NAME:

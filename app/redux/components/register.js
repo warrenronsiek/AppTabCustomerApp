@@ -2,10 +2,10 @@
  * Created by warren on 1/22/17.
  */
 import React, {PropTypes} from 'react';
-import {View, Button, Text, TextInput, StyleSheet, Dimensions} from 'react-native';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import EnytpoIcon from 'react-native-vector-icons/Entypo'
+import {View, Text, TextInput, StyleSheet, Dimensions} from 'react-native';
 import Spinner from '../../common/spinner'
+import Button from '../../common/button'
+import PasswordChecklist from './passwordChecklist'
 const {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -15,51 +15,37 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 40,
-    textAlign: 'center',
-    margin: 10,
-  },
-  welcomeContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 60
-  },
   textContainer: {
-    flex: 2,
+    marginTop: 10,
+    flex: 3,
     alignItems: 'center',
     justifyContent: 'center',
-    width: width * .6,
-    flexDirection: 'row',
-    maxHeight: 150
-  },
-  textInputContainer: {
-    flex: 4,
+    maxHeight: 200,
     flexDirection: 'column'
   },
-  iconContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
-  },
-  iconSubContainer: {
-    flex: 1,
+  checkListContainer: {
+    flex: 2,
     alignItems: 'center',
     justifyContent: 'center'
   },
+  textInputContainer: {
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: 'grey',
+    width: width,
+  },
   buttonContainer: {
     flex: 3,
-    marginTop: 30,
     alignItems: 'center',
   },
   textInputBox: {
     flex: 1,
-    height: 40
+    height: 40,
+    paddingLeft: 30
   }
 });
-
 
 const register = ({
                     updatePhoneNumber, phoneNumber, updateName, updateEmail, updatePassword, updateConfirmPassword,
@@ -67,64 +53,40 @@ const register = ({
                     registering, passwordValid
                   }) => (
   <View style={styles.container}>
-    <View style={styles.welcomeContainer}>
-      <Text style={styles.welcome}>
-        AppTab
-      </Text>
-      <Text>
-        Alpha 0.1.0
-      </Text>
-    </View>
     <View style={styles.textContainer}>
-      <View style={styles.iconContainer}>
-        <View style={styles.iconSubContainer}>
-          <EnytpoIcon name="user" size={30}/>
-        </View>
-        <View style={styles.iconSubContainer}>
-          <MaterialIcon name="phone" size={30}/>
-        </View>
-        <View style={styles.iconSubContainer}>
-          <MaterialIcon name="email" size={30}/>
-        </View>
-        <View style={styles.iconSubContainer}>
-          <EnytpoIcon name="key" size={30}/>
-        </View>
-        <View style={styles.iconSubContainer}>
-          <EnytpoIcon name="key" size={30}/>
-        </View>
+      <View style={[styles.textInputContainer, {borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: 'grey'} ]}>
+        <TextInput style={styles.textInputBox} onChangeText={text => updateName(text)} autoCapitalize='words'
+                   autoCorrect={false} value={name} placeholder="First Name (So servers know what to call you.)"/>
       </View>
       <View style={styles.textInputContainer}>
-        <TextInput style={styles.textInputBox} onChangeText={text => updateName(text)} autoCapitalize='words'
-                   autoCorrect={false} value={name} placeholder="your name"/>
         <TextInput style={styles.textInputBox} onChangeText={text => updatePhoneNumber(text)} autoCapitalize='words'
                    autoCorrect={false} value={phoneNumber} placeholder="(123) 456-7890" keyboardType='phone-pad'
                    maxLength={14}/>
-        <TextInput style={styles.textInputBox} onChangeText={text => updateEmail(text)} autoCapitalize='none'
-                   autoCorrect={false} value={email} placeholder="email (optional)"/>
-        <TextInput style={styles.textInputBox} onChangeText={text => updatePassword(text)} autoCapitalize='none'
-                   autoCorrect={false} value={password} placeholder="password"/>
-        <TextInput style={styles.textInputBox} onChangeText={text => updateConfirmPassword(text)} autoCapitalize='none'
-                   autoCorrect={false} value={confirmPassword} placeholder="confirm password"/>
       </View>
+      <View style={styles.textInputContainer}>
+        <TextInput style={styles.textInputBox} onChangeText={text => updateEmail(text)} autoCapitalize='none'
+                   autoCorrect={false} value={email} placeholder="Email (Optional)"/>
+      </View>
+      <View style={styles.textInputContainer}>
+        <TextInput style={styles.textInputBox} onChangeText={text => updatePassword(text)} autoCapitalize='none'
+                   autoCorrect={false} value={password} placeholder="Password"/>
+      </View>
+      <View style={styles.textInputContainer}>
+        <TextInput style={styles.textInputBox} onChangeText={text => updateConfirmPassword(text)} autoCapitalize='none'
+                   autoCorrect={false} value={confirmPassword} placeholder="Confirm Password"/>
+      </View>
+    </View>
+    <View style={styles.checkListContainer}>
+      {!registering &&
+      <PasswordChecklist hasLower={passwordValid.hasLower} hasUpper={passwordValid.hasUpper}
+                         hasDigit={passwordValid.hasDigit} hasSymbol={passwordValid.hasSymbol}
+                         hasLength={passwordValid.hasLength} matches={confirmPassword && (password === confirmPassword)}/>}
     </View>
     <View style={styles.buttonContainer}>
       {registering
         ? <Spinner/>
         : <Button onPress={() => registerUser(name, email, password, phoneNumber)} title="Register"
-                  disabled={(password !== confirmPassword) || name === undefined || !passwordValid || phoneNumber.length !== 14}/>}
-      {!registering &&
-      (password === confirmPassword)
-        ? <Text>Passwords Match!</Text>
-        : <Text>Passwords dont match!</Text>}
-      {!passwordValid
-        ? <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <Text>Password should contain at least: </Text>
-          <Text>one number</Text>
-          <Text>one uppercase character</Text>
-          <Text>one grammatical symbol</Text>
-          <Text>and be eight characters long</Text>
-        </View>
-        : null}
+                  disabled={(password !== confirmPassword) || name === undefined || !passwordValid.isValid || phoneNumber.length !== 14}/>}
       {(networkError && !registering) ? <Text>Networking Error!</Text> : null}
       {(unknownError && !registering) ? <Text>Unknown Error!</Text> : null}
       {(userExistsError && !registering) ? <Text>User Exists Error!</Text> : null}
@@ -148,6 +110,13 @@ register.propTypes = {
   registering: PropTypes.bool,
   phoneNumber: PropTypes.string,
   updatePhoneNumber: PropTypes.func.isRequired,
-  passwordValid: PropTypes.bool
+  passwordValid: PropTypes.shape({
+    hasLower: PropTypes.bool,
+    hasUpper: PropTypes.bool,
+    hasDigit: PropTypes.bool,
+    hasSymbol: PropTypes.bool,
+    hasLength: PropTypes.bool,
+    matches: PropTypes.bool
+  })
 };
 export default register

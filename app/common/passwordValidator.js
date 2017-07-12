@@ -4,12 +4,20 @@
 
 export default function passwordValidator(password) {
   if (password) {
-    return (
-      (password.length >= 8) &&
-      (!!password.match(/[\[\].,\/#!$%\^&\*;:{}=\-_`~()\?@]/)) &&
-      (!!password.match(/[A-Z]/)) &&
-      (!!password.match(/\d/))
-    )
+    const hasLength = password.length >= 8,
+      hasSymbol = !!password.match(/[\[\].,\/#!$%\^&\*;:{}=\-_`~()\?@]/),
+      hasDigit = !!password.match(/\d/),
+      hasUpper = !!password.match(/[A-Z]/),
+      hasLower = !!password.match(/[a-z]/),
+      isValid = hasLength && hasDigit && hasUpper && hasLower && hasSymbol;
+    return {
+      hasLength,
+      hasSymbol,
+      hasDigit,
+      hasUpper,
+      hasLower,
+      isValid
+    };
   } else {
     return false
   }
