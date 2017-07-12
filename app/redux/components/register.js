@@ -2,10 +2,11 @@
  * Created by warren on 1/22/17.
  */
 import React, {PropTypes} from 'react';
-import {View, Button, Text, TextInput, StyleSheet, Dimensions} from 'react-native';
+import {View, Text, TextInput, StyleSheet, Dimensions} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import EnytpoIcon from 'react-native-vector-icons/Entypo'
 import Spinner from '../../common/spinner'
+import Button from '../../common/button'
 import PasswordChecklist from './passwordChecklist'
 const {height, width} = Dimensions.get('window');
 
@@ -17,13 +18,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   textContainer: {
-    marginTop: 30,
+    marginTop: 10,
     flex: 3,
     alignItems: 'center',
     justifyContent: 'center',
-    width: width * .6,
-    flexDirection: 'row',
     maxHeight: 200,
+    flexDirection: 'column'
   },
   checkListContainer: {
     flex: 2,
@@ -31,28 +31,33 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   textInputContainer: {
-    flex: 4,
-    flexDirection: 'column'
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: 'grey',
+    width: width,
   },
   iconContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
+    width: width
   },
   iconSubContainer: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   buttonContainer: {
     flex: 3,
-    marginTop: 30,
     alignItems: 'center',
   },
   textInputBox: {
     flex: 1,
-    height: 40
+    height: 40,
+    paddingLeft: 30
   }
 });
 
@@ -64,42 +69,33 @@ const register = ({
                   }) => (
   <View style={styles.container}>
     <View style={styles.textContainer}>
-      <View style={styles.iconContainer}>
-        <View style={styles.iconSubContainer}>
-          <EnytpoIcon name="user" size={30}/>
-        </View>
-        <View style={styles.iconSubContainer}>
-          <MaterialIcon name="phone" size={30}/>
-        </View>
-        <View style={styles.iconSubContainer}>
-          <MaterialIcon name="email" size={30}/>
-        </View>
-        <View style={styles.iconSubContainer}>
-          <EnytpoIcon name="key" size={30}/>
-        </View>
-        <View style={styles.iconSubContainer}>
-          <EnytpoIcon name="key" size={30}/>
-        </View>
+      <View style={[styles.textInputContainer, {borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: 'grey'} ]}>
+        <TextInput style={styles.textInputBox} onChangeText={text => updateName(text)} autoCapitalize='words'
+                   autoCorrect={false} value={name} placeholder="First Name (So servers know what to call you.)"/>
       </View>
       <View style={styles.textInputContainer}>
-        <TextInput style={styles.textInputBox} onChangeText={text => updateName(text)} autoCapitalize='words'
-                   autoCorrect={false} value={name} placeholder="your name"/>
         <TextInput style={styles.textInputBox} onChangeText={text => updatePhoneNumber(text)} autoCapitalize='words'
                    autoCorrect={false} value={phoneNumber} placeholder="(123) 456-7890" keyboardType='phone-pad'
                    maxLength={14}/>
+      </View>
+      <View style={styles.textInputContainer}>
         <TextInput style={styles.textInputBox} onChangeText={text => updateEmail(text)} autoCapitalize='none'
-                   autoCorrect={false} value={email} placeholder="email (optional)"/>
+                   autoCorrect={false} value={email} placeholder="Email (Optional)"/>
+      </View>
+      <View style={styles.textInputContainer}>
         <TextInput style={styles.textInputBox} onChangeText={text => updatePassword(text)} autoCapitalize='none'
-                   autoCorrect={false} value={password} placeholder="password"/>
+                   autoCorrect={false} value={password} placeholder="Password"/>
+      </View>
+      <View style={styles.textInputContainer}>
         <TextInput style={styles.textInputBox} onChangeText={text => updateConfirmPassword(text)} autoCapitalize='none'
-                   autoCorrect={false} value={confirmPassword} placeholder="confirm password"/>
+                   autoCorrect={false} value={confirmPassword} placeholder="Confirm Password"/>
       </View>
     </View>
     <View style={styles.checkListContainer}>
       {!registering &&
       <PasswordChecklist hasLower={passwordValid.hasLower} hasUpper={passwordValid.hasUpper}
                          hasDigit={passwordValid.hasDigit} hasSymbol={passwordValid.hasSymbol}
-                         hasLength={passwordValid.hasLength} matches={password === confirmPassword}/>}
+                         hasLength={passwordValid.hasLength} matches={confirmPassword && (password === confirmPassword)}/>}
     </View>
     <View style={styles.buttonContainer}>
       {registering
