@@ -1,7 +1,8 @@
 /**
  * Created by warren on 4/2/17.
  */
-import React, {PropTypes} from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import {View, Text, TextInput, StyleSheet, Image} from 'react-native'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import Spinner from '../../common/spinner'

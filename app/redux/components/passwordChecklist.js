@@ -1,7 +1,8 @@
 /**
  * Created by warren on 7/11/17.
  */
-import React, {PropTypes} from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import {View, Text, Image, StyleSheet} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 

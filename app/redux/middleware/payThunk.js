@@ -26,7 +26,7 @@ const payThunk = () => (dispatch, getState) => {
     .then(res => stripeChargeCard({total, stripeToken, cardToken, nodeId, customerId, items: currentCart}))
     .then(res => dispatch(ccActions.payment.success()))
     .then(res => dispatch(clearCart()))
-    .then(res => Actions.tabs())
+    .then(res => Actions.tabs({type: 'reset'}))
     .then(res => dispatch(ccActions.payment.reset()))
     .catch(err => dispatch(ccActions.payment.failure()))
 };

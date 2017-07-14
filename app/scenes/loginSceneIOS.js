@@ -3,6 +3,7 @@
  */
 import React, {Component} from 'react';
 import {PushNotificationIOS} from 'react-native'
+import PropTypes from 'prop-types'
 import Login from '../redux/connectedComponents/loginConnected'
 import {connect} from 'react-redux'
 import {setDeviceToken} from '../redux/actions/loginActions'
@@ -10,7 +11,7 @@ const noble = require('react-native-ble'); /** putting this here to turn on nobl
 
 class LoginScene extends Component {
   static contextTypes = {
-    store: React.PropTypes.object
+    store: PropTypes.object
   };
 
   componentWillMount() {

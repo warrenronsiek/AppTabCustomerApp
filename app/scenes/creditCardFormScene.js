@@ -2,12 +2,13 @@
  * Created by warren on 4/28/17.
  */
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import CardForm from '../redux/connectedComponents/creditCardFormConnected'
 import {connect} from 'react-redux'
 
 class CreditCardForm extends Component {
   static contextTypes = {
-    store: React.PropTypes.object
+    store: PropTypes.object
   };
 
   render() {

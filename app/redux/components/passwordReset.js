@@ -1,7 +1,8 @@
 /**
  * Created by warren on 6/20/17.
  */
-import React, {PropTypes} from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import {View, Text, TextInput, StyleSheet, Dimensions, Button as BuiltinButton} from 'react-native'
 import Button from '../../common/button'
 import Spinner from '../../common/spinner'

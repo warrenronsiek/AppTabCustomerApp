@@ -16,6 +16,7 @@ import getStripeToken from '../../api/getStripeToken'
 import {Actions} from 'react-native-router-flux'
 import logger from '../../api/loggingApi'
 import phoneFormatter from 'phone-formatter'
+import {InteractionManager} from 'react-native'
 
 export default loginThunk = (phoneNumber, password) => (dispatch, getState) => {
   let customerId;
@@ -31,16 +32,17 @@ export default loginThunk = (phoneNumber, password) => (dispatch, getState) => {
       Actions.nodes()
     })
     .then(() => {
+      dispatch(loginComplete())
+    })
+    .then(() => {
       customerId = getState().auth.customerId;
-      return getStripeToken({customerId})
+      return InteractionManager.runAfterInteractions(() => getStripeToken({customerId}))
     })
     .then(res => {
       return Promise.resolve(dispatch(updateStripeToken(res.stripeToken)))
     })
-    .then(() => {
-      dispatch(loginComplete())
-    })
     .catch(err => {
+      console.log(err);
       logger('error logging in', err);
       dispatch(loginComplete());
       switch (err.name) {

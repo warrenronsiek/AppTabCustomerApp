@@ -1,7 +1,8 @@
 /**
  * Created by warren on 1/22/17.
  */
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types'
 import {StyleSheet, Text, View, TextInput, Dimensions, Button as BuiltinButton} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import EnytpoIcon from 'react-native-vector-icons/Entypo'

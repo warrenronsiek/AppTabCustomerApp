@@ -1,7 +1,8 @@
 /**
  * Created by warren on 1/23/17.
  */
-import React, {PropTypes} from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import {Text, StyleSheet, View, Button} from 'react-native'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'

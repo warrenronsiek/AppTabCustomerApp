@@ -1,7 +1,8 @@
 /**
  * Created by warren on 4/2/17.
  */
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types'
 import {Text, StyleSheet, View, Image, TouchableHighlight} from 'react-native';
 import OcticonIcon from 'react-native-vector-icons/Octicons'
 

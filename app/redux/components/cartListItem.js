@@ -1,7 +1,8 @@
 /**
  * Created by warren on 2/28/17.
  */
-import React, {PropTypes} from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import {View, Text, TextInput, StyleSheet, Button} from 'react-native';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 

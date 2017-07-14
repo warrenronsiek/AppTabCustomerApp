@@ -1,11 +1,11 @@
 /**
  * Created by warren on 1/28/17.
  */
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {TouchableHighlight, StyleSheet, Text, View, Button} from 'react-native'
+import {StyleSheet, View, Button} from 'react-native'
 import serviceRequest from '../api/serviceRequestApi'
-import {Actions} from 'react-native-router-flux'
 import logger from '../api/loggingApi'
 
 const styles = StyleSheet.create({
@@ -16,9 +16,9 @@ const styles = StyleSheet.create({
   }
 });
 
-class ServiceRequestScene extends React.Component {
+class ServiceRequestScene extends Component {
   static contextTypes = {
-    store: React.PropTypes.object
+    store: PropTypes.object
   };
 
   constructor(props) {

@@ -2,6 +2,7 @@
  * Created by warren on 1/23/17.
  */
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import Nodes from '../redux/connectedComponents/nodeListConnected'
 import {updateNodeApi, updateNodeBle, setNodeQueried} from '../redux/actions/nodeActions'
 import getNodeInfo from '../api/nodeApi'
@@ -44,7 +45,7 @@ function parseBlePacket(item) {
 
 class NodeScene extends Component {
   static contextTypes = {
-    store: React.PropTypes.object
+    store: PropTypes.object
   };
 
   constructor(props) {
@@ -53,7 +54,7 @@ class NodeScene extends Component {
 
   componentWillMount() {
     noble.on('discover', this._onFound);
-    noble.on('updated', this._onFound);
+    // noble.on('updated', this._onFound);
   }
 
   componentDidMount() {

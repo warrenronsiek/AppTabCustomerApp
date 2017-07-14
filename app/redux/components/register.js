@@ -1,8 +1,9 @@
 /**
  * Created by warren on 1/22/17.
  */
-import React, {PropTypes} from 'react';
-import {View, Text, TextInput, StyleSheet, Dimensions} from 'react-native';
+import React from 'react'
+import PropTypes from 'prop-types'
+import {View, Text, TextInput, StyleSheet, Dimensions} from 'react-native'
 import Spinner from '../../common/spinner'
 import Button from '../../common/button'
 import PasswordChecklist from './passwordChecklist'

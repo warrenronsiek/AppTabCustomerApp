@@ -1,7 +1,8 @@
 /**
  * Created by warren on 2/26/17.
  */
-import React, {PropTypes} from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import {View, Text, StyleSheet} from 'react-native';
 import Button from '../../common/button'
 
