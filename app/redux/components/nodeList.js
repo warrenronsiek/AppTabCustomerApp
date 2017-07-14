@@ -1,7 +1,8 @@
 /**
  * Created by warren on 1/23/17.
  */
-import React, {PropTypes, Component} from 'react'
+import React, { Component} from 'react'
+import PropTypes from 'prop-types'
 import {Text, StyleSheet, View, ListView} from 'react-native'
 import NodeListItem from './nodeListItem'
 import Spinner from '../../common/spinner'

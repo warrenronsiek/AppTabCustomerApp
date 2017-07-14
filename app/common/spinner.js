@@ -1,68 +1,53 @@
 /**
  * Created by warren on 5/9/17.
  */
-import {Animated, StyleSheet, View, UIManager, LayoutAnimation} from 'react-native'
+import {Animated, StyleSheet, View, Easing, LayoutAnimation} from 'react-native'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import * as _ from 'lodash'
 import EvilIcon from 'react-native-vector-icons/EvilIcons'
 const AnimatedIcon = Animated.createAnimatedComponent(EvilIcon);
 
-UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
-
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
+  },
+  spinStyle: {
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 10,
-    flexDirection: 'row'
-  },
-  circles: {
-    backgroundColor: 'black'
   }
-});
-
-const squareStyleGen = (diameter) => ({
-  width: diameter,
-  height: diameter,
 });
 
 export default class Spinner extends Component {
+  static propTypes = {
+    width: PropTypes.number,
+    height: PropTypes.number,
+    size: PropTypes.number,
+    style: PropTypes.any
+  };
 
   constructor(props) {
     super(props);
-    this.width = this.props.width || 70;
+    this.width = this.props.width || 60;
     this.height = this.props.height || 50;
-    this.state = {squareDims: [10, 15, 20]};
+    this.spinValue = new Animated.Value(0);
   }
 
-  componentWillUpdate() {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear, this.update);
+  componentDidMount() {
+    this.spin()
   }
 
-  update = () => {
-    this.setState({squareDims: _.shuffle(this.state.squareDims)});
+  spin = () => {
+    this.spinValue.setValue(0);
+    Animated.timing(this.spinValue, {toValue: 1, duration: 4000, easing: Easing.linear, useNativeDriver: true}).start(() => this.spin());
   };
 
-  componentDidMount () {
-    this.update()
-  }
-
   render() {
+    const spin = this.spinValue.interpolate({inputRange: [0,1], outputRange: ['0deg', '360deg']});
     return (
-      <View style={[styles.container, {width: this.width, height: this.height, maxHeight: this.height}]}>
-            <View style={[styles.circles, squareStyleGen(this.state.squareDims[0])]}/>
-            <View style={[styles.circles, squareStyleGen(this.state.squareDims[1]), {marginLeft: 5}]}/>
-            <View style={[styles.circles, squareStyleGen(this.state.squareDims[2]), {marginLeft: 5}]}/>
+      <View style={[styles.container, this.props.style]}>
+        <AnimatedIcon name='spinner-2' size={this.props.size ? this.props.size : 60}
+                      style={[styles.spinStyle, {transform: [{rotate: spin}]}, {height: this.height, width: this.width}]}/>
       </View>
     )
   }
 }
-
-Spinner.propTypes = {
-  width: PropTypes.number,
-  height: PropTypes.number,
-  size: PropTypes.number,
-  style: PropTypes.any
-};

@@ -1,7 +1,8 @@
 /**
  * Created by warren on 4/2/17.
  */
-import React, {PropTypes, Component} from 'react'
+import React, { Component} from 'react'
+import PropTypes from 'prop-types'
 import {Text, StyleSheet, View, ListView, Image} from 'react-native'
 import PaymentItem from './paymentListItem'
 import Button from '../../common/button'

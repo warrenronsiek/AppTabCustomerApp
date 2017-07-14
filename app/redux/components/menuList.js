@@ -1,7 +1,8 @@
 /**
  * Created by warren on 2/26/17.
  */
-import React, {PropTypes, Component} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {View, ListView, StyleSheet, Text} from 'react-native'
 import MenuListItem from './menuListItem'
 import Button from '../../common/button'
@@ -58,7 +59,7 @@ export default class MenuList extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {!this.props.apiQueried ? <View style={styles.spinnerContainer}><Spinner/></View> : null}
+        {!this.props.apiQueried ? <Spinner style={{marginTop: 150}}/>: null}
         {(this.props.menuListItems.length === 0) && (this.props.apiQueried)
           ? <View style={styles.textContainer}><Text>This kind of item is not on the menu :(</Text></View>
           : <ListView dataSource={this.state.dataSource} enableEmptySections={true}

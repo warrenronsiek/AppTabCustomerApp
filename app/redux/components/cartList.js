@@ -1,7 +1,8 @@
 /**
  * Created by warren on 3/1/17.
  */
-import React, {PropTypes, Component} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types'
 import {View, ListView, StyleSheet, Text} from 'react-native';
 import CartListItem from './cartListItem';
 import Button from '../../common/button'
