@@ -14,11 +14,9 @@ const selectNode = (nodeId) => (dispatch, getState) => {
     .then(() => {
       const state = getState(),
         venueId = state.nodes.filter(node => node.nodeId === state.activeNode)[0].venueId;
-      console.log('calling getMenu');
       return getMenu({venueId})
     })
     .then(res => {
-      console.log(res);
       return Promise.all(res.Items.map(item => Promise.resolve(dispatch(updateMenuItem(item.ItemName.S, item.ItemDescription.S, item.Price.N, tags = item.Tags.SS, item.Category.S, item.ItemId.S, item.VenueId.S)))))
     })
     .then(res => {

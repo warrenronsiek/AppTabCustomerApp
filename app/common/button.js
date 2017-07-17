@@ -81,10 +81,14 @@ class Button extends Component {
     containerStyle: PropTypes.any
   };
 
+  handleOnPress = () => {
+    requestAnimationFrame(() => this.props.onPress())
+  };
+
   render() {
     return (
       <TouchableHighlight
-        onPress={!this.props.disabled ? () => this.props.onPress() : null}
+        onPress={!this.props.disabled ? this.handleOnPress : null}
         style={!this.props.disabled
           ? [styles.button, this.props.style]
           : [styles.button, this.props.style, {backgroundColor: 'grey'}]}
