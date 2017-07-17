@@ -54,7 +54,7 @@ export default class MenuList extends Component {
         && <View style={styles.textContainer}><Text>This kind of item is not on the menu :(</Text></View>}
         { this.props.menuListItems.length > 0 &&
         <FlatList data={this.props.menuListItems} keyExtractor={(item, index) => item.itemId}
-                  renderItem={item => <MenuListItem itemName={item.itemName}
+                  renderItem={({item}) => <MenuListItem itemName={item.itemName}
                                                     itemDescription={item.itemDescription}
                                                     itemId={item.itemId}
                                                     price={item.price} tags={item.tags}
