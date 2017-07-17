@@ -83,13 +83,13 @@ const menuListItem = ({itemName, itemDescription, itemId, price, tags, addToCart
   </View>
 );
 
-menuListItem.propTypes = {
-  itemName: PropTypes.string.isRequired,
-  itemDescription: PropTypes.string.isRequired,
-  itemId: PropTypes.string.isRequired,
-  price: PropTypes.string.isRequired,
-  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
-  addToCart: PropTypes.func.isRequired
-};
+// menuListItem.propTypes = {
+//   itemName: PropTypes.string.isRequired,
+//   itemDescription: PropTypes.string.isRequired,
+//   itemId: PropTypes.string.isRequired,
+//   price: PropTypes.string.isRequired,
+//   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+//   addToCart: PropTypes.func.isRequired
+// };
 
 export default menuListItem

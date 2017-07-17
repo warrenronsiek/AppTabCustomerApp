@@ -41,7 +41,6 @@ export default loginThunk = (phoneNumber, password) => (dispatch, getState) => {
       return Promise.resolve(dispatch(updateStripeToken(res.stripeToken)))
     })
     .catch(err => {
-      console.log(err);
       logger('error logging in', err);
       dispatch(loginComplete());
       switch (err.name) {

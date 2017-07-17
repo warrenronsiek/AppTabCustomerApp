@@ -20,7 +20,6 @@ class LoginScene extends Component {
       this.props.dispatch(setDeviceToken(token))
     });
     PushNotificationIOS.addEventListener('notification', (notification) => {
-      console.log(notification);
     })
   }
 

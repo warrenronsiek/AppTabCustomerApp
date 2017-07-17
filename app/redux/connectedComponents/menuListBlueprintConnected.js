@@ -1,11 +1,11 @@
 /**
  * Created by warren on 2/28/17.
  */
-import {connect} from 'react-redux';
-import {addToCartThunk} from '../middleware/cartThunk';
-import MenuList from '../components/menuList';
-import {Actions} from 'react-native-router-flux';
-const _ = require('lodash');
+import {connect} from 'react-redux'
+import {addToCartThunk} from '../middleware/cartThunk'
+import MenuList from '../components/menuList'
+import {Actions} from 'react-native-router-flux'
+import * as _ from 'lodash'
 
 const blueprint = (category) => {
   const mapStateToProps = (state) => {

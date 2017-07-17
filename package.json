@@ -19,10 +19,10 @@
     "react-native-collapsible": "^0.8.0",
     "react-native-router-flux": "^4.0.0-beta.6",
     "react-native-vector-icons": "^4.0.0",
-    "react-redux": "^5.0.2",
-    "redux": "^3.6.0",
-    "redux-actions": "^2.0.1",
-    "redux-thunk": "^2.1.0"
+    "react-redux": "^5.0.5",
+    "redux": "^3.7.2",
+    "redux-actions": "^2.2.1",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel-jest": "18.0.0",

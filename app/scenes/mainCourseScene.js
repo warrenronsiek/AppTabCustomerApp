@@ -3,7 +3,6 @@
  */
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import menuComponentWillMount from '../common/menuComponentWillMount'
 import MenuListBlueprint from '../redux/connectedComponents/menuListBlueprintConnected'
 import PropTypes from 'prop-types'
 
@@ -14,15 +13,11 @@ class MainScene extends Component {
     store: PropTypes.object
   };
 
-  componentWillMount() {
-    menuComponentWillMount(this)
-  }
-
   render() {
     return (
       <MainList/>
     )
   }
-};
+}
 
 export default connect()(MainScene)

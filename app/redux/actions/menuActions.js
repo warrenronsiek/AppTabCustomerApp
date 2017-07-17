@@ -6,6 +6,11 @@ export const updateMenuItem = (itemName, itemDescription, price, tags, category,
   return {type: UPDATE_MENU_ITEM, itemName, itemDescription, price, tags, category, itemId, venueId}
 };
 
+export const UPDATE_MENU = 'UPDATE_MENU';
+export const updateMenu = (items) => {
+  return {type: UPDATE_MENU, items}
+};
+
 export const MENU_API_QUERY_STATUS = 'MENU_API_QUERY_STATUS';
 export const menuApiQueryStatus = (venueId, time) => {
   return {type: MENU_API_QUERY_STATUS, venueId, time}
