@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'
-import {View, ListView, StyleSheet, Text} from 'react-native';
+import {View, ListView, StyleSheet, Text, FlatList} from 'react-native';
 import CartListItem from './cartListItem';
 import Button from '../../common/button'
 import Spinner from '../../common/spinner'
@@ -93,8 +93,8 @@ export default class MenuList extends Component {
         <View>
           {this.props.cartListItems.length === 0
             ? null
-            : <ListView dataSource={this.state.dataSource}
-                        renderRow={item => <CartListItem itemName={item.itemName}
+            : <FlatList data={this.props.cartListItems} keyExtractor={(item, index) => item.itemId}
+                        renderItem={({item}) => <CartListItem itemName={item.itemName}
                                                          itemDescription={item.itemDescription}
                                                          itemId={item.itemId}
                                                          price={item.price}

@@ -3,7 +3,7 @@
  */
 import React, { Component} from 'react'
 import PropTypes from 'prop-types'
-import {Text, StyleSheet, View, ListView, Image} from 'react-native'
+import {Text, StyleSheet, View, FlatList, Image} from 'react-native'
 import PaymentItem from './paymentListItem'
 import Button from '../../common/button'
 import Spinner from '../../common/spinner'
@@ -61,28 +61,14 @@ class PaymentMethodSelection extends Component {
     })
   };
 
-  constructor(props) {
-    super(props);
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.state = {
-      dataSource: ds.cloneWithRows(this.props.paymentListItems)
-    };
-  }
-
-  componentWillReceiveProps(newProps) {
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(newProps.paymentListItems)
-    });
-  }
-
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.cardImageContainer}><Image source={require('../../assets/images/card_front.png')}/></View>
         <View style={this.props.paymentListItems.length > 0 ? styles.listContainer : [styles.listContainer, {alignItems: 'center', justifyContent: 'center'}]}>
           {this.props.paymentListItems.length > 0
-            ? <ListView dataSource={this.state.dataSource} automaticallyAdjustContentInsets={false}
-                        renderRow={(item) => <PaymentItem brand={item.brand} isSelected={item.isSelected}
+            ? <FlatList data={this.props.paymentListItems} automaticallyAdjustContentInsets={false} keyExtractor={(item, index) => item.ccToken}
+                        renderItem={({item}) => <PaymentItem brand={item.brand} isSelected={item.isSelected}
                                                           last4={item.last4} ccToken={item.ccToken}
                                                           expMonth={item.expMonth} expYear={item.expYear}
                                                           select={this.props.selectCard}/>}/>

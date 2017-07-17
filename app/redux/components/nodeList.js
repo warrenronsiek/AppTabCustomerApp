@@ -3,7 +3,7 @@
  */
 import React, { Component} from 'react'
 import PropTypes from 'prop-types'
-import {StyleSheet, View, ListView, LayoutAnimation} from 'react-native'
+import {StyleSheet, View, FlatList} from 'react-native'
 import NodeListItem from './nodeListItem'
 import Spinner from '../../common/spinner'
 
@@ -35,26 +35,12 @@ class NodeList extends Component {
     activeNode: PropTypes.string.isRequired
   };
 
-  constructor(props) {
-    super(props);
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => (r1.nodeId !== r2.nodeId) || (r1.nodeName !== r2.nodeName) || (r1.nodeDescription !== r2.nodeDescription)});
-    this.state = {
-      dataSource: ds.cloneWithRows(this.props.nodeListItems)
-    };
-  }
-
-  componentWillReceiveProps(newProps) {
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(newProps.nodeListItems)
-    });
-  }
-
   render() {
     return (
       <View style={styles.container}>
         {this.props.renderNodes
-          ? <ListView dataSource={this.state.dataSource}
-                      renderRow={(item) => <NodeListItem nodeId={item.nodeId} key={item.nodeId} nodeName={item.nodeName}
+          ? <FlatList data={this.props.nodeListItems} keyExtractor={(item, index) => item.nodeId}
+                      renderItem={({item}) => <NodeListItem nodeId={item.nodeId} key={item.nodeId} nodeName={item.nodeName}
                                                          selectNode={this.props.selectNode}
                                                          activeNode={this.props.activeNode}
                                                          nodeDescription={item.nodeDescription}/>}/>
