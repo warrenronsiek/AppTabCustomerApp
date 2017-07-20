@@ -6,9 +6,10 @@ import {setActiveNode} from '../actions/nodeActions'
 import {menuApiQueryStatus, updateMenuItem} from '../actions/menuActions'
 import logger from '../../api/loggingApi'
 import getMenu from '../../api/getMenu'
+import noble from 'react-native-ble'
 
 const selectNode = (nodeId) => (dispatch, getState) => {
-
+  noble.stopScanning();
   Promise.resolve(dispatch(setActiveNode(nodeId)))
     .then(() => Promise.resolve(Actions.tabs()))
     .then(() => {

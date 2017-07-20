@@ -7,6 +7,7 @@ import Nodes from '../redux/connectedComponents/nodeListConnected'
 import {updateNodeApi, updateNodeBle, setNodeQueried} from '../redux/actions/nodeActions'
 import getNodeInfo from '../api/nodeApi'
 import BeaconTypeError from '../errors/beaconTypeError'
+import WrongNamespaceError from '../errors/wrongNamespaceError'
 import GetNodeQueriedError from '../errors/getNodeQueriedError'
 import {connect} from 'react-redux'
 import {Buffer} from 'buffer'
@@ -80,7 +81,7 @@ class NodeScene extends Component {
           return Promise.resolve(this.props.dispatch(updateNodeBle(res.distance, res.namespace, res.instance, res.lastSeen)))
         }
         else {
-          throw new Error('incorrect namespace')
+          throw new WrongNamespaceError('node has incorrect namespace')
         }
       })
       .then(res => {
@@ -105,6 +106,8 @@ class NodeScene extends Component {
           case 'BeaconTypeError':
             break;
           case 'GetNodeQueriedError':
+            break;
+          case 'WrongNamespaceError':
             break;
           default:
             logger('error processing node', err);
