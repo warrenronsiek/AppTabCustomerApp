@@ -17,7 +17,7 @@ const requester = (apiPath, successMessage, errorMessage, responseProcessor, all
       method: 'POST',
       body: JSON.stringify({
         refreshToken: state.auth.refreshToken,
-        userName: state.loginParams.email,
+        userName: state.loginParams.phoneNumber,
         password: state.loginParams.password,
         lastRefresh: state.auth.updateTime
       })

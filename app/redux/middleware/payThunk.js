@@ -6,6 +6,7 @@ import ccActions from '../actions/creditCardActions'
 import {clearCart} from '../actions/cartActions'
 import * as _ from 'lodash'
 import {Actions, ActionConst} from 'react-native-router-flux'
+import logger from '../../api/loggingApi'
 
 function round(value, decimals) {
   return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
@@ -21,7 +22,7 @@ const payThunk = () => (dispatch, getState) => {
     itemTotal = round(_.sum(currentCart.map(item => parseFloat(item.price) * item.count)), 2),
     tip = round(itemTotal * state.additionalCosts.tip, 2),
     tax = round(itemTotal * state.additionalCosts.tax, 2),
-    amount = (itemTotal + tip + tax) * 100,
+    amount = parseInt(round((itemTotal + tip + tax) * 100, 2)),
     stripeToken = state.stripeToken,
     cardToken = state.ccTokens.filter(item => item.isSelected)[0].ccToken,
     nodeId = state.activeNode,
@@ -33,7 +34,10 @@ const payThunk = () => (dispatch, getState) => {
     .then(res => dispatch(clearCart()))
     .then(res => Actions.tabs({type: 'reset'}))
     .then(res => dispatch(ccActions.payment.reset()))
-    .catch(err => dispatch(ccActions.payment.failure()))
+    .catch(err => {
+      dispatch(ccActions.payment.failure());
+      logger('error charging card', err)
+    })
 };
 
 export default payThunk
