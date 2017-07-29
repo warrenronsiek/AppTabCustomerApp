@@ -2,6 +2,7 @@ import store from '../redux/store'
 import AWS from 'aws-sdk/dist/aws-sdk-react-native'
 import {identityPoolId, firehoseName} from "../vars"
 import {omit, get} from 'lodash'
+import uuid from 'react-native-uuid'
 
 AWS.config.region = 'us-west-2';
 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -30,6 +31,7 @@ const writeToFirehose = type => {
         deviceToken: get(state, 'deviceToken', 'null'),
         date: Date.now(),
         sessionId: get(state, 'activeNode.sessionId', 'null'),
+        eventId: uuid.v1(),
         type
       })
     }
