@@ -28,7 +28,7 @@ class ServiceRequestScene extends Component {
   _serviceRequest = () => {
     const state = this.context.store.getState();
     const
-      activeNode = state.activeNode,
+      activeNode = state.activeNode.nodeId,
       userName = state.auth.userName;
     serviceRequest({nodeId: activeNode, userName})
       .catch(err => logger('service request error', err))

@@ -11,7 +11,7 @@ const mapStateToProps = (state) => {
   return {
     nodeListItems: viewableItems,
     renderNodes: viewableItems.length > 0,
-    activeNode: state.activeNode
+    activeNode: state.activeNode.nodeId
   }
 };
 

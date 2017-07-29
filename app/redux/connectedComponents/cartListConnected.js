@@ -9,7 +9,7 @@ import checkoutThunk from '../middleware/checkoutThunk'
 import * as _ from 'lodash'
 
 const mapStateToProps = (state) => {
-  const venueId = _.find(state.nodes, ['nodeId', state.activeNode]).venueId,
+  const venueId = _.find(state.nodes, ['nodeId', state.activeNode.nodeId]).venueId,
     currentCart = _.sortBy(state.cart.filter(item => item.venueId === venueId), ['itemName']),
     totalCartCost = Math.round(_.sum(currentCart.map(item => parseFloat(item.price) * item.count)) * 100) / 100,
     tax = Math.round(totalCartCost * state.additionalCosts.tax *100) / 100,
