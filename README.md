@@ -9,3 +9,10 @@ Possible Explosives
 -------------------
 
 1. If components get unmounted before some async request triggers a callback, there might be errors. See [react-timer-mixin](https://github.com/reactjs/react-timer-mixin). 
+2. If you get an error that says `config.h file not found` you need to: 
+* clean your project
+* delete `node_modules` and `yarn install`
+
+and/or
+* navigate to `node_modules/react-native/third-party/glog-#.#.#`
+* run `../../scripts/ios-configure-glog.sh`

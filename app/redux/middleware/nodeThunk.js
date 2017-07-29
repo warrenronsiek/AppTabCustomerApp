@@ -7,6 +7,7 @@ import {menuApiQueryStatus, updateMenuItem} from '../actions/menuActions'
 import logger from '../../api/loggingApi'
 import getMenu from '../../api/getMenu'
 import noble from 'react-native-ble'
+import {writeToFirehose} from "../../api/firehose"
 
 const selectNode = (nodeId) => (dispatch, getState) => {
   noble.stopScanning();
@@ -26,7 +27,9 @@ const selectNode = (nodeId) => (dispatch, getState) => {
         now = Date.now();
       dispatch(menuApiQueryStatus(venueId, now))
     })
+    .then(res => writeToFirehose('NodeSelected'))
     .catch(err => {
+      console.log(err);
       logger('error selecting node', err)})
 };
 

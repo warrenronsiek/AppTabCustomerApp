@@ -16,6 +16,7 @@ import getStripeToken from '../../api/getStripeToken'
 import {Actions} from 'react-native-router-flux'
 import logger from '../../api/loggingApi'
 import phoneFormatter from 'phone-formatter'
+import {updateCredentials, writeToFirehose} from '../../api/firehose'
 
 export default loginThunk = (phoneNumber, password) => (dispatch, getState) => {
   let customerId;
@@ -40,7 +41,10 @@ export default loginThunk = (phoneNumber, password) => (dispatch, getState) => {
     .then(res => {
       return Promise.resolve(dispatch(updateStripeToken(res.stripeToken)))
     })
+    .then(res => Promise.resolve(updateCredentials()))
+    .then(res => writeToFirehose('Login'))
     .catch(err => {
+      console.log(err);
       logger('error logging in', err);
       dispatch(loginComplete());
       switch (err.name) {

@@ -2,6 +2,7 @@
  * Created by warren on 1/23/17.
  */
 import {UPDATE_NODE_API, UPDATE_NODE_BLE, SET_ACTIVE_NODE, SET_NODE_QUERIED} from '../actions/nodeActions';
+
 const _ = require('lodash');
 
 export const nodes = (state = [], action) => {

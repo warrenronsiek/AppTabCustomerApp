@@ -7,6 +7,7 @@ import {url} from '../vars'
 import decode from 'jwt-decode'
 import store from '../redux/store'
 import {updateAuth} from '../redux/actions/loginActions'
+import {updateCredentials} from "./firehose"
 
 const requester = (apiPath, successMessage, errorMessage, responseProcessor, allowTokenRefresh = true, errorProcessor) => (postBody) => {
     const state = store.getState();
@@ -57,7 +58,9 @@ const requester = (apiPath, successMessage, errorMessage, responseProcessor, all
           customerId: idVals['sub']
         });
       })
-      .then(res => Promise.resolve(store.dispatch(updateAuth(res.accessToken, res.idToken, res.refreshToken, res.userName, res.customerId))));
+      .then(res => Promise.resolve(store.dispatch(updateAuth(res.accessToken, res.idToken, res.refreshToken, res.userName, res.customerId))))
+      .then(res => updateCredentials())
+      .catch(err => logger('failedTokenRefreshFetch', err));
 
     const timeCondition = (new Date() - state.auth.updateTime) / (60 * 1000) > 30;
     if (timeCondition && allowTokenRefresh) {
