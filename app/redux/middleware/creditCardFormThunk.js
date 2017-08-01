@@ -5,7 +5,8 @@ import {Actions} from 'react-native-router-flux'
 import ccActions from '../actions/creditCardActions'
 import stripeCreateCard from '../../api/stripeCreateCard'
 import logger from '../../api/loggingApi'
-import {writeToFirehose} from "../../api/firehose";
+import {writeToFirehose} from "../../api/firehose"
+import selectCardThunk from './selectCardThunk'
 
 const creditCardFormThunk = (cardNumber, expMonth, expYear, ccv) => (dispatch, getState) => {
   const state = getState();
@@ -22,7 +23,7 @@ const creditCardFormThunk = (cardNumber, expMonth, expYear, ccv) => (dispatch, g
       return Promise.resolve(dispatch(ccActions.real.wipe()))
     })
     .then(res => {
-      return Promise.resolve(dispatch(ccActions.token.setSelected(cardToken)))
+      return Promise.resolve(dispatch(selectCardThunk(cardToken)))
     })
     .then(res => Actions.pop())
     .then(() => writeToFirehose('AddedCreditCard'))

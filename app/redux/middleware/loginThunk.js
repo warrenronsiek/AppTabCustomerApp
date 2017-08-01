@@ -19,6 +19,7 @@ import {Actions} from 'react-native-router-flux'
 import logger from '../../api/loggingApi'
 import phoneFormatter from 'phone-formatter'
 import {updateCredentials, writeToFirehose} from '../../api/firehose'
+import {get} from 'lodash'
 
 export default loginThunk = (phoneNumber, password) => (dispatch, getState) => {
   let customerId;
@@ -45,7 +46,8 @@ export default loginThunk = (phoneNumber, password) => (dispatch, getState) => {
     })
     .then(res => getCreditCards({customerId}))
     .then(res => {
-      return Promise.all(res.Items.map(item => Promise.resolve(dispatch(ccActions.token.add(item.CardId.S, item.Last4.S, item.Brand.S, item.ExpMonth.N, item.ExpYear.N)))))
+      console.log(res);
+      return Promise.all(res.Items.map(item => Promise.resolve(dispatch(ccActions.token.add(item.CardId.S, item.Last4.S, item.Brand.S, item.ExpMonth.N, item.ExpYear.N, get(item, 'Default.BOOL', undefined))))))
     })
     .then(res => Promise.resolve(dispatch(ccActions.apiQueried(true))))
     .then(res => Promise.resolve(updateCredentials()))

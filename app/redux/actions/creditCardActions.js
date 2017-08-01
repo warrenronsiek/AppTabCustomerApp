@@ -16,7 +16,7 @@ export default ccActions = createActions({
     TOKENIZING: isTokenizing => isTokenizing
   },
   TOKEN: {
-    ADD: (ccToken, last4, brand, exp_month, exp_year) => ({ccToken, last4, brand, exp_month, exp_year}),
+    ADD: (ccToken, last4, brand, exp_month, exp_year, isDefault) => ({ccToken, last4, brand, exp_month, exp_year, isDefault}),
     DELETE: ccToken => ccToken,
     SET_SELECTED: ccToken => ccToken,
   },
