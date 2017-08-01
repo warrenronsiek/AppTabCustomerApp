@@ -21,7 +21,7 @@ const ccTokens = handleActions({
       last4: action.payload.last4,
       expMonth: action.payload.exp_month,
       expYear: action.payload.exp_year,
-      isSelected: false
+      isSelected: action.payload.isDefault || false
     }],
     [ccActions.token.delete]: (state, action) => state.filter(item => item.ccToken !== action.ccToken),
     [ccActions.token.setSelected]: (state, action) => [

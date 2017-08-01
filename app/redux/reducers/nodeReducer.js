@@ -1,7 +1,8 @@
 /**
  * Created by warren on 1/23/17.
  */
-import {UPDATE_NODE_API, UPDATE_NODE_BLE, SET_ACTIVE_NODE, SET_NODE_QUERIED} from '../actions/nodeActions';
+import {UPDATE_NODE_API, UPDATE_NODE_BLE, SET_ACTIVE_NODE, SET_NODE_QUERIED} from '../actions/nodeActions'
+import uuid from 'react-native-uuid'
 const _ = require('lodash');
 
 export const nodes = (state = [], action) => {
@@ -68,10 +69,10 @@ export const nodes = (state = [], action) => {
   }
 };
 
-export const activeNode = (state = "", action) => {
+export const activeNode = (state = {nodeId: "", sessionId: ""}, action) => {
   switch (action.type) {
     case SET_ACTIVE_NODE:
-      return action.nodeId;
+      return {nodeId: action.nodeId, sessionId: state.nodeId === action.nodeId ? state.sessionId : uuid.v4()};
     default:
       return state
   }

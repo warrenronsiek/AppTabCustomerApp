@@ -6,6 +6,7 @@ import {registering, clearErrors, networkError, userExistsError, registeringFini
 import {Actions} from 'react-native-router-flux'
 import logger from '../../api/loggingApi'
 import phoneFormatter from 'phone-formatter'
+import {writeToFirehose} from "../../api/firehose"
 
 export default registerThunk = (name, email, password, phoneNumber) => (dispatch, getState) => {
   const deviceToken = getState().deviceToken;
@@ -17,6 +18,7 @@ export default registerThunk = (name, email, password, phoneNumber) => (dispatch
     .then(() => dispatch(clearErrors()))
     .then(res => Actions.code())
     .then(() => dispatch(registeringFinished()))
+    .then(() => writeToFirehose('RegistrationStepOne'))
     .catch(err => {
       dispatch(registeringFinished());
       logger('error registering', err);

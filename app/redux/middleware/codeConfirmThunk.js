@@ -18,6 +18,7 @@ import {
   clearErrors
 } from '../actions/registerActions'
 import phoneFormatter from 'phone-formatter'
+import {writeToFirehose} from "../../api/firehose";
 
 const confirmCodeThunk = (confirmationCode) => (dispatch, getState) => {
   const state = getState(),
@@ -37,6 +38,7 @@ const confirmCodeThunk = (confirmationCode) => (dispatch, getState) => {
     .then(() => Actions.nodes())
     .then(() => dispatch(confirmationCodeProcessingFinished()))
     .then(() => dispatch(registeringFinished()))
+    .then(() => writeToFirehose('RegistrationComplete'))
     .catch(err => {
       dispatch(confirmationCodeProcessingFinished());
       switch (err.name) {

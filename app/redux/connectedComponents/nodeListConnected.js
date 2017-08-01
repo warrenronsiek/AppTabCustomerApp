@@ -4,12 +4,14 @@
 import {connect} from 'react-redux'
 import selectNode from '../middleware/nodeThunk'
 import NodeList from '../components/nodeList'
+import * as _ from 'lodash'
 
 const mapStateToProps = (state) => {
+  const viewableItems = _.filter(state.nodes, node => !!node.venueId);
   return {
-    nodeListItems: state.nodes,
-    renderNodes: state.nodes.length > 0,
-    activeNode: state.activeNode
+    nodeListItems: viewableItems,
+    renderNodes: viewableItems.length > 0,
+    activeNode: state.activeNode.nodeId
   }
 };
 
