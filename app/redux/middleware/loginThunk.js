@@ -46,14 +46,12 @@ export default loginThunk = (phoneNumber, password) => (dispatch, getState) => {
     })
     .then(res => getCreditCards({customerId}))
     .then(res => {
-      console.log(res);
       return Promise.all(res.Items.map(item => Promise.resolve(dispatch(ccActions.token.add(item.CardId.S, item.Last4.S, item.Brand.S, item.ExpMonth.N, item.ExpYear.N, get(item, 'Default.BOOL', undefined))))))
     })
     .then(res => Promise.resolve(dispatch(ccActions.apiQueried(true))))
     .then(res => Promise.resolve(updateCredentials()))
     .then(res => writeToFirehose('Login'))
     .catch(err => {
-      console.log(err);
       logger('error logging in', err);
       dispatch(loginComplete());
       switch (err.name) {

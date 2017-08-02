@@ -2,6 +2,7 @@
  * Created by warren on 5/5/17.
  */
 import stripeChargeCard from '../../api/stripeChargeCard'
+import openTransaction from '../../api/openTransaction'
 import ccActions from '../actions/creditCardActions'
 import {clearCart} from '../actions/cartActions'
 import * as _ from 'lodash'
@@ -30,7 +31,7 @@ const payThunk = () => (dispatch, getState) => {
     customerId = state.auth.customerId;
 
   return Promise.resolve(dispatch(ccActions.payment.processing()))
-    .then(res => stripeChargeCard({amount, stripeToken, cardToken, nodeId, customerId, items: currentCart, tip, tax, itemTotal}))
+    .then(res => openTransaction({amount, stripeToken, cardToken, nodeId, customerId, items: currentCart, tip, tax, itemTotal}))
     .then(res => dispatch(ccActions.payment.success()))
     .then(res => writeToFirehose('PaymentComplete'))
     .then(res => dispatch(clearCart()))

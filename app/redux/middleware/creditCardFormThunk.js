@@ -22,9 +22,6 @@ const creditCardFormThunk = (cardNumber, expMonth, expYear, ccv) => (dispatch, g
     .then(res => {
       return Promise.resolve(dispatch(ccActions.real.wipe()))
     })
-    .then(res => {
-      return Promise.resolve(dispatch(selectCardThunk(cardToken)))
-    })
     .then(res => Actions.pop())
     .then(() => writeToFirehose('AddedCreditCard'))
     .then(res => Promise.resolve(dispatch(ccActions.real.tokenizing(false))))
