@@ -35,7 +35,7 @@ const payThunk = () => (dispatch, getState) => {
     .then(res => dispatch(ccActions.payment.success()))
     .then(res => writeToFirehose('PaymentComplete'))
     .then(res => dispatch(clearCart()))
-    .then(res => Actions.tabs({type: 'reset'}))
+    .then(res => Actions.tabs())
     .then(res => dispatch(ccActions.payment.reset()))
     .catch(err => {
       dispatch(ccActions.payment.failure());

@@ -53,17 +53,17 @@ export default class AppTabCustomerApp extends Component {
                 <Scene key="nodes" component={Nodes} title="Table Selection" back/>
                 <Scene key="tabs" tabs={true} hideNavBar>
                   <Scene key="request" component={Request} title="Service Request" icon={bell} initial={true}
-                         back onBack={() => Actions.nodes({type: 'reset'})}/>
+                         back onBack={() => Actions.nodes()}/>
                   <Scene key="drinks" component={DrinkScene} title="Drinks" icon={drink}
-                         back onBack={() => Actions.nodes({type: 'reset'})}/>
+                         back onBack={() => Actions.nodes()}/>
                   <Scene key="main" component={MainCourseScene} title="Main Course" icon={main}
-                         back onBack={() => Actions.nodes({type: 'reset'})}/>
+                         back onBack={() => Actions.nodes()}/>
                   <Scene key="alcohol" component={AlcoholScene} title="Alcohol" icon={cocktail}
-                         back onBack={() => Actions.nodes({type: 'reset'})}/>
+                         back onBack={() => Actions.nodes()}/>
                   <Scene key="dessert" component={DessertScene} title="Dessert" icon={dessert}
-                         back onBack={() => Actions.nodes({type: 'reset'})}/>
+                         back onBack={() => Actions.nodes()}/>
                   <Scene key="appetizer" component={AppetizerScene} title="Appetizer" icon={carrot}
-                         back onBack={() => Actions.nodes({type: 'reset'})}/>
+                         back onBack={() => Actions.nodes()}/>
                 </Scene>
                 <Scene key="placeholder" component={Placeholder} title="Placeholder" back/>
                 <Scene key="cart" component={CartScene} title="Cart" back/>
