@@ -9,7 +9,8 @@ import * as _ from 'lodash'
 
 const blueprint = (category) => {
   const mapStateToProps = (state) => {
-    const venueId = _.find(state.nodes, ['nodeId', state.activeNode.nodeId]).venueId;
+    const node =  _.find(state.nodes, ['nodeId', state.activeNode.nodeId]);
+    const venueId = node ? node.venueId : null;
     return {
       menuListItems: state.menu.filter(item => item.category === category && item.venueId === venueId),
       selectionsCount: _.sum(state.cart.map(item => item.count)),
