@@ -6,7 +6,7 @@ import {oneClickBuy} from '../actions/cartActions'
 
 export default oneClickBuyThunk = (itemId) => (dispatch, getState) => {
   const state = getState(),
-    item = state.menu.filter(item => item.itemId === itemId)[0],
+    item = {...state.menu.filter(item => item.itemId === itemId)[0], count: 1},
     itemTotal = parseFloat(item.price),
     tip = round(itemTotal * state.additionalCosts.tip, 2),
     tax = round(itemTotal * state.additionalCosts.tax, 2),
