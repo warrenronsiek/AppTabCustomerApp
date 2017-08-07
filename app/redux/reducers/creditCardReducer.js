@@ -3,7 +3,6 @@
  */
 import ccActions from '../actions/creditCardActions'
 import {handleActions, handleAction} from 'redux-actions'
-import * as _ from 'lodash'
 
 const creditCard = handleActions({
   [ccActions.real.update.number]: (state, action) => ({...state, cardNumber: action.payload}),
@@ -31,6 +30,11 @@ const ccTokens = handleActions({
   }, []
 );
 
+const defaultCardExists = handleActions({
+  [ccActions.token.add]: (state, action) => action.payload.isDefault || false,
+  [ccActions.token.setSelected]: (state, action) => true
+}, false);
+
 const ccTokenApiQueried = handleAction(ccActions.apiQueried, {
   next: (state = false, action) => action.payload,
   throw: (state, action) => state
@@ -48,4 +52,4 @@ const paymentStatus = handleActions({
   [ccActions.payment.reset]: (state, action) => ({processing: false, success: null, failure: null})
 }, {processing: false, success: null, failure: null});
 
-export {creditCard, ccTokens, ccTokenApiQueried, paymentStatus, creditCardTokenizing}
+export {creditCard, ccTokens, ccTokenApiQueried, paymentStatus, creditCardTokenizing, defaultCardExists}

@@ -1,7 +1,6 @@
 /**
  * Created by warren on 5/5/17.
  */
-import stripeChargeCard from '../../api/stripeChargeCard'
 import openTransaction from '../../api/openTransaction'
 import ccActions from '../actions/creditCardActions'
 import {clearCart} from '../actions/cartActions'
@@ -9,11 +8,7 @@ import * as _ from 'lodash'
 import {Actions, ActionConst} from 'react-native-router-flux'
 import logger from '../../api/loggingApi'
 import {writeToFirehose} from '../../api/firehose'
-
-function round(value, decimals) {
-  return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
-}
-
+import round from '../../common/round'
 
 const payThunk = () => (dispatch, getState) => {
   const state = getState();

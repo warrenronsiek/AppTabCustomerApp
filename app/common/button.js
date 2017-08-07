@@ -78,7 +78,8 @@ class Button extends Component {
     onPress: PropTypes.func.isRequired,
     disabled: PropTypes.bool,
     underlayColor: PropTypes.string,
-    containerStyle: PropTypes.any
+    containerStyle: PropTypes.any,
+    textStyle: PropTypes.any
   };
 
   handleOnPress = () => {
@@ -100,7 +101,7 @@ class Button extends Component {
                             iconSize={this.props.iconProps.iconSize}
                             color={this.props.iconProps.iconColor || 'white'}/>
             : null}
-          {this.props.title ? <Text style={styles.text}>{this.props.title}</Text> : null}
+          {this.props.title ? <Text style={[styles.text, this.props.textStyle]}>{this.props.title}</Text> : null}
         </View>
       </TouchableHighlight>)
 
