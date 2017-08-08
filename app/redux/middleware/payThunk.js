@@ -26,7 +26,7 @@ const payThunk = () => (dispatch, getState) => {
     customerId = state.auth.customerId;
 
   return Promise.resolve(dispatch(ccActions.payment.processing()))
-    .then(res => openTransaction({amount, stripeToken, cardToken, nodeId, customerId, items: currentCart, tip, tax, itemTotal}))
+    .then(res => openTransaction({amount, stripeToken, cardToken, nodeId, customerId, items: currentCart, tip, tax, itemTotal, venueId}))
     .then(res => dispatch(ccActions.payment.success()))
     .then(res => writeToFirehose('PaymentComplete'))
     .then(res => dispatch(clearCart()))

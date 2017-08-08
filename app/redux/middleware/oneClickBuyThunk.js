@@ -3,6 +3,7 @@ import {writeToFirehose} from '../../api/firehose'
 import openTransaction from '../../api/openTransaction'
 import round from '../../common/round'
 import {oneClickBuy} from '../actions/cartActions'
+import {find} from 'lodash'
 
 export default oneClickBuyThunk = (itemId) => (dispatch, getState) => {
   const state = getState(),
@@ -14,7 +15,8 @@ export default oneClickBuyThunk = (itemId) => (dispatch, getState) => {
     stripeToken = state.stripeToken,
     cardToken = state.ccTokens.filter(item => item.isSelected)[0].ccToken,
     nodeId = state.activeNode.nodeId,
-    customerId = state.auth.customerId;
+    customerId = state.auth.customerId,
+    venueId = find(state.nodes, ['nodeId', state.activeNode.nodeId]).venueId;
 
   Promise.resolve(dispatch(oneClickBuy(item.itemName, item.itemDescription, item.price, item.tags, item.category, item.itemId, item.venueId)))
     .then(res => openTransaction({
@@ -26,7 +28,8 @@ export default oneClickBuyThunk = (itemId) => (dispatch, getState) => {
       items: [item],
       tax,
       tip,
-      itemTotal
+      itemTotal,
+      venueId
     }))
     .then(res => writeToFirehose('OneClickBuy'))
     .catch(err => {
