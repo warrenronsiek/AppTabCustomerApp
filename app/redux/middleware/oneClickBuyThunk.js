@@ -1,5 +1,6 @@
 import logger from '../../api/loggingApi'
 import {writeToFirehose} from '../../api/firehose'
+import transactionActions from '../actions/trasactionActions'
 import openTransaction from '../../api/openTransaction'
 import round from '../../common/round'
 import {oneClickBuy} from '../actions/cartActions'
@@ -31,9 +32,12 @@ export default oneClickBuyThunk = (itemId) => (dispatch, getState) => {
       itemTotal,
       venueId
     }))
+    .then(res => {
+      let transaction = res.transaction;
+      return Promise.resolve(dispatch(transactionActions.update(transaction.transactionId, transaction.amount, transaction.items, transaction.createDate)))
+    })
     .then(res => writeToFirehose('OneClickBuy'))
     .catch(err => {
-      console.log(err);
       logger('failed to one-click buy', err)
     })
 }

@@ -9,7 +9,7 @@ import Login from './app/scenes/loginSceneIOS'
 import Placeholder from './app/scenes/placeholder'
 import Register from './app/scenes/registerScene'
 import Nodes from './app/scenes/nodeScene'
-import Request from './app/scenes/serviceRequestScene'
+import Request from './app/scenes/ordersScene'
 import DrinkScene from './app/scenes/drinkScene'
 import AlcoholScene from './app/scenes/alcoholScene'
 import MainCourseScene from './app/scenes/mainCourseScene'
@@ -52,7 +52,7 @@ export default class AppTabCustomerApp extends Component {
               <Scene key="drawerRoot">
                 <Scene key="nodes" component={Nodes} title="Table Selection" back/>
                 <Scene key="tabs" tabs={true} hideNavBar>
-                  <Scene key="request" component={Request} title="Service Request" icon={bell} initial={true}
+                  <Scene key="orders" component={Request} title="Your Orders" icon={bell} initial={true}
                          back onBack={() => Actions.nodes()}/>
                   <Scene key="drinks" component={DrinkScene} title="Drinks" icon={drink}
                          back onBack={() => Actions.nodes()}/>

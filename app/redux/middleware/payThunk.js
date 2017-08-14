@@ -3,6 +3,7 @@
  */
 import openTransaction from '../../api/openTransaction'
 import ccActions from '../actions/creditCardActions'
+import transactionActions from '../actions/trasactionActions'
 import {clearCart} from '../actions/cartActions'
 import * as _ from 'lodash'
 import {Actions, ActionConst} from 'react-native-router-flux'
@@ -27,12 +28,17 @@ const payThunk = () => (dispatch, getState) => {
 
   return Promise.resolve(dispatch(ccActions.payment.processing()))
     .then(res => openTransaction({amount, stripeToken, cardToken, nodeId, customerId, items: currentCart, tip, tax, itemTotal, venueId}))
-    .then(res => dispatch(ccActions.payment.success()))
+    .then(res => {
+      let transaction = res.transaction;
+      return Promise.resolve(dispatch(transactionActions.update(transaction.transactionId, transaction.amount, transaction.items, transaction.createDate)))
+    })
+    .then(res => Promise.resolve(dispatch(ccActions.payment.success())))
     .then(res => writeToFirehose('PaymentComplete'))
     .then(res => dispatch(clearCart()))
     .then(res => Actions.tabs())
     .then(res => dispatch(ccActions.payment.reset()))
     .catch(err => {
+      console.log(err);
       dispatch(ccActions.payment.failure());
       logger('error charging card', err)
     })

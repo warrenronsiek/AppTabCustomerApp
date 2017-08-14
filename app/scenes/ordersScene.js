@@ -7,6 +7,7 @@ import {connect} from 'react-redux'
 import {StyleSheet, View, Button} from 'react-native'
 import serviceRequest from '../api/serviceRequestApi'
 import logger from '../api/loggingApi'
+import OrderListConnected from '../redux/connectedComponents/orderListConnected'
 
 const styles = StyleSheet.create({
   container: {
@@ -37,7 +38,8 @@ class ServiceRequestScene extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button onPress={this._serviceRequest} title="Service Request"/>
+        <OrderListConnected/>
+        {/*<Button onPress={this._serviceRequest} title="Service Request"/>*/}
       </View>)
   }
 }

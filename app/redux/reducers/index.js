@@ -10,6 +10,7 @@ import {menu, menuQueryStatus} from './menuReducer'
 import {cart, additionalCosts, cartStatus, oneClickBuyItem} from './cartReducer'
 import {creditCard, ccTokens, ccTokenApiQueried, paymentStatus, creditCardTokenizing, defaultCardExists} from './creditCardReducer'
 import {passwordResetData, passwordResetStatus} from './passwordResetReducer'
+import {transactions} from "./transactionReducer"
 
 const appReducer = combineReducers({
   auth,
@@ -35,7 +36,8 @@ const appReducer = combineReducers({
   passwordResetData,
   passwordResetStatus,
   defaultCardExists,
-  oneClickBuyItem
+  oneClickBuyItem,
+  transactions
 });
 
 const rootReducer = (state, action) => {

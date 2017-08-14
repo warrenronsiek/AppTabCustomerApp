@@ -18,8 +18,9 @@ const updateCredentials = () => {
     'cognito-idp.us-west-2.amazonaws.com/us-west-2_ct1EHN2VZ': auth.idToken
   };
   AWS.config.credentials.expired = true;
-  AWS.config.credentials.get();
-  firehose = new AWS.Firehose();
+  AWS.config.credentials.get(() => {
+    firehose = new AWS.Firehose();
+  });
 };
 
 const writeToFirehose = type => {
