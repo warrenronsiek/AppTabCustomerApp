@@ -43,7 +43,9 @@ export default class MenuList extends Component {
     addToCart: PropTypes.func.isRequired,
     checkout: PropTypes.func.isRequired,
     selectionsCount: PropTypes.number,
-    apiQueried: PropTypes.bool.isRequired
+    apiQueried: PropTypes.bool.isRequired,
+    oneClickBuy: PropTypes.func.isRequired,
+    defaultCardExists: PropTypes.bool.isRequired
   };
 
   render() {
@@ -52,13 +54,15 @@ export default class MenuList extends Component {
         {!this.props.apiQueried && <Spinner style={{marginTop: 150, alignItems: 'center', justifyContent: 'center'}}/>}
         {(this.props.menuListItems.length === 0) && (this.props.apiQueried)
         && <View style={styles.textContainer}><Text>This kind of item is not on the menu :(</Text></View>}
-        { this.props.menuListItems.length > 0 &&
+        {this.props.menuListItems.length > 0 &&
         <FlatList data={this.props.menuListItems} keyExtractor={(item, index) => item.itemId}
                   renderItem={({item}) => <MenuListItem itemName={item.itemName}
-                                                    itemDescription={item.itemDescription}
-                                                    itemId={item.itemId}
-                                                    price={item.price} tags={item.tags}
-                                                    addToCart={this.props.addToCart}
+                                                        itemDescription={item.itemDescription}
+                                                        itemId={item.itemId}
+                                                        price={item.price} tags={item.tags}
+                                                        addToCart={this.props.addToCart}
+                                                        oneClickBuy={this.props.oneClickBuy}
+                                                        defaultCardExists={this.props.defaultCardExists}
                   />}
         />}
         <View style={styles.buttonContainer}>

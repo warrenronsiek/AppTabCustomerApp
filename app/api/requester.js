@@ -3,6 +3,7 @@
  */
 import NetworkError from '../errors/networkError'
 import logger from './loggingApi'
+import phoneFormatter from 'phone-formatter'
 import {url} from '../vars'
 import decode from 'jwt-decode'
 import store from '../redux/store'
@@ -18,7 +19,7 @@ const requester = (apiPath, successMessage, errorMessage, responseProcessor, all
       method: 'POST',
       body: JSON.stringify({
         refreshToken: state.auth.refreshToken,
-        userName: state.loginParams.phoneNumber,
+        userName: phoneFormatter.normalize(state.loginParams.phoneNumber),
         password: state.loginParams.password,
         lastRefresh: state.auth.updateTime
       })

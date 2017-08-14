@@ -9,7 +9,8 @@ import {
   UPDATE_TIP,
   CLEAR_CART,
   CHECKING_OUT_COMPLETE,
-  CHEKING_OUT
+  CHEKING_OUT,
+  ONE_CLICK_BUY
 } from '../actions/cartActions'
 import * as _ from 'lodash'
 
@@ -49,6 +50,23 @@ const cart = (state = [], action) => {
   }
 };
 
+const oneClickBuyItem = (state = {}, action) => {
+  switch (action.type) {
+    case ONE_CLICK_BUY:
+      return {
+        itemId: action.itemId,
+        itemName: action.itemName,
+        itemDescription: action.itemDescription,
+        price: action.price,
+        tags: action.tags,
+        category: action.category,
+        venueId: action.venueId
+      };
+    default:
+      return state
+  }
+};
+
 const additionalCosts = (state = {tip: .2, tax: .0725}, action) => {
   switch (action.type) {
     case UPDATE_TIP:
@@ -71,4 +89,4 @@ const cartStatus = (state = {}, action) => {
   }
 };
 
-export {cart, additionalCosts, cartStatus}
+export {cart, additionalCosts, cartStatus, oneClickBuyItem}

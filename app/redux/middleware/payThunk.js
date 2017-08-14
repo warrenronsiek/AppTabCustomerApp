@@ -1,18 +1,15 @@
 /**
  * Created by warren on 5/5/17.
  */
-import stripeChargeCard from '../../api/stripeChargeCard'
+import openTransaction from '../../api/openTransaction'
 import ccActions from '../actions/creditCardActions'
+import transactionActions from '../actions/trasactionActions'
 import {clearCart} from '../actions/cartActions'
 import * as _ from 'lodash'
 import {Actions, ActionConst} from 'react-native-router-flux'
 import logger from '../../api/loggingApi'
 import {writeToFirehose} from '../../api/firehose'
-
-function round(value, decimals) {
-  return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
-}
-
+import round from '../../common/round'
 
 const payThunk = () => (dispatch, getState) => {
   const state = getState();
@@ -30,13 +27,18 @@ const payThunk = () => (dispatch, getState) => {
     customerId = state.auth.customerId;
 
   return Promise.resolve(dispatch(ccActions.payment.processing()))
-    .then(res => stripeChargeCard({amount, stripeToken, cardToken, nodeId, customerId, items: currentCart, tip, tax, itemTotal}))
-    .then(res => dispatch(ccActions.payment.success()))
+    .then(res => openTransaction({amount, stripeToken, cardToken, nodeId, customerId, items: currentCart, tip, tax, itemTotal, venueId}))
+    .then(res => {
+      let transaction = res.transaction;
+      return Promise.resolve(dispatch(transactionActions.update(transaction.transactionId, transaction.amount, transaction.items, transaction.createDate)))
+    })
+    .then(res => Promise.resolve(dispatch(ccActions.payment.success())))
     .then(res => writeToFirehose('PaymentComplete'))
     .then(res => dispatch(clearCart()))
-    .then(res => Actions.tabs({type: 'reset'}))
+    .then(res => Actions.tabs())
     .then(res => dispatch(ccActions.payment.reset()))
     .catch(err => {
+      console.log(err);
       dispatch(ccActions.payment.failure());
       logger('error charging card', err)
     })

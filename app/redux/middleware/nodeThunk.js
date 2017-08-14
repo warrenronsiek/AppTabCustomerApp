@@ -29,7 +29,6 @@ const selectNode = (nodeId) => (dispatch, getState) => {
     })
     .then(res => writeToFirehose('NodeSelected'))
     .catch(err => {
-      console.log(err);
       logger('error selecting node', err)})
 };
 

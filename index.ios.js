@@ -4,11 +4,12 @@ import React, {Component} from 'react'
 import {AppRegistry} from 'react-native'
 import {Provider, connect} from 'react-redux'
 import {Router, Scene, Actions, ActionConst} from 'react-native-router-flux'
+import DrawerComponent from './app/redux/connectedComponents/drawerListConnected'
 import Login from './app/scenes/loginSceneIOS'
 import Placeholder from './app/scenes/placeholder'
 import Register from './app/scenes/registerScene'
 import Nodes from './app/scenes/nodeScene'
-import Request from './app/scenes/serviceRequestScene'
+import Request from './app/scenes/ordersScene'
 import DrinkScene from './app/scenes/drinkScene'
 import AlcoholScene from './app/scenes/alcoholScene'
 import MainCourseScene from './app/scenes/mainCourseScene'
@@ -47,25 +48,29 @@ export default class AppTabCustomerApp extends Component {
             <Scene key="passwordreset" component={ResetPasswordScene} title="Reset Password"
                    back onBack={() => passwordResetOnBack()}/>
             <Scene key="code" component={ConfirmCodeScene} title="Confirm Code"/>
-            <Scene key="nodes" component={Nodes} title="Table Selection"/>
-            <Scene key="tabs" tabs={true} hideNavBar>
-              <Scene key="request" component={Request} title="Service Request" icon={bell} initial={true}
-                     back onBack={() => Actions.nodes({type: 'reset'})}/>
-              <Scene key="drinks" component={DrinkScene} title="Drinks" icon={drink}
-                     back onBack={() => Actions.nodes({type: 'reset'})}/>
-              <Scene key="main" component={MainCourseScene} title="Main Course" icon={main}
-                     back onBack={() => Actions.nodes({type: 'reset'})}/>
-              <Scene key="alcohol" component={AlcoholScene} title="Alcohol" icon={cocktail}
-                     back onBack={() => Actions.nodes({type: 'reset'})}/>
-              <Scene key="dessert" component={DessertScene} title="Dessert" icon={dessert}
-                     back onBack={() => Actions.nodes({type: 'reset'})}/>
-              <Scene key="appetizer" component={AppetizerScene} title="Appetizer" icon={carrot}
-                     back onBack={() => Actions.nodes({type: 'reset'})}/>
+            <Scene key="drawer" drawer drawerPosition="right" contentComponent={DrawerComponent} hideNavBar>
+              <Scene key="drawerRoot">
+                <Scene key="nodes" component={Nodes} title="Table Selection" back/>
+                <Scene key="tabs" tabs={true} hideNavBar>
+                  <Scene key="orders" component={Request} title="Your Orders" icon={bell} initial={true}
+                         back onBack={() => Actions.nodes()}/>
+                  <Scene key="drinks" component={DrinkScene} title="Drinks" icon={drink}
+                         back onBack={() => Actions.nodes()}/>
+                  <Scene key="main" component={MainCourseScene} title="Main Course" icon={main}
+                         back onBack={() => Actions.nodes()}/>
+                  <Scene key="alcohol" component={AlcoholScene} title="Alcohol" icon={cocktail}
+                         back onBack={() => Actions.nodes()}/>
+                  <Scene key="dessert" component={DessertScene} title="Dessert" icon={dessert}
+                         back onBack={() => Actions.nodes()}/>
+                  <Scene key="appetizer" component={AppetizerScene} title="Appetizer" icon={carrot}
+                         back onBack={() => Actions.nodes()}/>
+                </Scene>
+                <Scene key="placeholder" component={Placeholder} title="Placeholder" back/>
+                <Scene key="cart" component={CartScene} title="Cart" back/>
+                <Scene key="checkout" component={CheckoutScene} title="Checkout" back/>
+                <Scene key="cardForm" component={CardFormScene} title="Card Details" back/>
+              </Scene>
             </Scene>
-            <Scene key="placeholder" component={Placeholder} title="Placeholder"/>
-            <Scene key="cart" component={CartScene} title="Cart"/>
-            <Scene key="checkout" component={CheckoutScene} title="Checkout"/>
-            <Scene key="cardForm" component={CardFormScene} title="Card Details"/>
           </Scene>
         </RouterWithRedux>
       </Provider>
