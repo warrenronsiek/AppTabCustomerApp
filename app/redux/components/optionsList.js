@@ -6,15 +6,18 @@ import Button from '../../common/button'
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    alignItems: 'center',
+    flexDirection: 'column',
   }
 });
 
 const optionsList = ({optionSets, onSelection, done}) => (
-  <View>
+  <View style={styles.container}>
     <FlatList data={optionSets} keyExtractor={(item, index) => item.optionSetName}
-              renderItem={({item}) => OptionsListItem({optionsListItem: item, onSelection})}/>
-    <Button onPress={() => done()} title="Done"/>
+              renderItem={({item}) => <OptionsListItem optionsListItem={item} onSelection={onSelection}/>}/>
+    <View style={[styles.container, {paddingTop: 30}]}>
+      <Button  onPress={() => done()} title="Done"/>
+    </View>
   </View>
 );
 

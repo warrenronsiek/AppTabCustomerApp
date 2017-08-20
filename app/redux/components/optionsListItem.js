@@ -6,8 +6,9 @@ import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    flexDirection: 'column'
   },
   switchContainer: {
     flex: 1,
@@ -18,20 +19,24 @@ const styles = StyleSheet.create({
 
 });
 
-const optionsListItem = ({optionsListItem, onSelection}) => (
-  <View style={styles.container}>
-    {optionsListItem.options.map(option => (
-      <View style={styles.switchContainer}>
-        <Text>{option}</Text>
-        <TouchableHighlight onPress={() => onSelection(optionsListItem.optionSetName, option.optionName)}>
-          {option.isSelected
-            ? <MaterialIcons name="radiobox-blank" size={30}/>
-            : <MaterialIcons name="radiobox-marked" size={30}/>}
-        </TouchableHighlight>
-      </View>
-    ))}
-  </View>
-);
+const optionsListItem = ({optionsListItem, onSelection}) => {
+  let options = optionsListItem.options;
+  return (
+    <View style={styles.container}>
+      <Text>{optionsListItem.optionSetName}</Text>
+      {options.map(option => {
+        return <View style={styles.switchContainer} key={optionsListItem.optionName}>
+          <Text>{option.optionName}</Text>
+          <TouchableHighlight onPress={() => onSelection(optionsListItem.optionSetName, option.optionName)}>
+            {option.isSelected
+              ? <MaterialIcons name="radiobox-marked" size={30}/>
+              : <MaterialIcons name="radiobox-blank" size={30}/>}
+          </TouchableHighlight>
+        </View>
+      })}
+    </View>
+  )
+};
 
 optionsListItem.propTypes = {
   optionsListItem: PropTypes.shape({
