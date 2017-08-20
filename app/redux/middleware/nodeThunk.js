@@ -19,7 +19,16 @@ const selectNode = (nodeId) => (dispatch, getState) => {
       return getMenu({venueId})
     })
     .then(res => {
-      return Promise.all(res.Items.map(item => Promise.resolve(dispatch(updateMenuItem(item.ItemName.S, item.ItemDescription.S, item.Price.N, tags = item.Tags.SS, item.Category.S, item.ItemId.S, item.VenueId.S)))))
+      return Promise.all(res.Items.map(item =>
+        Promise.resolve(dispatch(updateMenuItem(
+          item.ItemName.S,
+          item.ItemDescription.S,
+          item.Price.N,
+          tags = item.Tags.SS,
+          item.Category.S,
+          item.ItemId.S,
+          item.VenueId.S,
+          itemOptions = item.ItemOptions ? item.ItemOptions.S : null)))))
     })
     .then(res => {
       const state = getState(),
