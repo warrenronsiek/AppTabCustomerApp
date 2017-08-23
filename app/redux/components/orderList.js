@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import OrderListItem from './orderListItem'
-import {SectionList, Text, StyleSheet, View, Button} from 'react-native'
+import {SectionList, Text, StyleSheet, View} from 'react-native'
 
 const styles = StyleSheet.create({
   sectionHeader: {
@@ -35,8 +35,9 @@ const OrderListHeader = ({dateTime, amount}) => (
 
 const orderList = ({orders}) => {
   return <SectionList renderItem={({item}) => <OrderListItem quantity={item.count} itemName={item.itemName}/>}
-               renderSectionHeader={({section}) => <OrderListHeader dateTime={section.displayDate} amount={section.displayAmount}/>}
-               sections={orders} keyExtractor={(item, index) => item.itemId}
+                      renderSectionHeader={({section}) => <OrderListHeader dateTime={section.displayDate}
+                                                                           amount={section.displayAmount}/>}
+                      sections={orders} keyExtractor={(item, index) => item.itemId}
   />
 };
 

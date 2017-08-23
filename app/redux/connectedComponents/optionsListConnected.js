@@ -3,7 +3,9 @@ import {connect} from 'react-redux'
 import {menuItemOptionsUpdateThunk, finishedMenuItemOptionsSelectionThunk} from '../middleware/menuItemOptionsThunk'
 
 const mapStateToProps = state => ({
-  optionSets: state.activeMenuItem.itemOptions
+  optionSets: state.activeMenuItem.itemOptions,
+  price: state.activeMenuItem.viewablePrice,
+  allOptionsSelected: state.activeMenuItem.allOptionsSelected
 });
 
 const mapDispatchToProps = dispatch => ({

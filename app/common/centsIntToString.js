@@ -8,5 +8,5 @@ export default (centsInt) => {
   amountPlaceholder.splice(2, 0, '.');
   amountPlaceholder.reverse();
   amountPlaceholder = amountPlaceholder.join('');
-  return amountPlaceholder
+  return (amountPlaceholder !== '.0') ? amountPlaceholder : '0.00'
 }

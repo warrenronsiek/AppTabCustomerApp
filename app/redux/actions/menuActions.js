@@ -17,7 +17,7 @@ export const setActiveItem = (itemName, itemDescription, price, tags, category, 
 };
 
 export const UPDATE_ACTIVE_ITEM_OPTIONS = 'UPDATE_ACTIVE_ITEM_OPTIONS';
-export const updateActiveItemOptions = (itemOptions, price) => {
-  return {type: UPDATE_ACTIVE_ITEM_OPTIONS, itemOptions, price}
+export const updateActiveItemOptions = (itemOptions, price, allOptionsSelected) => {
+  return {type: UPDATE_ACTIVE_ITEM_OPTIONS, itemOptions, price, allOptionsSelected}
 };
 

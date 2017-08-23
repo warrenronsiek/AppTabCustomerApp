@@ -16,24 +16,39 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row'
   },
-
+  nameContainer: {
+    flex: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingLeft: 40,
+  },
+  priceContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  toggleContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
 });
 
-const optionsListItem = ({optionsListItem, onSelection}) => {
-  let options = optionsListItem.options;
+const optionsListItem = ({optionName, isSelected, onSelection, optionSetName, price}) => {
   return (
     <View style={styles.container}>
-      <Text>{optionsListItem.optionSetName}</Text>
-      {options.map(option => {
-        return <View style={styles.switchContainer} key={optionsListItem.optionName}>
-          <Text>{option.optionName}</Text>
-          <TouchableHighlight onPress={() => onSelection(optionsListItem.optionSetName, option.optionName)}>
-            {option.isSelected
+      <View style={styles.switchContainer}>
+        <Text style={styles.nameContainer}>{optionName}</Text>
+        <Text style={styles.priceContainer}>{price}</Text>
+        <View style={styles.toggleContainer}>
+
+          <TouchableHighlight onPress={() => onSelection(optionSetName, optionName)}>
+            {isSelected
               ? <MaterialIcons name="radiobox-marked" size={30}/>
               : <MaterialIcons name="radiobox-blank" size={30}/>}
           </TouchableHighlight>
         </View>
-      })}
+      </View>
     </View>
   )
 };
