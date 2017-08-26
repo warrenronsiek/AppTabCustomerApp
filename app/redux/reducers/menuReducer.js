@@ -58,9 +58,9 @@ const _ = require('lodash');
  */
 
 const menu = (state = [], action) => {
-  const oldItem = _.find(state, ['itemId', action.itemId]);
   switch (action.type) {
     case UPDATE_MENU_ITEM:
+      const oldItem = _.find(state, ['itemId', action.itemId]);
       if (oldItem) {
         return [...state.filter(item => item.itemId !== action.itemId),
           {
@@ -95,7 +95,6 @@ const menu = (state = [], action) => {
 const activeMenuItem = (state = {}, action) => {
   switch (action.type) {
     case SET_ACTIVE_ITEM:
-      console.log(action);
       return {
         itemName: action.itemName,
         itemDescription: action.itemDescription,
@@ -109,7 +108,6 @@ const activeMenuItem = (state = {}, action) => {
         allOptionsSelected: false
       };
     case UPDATE_ACTIVE_ITEM_OPTIONS:
-      console.log(action);
       return {
         ...state,
         itemOptions: action.itemOptions,

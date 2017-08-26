@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">62.5% </span>
+        <span class="strong">55.56% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>5/8</span>
+        <span class='fraction'>5/9</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">50% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>6/12</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">25% </span>
+        <span class="strong">20% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>1/4</span>
+        <span class='fraction'>1/5</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">62.5% </span>
+        <span class="strong">55.56% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>5/8</span>
+        <span class='fraction'>5/9</span>
       </div>
     </div>
   </div>
@@ -164,7 +164,11 @@
 119
 120
 121
-122</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+122
+123
+124
+125</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -267,11 +271,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -288,8 +294,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
  * Created by warren on 1/22/17.
  */
-import React, {PropTypes} from 'react';
-import {StyleSheet, Text, View, TextInput, Dimensions} from 'react-native';
+import React from 'react';
+import PropTypes from 'prop-types'
+import {StyleSheet, Text, View, TextInput, Dimensions, Button as BuiltinButton} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import EnytpoIcon from 'react-native-vector-icons/Entypo'
 import Spinner from '../../common/spinner'
@@ -352,7 +359,7 @@ const styles = StyleSheet.create({
   }
 });
 &nbsp;
-const login = ({validationError, networkError, unknownError, loggingIn, email, password, updateEmail, updatePassword, onLogin, navToRegister}) =&gt; (
+const login = ({validationError, networkError, unknownError, loggingIn, phoneNumber, password, updatePhoneNumber, updatePassword, onLogin, navToRegister, navToPasswordReset}) =&gt; (
   &lt;View style={styles.container}&gt;
     &lt;View style={styles.welcomeContainer}&gt;
       &lt;Text style={styles.welcome}&gt;
@@ -365,29 +372,30 @@ const login = ({validationError, networkError, unknownError, loggingIn, email, p
     &lt;View style={styles.textContainer}&gt;
       &lt;View style={styles.iconContainer}&gt;
         &lt;View style={styles.iconSubContainer}&gt;
-          &lt;MaterialIcon name="email" size={30}/&gt;
+          &lt;MaterialIcon name="phone" size={30}/&gt;
         &lt;/View&gt;
         &lt;View style={styles.iconSubContainer}&gt;
           &lt;EnytpoIcon name="key" size={30}/&gt;
         &lt;/View&gt;
       &lt;/View&gt;
       &lt;View style={styles.textInputContainer}&gt;
-        &lt;TextInput style={styles.textInputBox} value={email} defaultValue="email address" autoCapitalize='none'
-                   autoCorrect={false}
-                   onChangeText={<span class="fstat-no" title="function not covered" >(t</span>ext) =&gt; <span class="cstat-no" title="statement not covered" >updateEmail(text)}</span>/&gt;
+        &lt;TextInput style={styles.textInputBox} value={phoneNumber} placeholder="(123) 456-7890" autoCapitalize='none'
+                   autoCorrect={false} keyboardType='phone-pad'
+                   onChangeText={<span class="fstat-no" title="function not covered" >(t</span>ext) =&gt; <span class="cstat-no" title="statement not covered" >updatePhoneNumber(text)}</span>/&gt;
 &nbsp;
-        &lt;TextInput style={styles.textInputBox} value={password} defaultValue="password" autoCapitalize='none'
+        &lt;TextInput style={styles.textInputBox} value={password} placeholder="password" autoCapitalize='none'
                    autoCorrect={false}
                    onChangeText={<span class="fstat-no" title="function not covered" >(t</span>ext) =&gt; <span class="cstat-no" title="statement not covered" >updatePassword(text)}</span>/&gt;
       &lt;/View&gt;
     &lt;/View&gt;
     &lt;View style={styles.buttonContainer}&gt;
-      {!loggingIn ? &lt;Button onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >onLogin(email, password)}</span> title="Login" style={{marginBottom:10}}/&gt; : <span class="branch-1 cbranch-no" title="branch not covered" >null}</span>
+      {!loggingIn ? &lt;Button onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >onLogin(phoneNumber, password)}</span> title="Login" style={{marginBottom:10}}/&gt; : <span class="branch-1 cbranch-no" title="branch not covered" >null}</span>
       {!loggingIn ? &lt;Button onPress={navToRegister} title="Register"/&gt; : <span class="branch-1 cbranch-no" title="branch not covered" >null}</span>
       {validationError ? <span class="branch-0 cbranch-no" title="branch not covered" >&lt;Text&gt;Oops! Wrong username or password!&lt;/Text&gt; </span>: null}
       {networkError ? <span class="branch-0 cbranch-no" title="branch not covered" >&lt;Text&gt;Networking Error!&lt;/Text&gt; </span>: null}
       {unknownError ? <span class="branch-0 cbranch-no" title="branch not covered" >&lt;Text&gt;Unknown Error!&lt;/Text&gt; </span>: null}
       {loggingIn ? <span class="branch-0 cbranch-no" title="branch not covered" >&lt;Spinner/&gt; </span>: null}
+      &lt;BuiltinButton onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >navToPasswordReset()}</span> title="Forgot Password"/&gt;
     &lt;/View&gt;
   &lt;/View&gt;
 );
@@ -397,12 +405,13 @@ login.propTypes = {
   networkError: PropTypes.bool,
   unknownError: PropTypes.bool,
   loggingIn: PropTypes.bool,
-  email: PropTypes.string,
+  phoneNumber: PropTypes.string,
   password: PropTypes.string,
-  updateEmail: PropTypes.func.isRequired,
+  updatePhoneNumber: PropTypes.func.isRequired,
   updatePassword: PropTypes.func.isRequired,
   onLogin: PropTypes.func.isRequired,
-  navToRegister: PropTypes.func.isRequired
+  navToRegister: PropTypes.func.isRequired,
+  navToPasswordReset: PropTypes.func.isRequired
 };
 &nbsp;
 export default login
@@ -412,7 +421,7 @@ export default login
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed May 17 2017 13:23:52 GMT-0700 (PDT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Aug 26 2017 15:59:38 GMT-0700 (PDT)
 </div>
 </div>
 <script src="../../../../prettify.js"></script>

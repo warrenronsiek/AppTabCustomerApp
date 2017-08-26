@@ -5,7 +5,7 @@ import {Actions} from 'react-native-router-flux'
 import centsIntToString from '../../common/centsIntToString'
 
 const menuItemOptionsUpdateThunk = (optionSetName, optionName) => (dispatch, getState) => {
-  let activeItem = getState().activeMenuItem;
+  let activeItem = JSON.parse(JSON.stringify(getState().activeMenuItem));
   let itemOptions = [...activeItem.itemOptions];
   const optionSetIndex = findIndex(itemOptions, option => option.optionSetName === optionSetName);
   let previousSelectionPrice = 0;
