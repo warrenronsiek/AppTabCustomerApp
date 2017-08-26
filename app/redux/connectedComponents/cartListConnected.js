@@ -29,8 +29,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    incrementCount: itemId => dispatch(incrementCount(itemId)),
-    decrementCount: itemId => dispatch(decrementCount(itemId)),
+    incrementCount: (itemId, itemOptions) => dispatch(incrementCount(itemId, itemOptions)),
+    decrementCount: (itemId, itemOptions) => dispatch(decrementCount(itemId, itemOptions)),
     checkout: () => dispatch(checkoutThunk()),
     updateTip: tipPercent => dispatch(updateTip(tipPercent))
   }

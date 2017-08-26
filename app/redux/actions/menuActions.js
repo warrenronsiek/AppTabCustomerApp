@@ -21,3 +21,8 @@ export const updateActiveItemOptions = (itemOptions, price, allOptionsSelected) 
   return {type: UPDATE_ACTIVE_ITEM_OPTIONS, itemOptions, price, allOptionsSelected}
 };
 
+export const CLEAR_ACTIVE_ITEM = 'CLEAR_ACTIVE_ITEM';
+export const clearActiveItem = () => {
+  return {type: CLEAR_ACTIVE_ITEM, }
+};
+

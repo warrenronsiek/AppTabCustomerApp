@@ -1,4 +1,4 @@
-import {updateActiveItemOptions} from '../actions/menuActions'
+import {updateActiveItemOptions, clearActiveItem} from '../actions/menuActions'
 import {addToCart} from '../actions/cartActions'
 import {find, findIndex} from 'lodash'
 import {Actions} from 'react-native-router-flux'
@@ -29,10 +29,7 @@ const finishedMenuItemOptionsSelectionThunk = () => (dispatch, getState) => {
     const selected = find(optionSet.data, ['isSelected', true]);
     return optionSet.optionSetName + ': ' + selected.optionName
   });
-  console.log(activeItem);
-  console.log(newDescription);
-  dispatch(addToCart(activeItem.itemName, newDescription, activeItem.price, activeItem.tags, activeItem.category, activeItem.itemId, activeItem.venueId));
-  console.log(getState());
+  dispatch(addToCart(activeItem.itemName, newDescription, activeItem.price, activeItem.tags, activeItem.category, activeItem.itemId, activeItem.venueId, activeItem.itemOptions));
   Actions.pop();
 };
 

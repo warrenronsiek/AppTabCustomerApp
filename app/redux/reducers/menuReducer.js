@@ -5,7 +5,8 @@ import {
   UPDATE_MENU_ITEM,
   MENU_API_QUERY_STATUS,
   SET_ACTIVE_ITEM,
-  UPDATE_ACTIVE_ITEM_OPTIONS
+  UPDATE_ACTIVE_ITEM_OPTIONS,
+  CLEAR_ACTIVE_ITEM
 } from '../actions/menuActions';
 
 const _ = require('lodash');
@@ -94,6 +95,7 @@ const menu = (state = [], action) => {
 const activeMenuItem = (state = {}, action) => {
   switch (action.type) {
     case SET_ACTIVE_ITEM:
+      console.log(action);
       return {
         itemName: action.itemName,
         itemDescription: action.itemDescription,
@@ -107,6 +109,7 @@ const activeMenuItem = (state = {}, action) => {
         allOptionsSelected: false
       };
     case UPDATE_ACTIVE_ITEM_OPTIONS:
+      console.log(action);
       return {
         ...state,
         itemOptions: action.itemOptions,
@@ -114,6 +117,8 @@ const activeMenuItem = (state = {}, action) => {
         viewablePrice: '$' + action.price,
         allOptionsSelected: action.allOptionsSelected
       };
+    case CLEAR_ACTIVE_ITEM:
+      return {};
     default:
       return state
   }
