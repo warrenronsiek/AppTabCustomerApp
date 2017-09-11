@@ -15,8 +15,8 @@ import {
 import * as _ from 'lodash'
 
 const cart = (state = [], action) => {
-  let inCart = _.find(state, ['itemId', action.itemId]);
-  let filteredState = _.filter(state, item => item.itemId !== action.itemId);
+  let inCart = _.find(state, item => (action.itemId === item.itemId) && (action.itemOptions === item.itemOptions));
+  let filteredState = _.filter(state, item => (item.itemId !== action.itemId) || (action.itemOptions !== item.itemOptions));
   let newItem;
   switch (action.type) {
     case ADD_TO_CART:
@@ -32,6 +32,7 @@ const cart = (state = [], action) => {
         tags: action.tags,
         category: action.category,
         venueId: action.venueId,
+        itemOptions: action.itemOptions,
         count: 1
       }];
     case INCREMENT_COUNT:

@@ -18,10 +18,10 @@
     "react-native-awesome-card-io": "^0.6.1",
     "react-native-ble": "^1.0.8",
     "react-native-collapsible": "^0.8.0",
-    "react-native-router-flux": "4.0.0-beta.16",
+    "react-native-router-flux": "4.0.0-beta.19",
     "react-native-uuid": "^1.4.9",
     "react-native-vector-icons": "^4.0.0",
-    "react-redux": "^5.0.5",
+    "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "redux-thunk": "^2.2.0"

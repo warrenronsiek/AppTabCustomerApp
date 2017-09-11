@@ -7,6 +7,7 @@ import {Router, Scene, Actions, ActionConst} from 'react-native-router-flux'
 import DrawerComponent from './app/redux/connectedComponents/drawerListConnected'
 import Login from './app/scenes/loginSceneIOS'
 import Placeholder from './app/scenes/placeholder'
+import OptionsSelectionModal from './app/scenes/optionsSelectionModal'
 import Register from './app/scenes/registerScene'
 import Nodes from './app/scenes/nodeScene'
 import Request from './app/scenes/ordersScene'
@@ -65,6 +66,7 @@ export default class AppTabCustomerApp extends Component {
                   <Scene key="appetizer" component={AppetizerScene} title="Appetizer" icon={carrot}
                          back onBack={() => Actions.nodes()}/>
                 </Scene>
+                <Scene key="optionsModal" component={OptionsSelectionModal} title="Options" back modal/>
                 <Scene key="placeholder" component={Placeholder} title="Placeholder" back/>
                 <Scene key="cart" component={CartScene} title="Cart" back/>
                 <Scene key="checkout" component={CheckoutScene} title="Checkout" back/>

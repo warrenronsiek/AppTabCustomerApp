@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const cartListItem = ({itemName, itemDescription, itemId, price, count, incrementCount, decrementCount}) => (
+const cartListItem = ({itemName, itemDescription, itemId, price, count, incrementCount, decrementCount, itemOptions}) => (
     <View style={styles.container}>
       <View style={styles.textContainer}>
         <Text style={styles.nameStyle}>{itemName}</Text>
@@ -75,14 +75,14 @@ const cartListItem = ({itemName, itemDescription, itemId, price, count, incremen
       <View style={styles.cartIconContainer}>
         <View style={styles.cartIconSubContainer}>
           <EntypoIcon name="chevron-small-up" size={30} onPress={() => {
-            incrementCount(itemId)
+            incrementCount(itemId, itemOptions)
           }}/>
         </View>
         <View style={styles.cartIconSubContainer}>
           <Text>{count}</Text>
         </View>
         <View style={styles.cartIconSubContainer}>
-          <EntypoIcon name="chevron-small-down" size={30} onPress={() => decrementCount(itemId)}/>
+          <EntypoIcon name="chevron-small-down" size={30} onPress={() => decrementCount(itemId, itemOptions)}/>
 
         </View>
       </View>
@@ -96,7 +96,8 @@ cartListItem.propTypes = {
   price: PropTypes.string.isRequired,
   count: PropTypes.number.isRequired,
   incrementCount: PropTypes.func.isRequired,
-  decrementCount: PropTypes.func.isRequired
+  decrementCount: PropTypes.func.isRequired,
+  itemOptions: PropTypes.array
 };
 
 export default cartListItem

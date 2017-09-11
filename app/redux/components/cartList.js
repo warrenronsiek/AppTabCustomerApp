@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'
-import {View, ListView, StyleSheet, Text, FlatList} from 'react-native';
+import {View, StyleSheet, Text, FlatList} from 'react-native';
 import CartListItem from './cartListItem';
 import Button from '../../common/button'
 import Spinner from '../../common/spinner'
@@ -77,14 +77,8 @@ export default class MenuList extends Component {
     checkingOut: PropTypes.bool
   };
 
-  constructor(props) {
-    super(props);
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.state = {dataSource: ds.cloneWithRows(this.props.cartListItems)};
-  }
-
-  componentWillReceiveProps(newProps) {
-    this.setState({dataSource: this.state.dataSource.cloneWithRows(newProps.cartListItems)});
+  componentWillMount() {
+    console.log(this.props)
   }
 
   render() {
@@ -93,14 +87,16 @@ export default class MenuList extends Component {
         <View>
           {this.props.cartListItems.length === 0
             ? null
-            : <FlatList data={this.props.cartListItems} keyExtractor={(item, index) => item.itemId}
+            : <FlatList data={this.props.cartListItems}
+                        keyExtractor={(item, index) => item.itemId + JSON.stringify(item.itemDescription)}
                         renderItem={({item}) => <CartListItem itemName={item.itemName}
-                                                         itemDescription={item.itemDescription}
-                                                         itemId={item.itemId}
-                                                         price={item.price}
-                                                         count={item.count}
-                                                         incrementCount={this.props.incrementCount}
-                                                         decrementCount={this.props.decrementCount}
+                                                              itemDescription={item.itemDescription}
+                                                              itemId={item.itemId}
+                                                              price={item.price}
+                                                              count={item.count}
+                                                              incrementCount={this.props.incrementCount}
+                                                              decrementCount={this.props.decrementCount}
+                                                              itemOptions={item.itemOptions}
 
                         />}
             />
