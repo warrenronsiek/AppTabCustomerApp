@@ -4,11 +4,11 @@ import transactionActions from '../actions/trasactionActions'
 import openTransaction from '../../api/openTransaction'
 import round from '../../common/round'
 import {oneClickBuy} from '../actions/cartActions'
-import {find} from 'lodash'
+import * as _ from 'lodash'
 
 export default oneClickBuyThunk = (itemId) => (dispatch, getState) => {
   const state = getState(),
-    item = {...state.menu.filter(item => item.itemId === itemId)[0], count: 1},
+    item = {..._.find(_.flatten(getState().menu.map(section => section.data)), ['itemId', itemId]), count: 1},
     itemTotal = parseFloat(item.price),
     tip = round(itemTotal * state.additionalCosts.tip, 2),
     tax = round(itemTotal * state.additionalCosts.tax, 2),
@@ -17,7 +17,7 @@ export default oneClickBuyThunk = (itemId) => (dispatch, getState) => {
     cardToken = state.ccTokens.filter(item => item.isSelected)[0].ccToken,
     nodeId = state.activeNode.nodeId,
     customerId = state.auth.customerId,
-    venueId = find(state.nodes, ['nodeId', state.activeNode.nodeId]).venueId;
+    venueId = _.find(state.nodes, ['nodeId', state.activeNode.nodeId]).venueId;
 
   Promise.resolve(dispatch(oneClickBuy(item.itemName, item.itemDescription, item.price, item.tags, item.category, item.itemId, item.venueId)))
     .then(res => openTransaction({

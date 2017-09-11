@@ -7,7 +7,7 @@ import {Actions} from 'react-native-router-flux'
 const _ = require('lodash');
 
 const addToCartThunk = (itemId) => (dispatch, getState) => {
-  const item = _.find(getState().menu, ['itemId', itemId]);
+  const item = _.find(_.flatten(getState().menu.map(section => section.data)), ['itemId', itemId]);
   if (item.itemOptions) {
     dispatch(setActiveItem(item.itemName, item.itemDescription, item.price, item.tags, item.category, item.itemId, item.venueId, item.itemOptions));
     Actions.optionsModal()

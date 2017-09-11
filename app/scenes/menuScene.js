@@ -3,21 +3,19 @@
  */
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import MenuListBlueprint from '../redux/connectedComponents/menuListBlueprintConnected'
+import MenuList from '../redux/connectedComponents/menuListConnected'
 import PropTypes from 'prop-types'
 
-const MainList = MenuListBlueprint('main');
-
-class MainScene extends Component {
+class MenuScene extends Component {
   static contextTypes = {
     store: PropTypes.object
   };
 
   render() {
     return (
-      <MainList/>
+      <MenuList/>
     )
   }
 }
 
-export default connect()(MainScene)
+export default connect()(MenuScene)

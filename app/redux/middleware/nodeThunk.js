@@ -34,7 +34,7 @@ const selectNode = (nodeId) => (dispatch, getState) => {
       const state = getState(),
         venueId = state.nodes.filter(node => node.nodeId === state.activeNode.nodeId)[0].venueId,
         now = Date.now();
-      dispatch(menuApiQueryStatus(venueId, now))
+      dispatch(menuApiQueryStatus(venueId, now));
     })
     .then(res => writeToFirehose('NodeSelected'))
     .catch(err => {
