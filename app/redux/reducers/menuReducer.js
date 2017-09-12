@@ -150,7 +150,8 @@ const activeMenuItem = (state = {}, action) => {
         viewablePrice: '$' + action.price,
         category: action.category,
         itemOptions: action.itemOptions,
-        allOptionsSelected: false
+        allOptionsSelected: false,
+        oneClickBuy: action.oneClickBuy || false
       };
     case UPDATE_ACTIVE_ITEM_OPTIONS:
       return {

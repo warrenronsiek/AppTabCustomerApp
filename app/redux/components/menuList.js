@@ -45,7 +45,8 @@ const styles = StyleSheet.create({
     borderTopColor: 'grey',
     borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomColor: 'grey',
-    borderBottomWidth: StyleSheet.hairlineWidth
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    backgroundColor: 'white'
   },
   headerText: {
     paddingLeft: 20,
