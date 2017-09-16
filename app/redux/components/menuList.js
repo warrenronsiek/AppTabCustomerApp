@@ -25,7 +25,9 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom: 10,
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
+    borderTopColor: 'grey',
+    borderTopWidth: StyleSheet.hairlineWidth,
   },
   spinnerContainer: {
     alignItems: 'center',

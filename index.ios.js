@@ -45,11 +45,11 @@ export default class AppTabCustomerApp extends Component {
             <Scene key="nodes" component={Nodes} title="Table Selection" back/>
             <Scene key="tabs" tabs={true} hideNavBar>
               <Scene key="orders" component={Request} title="Your Orders" icon={bell} initial={true}
-                     back onBack={() => Actions.nodes({type: 'reset'})}/>
+                     back onBack={() => Actions.nodes()}/>
               <Scene key="menu" component={MenuScene} title="Menu" icon={drink}
-                     back onBack={() => Actions.nodes({type: 'reset'})}/>
+                     back onBack={() => Actions.nodes()}/>
               <Scene key="options" component={DrawerComponent} title="Options" icon={options}
-                     back onBack={() => Actions.nodes({type: 'reset'})}/>
+                     back onBack={() => Actions.nodes()}/>
             </Scene>
             <Scene key="optionsModal" component={OptionsSelectionModal} title="Options" back modal/>
             <Scene key="placeholder" component={Placeholder} title="Placeholder" back/>

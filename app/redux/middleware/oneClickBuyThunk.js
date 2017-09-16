@@ -1,11 +1,5 @@
-import logger from '../../api/loggingApi'
-import {writeToFirehose} from '../../api/firehose'
 import {setActiveItem} from "../actions/menuActions"
-import transactionActions from '../actions/trasactionActions'
-import openTransaction from '../../api/openTransaction'
-import round from '../../common/round'
 import {Actions} from 'react-native-router-flux'
-import {oneClickBuy} from '../actions/cartActions'
 import oneClickBuyResolver from '../../common/oneClickBuyResolver'
 import * as _ from 'lodash'
 

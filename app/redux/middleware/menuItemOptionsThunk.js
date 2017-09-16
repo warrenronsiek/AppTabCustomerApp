@@ -1,4 +1,4 @@
-import {updateActiveItemOptions, clearActiveItem} from '../actions/menuActions'
+import {updateActiveItemOptions} from '../actions/menuActions'
 import {addToCart} from '../actions/cartActions'
 import {find, findIndex} from 'lodash'
 import {Actions} from 'react-native-router-flux'
