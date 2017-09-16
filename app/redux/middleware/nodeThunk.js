@@ -11,12 +11,16 @@ import {writeToFirehose} from "../../api/firehose"
 
 const selectNode = (nodeId) => (dispatch, getState) => {
   noble.stopScanning();
-  Promise.resolve(dispatch(setActiveNode(nodeId)))
-    .then(() => Promise.resolve(Actions.tabs()))
+  Promise.resolve()
     .then(() => {
       const state = getState(),
-        venueId = state.nodes.filter(node => node.nodeId === state.activeNode.nodeId)[0].venueId;
-      return getMenu({venueId})
+        venueId = state.nodes.filter(node => node.nodeId === nodeId)[0].venueId;
+      dispatch(setActiveNode(nodeId, venueId))
+    })
+    .then(() => Promise.resolve(Actions.tabs()))
+    .then(() => {
+      const state = getState();
+      return getMenu({venueId: state.activeNode.venueId})
     })
     .then(res => {
       return Promise.all(res.Items.map(item =>

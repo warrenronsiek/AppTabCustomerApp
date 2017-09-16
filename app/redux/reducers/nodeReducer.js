@@ -72,7 +72,11 @@ export const nodes = (state = [], action) => {
 export const activeNode = (state = {nodeId: "", sessionId: ""}, action) => {
   switch (action.type) {
     case SET_ACTIVE_NODE:
-      return {nodeId: action.nodeId, sessionId: state.nodeId === action.nodeId ? state.sessionId : uuid.v4()};
+      return {
+        nodeId: action.nodeId,
+        sessionId: state.nodeId === action.nodeId ? state.sessionId : uuid.v4(),
+        venueId: action.venueId
+      };
     default:
       return state
   }

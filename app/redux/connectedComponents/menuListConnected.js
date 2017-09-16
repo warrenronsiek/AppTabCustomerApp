@@ -9,7 +9,7 @@ import oneClickBuyThunk from '../middleware/oneClickBuyThunk'
 import * as _ from 'lodash'
 
 const mapStateToProps = (state) => {
-  const venueId = state.nodes.filter(node => node.nodeId === state.activeNode.nodeId)[0].venueId;
+  const venueId = state.activeNode.venueId;
   return {
     menuListItems: state.menu,
     selectionsCount: _.sum(state.cart.map(item => item.count)),
