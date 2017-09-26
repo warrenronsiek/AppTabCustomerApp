@@ -57,26 +57,71 @@ const _ = require('lodash');
  ]
  */
 
+/**
+ * menu state is of shape:
+ * [
+ *  {data: [
+ *          {
+              itemName: itemName,
+              itemDescription: itemDescription,
+              itemId: itemId,
+              venueId: venueId,
+              tags: tags,
+              price: price,
+              category: category,
+              itemOptions: itemOptions
+            }
+ *    ],
+ *   category: 'main'},
+ *  {data: [], category: 'drink'},
+ * ]
+ */
+
 const menu = (state = [], action) => {
   switch (action.type) {
     case UPDATE_MENU_ITEM:
-      const oldItem = _.find(state, ['itemId', action.itemId]);
+      const section = _.find(state, ['category', action.category]);
+      const oldItem = _.find(_.get(section, 'data'), ['itemId', action.itemId]);
       if (oldItem) {
-        return [...state.filter(item => item.itemId !== action.itemId),
+        return [...state.filter(section => section.category !== action.category),
           {
-            itemName: action.itemName,
-            itemDescription: action.itemDescription,
-            itemId: action.itemId,
-            venueId: action.venueId,
-            tags: action.tags,
-            price: action.price,
-            category: action.category,
-            itemOptions: action.itemOptions
+            data: [
+              ...section.data.filter(item => item.itemId !== action.itemId),
+              {
+                itemName: action.itemName,
+                itemDescription: action.itemDescription,
+                itemId: action.itemId,
+                venueId: action.venueId,
+                tags: action.tags,
+                price: action.price,
+                category: action.category,
+                itemOptions: action.itemOptions
+              }
+            ], category: action.category
+          }
+        ]
+      }
+      if (section) {
+        return [...state.filter(section => section.category !== action.category),
+          {
+            data: [
+              ...section.data,
+              {
+                itemName: action.itemName,
+                itemDescription: action.itemDescription,
+                itemId: action.itemId,
+                venueId: action.venueId,
+                tags: action.tags,
+                price: action.price,
+                category: action.category,
+                itemOptions: action.itemOptions
+              }
+            ], category: action.category
           }
         ]
       }
       return [...state,
-        {
+        {data: [{
           itemName: action.itemName,
           itemDescription: action.itemDescription,
           itemId: action.itemId,
@@ -85,7 +130,7 @@ const menu = (state = [], action) => {
           price: action.price,
           category: action.category,
           itemOptions: action.itemOptions
-        }
+        }], category: action.category}
       ];
     default:
       return state
@@ -105,7 +150,8 @@ const activeMenuItem = (state = {}, action) => {
         viewablePrice: '$' + action.price,
         category: action.category,
         itemOptions: action.itemOptions,
-        allOptionsSelected: false
+        allOptionsSelected: false,
+        oneClickBuy: action.oneClickBuy || false
       };
     case UPDATE_ACTIVE_ITEM_OPTIONS:
       return {

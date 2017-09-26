@@ -3,10 +3,12 @@
  */
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {View, StyleSheet, Text, FlatList} from 'react-native'
+import {View, StyleSheet, Text, SectionList, Dimensions} from 'react-native'
 import MenuListItem from './menuListItem'
 import Button from '../../common/button'
 import Spinner from '../../common/spinner'
+
+const {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -21,9 +23,11 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
-    marginBottom: 30,
+    marginBottom: 10,
     alignItems: 'center',
-    justifyContent: 'flex-end'
+    justifyContent: 'center',
+    borderTopColor: 'grey',
+    borderTopWidth: StyleSheet.hairlineWidth,
   },
   spinnerContainer: {
     alignItems: 'center',
@@ -34,8 +38,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1
-  }
+  },
+  sectionHeader: {
+    minHeight: 30,
+    minWidth: width,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderTopColor: 'grey',
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: 'grey',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    backgroundColor: 'white'
+  },
+  headerText: {
+    paddingLeft: 20,
+    fontWeight: 'bold'
+  },
 });
+
+const SectionHeader = ({headerName}) => (
+  <View style={styles.sectionHeader}>
+    <Text style={styles.headerText}>{headerName}</Text>
+  </View>
+);
 
 export default class MenuList extends Component {
   static propTypes = {
@@ -55,22 +80,23 @@ export default class MenuList extends Component {
         {(this.props.menuListItems.length === 0) && (this.props.apiQueried)
         && <View style={styles.textContainer}><Text>This kind of item is not on the menu :(</Text></View>}
         {this.props.menuListItems.length > 0 &&
-        <FlatList data={this.props.menuListItems} keyExtractor={(item, index) => item.itemId}
-                  renderItem={({item}) => <MenuListItem itemName={item.itemName}
-                                                        itemDescription={item.itemDescription}
-                                                        itemId={item.itemId}
-                                                        price={item.price} tags={item.tags}
-                                                        addToCart={this.props.addToCart}
-                                                        oneClickBuy={this.props.oneClickBuy}
-                                                        defaultCardExists={this.props.defaultCardExists}
-                  />}
+        <SectionList sections={this.props.menuListItems} keyExtractor={(item, index) => item.itemId}
+                     renderSectionHeader={({section}) => <SectionHeader headerName={section.category}/>}
+                     renderItem={({item}) => <MenuListItem itemName={item.itemName}
+                                                           itemDescription={item.itemDescription}
+                                                           itemId={item.itemId}
+                                                           price={item.price} tags={item.tags}
+                                                           addToCart={this.props.addToCart}
+                                                           oneClickBuy={this.props.oneClickBuy}
+                                                           defaultCardExists={this.props.defaultCardExists}
+                     />}
         />}
         <View style={styles.buttonContainer}>
           <Button onPress={() => this.props.checkout()}
                   title={
                     this.props.selectionsCount > 0
                       ? "My Selections: " + this.props.selectionsCount.toString()
-                      : "My Selections"} style={{width: 150, marginTop: 10}}
+                      : "My Selections"} style={{width: 150, marginTop: 50}}
                   disabled={this.props.selectionsCount === 0}
           />
         </View>

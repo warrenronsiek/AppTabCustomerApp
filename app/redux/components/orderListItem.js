@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Text, StyleSheet, View, Button} from 'react-native'
+import {Text, StyleSheet, View} from 'react-native'
 
 const styles = StyleSheet.create({
   itemContainer: {

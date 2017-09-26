@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 
 const drawerList = ({logoutThunk}) => (
   <ScrollView style={styles.scrollStyle}>
-    <TouchableHighlight style={styles.scrollItem} onPress={() => logoutThunk()} underlayColor="grey">
+    <TouchableHighlight style={styles.scrollItem} onPress={() => logoutThunk()}>
       <View style={styles.textContainer}>
         <Text style={styles.textStyle}>Logout</Text>
         <SimpleIcon size={30} name="logout"/>

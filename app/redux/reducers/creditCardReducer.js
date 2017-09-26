@@ -31,7 +31,7 @@ const ccTokens = handleActions({
 );
 
 const defaultCardExists = handleActions({
-  [ccActions.token.add]: (state, action) => action.payload.isDefault || false,
+  [ccActions.token.add]: (state, action) => action.payload.isDefault || state,
   [ccActions.token.setSelected]: (state, action) => true
 }, false);
 

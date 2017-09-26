@@ -13,8 +13,8 @@ export const updateNodeApi = (nodeId, nodeName, nodeDescription, venueId) => {
 };
 
 export const SET_ACTIVE_NODE = 'SET_ACTIVE_NODE';
-export const setActiveNode = (nodeId) => {
-    return {type: SET_ACTIVE_NODE, nodeId}
+export const setActiveNode = (nodeId, venueId) => {
+    return {type: SET_ACTIVE_NODE, nodeId, venueId}
 };
 
 export const SET_NODE_QUERIED = 'SET_NODE_QUERIED';
