@@ -21,14 +21,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  buttonContainer: {
-    flex: 1,
-    marginBottom: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderTopColor: 'grey',
-    borderTopWidth: StyleSheet.hairlineWidth,
-  },
   spinnerContainer: {
     alignItems: 'center',
     paddingTop: 100,
@@ -66,7 +58,6 @@ export default class MenuList extends Component {
   static propTypes = {
     menuListItems: PropTypes.arrayOf(PropTypes.object).isRequired,
     addToCart: PropTypes.func.isRequired,
-    checkout: PropTypes.func.isRequired,
     selectionsCount: PropTypes.number,
     apiQueried: PropTypes.bool.isRequired,
     oneClickBuy: PropTypes.func.isRequired,
@@ -91,15 +82,6 @@ export default class MenuList extends Component {
                                                            defaultCardExists={this.props.defaultCardExists}
                      />}
         />}
-        <View style={styles.buttonContainer}>
-          <Button onPress={() => this.props.checkout()}
-                  title={
-                    this.props.selectionsCount > 0
-                      ? "My Selections: " + this.props.selectionsCount.toString()
-                      : "My Selections"} style={{width: 150, marginTop: 50}}
-                  disabled={this.props.selectionsCount === 0}
-          />
-        </View>
       </View>
     )
   }

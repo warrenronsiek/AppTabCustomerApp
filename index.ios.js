@@ -20,12 +20,14 @@ import ResetPasswordScene from './app/scenes/passwordResetScene'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import SimpleIcons from 'react-native-vector-icons/SimpleLineIcons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome'
 
 const RouterWithRedux = connect()(Router);
 
 const drink = ({selected}) => <MaterialIcons name="restaurant-menu" size={36} color={selected ? '#6495ED' : 'black'}/>;
-const options = ({selected}) => <SimpleIcons name="options" size={30} color={selected ? '#6495ED' : 'black'}/>
+const options = ({selected}) => <SimpleIcons name="options" size={30} color={selected ? '#6495ED' : 'black'}/>;
 const bell = ({selected}) => <Ionicon name="ios-notifications" size={36} color={selected ? '#6495ED' : 'black'}/>;
+const cart = ({selected}) => <FontAwesomeIcons name="shopping-cart" size={30} color={selected ? '#6495ED' : 'black'}/>;
 
 export default class AppTabCustomerApp extends Component {
   constructor(props) {
@@ -48,12 +50,13 @@ export default class AppTabCustomerApp extends Component {
                      back onBack={() => Actions.nodes()}/>
               <Scene key="menu" component={MenuScene} title="Menu" icon={drink}
                      back onBack={() => Actions.nodes()}/>
+              <Scene key="cart" component={CartScene} title="Cart" icon={cart}
+                     back onBack={() => Actions.nodes()}/>
               <Scene key="options" component={DrawerComponent} title="Options" icon={options}
                      back onBack={() => Actions.nodes()}/>
             </Scene>
             <Scene key="optionsModal" component={OptionsSelectionModal} title="Options" back modal/>
             <Scene key="placeholder" component={Placeholder} title="Placeholder" back/>
-            <Scene key="cart" component={CartScene} title="Cart" back/>
             <Scene key="checkout" component={CheckoutScene} title="Checkout" back/>
             <Scene key="cardForm" component={CardFormScene} title="Card Details" back/>
           </Scene>
