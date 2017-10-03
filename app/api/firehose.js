@@ -1,6 +1,6 @@
 import store from '../redux/store'
 import AWS from 'aws-sdk/dist/aws-sdk-react-native'
-import {identityPoolId, firehoseName} from "../vars"
+import {identityPoolId, firehoseName, identityPoolName} from "../vars"
 import {omit, get} from 'lodash'
 import uuid from 'react-native-uuid'
 
@@ -15,7 +15,7 @@ firehose = new AWS.Firehose();
 const updateCredentials = () => {
   const auth = store.getState().auth;
   AWS.config.credentials.Logins = {
-    'cognito-idp.us-west-2.amazonaws.com/us-west-2_ct1EHN2VZ': auth.idToken
+    [identityPoolName]: auth.idToken
   };
   AWS.config.credentials.expired = true;
   AWS.config.credentials.get(() => {

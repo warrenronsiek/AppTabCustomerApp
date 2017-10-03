@@ -97,7 +97,7 @@ cartListItem.propTypes = {
   count: PropTypes.number.isRequired,
   incrementCount: PropTypes.func.isRequired,
   decrementCount: PropTypes.func.isRequired,
-  itemOptions: PropTypes.array
+  itemOptions: PropTypes.oneOfType([PropTypes.array, PropTypes.string]).isRequired
 };
 
 export default cartListItem
