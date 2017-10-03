@@ -11,8 +11,10 @@ import WrongNamespaceError from '../errors/wrongNamespaceError'
 import GetNodeQueriedError from '../errors/getNodeQueriedError'
 import {connect} from 'react-redux'
 import {Buffer} from 'buffer'
+import {Platform} from 'react-native'
 import logger from '../api/loggingApi'
 import * as _ from 'lodash'
+
 const noble = require('react-native-ble');
 
 function parseIntObject(intObject) {
@@ -33,7 +35,7 @@ function parseIntObject(intObject) {
 function parseBlePacket(item) {
   return new Promise((resolve, reject) => {
       if (item.advertisement.localName === 'Kontakt') {
-        const data = parseIntObject(_.filter(item.advertisement.serviceData, {uuid: 'feaa'})[0].data);
+        const data = parseIntObject(_.filter(item.advertisement.serviceData, {uuid: (Platform.OS === 'ios') ? 'feaa' : '0000feaa00001000800000805f9b34fb'})[0].data);
         const distance = Math.pow(10, ((data.txPower - item.rssi) - 41) / 20.0);
         const lastSeen = Math.floor(Date.now() / 1000);
         resolve({instance: data.instance, namespace: data.namespace, distance, lastSeen})

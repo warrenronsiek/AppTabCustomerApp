@@ -16,3 +16,9 @@ Possible Explosives
 and/or
 * navigate to `node_modules/react-native/third-party/glog-#.#.#`
 * run `../../scripts/ios-configure-glog.sh`
+
+Running on Android
+------------------
+1. run `react-native run-android`
+2. run `adb reverse tcp:8081 tcp:8081`
+3. run `adb logcat | grep ReactNativeJS` to get the logs
