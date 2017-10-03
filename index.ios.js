@@ -46,9 +46,9 @@ export default class AppTabCustomerApp extends Component {
             <Scene key="code" component={ConfirmCodeScene} title="Confirm Code"/>
             <Scene key="nodes" component={Nodes} title="Table Selection" back/>
             <Scene key="tabs" tabs={true} hideNavBar>
-              <Scene key="orders" component={Request} title="Your Orders" icon={bell} initial={true}
+              <Scene key="orders" component={Request} title="Your Orders" icon={bell}
                      back onBack={() => Actions.nodes()}/>
-              <Scene key="menu" component={MenuScene} title="Menu" icon={drink}
+              <Scene key="menu" component={MenuScene} title="Menu" icon={drink} initial={true}
                      back onBack={() => Actions.nodes()}/>
               <Scene key="cart" component={CartScene} title="Cart" icon={cart}
                      back onBack={() => Actions.nodes()}/>
