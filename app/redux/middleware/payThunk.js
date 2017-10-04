@@ -38,7 +38,6 @@ const payThunk = () => (dispatch, getState) => {
     .then(res => Actions.tabs())
     .then(res => dispatch(ccActions.payment.reset()))
     .catch(err => {
-      console.log(err);
       dispatch(ccActions.payment.failure());
       logger('error charging card', err)
     })
