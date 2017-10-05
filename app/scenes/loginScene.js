@@ -19,10 +19,10 @@ class LoginScene extends Component {
   };
 
   componentWillMount() {
+    let that = this;
     PushNotification.configure({
       onRegister: function(token) {
-        console.log( 'TOKEN:', token );
-        this.props.dispatch(setDeviceToken(token))
+        that.props.dispatch(setDeviceToken(token))
       }
     })
   }
