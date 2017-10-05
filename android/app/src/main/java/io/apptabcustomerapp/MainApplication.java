@@ -10,7 +10,7 @@ import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.geniem.rnble.RNBLEPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
-
+import com.solinor.bluetoothstatus.RNBluetoothManagerPackage;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,7 +28,8 @@ public class MainApplication extends Application implements ReactApplication {
                     new MainReactPackage(),
                     new RNCardIOPackage(),
                     new RNBLEPackage(),
-                    new ReactNativePushNotificationPackage()
+                    new ReactNativePushNotificationPackage(),
+                    new RNBluetoothManagerPackage()
             );
         }
     };

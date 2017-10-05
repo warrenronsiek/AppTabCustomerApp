@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 import Login from '../redux/connectedComponents/loginConnected'
 import {connect} from 'react-redux'
 import {setDeviceToken} from '../redux/actions/loginActions'
+import {BluetoothStatus} from 'react-native-bluetooth-status'
 const noble = require('react-native-ble'); /** putting this here to turn on noble early and avoid warm-up*/
 
 class LoginScene extends Component {
@@ -21,6 +22,15 @@ class LoginScene extends Component {
     });
     PushNotificationIOS.addEventListener('notification', (notification) => {
     })
+  }
+
+  componentDidMount() {
+    BluetoothStatus.state()
+      .then(res => {
+        if (!res) {
+          alert('Your phone\'s bluetooth is turned off.\nThe app won\'t be able to detect tables until it is turned on.');
+        }
+      })
   }
 
   render() {

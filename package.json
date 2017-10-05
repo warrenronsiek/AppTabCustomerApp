@@ -17,6 +17,7 @@
     "react-native": "0.45.1",
     "react-native-awesome-card-io": "^0.6.1",
     "react-native-ble": "^1.0.8",
+    "react-native-bluetooth-status": "^1.1.2",
     "react-native-collapsible": "^0.8.0",
     "react-native-push-notification": "^3.0.1",
     "react-native-router-flux": "4.0.0-beta.19",

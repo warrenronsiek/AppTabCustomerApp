@@ -7,6 +7,7 @@ import Login from '../redux/connectedComponents/loginConnected'
 import {connect} from 'react-redux'
 import {setDeviceToken} from '../redux/actions/loginActions'
 import PushNotification from 'react-native-push-notification'
+import {BluetoothStatus} from 'react-native-bluetooth-status'
 
 const noble = require('react-native-ble');
 
@@ -24,6 +25,15 @@ class LoginScene extends Component {
         this.props.dispatch(setDeviceToken(token))
       }
     })
+  }
+
+  componentDidMount() {
+    BluetoothStatus.state()
+      .then(res => {
+        if (!res) {
+          alert('Your phone\'s bluetooth is turned off.\nThe app won\'t be able to detect tables until it is turned on.');
+        }
+      })
   }
 
   render() {
