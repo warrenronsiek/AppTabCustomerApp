@@ -1,10 +1,14 @@
 import {connect} from 'react-redux'
 import CartIconWithAlert from '../components/cartIconWithAlert'
 
-const mapStateToProps = (state) => ({
+const CartIcon = ({selected}) => {
+  const mapStateToProps = (state) => ({
+    selected: selected,
+    count: state.numberOfCartItems
+  });
 
-});
+  return connect(mapStateToProps)(CartIconWithAlert)
+};
 
-const mapDispatchToProps =(dispatch) => {};
 
-export default
+export default CartIcon

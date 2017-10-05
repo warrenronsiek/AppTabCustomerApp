@@ -51,6 +51,19 @@ const cart = (state = [], action) => {
   }
 };
 
+const numberOfCartItems = (state = 0, action) => {
+  switch (action.type) {
+    case ADD_TO_CART:
+      return state + 1;
+    case INCREMENT_COUNT:
+      return state + 1;
+    case DECREMENT_COUNT:
+      return state - 1;
+    default:
+      return state
+  }
+};
+
 const oneClickBuyItem = (state = {}, action) => {
   switch (action.type) {
     case ONE_CLICK_BUY:
@@ -90,4 +103,4 @@ const cartStatus = (state = {}, action) => {
   }
 };
 
-export {cart, additionalCosts, cartStatus, oneClickBuyItem}
+export {cart, additionalCosts, cartStatus, oneClickBuyItem, numberOfCartItems}

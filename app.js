@@ -4,6 +4,7 @@ import React, {Component} from 'react'
 import {Provider, connect} from 'react-redux'
 import {Router, Scene, Actions} from 'react-native-router-flux'
 import DrawerComponent from './app/redux/connectedComponents/drawerListConnected'
+import CartIcon from './app/redux/connectedComponents/cartIconWithAlertConnected'
 import Login from './app/scenes/loginScene'
 import Placeholder from './app/scenes/placeholder'
 import OptionsSelectionModal from './app/scenes/optionsSelectionModal'
@@ -26,7 +27,7 @@ const RouterWithRedux = connect()(Router);
 const drink = ({selected}) => <MaterialIcons name="restaurant-menu" size={36} color={selected ? '#6495ED' : 'black'}/>;
 const options = ({selected}) => <SimpleIcons name="options" size={30} color={selected ? '#6495ED' : 'black'}/>;
 const bell = ({selected}) => <Ionicon name="ios-notifications" size={36} color={selected ? '#6495ED' : 'black'}/>;
-const cart = ({selected}) => <FontAwesomeIcons name="shopping-cart" size={30} color={selected ? '#6495ED' : 'black'}/>;
+const cart = ({selected}) => <CartIcon selected={selected}/>;
 
 class AppTabCustomerApp extends Component {
   constructor(props) {
