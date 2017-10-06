@@ -70,11 +70,11 @@ const register = ({
       </View>
       <View style={styles.textInputContainer}>
         <TextInput style={styles.textInputBox} onChangeText={text => updatePassword(text)} autoCapitalize='none'
-                   autoCorrect={false} value={password} placeholder="Password"/>
+                   autoCorrect={false} value={password} placeholder="Password" secureTextEntry={true}/>
       </View>
       <View style={styles.textInputContainer}>
         <TextInput style={styles.textInputBox} onChangeText={text => updateConfirmPassword(text)} autoCapitalize='none'
-                   autoCorrect={false} value={confirmPassword} placeholder="Confirm Password"/>
+                   autoCorrect={false} value={confirmPassword} placeholder="Confirm Password" secureTextEntry={true}/>
       </View>
     </View>
     <View style={styles.checkListContainer}>

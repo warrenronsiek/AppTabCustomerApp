@@ -77,10 +77,6 @@ export default class MenuList extends Component {
     checkingOut: PropTypes.bool
   };
 
-  componentWillMount() {
-    console.log(this.props)
-  }
-
   render() {
     return (
       <View style={styles.container}>

@@ -32,7 +32,10 @@ const resolver = (item) => (dispatch, getState) => {
     }))
     .then(res => {
       let transaction = res.transaction;
-      return Promise.resolve(dispatch(transactionActions.update(transaction.transactionId, transaction.amount, transaction.items, transaction.createDate)))
+      return Promise.all([
+        Promise.resolve(dispatch(transactionActions.update(transaction.transactionId, transaction.amount, transaction.items, transaction.createDate))),
+        Promise.resolve(dispatch(transactionActions.alert.add()))
+      ])
     })
     .then(res => writeToFirehose('OneClickBuy'))
     .catch(err => {

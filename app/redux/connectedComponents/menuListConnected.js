@@ -4,7 +4,6 @@
 import {connect} from 'react-redux'
 import {addToCartThunk} from '../middleware/cartThunk'
 import MenuList from '../components/menuList'
-import {Actions} from 'react-native-router-flux'
 import oneClickBuyThunk from '../middleware/oneClickBuyThunk'
 import * as _ from 'lodash'
 
@@ -21,7 +20,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addToCart: (itemId) => dispatch(addToCartThunk(itemId)),
-    checkout: () => Actions.cart(),
     oneClickBuy: itemId => dispatch(oneClickBuyThunk(itemId))
   }
 };

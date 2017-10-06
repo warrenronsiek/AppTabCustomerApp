@@ -30,7 +30,10 @@ const payThunk = () => (dispatch, getState) => {
     .then(res => openTransaction({amount, stripeToken, cardToken, nodeId, customerId, items: currentCart, tip, tax, itemTotal, venueId}))
     .then(res => {
       let transaction = res.transaction;
-      return Promise.resolve(dispatch(transactionActions.update(transaction.transactionId, transaction.amount, transaction.items, transaction.createDate)))
+      return Promise.all([
+        Promise.resolve(dispatch(transactionActions.update(transaction.transactionId, transaction.amount, transaction.items, transaction.createDate))),
+        Promise.resolve(dispatch(transactionActions.alert.add()))
+      ])
     })
     .then(res => Promise.resolve(dispatch(ccActions.payment.success())))
     .then(res => writeToFirehose('PaymentComplete'))
@@ -38,7 +41,6 @@ const payThunk = () => (dispatch, getState) => {
     .then(res => Actions.tabs())
     .then(res => dispatch(ccActions.payment.reset()))
     .catch(err => {
-      console.log(err);
       dispatch(ccActions.payment.failure());
       logger('error charging card', err)
     })
