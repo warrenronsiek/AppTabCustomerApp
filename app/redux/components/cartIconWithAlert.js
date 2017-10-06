@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {View, Text, StyleSheet} from 'react-native'
-import Ionicon from 'react-native-vector-icons/Ionicons'
+import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome'
 
 const styles = StyleSheet.create({
   iconContainer: {
@@ -10,21 +10,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     minWidth: 40,
     minHeight: 20,
-    backgroundColor: 'green'
   },
   numberCircle: {
-    minWidth: 15,
-    minHeight: 15,
-    borderRadius: 7.5,
+    minWidth: 16,
+    minHeight: 16,
+    borderRadius: 8,
     backgroundColor: 'red',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 10,
+    right: 2,
   }
 });
 
 const CartIconWithAlert = ({count}) => (
   <View style={styles.iconContainer}>
-    <Ionicon name="ios-notifications" size={36}/>
+    <FontAwesomeIcons name="shopping-cart" size={30}/>
     {(count > 0)
       ? <View style={styles.numberCircle}>
         <Text style={{fontSize: 10, color: 'white'}}>{count.toString()}</Text>
