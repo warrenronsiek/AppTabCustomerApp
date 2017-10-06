@@ -59,6 +59,8 @@ const numberOfCartItems = (state = 0, action) => {
       return state + 1;
     case DECREMENT_COUNT:
       return state - 1;
+    case CLEAR_CART:
+      return 0;
     default:
       return state
   }

@@ -2,10 +2,10 @@ import store from './app/redux/store'
 import passwordResetOnBack from './app/common/passwordResetOnBack'
 import React, {Component} from 'react'
 import {Provider, connect} from 'react-redux'
-import {View} from 'react-native'
 import {Router, Scene, Actions} from 'react-native-router-flux'
 import DrawerComponent from './app/redux/connectedComponents/drawerListConnected'
 import CartIcon from './app/redux/connectedComponents/cartIconWithAlertConnected'
+import OrderIcon from './app/redux/connectedComponents/orderIconWithAlertConnected'
 import Login from './app/scenes/loginScene'
 import Placeholder from './app/scenes/placeholder'
 import OptionsSelectionModal from './app/scenes/optionsSelectionModal'
@@ -18,16 +18,15 @@ import CardFormScene from './app/scenes/creditCardFormScene'
 import ConfirmCodeScene from './app/scenes/confirmationCodeEntryScene'
 import CartScene from './app/scenes/cartScene'
 import ResetPasswordScene from './app/scenes/passwordResetScene'
-import Ionicon from 'react-native-vector-icons/Ionicons'
 import SimpleIcons from 'react-native-vector-icons/SimpleLineIcons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome'
+import transactionActions from './app/redux/actions/trasactionActions'
 
 const RouterWithRedux = connect()(Router);
 
 const drink = ({selected}) => <MaterialIcons name="restaurant-menu" size={36} color={selected ? '#6495ED' : 'black'}/>;
 const options = ({selected}) => <SimpleIcons name="options" size={30} color={selected ? '#6495ED' : 'black'}/>;
-const bell = ({selected}) => <Ionicon name="ios-notifications" size={36} color={selected ? '#6495ED' : 'black'}/>;
+const bell = ({selected}) => <OrderIcon/>;
 const cart = ({selected}) => <CartIcon/>;
 
 class AppTabCustomerApp extends Component {
@@ -48,7 +47,7 @@ class AppTabCustomerApp extends Component {
             <Scene key="nodes" component={Nodes} title="Table Selection" back/>
             <Scene key="tabs" tabs={true} hideNavBar tabBarIconContainerStyle={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
               <Scene key="orders" component={Request} title="Your Orders" icon={bell}
-                     back onBack={() => Actions.nodes()}/>
+                     back onBack={() => Actions.nodes()} onEnter={() => store.dispatch(transactionActions.alert.clear())}/>
               <Scene key="menu" component={MenuScene} title="Menu" icon={drink} initial={true}
                      back onBack={() => Actions.nodes()}/>
               <Scene key="cart" component={CartScene} title="Cart" icon={cart}

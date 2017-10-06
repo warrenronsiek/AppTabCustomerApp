@@ -21,4 +21,9 @@ const transactions = handleActions({
   [transactionActions.delete]: (state, action) => filter(state, [action.payload.transactionId])
 }, []);
 
-export {transactions}
+const transactionCount = handleActions({
+  [transactionActions.alert.add]: (state, action) => state + 1,
+  [transactionActions.alert.clear]: (state, action) => 0
+}, 0);
+
+export {transactions, transactionCount}

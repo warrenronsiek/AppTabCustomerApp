@@ -4,7 +4,6 @@
 import {connect} from 'react-redux'
 import {incrementCount, decrementCount, updateTip} from '../actions/cartActions'
 import CartList from '../components/cartList'
-import {Actions} from 'react-native-router-flux'
 import checkoutThunk from '../middleware/checkoutThunk'
 import * as _ from 'lodash'
 
