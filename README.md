@@ -22,3 +22,7 @@ Running on Android
 1. run `react-native run-android`
 2. run `adb reverse tcp:8081 tcp:8081`
 3. run `adb logcat | grep ReactNativeJS` to get the logs
+
+Building IOS icon sets
+----------------------
+run `yo rn-toolbox:assets --icon <path to your icon>`
