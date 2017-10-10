@@ -7,12 +7,6 @@ import {Text, StyleSheet, View, Button} from 'react-native'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 
-const LocationButton = ({onPress}) => (
-  <MaterialIcon.Button name='location-on' size={30} onPress={onPress}>
-    Select
-  </MaterialIcon.Button>
-);
-
 const styles = StyleSheet.create({
   nodeBlock: {
     flex: 1,
@@ -31,14 +25,21 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   buttonContainer: {
-    flex: 2
+    flex: 2,
+    maxWidth: 130
   },
   iconContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
-  }
+  },
 });
+
+const LocationButton = ({onPress}) => (
+  <MaterialIcon.Button name='location-on' size={30} onPress={onPress}>
+    Select
+  </MaterialIcon.Button>
+);
 
 const NodeListItem = ({nodeId, nodeName, nodeDescription, selectNode, activeNode}) => (
   <View style={styles.nodeBlock}>
