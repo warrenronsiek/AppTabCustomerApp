@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 2,
-    width: width * .6,
+    width: 250,
     flexDirection: 'row',
     maxHeight: 100
   },
@@ -71,9 +71,6 @@ const login = ({validationError, networkError, unknownError, loggingIn, phoneNum
     <View style={styles.welcomeContainer}>
       <Text style={styles.welcome}>
         AppTab
-      </Text>
-      <Text>
-        Alpha 0.2.0
       </Text>
     </View>
     <View style={styles.textContainer}>
