@@ -62,11 +62,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ({}) => (<View>
-  <h1>HI</h1>
-</View>)
-
-class CartList extends Component {
+export default class CartList extends Component {
   static propTypes = {
     cartListItems: PropTypes.arrayOf(PropTypes.object).isRequired,
     incrementCount: PropTypes.func.isRequired,
