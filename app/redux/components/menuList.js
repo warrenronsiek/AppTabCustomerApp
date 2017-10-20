@@ -76,7 +76,7 @@ export default class MenuList extends Component {
                      renderItem={({item}) => <MenuListItem itemName={item.itemName}
                                                            itemDescription={item.itemDescription}
                                                            itemId={item.itemId}
-                                                           price={item.price} tags={item.tags}
+                                                           viewablePrice={item.viewablePrice} tags={item.tags}
                                                            addToCart={this.props.addToCart}
                                                            oneClickBuy={this.props.oneClickBuy}
                                                            defaultCardExists={this.props.defaultCardExists}

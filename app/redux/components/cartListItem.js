@@ -64,13 +64,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const cartListItem = ({itemName, itemDescription, itemId, price, count, incrementCount, decrementCount, itemOptions}) => (
+const cartListItem = ({itemName, itemDescription, itemId, viewablePrice, count, incrementCount, decrementCount, itemOptions}) => (
     <View style={styles.container}>
       <View style={styles.textContainer}>
         <Text style={styles.nameStyle}>{itemName}</Text>
       </View>
       <View style={styles.priceContainer}>
-        <Text>{price}</Text>
+        <Text>{viewablePrice}</Text>
       </View>
       <View style={styles.cartIconContainer}>
         <View style={styles.cartIconSubContainer}>
@@ -93,7 +93,7 @@ cartListItem.propTypes = {
   itemName: PropTypes.string.isRequired,
   itemDescription: PropTypes.string.isRequired,
   itemId: PropTypes.string.isRequired,
-  price: PropTypes.string.isRequired,
+  viewablePrice: PropTypes.string.isRequired,
   count: PropTypes.number.isRequired,
   incrementCount: PropTypes.func.isRequired,
   decrementCount: PropTypes.func.isRequired,

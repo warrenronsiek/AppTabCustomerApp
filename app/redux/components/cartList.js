@@ -62,16 +62,20 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class MenuList extends Component {
+export default ({}) => (<View>
+  <h1>HI</h1>
+</View>)
+
+class CartList extends Component {
   static propTypes = {
     cartListItems: PropTypes.arrayOf(PropTypes.object).isRequired,
     incrementCount: PropTypes.func.isRequired,
     decrementCount: PropTypes.func.isRequired,
-    totalCartCost: PropTypes.number.isRequired,
+    totalCartCost: PropTypes.string.isRequired,
     checkout: PropTypes.func.isRequired,
-    tax: PropTypes.number.isRequired,
-    tip: PropTypes.number.isRequired,
-    total: PropTypes.number.isRequired,
+    tax: PropTypes.string.isRequired,
+    tip: PropTypes.string.isRequired,
+    total: PropTypes.string.isRequired,
     updateTip: PropTypes.func.isRequired,
     tipPct: PropTypes.number.isRequired,
     checkingOut: PropTypes.bool
@@ -88,7 +92,7 @@ export default class MenuList extends Component {
                         renderItem={({item}) => <CartListItem itemName={item.itemName}
                                                               itemDescription={item.itemDescription}
                                                               itemId={item.itemId}
-                                                              price={item.price}
+                                                              viewablePrice={item.viewablePrice}
                                                               count={item.count}
                                                               incrementCount={this.props.incrementCount}
                                                               decrementCount={this.props.decrementCount}
@@ -118,7 +122,7 @@ export default class MenuList extends Component {
           </View>
           <View style={styles.totalsNumbersContainer}>
             <Text style={styles.totalsFont}>
-              ${this.props.totalCartCost * 100 % 10 === 0 ? this.props.totalCartCost + '0' : this.props.totalCartCost}
+              ${this.props.totalCartCost}
             </Text>
             <Text style={styles.totalsFont}>${this.props.tax}</Text>
             <Text style={styles.totalsFont}>${this.props.tip}</Text>

@@ -14,13 +14,7 @@ import round from '../../common/round'
 const payThunk = () => (dispatch, getState) => {
   const state = getState();
   const
-    venueId = _.find(state.nodes, ['nodeId', state.activeNode.nodeId]).venueId,
-    currentCart = state.cart.filter(item => item.venueId === venueId);
-  const
-    itemTotal = round(_.sum(currentCart.map(item => parseFloat(item.price) * item.count)), 2),
-    tip = round(itemTotal * state.additionalCosts.tip, 2),
-    tax = round(itemTotal * state.additionalCosts.tax, 2),
-    amount = parseInt(round((itemTotal + tip + tax) * 100, 2)),
+    amount = state.cart.costs.totalCost,
     stripeToken = state.stripeToken,
     cardToken = state.ccTokens.filter(item => item.isSelected)[0].ccToken,
     nodeId = state.activeNode.nodeId,

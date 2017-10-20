@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const menuListItem = ({itemName, itemDescription, itemId, price, tags, addToCart, defaultCardExists, oneClickBuy}) => (
+const menuListItem = ({itemName, itemDescription, itemId, viewablePrice, tags, addToCart, defaultCardExists, oneClickBuy}) => (
   <View style={styles.container}>
     <View style={styles.textContainer}>
       <Text style={styles.nameStyle}>{itemName}</Text>
@@ -78,7 +78,7 @@ const menuListItem = ({itemName, itemDescription, itemId, price, tags, addToCart
       </View>
     </View>
     <View style={styles.priceContainer}>
-      <Text>{price}</Text>
+      <Text>{viewablePrice}</Text>
     </View>
     <View style={styles.oneClickButtonContainer}>
       <Button onPress={() => oneClickBuy(itemId)} style={{width: 53}} underlayColor="grey" disabled={!defaultCardExists}
@@ -99,7 +99,7 @@ menuListItem.propTypes = {
   itemName: PropTypes.string.isRequired,
   itemDescription: PropTypes.string.isRequired,
   itemId: PropTypes.string.isRequired,
-  price: PropTypes.string.isRequired,
+  viewablePrice: PropTypes.string.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   addToCart: PropTypes.func.isRequired,
   defaultCardExists: PropTypes.bool.isRequired,
