@@ -8,7 +8,6 @@ const _ = require('lodash');
 
 const addToCartThunk = (itemId) => (dispatch, getState) => {
   const item = _.find(_.flatten(getState().menu.map(section => section.data)), ['itemId', itemId]);
-  console.log(item);
   if (item.itemOptions && (item.itemOptions !== 'NULL')) {
     dispatch(setActiveItem(item.itemName, item.itemDescription, item.price, item.tags, item.category, item.itemId, item.venueId, item.itemOptions));
     Actions.optionsModal()

@@ -118,11 +118,11 @@ export default class CartList extends Component {
           </View>
           <View style={styles.totalsNumbersContainer}>
             <Text style={styles.totalsFont}>
-              ${this.props.totalCartCost}
+              {this.props.totalCartCost}
             </Text>
-            <Text style={styles.totalsFont}>${this.props.tax}</Text>
-            <Text style={styles.totalsFont}>${this.props.tip}</Text>
-            <Text style={styles.totalsFontBold}>${this.props.total}</Text>
+            <Text style={styles.totalsFont}>{this.props.tax}</Text>
+            <Text style={styles.totalsFont}>{this.props.tip}</Text>
+            <Text style={styles.totalsFontBold}>{this.props.total}</Text>
           </View>
         </View>
         <View style={styles.checkoutButtonContainer}>

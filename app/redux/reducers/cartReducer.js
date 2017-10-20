@@ -15,12 +15,13 @@ import {
 import {SET_ACTIVE_NODE} from '../actions/nodeActions'
 import * as _ from 'lodash'
 import centsIntToString from '../../common/centsIntToString'
+import round from '../../common/round'
 
 
 const costsGenerator = (itemArray, tipPct, taxPct) => {
   let totalCart = itemArray.reduce((sum, item) => sum + (item.price * item.count ), 0),
-    totalTip = totalCart * tipPct,
-    totalTax = totalCart * taxPct,
+    totalTip = round(totalCart * tipPct, 0),
+    totalTax = round(totalCart * taxPct, 0),
     totalCost = totalCart + totalTip + totalTax;
   return {
     tax: taxPct,
@@ -33,14 +34,14 @@ const costsGenerator = (itemArray, tipPct, taxPct) => {
     totalViewableCost: '$' + centsIntToString(totalCost),
     totalViewableTax: '$' + centsIntToString(totalTax),
     totalViewableTip: '$' + centsIntToString(totalTip)
-  }
+  };
 };
 
 const cart = (state = {
   items: [],
   costs: {
     tip: .2,
-    tax: .0725,
+    tax: .075,
     totalTip: 0,
     totalTax: 0,
     totalCart: 0,
