@@ -37,8 +37,9 @@ const optionsList = ({optionSets, onSelection, done, price, allOptionsSelected})
   <View style={styles.container}>
     <SectionList sections={optionSets} keyExtractor={(item, index) => item.optionSetName + item.optionName}
                  renderItem={({item}) => <OptionsListItem optionName={item.optionName} isSelected={item.isSelected}
-                                                          optionSetName={item.optionSetName} price={'+$' + centsIntToString(item.price)}
-                                                          onSelection={onSelection}/>}
+                                                          price={'+$' + centsIntToString(item.price)}
+                                                          onSelection={onSelection} optionSetId={item.optionSetId}
+                                                          optionId={item.optionId}/>}
                  renderSectionHeader={({section}) => <OptionSetHeader optionSetName={section.optionSetName}/>}
     />
     <View style={[styles.container, {paddingTop: 30}]}>
@@ -55,11 +56,14 @@ optionsList.propTypes = {
     PropTypes.shape({
       optionsListItem: PropTypes.shape({
         optionSetName: PropTypes.string.isRequired,
+        optionSetId: PropTypes.string.isRequired,
         data: PropTypes.arrayOf(
           PropTypes.shape({
             optionName: PropTypes.string.isRequired,
             price: PropTypes.number.isRequired,
-            isSelected: PropTypes.bool.isRequired
+            isSelected: PropTypes.bool.isRequired,
+            optionSetId: PropTypes.string.isRequired,
+            optionId: PropTypes.string.isRequired
           })
         )
       })

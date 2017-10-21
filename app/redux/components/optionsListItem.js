@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const optionsListItem = ({optionName, isSelected, onSelection, optionSetName, price}) => {
+const optionsListItem = ({optionName, isSelected, onSelection, price, optionSetId, optionId}) => {
   return (
     <View style={styles.container}>
       <View style={styles.switchContainer}>
@@ -42,7 +42,7 @@ const optionsListItem = ({optionName, isSelected, onSelection, optionSetName, pr
         <Text style={styles.priceContainer}>{price}</Text>
         <View style={styles.toggleContainer}>
 
-          <TouchableHighlight onPress={() => onSelection(optionSetName, optionName)}>
+          <TouchableHighlight onPress={() => onSelection(optionSetId, optionId)}>
             {isSelected
               ? <MaterialIcons name="radiobox-marked" size={30}/>
               : <MaterialIcons name="radiobox-blank" size={30}/>}

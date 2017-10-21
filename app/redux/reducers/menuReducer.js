@@ -150,9 +150,9 @@ const activeMenuItem = (state = {}, action) => {
         venueId: action.venueId,
         tags: action.tags,
         price: action.price,
-        viewablePrice: '$' + action.price,
+        viewablePrice: '$' + centsIntToString(action.price),
         category: action.category,
-        itemOptions: action.itemOptions,
+        itemOptions: action.itemOptions.map(optionSet => ({...optionSet, data: optionSet.data.map(option => ({...option, isSelected: false, optionSetId: optionSet.optionSetId}))})),
         allOptionsSelected: false,
         oneClickBuy: action.oneClickBuy || false
       };
@@ -161,7 +161,7 @@ const activeMenuItem = (state = {}, action) => {
         ...state,
         itemOptions: action.itemOptions,
         price: action.price,
-        viewablePrice: '$' + action.price,
+        viewablePrice: '$' + centsIntToString(action.price),
         allOptionsSelected: action.allOptionsSelected
       };
     case CLEAR_ACTIVE_ITEM:

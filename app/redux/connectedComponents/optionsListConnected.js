@@ -9,7 +9,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onSelection: (optionSetName, optionName) => dispatch(menuItemOptionsUpdateThunk(optionSetName, optionName)),
+  onSelection: (optionSetId, optionId) => dispatch(menuItemOptionsUpdateThunk(optionSetId, optionId)),
   done: () => dispatch(finishedMenuItemOptionsSelectionThunk())
 });
 

@@ -91,6 +91,8 @@ const cart = (state = {
       return Object.assign({}, {items: filteredState, costs: costsGenerator(newItems, state.costs.tip, state.costs.tax)});
     case SET_ACTIVE_NODE:
       return {...state, items: [...state.items.filter(item => item.venueId === action.venueId)]};
+    case UPDATE_TIP:
+      return {...state, costs: costsGenerator(state.items, action.tip, state.costs.tax)};
     case CLEAR_CART:
       return Object.assign({}, {items: [], costs: costsGenerator([], state.costs.tip, state.costs.tax)});
     default:

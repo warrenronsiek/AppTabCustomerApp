@@ -2,13 +2,12 @@ import {updateActiveItemOptions} from '../actions/menuActions'
 import {addToCart} from '../actions/cartActions'
 import {find, findIndex} from 'lodash'
 import {Actions} from 'react-native-router-flux'
-import centsIntToString from '../../common/centsIntToString'
 import oneClickBuyResolver from '../../common/oneClickBuyResolver'
 
-const menuItemOptionsUpdateThunk = (optionSetName, optionName) => (dispatch, getState) => {
+const menuItemOptionsUpdateThunk = (optionSetId, optionId) => (dispatch, getState) => {
   let activeItem = JSON.parse(JSON.stringify(getState().activeMenuItem));
   let itemOptions = [...activeItem.itemOptions];
-  const optionSetIndex = findIndex(itemOptions, option => option.optionSetName === optionSetName);
+  const optionSetIndex = findIndex(itemOptions, option => option.optionSetId === optionSetId);
   let previousSelectionPrice = 0;
   let previousSelection = find(itemOptions[optionSetIndex].data, ['isSelected', true]);
   const previousSelectionIndex = findIndex(itemOptions[optionSetIndex].data, ['isSelected', true]);
@@ -16,9 +15,11 @@ const menuItemOptionsUpdateThunk = (optionSetName, optionName) => (dispatch, get
     previousSelectionPrice = previousSelection.price;
     itemOptions[optionSetIndex].data[previousSelectionIndex].isSelected = false;
   }
-  const subOptionIndex = findIndex(itemOptions[optionSetIndex].data, option => option.optionName === optionName);
+  const subOptionIndex = findIndex(itemOptions[optionSetIndex].data, option => option.optionId === optionId);
   let option = itemOptions[optionSetIndex].data[subOptionIndex];
-  let newPrice = centsIntToString(parseFloat(activeItem.price) * 100 + option.price - previousSelectionPrice);
+  console.log(activeItem.price, option.price, previousSelectionPrice);
+  let newPrice = parseFloat(activeItem.price) + option.price - previousSelectionPrice;
+  console.log(newPrice);
   itemOptions[optionSetIndex].data[subOptionIndex] = {...option, isSelected: true};
   const allOptionsSelected = itemOptions.map(optionSet => optionSet.data.reduce((optionSelected, item) => optionSelected || item.isSelected, false)).reduce((allSelected, bool) => allSelected && bool, true);
   dispatch(updateActiveItemOptions(itemOptions, newPrice, allOptionsSelected));
