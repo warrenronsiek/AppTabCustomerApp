@@ -3,67 +3,75 @@
  */
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Text, StyleSheet, View, Button} from 'react-native'
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
+import {Text, StyleSheet, View, TouchableHighlight} from 'react-native'
 
 const styles = StyleSheet.create({
   nodeBlock: {
     flex: 1,
     flexDirection: "row",
     maxHeight: 120,
-    paddingRight: 20,
     height: 120,
     alignItems: 'center',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: 'grey',
-    borderTopColor: 'grey'
   },
   nodeText: {
     flex: 4,
     alignItems: 'flex-start',
     flexDirection: 'column'
   },
-  buttonContainer: {
-    flex: 2,
-    maxWidth: 130
-  },
   iconContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
   },
+  highlightContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    borderWidth: 10,
+    borderColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+  },
+  highlight: {
+    flex: 1,
+    backgroundColor: '#bdbdbd',
+    maxWidth: 100,
+    minWidth: 100,
+  },
+  textContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1
+  },
+  text: {
+    fontSize: 46,
+    color: 'white',
+    fontWeight: 'bold'
+  }
 });
 
-const LocationButton = ({onPress}) => (
-  <MaterialIcon.Button name='location-on' size={30} onPress={onPress}>
-    Select
-  </MaterialIcon.Button>
-);
-
-const NodeListItem = ({nodeId, nodeName, nodeDescription, selectNode, activeNode}) => (
+const NodeListItem = ({data, selectNode}) => (
   <View style={styles.nodeBlock}>
-    <View style={styles.iconContainer}>
-      <FontAwesomeIcon name="feed" size={30}/>
-    </View>
-    <View style={styles.nodeText}>
-      <Text>Number: {nodeId.slice(-2)}</Text>
-      {nodeName ? <Text>Name: {nodeName}</Text> : null}
-      {nodeDescription ? <Text>Details: {nodeDescription}</Text> : null}
-    </View>
-    <View style={styles.buttonContainer}>
-      <LocationButton onPress={() => selectNode(nodeId)} />
-    </View>
+    {data.map(node => (
+      <View style={styles.highlightContainer} key={node.nodeId}>
+        <TouchableHighlight onPress={() => selectNode(node.nodeId)} style={styles.highlight}>
+          <View style={styles.textContainer}>
+            <Text style={styles.text}>{node.nodeId.slice(-2)}</Text>
+          </View>
+        </TouchableHighlight>
+      </View>
+
+    ))}
   </View>
 );
 
 
 NodeListItem.propTypes = {
-  nodeId: PropTypes.string.isRequired,
-  nodeName: PropTypes.string,
-  nodeDescription: PropTypes.string,
+  data: PropTypes.arrayOf(PropTypes.shape({
+    venueId: PropTypes.string,
+    nodeId: PropTypes.string
+  })),
   selectNode: PropTypes.func.isRequired,
-  activeNode: PropTypes.string.isRequired
 };
 
 export default NodeListItem

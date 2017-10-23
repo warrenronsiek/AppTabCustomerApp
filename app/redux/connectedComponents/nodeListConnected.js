@@ -8,8 +8,8 @@ import * as _ from 'lodash'
 
 const mapStateToProps = (state) => {
   return {
-    nodeListItems: state.nodes.nodeList,
-    renderNodes: state.nodes.nodeList.length > 0,
+    nodeListItems: state.nodes.viewableNodes,
+    renderNodes: state.nodes.showNodes,
     activeNode: state.activeNode.nodeId
   }
 };

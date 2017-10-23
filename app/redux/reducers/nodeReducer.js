@@ -14,20 +14,26 @@ import flow from 'lodash/fp/flow'
 /*
 viewableNodes has a structure of :
 [
- [
-  {nodeId, venueId},
-  {nodeId, venueId},
-  {nodeId, venueId}
- ],
+ {
+  data: [
+    {nodeId, venueId},
+    {nodeId, venueId},
+    {nodeId, venueId}
+  ],
+  key: somekey
+ },
  ...
- [
-  {nodeId, venueId},
-  {nodeId, venueId},
-  {nodeId, venueId}
- ]
+  {
+  data: [
+    {nodeId, venueId},
+    {nodeId, venueId},
+    {nodeId, venueId}
+  ],
+  key: someotherkey
+ },
 ]
 */
-export const nodes = (state = {nodeList: [], viewableNodes: []}, action) => {
+export const nodes = (state = {nodeList: [], viewableNodes: [], showNodes: false}, action) => {
   let updatedNode, oldNode, filteredState;
   switch (action.type) {
     case UPDATE_NODE_BLE:
@@ -84,26 +90,29 @@ export const nodes = (state = {nodeList: [], viewableNodes: []}, action) => {
           filter(node => !!node.venueId),
           map(node => _.pick(node, ['venueId', 'nodeId'])),
           sortBy(node => node.nodeId.slice(-3)),
-          chunk(3)
-        )(newNodeList)
+          chunk(3),
+          map(nodeChunk => ({data: nodeChunk, key: nodeChunk[0].nodeId}))
+        )(newNodeList),
+        showNodes: true
       };
     case SET_NODE_QUERIED:
       oldNode = _.find(state.nodeList, ['nodeId', action.nodeId]);
       filteredState = state.nodeList.filter((node) => node.nodeId !== action.nodeId);
       if (oldNode) {
         return {
+          ...state,
           nodeList: [...filteredState, {
             ...oldNode,
             nodeId: action.nodeId,
             apiQueried: true
-          }], viewableNodes: []
+          }]
         }
       } else {
         updatedNode = {
           nodeId: action.nodeId,
           apiQueried: true
         };
-        return {nodeList: [...filteredState, updatedNode], viewableNodes: []}
+        return {...state, nodeList: [...filteredState, updatedNode], viewableNodes: []}
       }
     default:
       return state
