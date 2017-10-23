@@ -87,7 +87,7 @@ class NodeScene extends Component {
         }
       })
       .then(res => {
-        const nodeState = _.find(this.context.store.getState().nodes, {nodeId: res.nodeId});
+        const nodeState = _.find(this.context.store.getState().nodes.nodeList, {nodeId: res.nodeId});
         if (nodeState.apiQueried === undefined) {
           this.props.dispatch(setNodeQueried(res.nodeId));
           return getNodeInfo({nodeId: res.nodeId})
