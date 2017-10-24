@@ -2,7 +2,7 @@
  * Created by warren on 3/1/17.
  */
 import {connect} from 'react-redux'
-import {incrementCount, decrementCount, updateTip} from '../actions/cartActions'
+import {incrementCount, decrementCount, updateTip, toggleIncrementer} from '../actions/cartActions'
 import CartList from '../components/cartList'
 import checkoutThunk from '../middleware/checkoutThunk'
 import centsIntToString from '../../common/centsIntToString'
@@ -24,6 +24,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     incrementCount: (itemId, itemOptions) => dispatch(incrementCount(itemId, itemOptions)),
     decrementCount: (itemId, itemOptions) => dispatch(decrementCount(itemId, itemOptions)),
+    toggleIncrementer: (itemId, itemOptions) => dispatch(toggleIncrementer(itemId, itemOptions)),
     checkout: () => dispatch(checkoutThunk()),
     updateTip: tipPercent => dispatch(updateTip(tipPercent))
   }

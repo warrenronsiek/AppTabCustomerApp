@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import PropTypes from 'prop-types'
-import {View, Text, TextInput, StyleSheet, Button} from 'react-native';
+import {View, Text, TextInput, StyleSheet, TouchableHighlight} from 'react-native';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 
 const styles = StyleSheet.create({
@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontStyle: "italic",
   },
-
   tagContainer: {
     flexDirection: 'row',
     paddingTop: 5
@@ -51,7 +50,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   cartIconSubContainer: {
     flex: 1,
@@ -68,47 +67,52 @@ const styles = StyleSheet.create({
     flex: 3,
     alignItems: 'center',
     justifyContent: 'center',
+    minHeight: 90
   },
   priceStyle: {
     flex: 1,
     textAlign: 'right',
-    textAlignVertical: 'center'
+    textAlignVertical: 'center',
+    paddingRight: 10
   }
 });
 
-const cartListItem = ({itemName, itemId, viewablePrice, count, incrementCount, decrementCount, itemOptions}) => (
+const cartListItem = ({itemName, itemId, viewablePrice, count, incrementCount, decrementCount, itemOptions, showIncrementer, toggleIncrementer}) => (
   <View style={styles.container}>
-    <View style={styles.itemDataContainer}>
-      <View style={[styles.itemDataRowContainer]}>
-        <View style={styles.textContainer}>
-          <Text style={styles.nameStyle}>{itemName}</Text>
-        </View>
+    <TouchableHighlight style={{flex:3}} onPress={() => toggleIncrementer(itemId, itemOptions)} underlayColor="white" activeOpacity={0}>
+      <View style={styles.itemDataContainer}>
+        <View style={[styles.itemDataRowContainer]}>
+          <View style={styles.textContainer}>
+            <Text style={styles.nameStyle}>{itemName}</Text>
+          </View>
           <Text style={styles.priceStyle}>{viewablePrice}</Text>
-      </View>
-      {itemOptions.map(option => (
+        </View>
+        {(Array.isArray(itemOptions) ? itemOptions : []).map(option => (
           <View style={[styles.itemDataRowContainer]} key={option.key}>
             <View style={styles.textContainer}>
               <Text>{option.optionSetName + ': ' + option.optionName}</Text>
             </View>
-              <Text style={styles.priceStyle}>{option.viewablePrice}</Text>
+            <Text style={styles.priceStyle}>{option.viewablePrice}</Text>
           </View>))
-      }
-
-    </View>
-    <View style={styles.cartIconContainer}>
-      <View style={styles.cartIconSubContainer}>
-        <EntypoIcon name="chevron-small-up" size={30} onPress={() => {
-          incrementCount(itemId, itemOptions)
-        }}/>
+        }
       </View>
-      <View style={styles.cartIconSubContainer}>
-        <Text>{count}</Text>
+    </TouchableHighlight>
+    {showIncrementer ?
+      <View style={styles.cartIconContainer}>
+        <View style={styles.cartIconSubContainer}>
+          <EntypoIcon name="chevron-small-up" size={30} onPress={() => {
+            incrementCount(itemId, itemOptions)
+          }}/>
+        </View>
+        <View style={styles.cartIconSubContainer}>
+          <Text>{count}</Text>
+        </View>
+        <View style={styles.cartIconSubContainer}>
+          <EntypoIcon name="chevron-small-down" size={30} onPress={() => decrementCount(itemId, itemOptions)}/>
+        </View>
       </View>
-      <View style={styles.cartIconSubContainer}>
-        <EntypoIcon name="chevron-small-down" size={30} onPress={() => decrementCount(itemId, itemOptions)}/>
-
-      </View>
-    </View>
+      : null
+    }
   </View>
 );
 
@@ -119,7 +123,8 @@ cartListItem.propTypes = {
   count: PropTypes.number.isRequired,
   incrementCount: PropTypes.func.isRequired,
   decrementCount: PropTypes.func.isRequired,
-  itemOptions: PropTypes.oneOfType([PropTypes.array, PropTypes.string]).isRequired
+  itemOptions: PropTypes.oneOfType([PropTypes.array, PropTypes.string]).isRequired,
+  showIncrementer: PropTypes.bool
 };
 
 export default cartListItem

@@ -9,7 +9,8 @@ import {
   CLEAR_CART,
   CHECKING_OUT_COMPLETE,
   CHEKING_OUT,
-  ONE_CLICK_BUY
+  ONE_CLICK_BUY,
+  TOGGLE_INCREMENTER
 } from '../actions/cartActions'
 import {SET_ACTIVE_NODE} from '../actions/nodeActions'
 import * as _ from 'lodash'
@@ -86,6 +87,7 @@ const cart = (state = {
         tags: action.tags,
         category: action.category,
         venueId: action.venueId,
+        showIncrementer: false,
         itemOptions: selectedOptionsGetter(action.itemOptions),
         count: 1
       }].sort((a, b) => a.itemName.localeCompare(b.itemName));
@@ -107,6 +109,12 @@ const cart = (state = {
       return {...state, costs: costsGenerator(state.items, action.tip, state.costs.tax)};
     case CLEAR_CART:
       return Object.assign({}, {items: [], costs: costsGenerator([], state.costs.tip, state.costs.tax)});
+    case TOGGLE_INCREMENTER:
+      console.log(state.items);
+      console.log(action, inCart);
+      newItem = {...inCart, showIncrementer: !inCart.showIncrementer};
+      newItems = [...filteredState, newItem].sort((a, b) => a.itemName.localeCompare(b.itemName));
+      return {...state, items: newItems};
     default:
       return state
   }
