@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
     paddingLeft: 10
   },
   nameStyle: {
-    fontSize: 20,
-    fontWeight: "200"
+    fontSize: 16,
+    fontWeight: "bold"
   },
   descriptionContainer: {
     paddingLeft: 10,

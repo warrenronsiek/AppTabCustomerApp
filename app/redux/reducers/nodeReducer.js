@@ -83,7 +83,6 @@ export const nodes = (state = {nodeList: [], viewableNodes: [], showNodes: false
         };
         newNodeList = [...filteredState, updatedNode]
       }
-      console.log(state);
       return {
         nodeList: newNodeList,
         viewableNodes: flow(

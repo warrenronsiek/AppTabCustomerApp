@@ -25,7 +25,6 @@ const payThunk = () => (dispatch, getState) => {
     nodeId = state.activeNode.nodeId,
     customerId = state.auth.customerId;
 
-  console.log(amount, stripeToken, cardToken, nodeId, customerId);
   return Promise.resolve(dispatch(ccActions.payment.processing()))
     .then(res => openTransaction({amount, stripeToken, cardToken, nodeId, customerId, items: currentCart, tip, tax, itemTotal, venueId}))
     .then(res => {
@@ -41,7 +40,6 @@ const payThunk = () => (dispatch, getState) => {
     .then(res => Actions.tabs())
     .then(res => dispatch(ccActions.payment.reset()))
     .catch(err => {
-      console.log(err);
       dispatch(ccActions.payment.failure());
       logger('error charging card', err)
     })

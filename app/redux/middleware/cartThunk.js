@@ -10,7 +10,6 @@ const addToCartThunk = (itemId) => (dispatch, getState) => {
   const item = _.find(_.flatten(getState().menu.map(section => section.data)), ['itemId', itemId]);
   if (item.itemOptions && (item.itemOptions !== 'NULL')) {
     dispatch(setActiveItem(item.itemName, item.itemDescription, item.price, item.tags, item.category, item.itemId, item.venueId, item.itemOptions));
-    console.log(getState().activeMenuItem);
     Actions.optionsModal()
   } else {
     dispatch(addToCart(item.itemName, item.itemDescription, item.price, item.tags, item.category, item.itemId, item.venueId, item.itemOptions))

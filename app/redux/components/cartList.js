@@ -77,6 +77,7 @@ export default class CartList extends Component {
     checkingOut: PropTypes.bool
   };
 
+
   render() {
     return (
       <View style={styles.container}>
@@ -84,15 +85,14 @@ export default class CartList extends Component {
           {this.props.cartListItems.length === 0
             ? null
             : <FlatList data={this.props.cartListItems}
-                        keyExtractor={(item, index) => item.itemId + JSON.stringify(item.itemDescription)}
+                        keyExtractor={(item, index) => item.itemId + JSON.stringify(item.itemOptions)}
                         renderItem={({item}) => <CartListItem itemName={item.itemName}
-                                                              itemDescription={item.itemDescription}
                                                               itemId={item.itemId}
                                                               viewablePrice={item.viewablePrice}
                                                               count={item.count}
                                                               incrementCount={this.props.incrementCount}
                                                               decrementCount={this.props.decrementCount}
-                                                              itemOptions={item.itemOptions}
+                                                              itemOptions={Array.isArray(item.itemOptions) ? item.itemOptions : []}
 
                         />}
             />

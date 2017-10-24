@@ -8,21 +8,16 @@ const menuItemOptionsUpdateThunk = (optionSetId, optionId) => (dispatch, getStat
   let activeItem = JSON.parse(JSON.stringify(getState().activeMenuItem));
   let itemOptions = [...activeItem.itemOptions];
   const optionSetIndex = findIndex(itemOptions, option => option.optionSetId === optionSetId);
-  let previousSelectionPrice = 0;
   let previousSelection = find(itemOptions[optionSetIndex].data, ['isSelected', true]);
   const previousSelectionIndex = findIndex(itemOptions[optionSetIndex].data, ['isSelected', true]);
   if (previousSelection) {
-    previousSelectionPrice = previousSelection.price;
     itemOptions[optionSetIndex].data[previousSelectionIndex].isSelected = false;
   }
   const subOptionIndex = findIndex(itemOptions[optionSetIndex].data, option => option.optionId === optionId);
   let option = itemOptions[optionSetIndex].data[subOptionIndex];
-  console.log(activeItem.price, option.price, previousSelectionPrice);
-  let newPrice = parseFloat(activeItem.price) + option.price - previousSelectionPrice;
-  console.log(newPrice);
   itemOptions[optionSetIndex].data[subOptionIndex] = {...option, isSelected: true};
   const allOptionsSelected = itemOptions.map(optionSet => optionSet.data.reduce((optionSelected, item) => optionSelected || item.isSelected, false)).reduce((allSelected, bool) => allSelected && bool, true);
-  dispatch(updateActiveItemOptions(itemOptions, newPrice, allOptionsSelected));
+  dispatch(updateActiveItemOptions(itemOptions, activeItem.price, allOptionsSelected));
 };
 
 const finishedMenuItemOptionsSelectionThunk = () => (dispatch, getState) => {

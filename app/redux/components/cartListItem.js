@@ -19,11 +19,11 @@ const styles = StyleSheet.create({
     flex: 4,
     flexDirection: 'column',
     paddingLeft: 10,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   nameStyle: {
-    fontSize: 20,
-    fontWeight: "200"
+    fontSize: 16,
+    fontWeight: "bold"
   },
   descriptionContainer: {
     paddingLeft: 10,
@@ -32,11 +32,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontStyle: "italic",
   },
-  priceContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
+
   tagContainer: {
     flexDirection: 'row',
     paddingTop: 5
@@ -62,36 +58,62 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  itemDataRowContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row'
+  },
+  itemDataContainer: {
+    flex: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  priceStyle: {
+    flex: 1,
+    textAlign: 'right',
+    textAlignVertical: 'center'
+  }
 });
 
-const cartListItem = ({itemName, itemDescription, itemId, viewablePrice, count, incrementCount, decrementCount, itemOptions}) => (
-    <View style={styles.container}>
-      <View style={styles.textContainer}>
-        <Text style={styles.nameStyle}>{itemName}</Text>
-      </View>
-      <View style={styles.priceContainer}>
-        <Text>{viewablePrice}</Text>
-      </View>
-      <View style={styles.cartIconContainer}>
-        <View style={styles.cartIconSubContainer}>
-          <EntypoIcon name="chevron-small-up" size={30} onPress={() => {
-            incrementCount(itemId, itemOptions)
-          }}/>
+const cartListItem = ({itemName, itemId, viewablePrice, count, incrementCount, decrementCount, itemOptions}) => (
+  <View style={styles.container}>
+    <View style={styles.itemDataContainer}>
+      <View style={[styles.itemDataRowContainer]}>
+        <View style={styles.textContainer}>
+          <Text style={styles.nameStyle}>{itemName}</Text>
         </View>
-        <View style={styles.cartIconSubContainer}>
-          <Text>{count}</Text>
-        </View>
-        <View style={styles.cartIconSubContainer}>
-          <EntypoIcon name="chevron-small-down" size={30} onPress={() => decrementCount(itemId, itemOptions)}/>
+          <Text style={styles.priceStyle}>{viewablePrice}</Text>
+      </View>
+      {itemOptions.map(option => (
+          <View style={[styles.itemDataRowContainer]} key={option.key}>
+            <View style={styles.textContainer}>
+              <Text>{option.optionSetName + ': ' + option.optionName}</Text>
+            </View>
+              <Text style={styles.priceStyle}>{option.viewablePrice}</Text>
+          </View>))
+      }
 
-        </View>
+    </View>
+    <View style={styles.cartIconContainer}>
+      <View style={styles.cartIconSubContainer}>
+        <EntypoIcon name="chevron-small-up" size={30} onPress={() => {
+          incrementCount(itemId, itemOptions)
+        }}/>
+      </View>
+      <View style={styles.cartIconSubContainer}>
+        <Text>{count}</Text>
+      </View>
+      <View style={styles.cartIconSubContainer}>
+        <EntypoIcon name="chevron-small-down" size={30} onPress={() => decrementCount(itemId, itemOptions)}/>
+
       </View>
     </View>
-  );
+  </View>
+);
 
 cartListItem.propTypes = {
   itemName: PropTypes.string.isRequired,
-  itemDescription: PropTypes.string.isRequired,
   itemId: PropTypes.string.isRequired,
   viewablePrice: PropTypes.string.isRequired,
   count: PropTypes.number.isRequired,
