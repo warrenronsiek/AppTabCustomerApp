@@ -3,28 +3,17 @@
  */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'
-import {View, StyleSheet, Text, FlatList} from 'react-native';
+import {View, StyleSheet, Text, FlatList, Slider} from 'react-native';
 import CartListItem from './cartListItem';
 import Button from '../../common/button'
 import Spinner from '../../common/spinner'
 
 const styles = StyleSheet.create({
   container: {
-    paddingBottom: 40,
     flex: 1,
-    backgroundColor: '#f5fcff'
   },
-  newItemContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  buttonContainer: {
-    flex: 1,
-    paddingBottom: 30
-  },
-  totalContainer: {
-    flex: 1,
+  subTotalContainer: {
+    flex: 2,
     marginTop: 10,
     flexDirection: 'column',
     maxHeight: 90
@@ -33,29 +22,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold'
   },
-  tipButtonContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row'
-  },
   checkoutButtonContainer: {
-    flex: 1,
+    flex: 2,
     alignItems: 'center',
-    justifyContent: 'center'
-  },
-  totalsTextContainer: {
-    flex: 2,
-    alignItems: 'flex-end',
-    justifyContent: 'flex-start',
-  },
-  totalsNumbersContainer: {
-    flex: 2,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start'
-  },
-  totalsFont: {
-    fontSize: 16
+    marginTop: -15
   },
   totalsFontBold: {
     fontSize: 16,
@@ -69,7 +39,7 @@ const styles = StyleSheet.create({
   dataContainer: {
     flex: 3,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: 'grey'
+    borderTopColor: 'grey',
   },
   dataRowContainer: {
     alignItems: 'center',
@@ -84,6 +54,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     flex: 1,
     paddingRight: 10
+  },
+  sliderContainer: {
+    flex: 1,
+    paddingRight: 10,
+    paddingLeft: 10,
   }
 });
 
@@ -127,34 +102,30 @@ export default class CartList extends Component {
           }
         </View>
         <View style={styles.dataContainer}>
-          <View style={styles.totalContainer}>
-              <View style={styles.dataRowContainer}>
-                <Text style={styles.totalsFontBold}>Subtotal: </Text>
-                <Text style={styles.priceText}>{this.props.totalCartCost}</Text>
-              </View>
-              <View style={styles.dataRowContainer}>
-                <Text style={styles.totalsFontBold}>Tax:</Text>
-                <Text style={styles.priceText}>{this.props.tax}</Text>
-              </View>
-              <View style={styles.dataRowContainer}>
-                <Text style={styles.totalsFontBold}>Tip:</Text>
-                <Text style={styles.priceText}>{this.props.tip}</Text>
-              </View>
+          <View style={styles.subTotalContainer}>
             <View style={styles.dataRowContainer}>
-              <Text style={styles.totalsFontBold}>Total:</Text>
-              <Text style={styles.priceText}>{this.props.total}</Text>
+              <Text style={styles.totalsFontBold}>Subtotal: </Text>
+              <Text style={styles.priceText}>{this.props.totalCartCost}</Text>
+            </View>
+            <View style={styles.dataRowContainer}>
+              <Text style={styles.totalsFontBold}>Tax:</Text>
+              <Text style={styles.priceText}>{this.props.tax}</Text>
+            </View>
+            <View style={styles.dataRowContainer}>
+              <Text style={styles.totalsFontBold}>Tip:</Text>
+              <Text style={styles.priceText}>{this.props.tip}</Text>
             </View>
           </View>
-          {/*<View style={styles.tipButtonContainer}>*/}
-            {/*<Button title="Tip: 0%" onPress={() => this.props.updateTip(0)}*/}
-                    {/*style={this.props.tipPct === 0 ? {backgroundColor: 'grey'} : null}/>*/}
-            {/*<Button title="Tip: 10%" onPress={() => this.props.updateTip(.10)}*/}
-                    {/*style={[{marginLeft: 10}, this.props.tipPct === .1 ? {backgroundColor: 'grey'} : null]}/>*/}
-            {/*<Button title="Tip: 20%" onPress={() => this.props.updateTip(.20)}*/}
-                    {/*style={[{marginLeft: 10}, this.props.tipPct === .2 ? {backgroundColor: 'grey'} : null]}/>*/}
-            {/*<Button title="Tip: 30%" onPress={() => this.props.updateTip(.30)}*/}
-                    {/*style={[{marginLeft: 10}, this.props.tipPct === .3 ? {backgroundColor: 'grey'} : null]}/>*/}
-          {/*</View>*/}
+          <View style={styles.sliderContainer}>
+            <Slider maximumValue={50} value={20} onSlidingComplete={value => this.props.updateTip(value / 100.)}
+                    onValueChange={value => this.props.updateTip(value / 100.)}/>
+          </View>
+          <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <View style={styles.dataRowContainer}>
+              <Text style={[styles.totalsFontBold, {fontSize: 20}]}>Total:</Text>
+              <Text style={[styles.priceText, {fontSize: 20}]}>{this.props.total}</Text>
+            </View>
+          </View>
           <View style={styles.checkoutButtonContainer}>
             {this.props.checkingOut
               ? <Spinner/>
