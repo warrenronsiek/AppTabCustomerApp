@@ -110,8 +110,6 @@ const cart = (state = {
     case CLEAR_CART:
       return Object.assign({}, {items: [], costs: costsGenerator([], state.costs.tip, state.costs.tax)});
     case TOGGLE_INCREMENTER:
-      console.log(state.items);
-      console.log(action, inCart);
       newItem = {...inCart, showIncrementer: !inCart.showIncrementer};
       newItems = [...filteredState, newItem].sort((a, b) => a.itemName.localeCompare(b.itemName));
       return {...state, items: newItems};

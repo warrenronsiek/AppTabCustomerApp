@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
   checkoutButtonContainer: {
     flex: 2,
     alignItems: 'center',
+    justifyContent: 'flex-start',
     marginTop: -15
   },
   totalsFontBold: {
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
     flex: 5
   },
   dataContainer: {
-    flex: 3,
+    flex: 4,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: 'grey',
   },
