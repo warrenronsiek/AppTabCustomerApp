@@ -122,7 +122,7 @@ export default class CartList extends Component {
           </View>
           <View style={styles.sliderContainer}>
             <Slider maximumValue={50} value={20} onSlidingComplete={value => this.props.updateTip(value / 100.)}
-                    onValueChange={value => this.props.updateTip(value / 100.)}/>
+                    onValueChange={value => this.props.updateTip(value / 100.)} step={1}/>
             <View style={{paddingLeft: 15}}>
               <Svg width={width - 50} height={20}>
                 <Line x1='0' y1='0' x2={width - 20} y2='0' strokeWidth='1' stroke='black'/>

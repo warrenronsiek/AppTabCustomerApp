@@ -63,7 +63,8 @@ const cart = (state = {
     totalViewableTax: '$0',
     totalViewableCart: '$0',
     totalViewableCost: '$0'
-  }
+  },
+  numberOfCartItems: 0
 }, action) => {
   let inCart = _.find(state.items, item => (action.itemId === item.itemId) && (action.itemOptions === item.itemOptions));
   let filteredState = _.filter(state.items, item => (item.itemId !== action.itemId) || (action.itemOptions !== item.itemOptions));
@@ -75,7 +76,8 @@ const cart = (state = {
         newItems = [...filteredState, newItem];
         return Object.assign({}, {
           items: newItems,
-          costs: costsGenerator(newItems, state.costs.tip, state.costs.tax)
+          costs: costsGenerator(newItems, state.costs.tip, state.costs.tax),
+          numberOfCartItems: newItems.reduce((sum, item) => sum + item.count, 0)
         })
       }
       newItems = [...filteredState, {
@@ -91,43 +93,28 @@ const cart = (state = {
         itemOptions: selectedOptionsGetter(action.itemOptions),
         count: 1
       }].sort((a, b) => a.itemName.localeCompare(b.itemName));
-      return Object.assign({}, {items: newItems, costs: costsGenerator(newItems, state.costs.tip, state.costs.tax)});
+      return Object.assign({}, {items: newItems, costs: costsGenerator(newItems, state.costs.tip, state.costs.tax), numberOfCartItems: newItems.reduce((sum, item) => sum + item.count, 0)});
     case INCREMENT_COUNT:
       newItem = {...inCart, count: inCart.count + 1};
-      newItems = [...filteredState, newItem];
-      return Object.assign({}, {items: newItems, costs: costsGenerator(newItems, state.costs.tip, state.costs.tax)});
+      newItems = [...filteredState, newItem].sort((a, b) => a.itemName.localeCompare(b.itemName));
+      return Object.assign({}, {items: newItems, costs: costsGenerator(newItems, state.costs.tip, state.costs.tax), numberOfCartItems: state.numberOfCartItems + 1});
     case DECREMENT_COUNT:
       newItem = {...inCart, count: inCart.count - 1};
       newItems = [...filteredState, newItem].sort((a, b) => a.itemName.localeCompare(b.itemName));
       if (inCart.count > 0) {
-        return Object.assign({}, {items: newItems, costs: costsGenerator(newItems, state.costs.tip, state.costs.tax)});
+        return Object.assign({}, {items: newItems, costs: costsGenerator(newItems, state.costs.tip, state.costs.tax), numberOfCartItems: newItems.reduce((sum, item) => sum + item.count, 0)});
       }
-      return Object.assign({}, {items: filteredState, costs: costsGenerator(newItems, state.costs.tip, state.costs.tax)});
+      return Object.assign({}, {items: filteredState, costs: costsGenerator(filteredState, state.costs.tip, state.costs.tax), numberOfCartItems: filteredState.reduce((sum, item) => sum + item.count, 0)});
     case SET_ACTIVE_NODE:
       return {...state, items: [...state.items.filter(item => item.venueId === action.venueId)]};
     case UPDATE_TIP:
       return {...state, costs: costsGenerator(state.items, action.tip, state.costs.tax)};
     case CLEAR_CART:
-      return Object.assign({}, {items: [], costs: costsGenerator([], state.costs.tip, state.costs.tax)});
+      return Object.assign({}, {items: [], costs: costsGenerator([], state.costs.tip, state.costs.tax), numberOfCartItems: 0});
     case TOGGLE_INCREMENTER:
       newItem = {...inCart, showIncrementer: !inCart.showIncrementer};
       newItems = [...filteredState, newItem].sort((a, b) => a.itemName.localeCompare(b.itemName));
       return {...state, items: newItems};
-    default:
-      return state
-  }
-};
-
-const numberOfCartItems = (state = 0, action) => {
-  switch (action.type) {
-    case ADD_TO_CART:
-      return state + 1;
-    case INCREMENT_COUNT:
-      return state + 1;
-    case DECREMENT_COUNT:
-      return (state > 0 ) ? state - 1 : state;
-    case CLEAR_CART:
-      return 0;
     default:
       return state
   }
@@ -161,4 +148,4 @@ const cartStatus = (state = {}, action) => {
   }
 };
 
-export {cart, cartStatus, oneClickBuyItem, numberOfCartItems}
+export {cart, cartStatus, oneClickBuyItem}

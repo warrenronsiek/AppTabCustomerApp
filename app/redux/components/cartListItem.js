@@ -100,9 +100,7 @@ const cartListItem = ({itemName, itemId, viewablePrice, count, incrementCount, d
     {showIncrementer ?
       <View style={styles.cartIconContainer}>
         <View style={styles.cartIconSubContainer}>
-          <EntypoIcon name="chevron-small-up" size={30} onPress={() => {
-            incrementCount(itemId, itemOptions)
-          }}/>
+          <EntypoIcon name="chevron-small-up" size={30} onPress={() => incrementCount(itemId, itemOptions)}/>
         </View>
         <View style={styles.cartIconSubContainer}>
           <Text>{count}</Text>

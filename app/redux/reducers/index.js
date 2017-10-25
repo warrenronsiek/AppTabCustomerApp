@@ -7,7 +7,7 @@ import {auth, loginParams, loginState, stripeToken, deviceToken} from './loginRe
 import {registerParams, registerState, confirmationCode} from './registerReducer'
 import {nodes, activeNode} from './nodeReducer'
 import {menu, menuQueryStatus, activeMenuItem} from './menuReducer'
-import {cart, cartStatus, oneClickBuyItem, numberOfCartItems} from './cartReducer'
+import {cart, cartStatus, oneClickBuyItem} from './cartReducer'
 import {creditCard, ccTokens, ccTokenApiQueried, paymentStatus, creditCardTokenizing, defaultCardExists} from './creditCardReducer'
 import {passwordResetData, passwordResetStatus} from './passwordResetReducer'
 import {transactions, transactionCount} from "./transactionReducer"
@@ -39,7 +39,6 @@ const appReducer = combineReducers({
   oneClickBuyItem,
   transactions,
   activeMenuItem,
-  numberOfCartItems
 });
 
 const rootReducer = (state, action) => {
