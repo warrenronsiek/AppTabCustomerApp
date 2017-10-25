@@ -3,10 +3,13 @@
  */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'
-import {View, StyleSheet, Text, FlatList, Slider} from 'react-native';
+import {View, StyleSheet, Text, FlatList, Slider, Dimensions} from 'react-native';
 import CartListItem from './cartListItem';
 import Button from '../../common/button'
 import Spinner from '../../common/spinner'
+import Svg, {Line, Text as TextSVG, Circle} from 'react-native-svg'
+
+const {width, height} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -120,6 +123,17 @@ export default class CartList extends Component {
           <View style={styles.sliderContainer}>
             <Slider maximumValue={50} value={20} onSlidingComplete={value => this.props.updateTip(value / 100.)}
                     onValueChange={value => this.props.updateTip(value / 100.)}/>
+            <View style={{paddingLeft: 15}}>
+              <Svg width={width - 50} height={20}>
+                <Line x1='0' y1='0' x2={width - 20} y2='0' strokeWidth='1' stroke='black'/>
+                <TextSVG x='0' y='0' fontSize='10'>0</TextSVG>
+                <TextSVG x={(width - 50) / 5 - 6} y='0' fontSize='10'>10</TextSVG>
+                <TextSVG x={(width - 50) * 2 / 5 - 6} y='0' fontSize='10'>20</TextSVG>
+                <TextSVG x={(width - 50) * 3 / 5 - 6} y='0' fontSize='10'>30</TextSVG>
+                <TextSVG x={(width - 50) * 4 / 5 - 8} y='0' fontSize='10'>40</TextSVG>
+                <TextSVG x={(width - 50) - 12} y='0' fontSize='10'>50</TextSVG>
+              </Svg>
+            </View>
           </View>
           <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
             <View style={styles.dataRowContainer}>
