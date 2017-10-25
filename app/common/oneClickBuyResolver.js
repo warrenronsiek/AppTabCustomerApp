@@ -39,6 +39,7 @@ const resolver = (item) => (dispatch, getState) => {
     })
     .then(res => writeToFirehose('OneClickBuy'))
     .catch(err => {
+      console.log(err);
       logger('failed to one-click buy', err)
     });
 };

@@ -42,7 +42,7 @@ const optionsListItem = ({optionName, isSelected, onSelection, price, optionSetI
         <Text style={styles.priceContainer}>{price}</Text>
         <View style={styles.toggleContainer}>
 
-          <TouchableHighlight onPress={() => onSelection(optionSetId, optionId)}>
+          <TouchableHighlight onPress={() => onSelection(optionSetId, optionId)} underlayColor="white" activeOpacity={0}>
             {isSelected
               ? <MaterialIcons name="radiobox-marked" size={30}/>
               : <MaterialIcons name="radiobox-blank" size={30}/>}

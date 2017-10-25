@@ -4,8 +4,8 @@ import {menuItemOptionsUpdateThunk, finishedMenuItemOptionsSelectionThunk} from 
 
 const mapStateToProps = state => ({
   optionSets: state.activeMenuItem.itemOptions,
-  price: state.activeMenuItem.viewablePrice,
-  allOptionsSelected: state.activeMenuItem.allOptionsSelected
+  allOptionsSelected: state.activeMenuItem.allOptionsSelected,
+  itemName: state.activeMenuItem.itemName
 });
 
 const mapDispatchToProps = dispatch => ({

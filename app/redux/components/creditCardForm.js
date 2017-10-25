@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 90,
-    marginBottom: 230
+    paddingBottom: 230,
+    backgroundColor: 'white'
   },
   cardImageContainer: {
     flex: 1,
