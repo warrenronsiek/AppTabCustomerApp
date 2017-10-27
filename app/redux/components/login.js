@@ -110,8 +110,10 @@ const login = ({validationError, networkError, unknownError, loggingIn, phoneNum
       {validationError ? <Text>Oops! Wrong username or password!</Text> : null}
       {networkError ? <Text>Networking Error!</Text> : null}
       {unknownError ? <Text>Unknown Error!</Text> : null}
-      {loggingIn ? <Spinner/> : null}
-      <Button onPress={() => navToPasswordReset()} title="Forgot Password" style={{marginTop: 10, width: 170}}/>
+      {loggingIn ? <Spinner style={{marginTop: 20}}/> : null}
+      {loggingIn
+        ? null
+        : <Button onPress={() => navToPasswordReset()} title="Forgot Password" style={{marginTop: 10, width: 170}}/>}
     </View>
   </View>
 );

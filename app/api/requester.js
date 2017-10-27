@@ -4,7 +4,7 @@
 import NetworkError from '../errors/networkError'
 import logger from './loggingApi'
 import phoneFormatter from 'phone-formatter'
-import {url} from '../vars'
+import {url, apiKey} from '../vars'
 import decode from 'jwt-decode'
 import store from '../redux/store'
 import {updateAuth} from '../redux/actions/loginActions'
@@ -13,10 +13,11 @@ import {updateCredentials} from "./firehose"
 const requester = (apiPath, successMessage, errorMessage, responseProcessor, allowTokenRefresh = true, errorProcessor) => (postBody) => {
     const state = store.getState();
     const desiredFetchParams = {
-      method: 'POST', headers: {'Authorization': state.auth.idToken}, body: JSON.stringify(postBody)
+      method: 'POST', headers: {'Authorization': state.auth.idToken, 'x-api-key': apiKey}, body: JSON.stringify(postBody)
     };
     const tokenRefreshFetchParams = {
       method: 'POST',
+      headers: {'x-api-key': apiKey},
       body: JSON.stringify({
         refreshToken: state.auth.refreshToken,
         userName: phoneFormatter.normalize(state.loginParams.phoneNumber),
@@ -63,7 +64,7 @@ const requester = (apiPath, successMessage, errorMessage, responseProcessor, all
       .then(res => updateCredentials())
       .catch(err => logger('failedTokenRefreshFetch', err));
 
-    const timeCondition = (new Date() - state.auth.updateTime) / (60 * 1000) > 30;
+    const timeCondition = (new Date() - state.auth.updateTime) / (60 * 1000) > 20;
     if (timeCondition && allowTokenRefresh) {
       return tokenRefreshFetch().then(() => desiredFetch())
     } else {
