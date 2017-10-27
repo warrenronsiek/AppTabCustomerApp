@@ -7,10 +7,9 @@ import NodeList from '../components/nodeList'
 import * as _ from 'lodash'
 
 const mapStateToProps = (state) => {
-  const viewableItems = _.filter(state.nodes, node => !!node.venueId);
   return {
-    nodeListItems: viewableItems,
-    renderNodes: viewableItems.length > 0,
+    nodeListItems: state.nodes.viewableNodes,
+    renderNodes: state.nodes.showNodes,
     activeNode: state.activeNode.nodeId
   }
 };

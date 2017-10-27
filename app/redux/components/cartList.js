@@ -3,132 +3,150 @@
  */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'
-import {View, StyleSheet, Text, FlatList} from 'react-native';
+import {View, StyleSheet, Text, FlatList, Slider, Dimensions} from 'react-native';
 import CartListItem from './cartListItem';
 import Button from '../../common/button'
 import Spinner from '../../common/spinner'
+import Svg, {Line, Text as TextSVG, Circle} from 'react-native-svg'
+
+const {width, height} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
-    paddingBottom: 40,
     flex: 1,
-    backgroundColor: '#f5fcff'
+    backgroundColor: 'white'
   },
-  newItemContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  buttonContainer: {
-    flex: 1,
-    paddingBottom: 30
-  },
-  totalContainer: {
-    flex: 1,
-    marginTop: 30,
-    flexDirection: 'row',
+  subTotalContainer: {
+    flex: 2,
+    marginTop: 10,
+    flexDirection: 'column',
+    maxHeight: 90
   },
   textStyle: {
     fontSize: 16,
     fontWeight: 'bold'
   },
-  tipButtonContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row'
-  },
   checkoutButtonContainer: {
-    flex: 1,
+    flex: 2,
     alignItems: 'center',
-    justifyContent: 'center'
-  },
-  totalsTextContainer: {
-    flex: 2,
-    alignItems: 'flex-end',
-    justifyContent: 'flex-start'
-  },
-  totalsNumbersContainer: {
-    flex: 2,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start'
-  },
-  totalsFont: {
-    fontSize: 16
+    justifyContent: 'flex-start',
+    marginTop: -15
   },
   totalsFontBold: {
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    flex: 1,
+    paddingLeft: 10,
+  },
+  listContainer: {
+    flex: 5
+  },
+  dataContainer: {
+    flex: 4,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: 'grey',
+  },
+  dataRowContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 3,
+    flexDirection: 'row',
+  },
+  priceText: {
+    textAlignVertical: 'center',
+    textAlign: 'right',
+    fontSize: 16,
+    fontWeight: 'bold',
+    flex: 1,
+    paddingRight: 10
+  },
+  sliderContainer: {
+    flex: 1,
+    paddingRight: 10,
+    paddingLeft: 10,
   }
 });
 
-export default class MenuList extends Component {
+export default class CartList extends Component {
   static propTypes = {
     cartListItems: PropTypes.arrayOf(PropTypes.object).isRequired,
     incrementCount: PropTypes.func.isRequired,
     decrementCount: PropTypes.func.isRequired,
-    totalCartCost: PropTypes.number.isRequired,
+    totalCartCost: PropTypes.string.isRequired,
     checkout: PropTypes.func.isRequired,
-    tax: PropTypes.number.isRequired,
-    tip: PropTypes.number.isRequired,
-    total: PropTypes.number.isRequired,
+    tax: PropTypes.string.isRequired,
+    tip: PropTypes.string.isRequired,
+    total: PropTypes.string.isRequired,
     updateTip: PropTypes.func.isRequired,
     tipPct: PropTypes.number.isRequired,
-    checkingOut: PropTypes.bool
+    checkingOut: PropTypes.bool,
+    toggleIncrementer: PropTypes.func.isRequired
   };
+
 
   render() {
     return (
       <View style={styles.container}>
-        <View>
+        <View style={styles.listContainer}>
           {this.props.cartListItems.length === 0
             ? null
             : <FlatList data={this.props.cartListItems}
-                        keyExtractor={(item, index) => item.itemId + JSON.stringify(item.itemDescription)}
+                        keyExtractor={(item, index) => item.itemId + JSON.stringify(item.itemOptions)}
                         renderItem={({item}) => <CartListItem itemName={item.itemName}
-                                                              itemDescription={item.itemDescription}
                                                               itemId={item.itemId}
-                                                              price={item.price}
+                                                              viewablePrice={item.viewablePrice}
                                                               count={item.count}
                                                               incrementCount={this.props.incrementCount}
                                                               decrementCount={this.props.decrementCount}
+                                                              showIncrementer={item.showIncrementer}
+                                                              toggleIncrementer={this.props.toggleIncrementer}
                                                               itemOptions={item.itemOptions}
 
                         />}
             />
           }
         </View>
-        <View style={styles.tipButtonContainer}>
-          <Button title="Tip: 0%" onPress={() => this.props.updateTip(0)}
-                  style={this.props.tipPct === 0 ? {backgroundColor: 'grey'} : null}/>
-          <Button title="Tip: 10%" onPress={() => this.props.updateTip(.10)}
-                  style={[{marginLeft: 10}, this.props.tipPct === .1 ? {backgroundColor: 'grey'} : null]}/>
-          <Button title="Tip: 20%" onPress={() => this.props.updateTip(.20)}
-                  style={[{marginLeft: 10}, this.props.tipPct === .2 ? {backgroundColor: 'grey'} : null]}/>
-          <Button title="Tip: 30%" onPress={() => this.props.updateTip(.30)}
-                  style={[{marginLeft: 10}, this.props.tipPct === .3 ? {backgroundColor: 'grey'} : null]}/>
-        </View>
-        <View style={styles.totalContainer}>
-          <View/>
-          <View style={styles.totalsTextContainer}>
-            <Text style={styles.totalsFont}>Subtotal: </Text>
-            <Text style={styles.totalsFont}>Tax: </Text>
-            <Text style={styles.totalsFont}>Tip: </Text>
-            <Text style={styles.totalsFontBold}>Total: </Text>
+        <View style={styles.dataContainer}>
+          <View style={styles.subTotalContainer}>
+            <View style={styles.dataRowContainer}>
+              <Text style={styles.totalsFontBold}>Subtotal: </Text>
+              <Text style={styles.priceText}>{this.props.totalCartCost}</Text>
+            </View>
+            <View style={styles.dataRowContainer}>
+              <Text style={styles.totalsFontBold}>Tax:</Text>
+              <Text style={styles.priceText}>{this.props.tax}</Text>
+            </View>
+            <View style={styles.dataRowContainer}>
+              <Text style={styles.totalsFontBold}>Tip:</Text>
+              <Text style={styles.priceText}>{this.props.tip}</Text>
+            </View>
           </View>
-          <View style={styles.totalsNumbersContainer}>
-            <Text style={styles.totalsFont}>
-              ${this.props.totalCartCost * 100 % 10 === 0 ? this.props.totalCartCost + '0' : this.props.totalCartCost}
-            </Text>
-            <Text style={styles.totalsFont}>${this.props.tax}</Text>
-            <Text style={styles.totalsFont}>${this.props.tip}</Text>
-            <Text style={styles.totalsFontBold}>${this.props.total}</Text>
+          <View style={styles.sliderContainer}>
+            <Slider maximumValue={50} value={20} onSlidingComplete={value => this.props.updateTip(value / 100.)}
+                    onValueChange={value => this.props.updateTip(value / 100.)} step={1}/>
+            <View style={{paddingLeft: 15}}>
+              <Svg width={width - 50} height={20}>
+                <Line x1='0' y1='0' x2={width - 20} y2='0' strokeWidth='1' stroke='black'/>
+                <TextSVG x='0' y='0' fontSize='10'>0</TextSVG>
+                <TextSVG x={(width - 50) / 5 - 6} y='0' fontSize='10'>10</TextSVG>
+                <TextSVG x={(width - 50) * 2 / 5 - 6} y='0' fontSize='10'>20</TextSVG>
+                <TextSVG x={(width - 50) * 3 / 5 - 6} y='0' fontSize='10'>30</TextSVG>
+                <TextSVG x={(width - 50) * 4 / 5 - 8} y='0' fontSize='10'>40</TextSVG>
+                <TextSVG x={(width - 50) - 12} y='0' fontSize='10'>50</TextSVG>
+              </Svg>
+            </View>
           </View>
-        </View>
-        <View style={styles.checkoutButtonContainer}>
-          {this.props.checkingOut
-            ? <Spinner/>
-            : <Button onPress={() => this.props.checkout()} title="Checkout" style={{width: 120, marginTop: 20}}/>}
+          <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <View style={styles.dataRowContainer}>
+              <Text style={[styles.totalsFontBold, {fontSize: 20}]}>Total:</Text>
+              <Text style={[styles.priceText, {fontSize: 20}]}>{this.props.total}</Text>
+            </View>
+          </View>
+          <View style={styles.checkoutButtonContainer}>
+            {this.props.checkingOut
+              ? <Spinner/>
+              : <Button onPress={() => this.props.checkout()} title="Checkout" style={{width: 120, marginTop: 20}}/>}
+          </View>
         </View>
       </View>
     )

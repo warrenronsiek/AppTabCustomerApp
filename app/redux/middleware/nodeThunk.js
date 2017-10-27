@@ -14,7 +14,7 @@ const selectNode = (nodeId) => (dispatch, getState) => {
   Promise.resolve()
     .then(() => {
       const state = getState(),
-        venueId = state.nodes.filter(node => node.nodeId === nodeId)[0].venueId;
+        venueId = state.nodes.nodeList.filter(node => node.nodeId === nodeId)[0].venueId;
       dispatch(setActiveNode(nodeId, venueId))
     })
     .then(() => Promise.resolve(Actions.tabs()))
@@ -36,7 +36,7 @@ const selectNode = (nodeId) => (dispatch, getState) => {
     })
     .then(res => {
       const state = getState(),
-        venueId = state.nodes.filter(node => node.nodeId === state.activeNode.nodeId)[0].venueId,
+        venueId = state.nodes.nodeList.filter(node => node.nodeId === state.activeNode.nodeId)[0].venueId,
         now = Date.now();
       dispatch(menuApiQueryStatus(venueId, now));
     })

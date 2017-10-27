@@ -11,7 +11,7 @@ const mapStateToProps = (state) => {
   const venueId = state.activeNode.venueId;
   return {
     menuListItems: state.menu,
-    selectionsCount: _.sum(state.cart.map(item => item.count)),
+    selectionsCount: state.numberOfCartItems,
     apiQueried: !!state.menuQueryStatus[venueId],
     defaultCardExists: state.defaultCardExists
   }

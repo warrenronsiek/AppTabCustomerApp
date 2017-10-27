@@ -6,7 +6,6 @@ const logoutThunk = () => (dispatch, getState) => {
   writeToFirehose('logout')
     .then(() => Actions.login({type: 'reset'}))
     .then(() => {dispatch(logout());})
-    .catch(err => console.log(err))
 };
 
 export default logoutThunk

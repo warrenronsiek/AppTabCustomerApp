@@ -47,3 +47,8 @@ export const oneClickBuy = (itemName, itemDescription, price, tags, category, it
   return {type: ONE_CLICK_BUY, itemName, itemDescription, price, tags, category, itemId, venueId}
 };
 
+export const TOGGLE_INCREMENTER = 'TOGGLE_INCREMENTER';
+export const toggleIncrementer = (itemId, itemOptions) => {
+  return {type: TOGGLE_INCREMENTER, itemId, itemOptions}
+};
+

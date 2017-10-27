@@ -3,14 +3,42 @@
  */
 import {UPDATE_NODE_API, UPDATE_NODE_BLE, SET_ACTIVE_NODE, SET_NODE_QUERIED} from '../actions/nodeActions'
 import uuid from 'react-native-uuid'
-const _ = require('lodash');
+import * as _ from 'lodash'
+import chunk from 'lodash/fp/chunk'
+import sortBy from 'lodash/fp/sortBy'
+import filter from 'lodash/fp/filter'
+import map from 'lodash/fp/map'
+import pick from 'lodash/fp/pick'
+import flow from 'lodash/fp/flow'
 
-export const nodes = (state = [], action) => {
-  let updatedNode,
-    oldNode = _.find(state, ['nodeId', action.nodeId]),
-    filteredState = state.filter((node) => node.nodeId !== action.nodeId);
+/*
+viewableNodes has a structure of :
+[
+ {
+  data: [
+    {nodeId, venueId},
+    {nodeId, venueId},
+    {nodeId, venueId}
+  ],
+  key: somekey
+ },
+ ...
+  {
+  data: [
+    {nodeId, venueId},
+    {nodeId, venueId},
+    {nodeId, venueId}
+  ],
+  key: someotherkey
+ },
+]
+*/
+export const nodes = (state = {nodeList: [], viewableNodes: [], showNodes: false}, action) => {
+  let updatedNode, oldNode, filteredState;
   switch (action.type) {
     case UPDATE_NODE_BLE:
+      oldNode = _.find(state.nodeList, ['nodeId', action.nodeId]);
+      filteredState = state.nodeList.filter((node) => node.nodeId !== action.nodeId);
       if (oldNode) {
         updatedNode = {
           ...oldNode,
@@ -20,25 +48,30 @@ export const nodes = (state = [], action) => {
           lastSeen: action.lastSeen,
           updatedCount: oldNode.updatedCount + 1
         };
-        return _.sortBy([...filteredState, updatedNode], [(item) => item.nodeId.slice(-3), 'nodeName'])
+        return {...state, nodeList: [...filteredState, updatedNode]}
       } else {
-        return _.sortBy([...filteredState, {
-          nodeId: action.nodeId,
-          distance: action.distance,
-          instance: action.instance,
-          lastSeen: action.lastSeen,
-          updatedCount: 1
-        }], [(item) => item.nodeId.slice(-3), 'nodeName'])
+        return {
+          ...state, nodeList: [...filteredState, {
+            nodeId: action.nodeId,
+            distance: action.distance,
+            instance: action.instance,
+            lastSeen: action.lastSeen,
+            updatedCount: 1
+          }]
+        }
       }
     case UPDATE_NODE_API:
+      oldNode = _.find(state.nodeList, ['nodeId', action.nodeId]);
+      filteredState = state.nodeList.filter((node) => node.nodeId !== action.nodeId);
+      let newNodeList;
       if (oldNode) {
-        return _.sortBy([...filteredState, {
+        newNodeList = [...filteredState, {
           nodeId: action.nodeId,
           nodeName: action.nodeName,
           nodeDescription: action.nodeDescription,
           venueId: action.venueId,
           apiQueried: true
-        }], [(item) => item.nodeId.slice(-3), 'nodeName'])
+        }]
       } else {
         updatedNode = {
           ...oldNode,
@@ -48,21 +81,37 @@ export const nodes = (state = [], action) => {
           venueId: action.venueId,
           apiQueried: true
         };
-        return _.sortBy([...filteredState, updatedNode], [(item) => item.nodeId.slice(-3), 'nodeName'])
+        newNodeList = [...filteredState, updatedNode]
       }
+      return {
+        nodeList: newNodeList,
+        viewableNodes: flow(
+          filter(node => !!node.venueId),
+          map(node => _.pick(node, ['venueId', 'nodeId'])),
+          sortBy(node => node.nodeId.slice(-3)),
+          chunk(3),
+          map(nodeChunk => ({data: nodeChunk, key: nodeChunk[0].nodeId}))
+        )(newNodeList),
+        showNodes: true
+      };
     case SET_NODE_QUERIED:
+      oldNode = _.find(state.nodeList, ['nodeId', action.nodeId]);
+      filteredState = state.nodeList.filter((node) => node.nodeId !== action.nodeId);
       if (oldNode) {
-        return _.sortBy([...filteredState, {
-          ...oldNode,
-          nodeId: action.nodeId,
-          apiQueried: true
-        }], [(item) => item.nodeId.slice(-3), 'nodeName'])
+        return {
+          ...state,
+          nodeList: [...filteredState, {
+            ...oldNode,
+            nodeId: action.nodeId,
+            apiQueried: true
+          }]
+        }
       } else {
         updatedNode = {
           nodeId: action.nodeId,
           apiQueried: true
         };
-        return _.sortBy([...filteredState, updatedNode], [(item) => item.nodeId.slice(-3), 'nodeName'])
+        return {...state, nodeList: [...filteredState, updatedNode], viewableNodes: []}
       }
     default:
       return state

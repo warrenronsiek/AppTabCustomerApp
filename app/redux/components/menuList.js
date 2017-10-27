@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   container: {
     paddingBottom: 40,
     flex: 1,
-    backgroundColor: '#f5fcff'
+    backgroundColor: 'white'
   },
   newItemContainer: {
     flex: 1,
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   sectionHeader: {
-    minHeight: 30,
+    minHeight: 50,
     minWidth: width,
     flexDirection: 'row',
     alignItems: 'center',
@@ -43,14 +43,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   headerText: {
-    paddingLeft: 20,
-    fontWeight: 'bold'
+    fontSize: 20,
+    fontWeight: '200',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    textAlign: 'center'
   },
 });
 
 const SectionHeader = ({headerName}) => (
   <View style={styles.sectionHeader}>
-    <Text style={styles.headerText}>{headerName}</Text>
+    <Text style={styles.headerText}>{headerName.charAt(0).toUpperCase() + headerName.slice(1)}</Text>
   </View>
 );
 
@@ -76,7 +80,7 @@ export default class MenuList extends Component {
                      renderItem={({item}) => <MenuListItem itemName={item.itemName}
                                                            itemDescription={item.itemDescription}
                                                            itemId={item.itemId}
-                                                           price={item.price} tags={item.tags}
+                                                           viewablePrice={item.viewablePrice} tags={item.tags}
                                                            addToCart={this.props.addToCart}
                                                            oneClickBuy={this.props.oneClickBuy}
                                                            defaultCardExists={this.props.defaultCardExists}

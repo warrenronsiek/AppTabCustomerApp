@@ -54,7 +54,7 @@ export const loginState = (state = {}, action) => {
 
 export const loginParams = (state = __DEV__
                                 ? {password: 'P@33word', phoneNumber: '(510) 883-4346'}
-                                : {password: '', phoneNumber: ''}, action) => {
+                                : {password: 'P@33word', phoneNumber: '(510) 883-4346'}, action) => {
   switch (action.type) {
     case UPDATE_PHONE_NUMBER:
       return {...state, phoneNumber: phoneNumberHandler(action.phoneNumber)};

@@ -8,7 +8,7 @@ import {
   UPDATE_ACTIVE_ITEM_OPTIONS,
   CLEAR_ACTIVE_ITEM
 } from '../actions/menuActions';
-
+import centsIntToString from '../../common/centsIntToString';
 const _ = require('lodash');
 
 /**
@@ -93,6 +93,7 @@ const menu = (state = [], action) => {
                 itemId: action.itemId,
                 venueId: action.venueId,
                 tags: action.tags,
+                viewablePrice: '$' + centsIntToString(action.price),
                 price: action.price,
                 category: action.category,
                 itemOptions: action.itemOptions
@@ -111,6 +112,7 @@ const menu = (state = [], action) => {
                 itemDescription: action.itemDescription,
                 itemId: action.itemId,
                 venueId: action.venueId,
+                viewablePrice: '$' + centsIntToString(action.price),
                 tags: action.tags,
                 price: action.price,
                 category: action.category,
@@ -128,6 +130,7 @@ const menu = (state = [], action) => {
           venueId: action.venueId,
           tags: action.tags,
           price: action.price,
+          viewablePrice: '$' + centsIntToString(action.price),
           category: action.category,
           itemOptions: action.itemOptions
         }], category: action.category}
@@ -147,9 +150,9 @@ const activeMenuItem = (state = {}, action) => {
         venueId: action.venueId,
         tags: action.tags,
         price: action.price,
-        viewablePrice: '$' + action.price,
+        viewablePrice: '$' + centsIntToString(action.price),
         category: action.category,
-        itemOptions: action.itemOptions,
+        itemOptions: action.itemOptions.map(optionSet => ({...optionSet, data: optionSet.data.map(option => ({...option, isSelected: false, optionSetId: optionSet.optionSetId}))})),
         allOptionsSelected: false,
         oneClickBuy: action.oneClickBuy || false
       };
@@ -158,7 +161,7 @@ const activeMenuItem = (state = {}, action) => {
         ...state,
         itemOptions: action.itemOptions,
         price: action.price,
-        viewablePrice: '$' + action.price,
+        viewablePrice: '$' + centsIntToString(action.price),
         allOptionsSelected: action.allOptionsSelected
       };
     case CLEAR_ACTIVE_ITEM:
