@@ -14,47 +14,44 @@ const _ = require('lodash');
 /**
  * itemOptions is of shape:
  [
- {
-   "optionSetName": "burger",
-   "data": [
-     {
-       "optionName": "rare",
-       "price": 0,
-       "isSelected": false,
-       "optionSetName": "burger"
-     },
-     {
-       "optionName": "medium",
-       "price": 0,
-       "isSelected": false,
-       "optionSetName": "burger"
-     },
-     {
-       "optionName": "well-done",
-       "price": 0,
-       "isSelected": false,
-       "optionSetName": "burger"
-     }
-   ]
- },
- {
-   "optionSetName": "avocado",
-   "data": [
-     {
-       "optionName": "yes",
-       "price": 200,
-       "isSelected": false,
-       "optionSetName": "avocado"
-     },
-     {
-       "optionName": "no",
-       "price": 0,
-       "isSelected": false,
-       "optionSetName": "avocado"
-     }
-   ]
- }
- ]
+  {
+    "optionSetName": "Sides",
+    "optionSetId": 0,
+    "data": [
+      {
+        "optionName": "Salad",
+        "price": 0,
+        "optionId": 0
+      },
+      {
+        "optionName": "Slaw",
+        "price": 0,
+        "optionId": 1
+      }
+    ]
+  },
+  {
+    "optionSetName": "Fries",
+    "optionSetId": 1,
+    "data": [
+      {
+        "optionName": "Regular",
+        "price": 0,
+        "optionId": 0
+      },
+      {
+        "optionName": "Curley",
+        "price": 200,
+        "optionId": 1
+      },
+      {
+        "optionName": "Garlic",
+        "price": 300,
+        "optionId": 2
+      }
+    ]
+  }
+]
  */
 
 /**
