@@ -21,11 +21,9 @@ const selectNode = (nodeId) => (dispatch, getState) => {
     .then(() => Promise.resolve(Actions.tabs()))
     .then(() => {
       const state = getState();
-      console.log('got to the promises');
       return Promise.all([getMenu({venueId: state.activeNode.venueId}), getVenue({venueId: state.activeNode.venueId})])
     })
     .then(res => {
-      console.log(res);
       res[0].Items.forEach(item => {
         dispatch(updateMenuItem(
           item.ItemName.S,
