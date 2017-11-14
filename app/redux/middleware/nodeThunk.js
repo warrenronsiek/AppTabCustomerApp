@@ -21,21 +21,20 @@ const selectNode = (nodeId) => (dispatch, getState) => {
     .then(() => Promise.resolve(Actions.tabs()))
     .then(() => {
       const state = getState();
-      console.log('got to the promises');
       return Promise.all([getMenu({venueId: state.activeNode.venueId}), getVenue({venueId: state.activeNode.venueId})])
     })
     .then(res => {
-      res[0].Items.forEach(item =>
+      res[0].Items.forEach(item => {
         dispatch(updateMenuItem(
           item.ItemName.S,
           item.ItemDescription.S,
           item.Price.N,
-          item.Tags.SS,
+          (JSON.stringify(item.Tags.SS) === JSON.stringify(['NULL'])) ? [] :item.Tags.SS,
           item.Category.S,
           item.ItemId.S,
           item.VenueId.S,
           itemOptions = item.ItemOptions ? item.ItemOptions.S : null,
-          item.TimeRanges.SS)));
+          item.TimeRanges.SS))});
       res[1].venue.Item.TimeRanges.L.forEach(timeRange =>
         dispatch(updateMenuRanges(timeRange.M.id.S, timeRange.M.range.S))
       );
