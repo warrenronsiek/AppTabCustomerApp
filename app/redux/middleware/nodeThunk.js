@@ -3,9 +3,10 @@
  */
 import {Actions} from 'react-native-router-flux'
 import {setActiveNode} from '../actions/nodeActions'
-import {menuApiQueryStatus, updateMenuItem} from '../actions/menuActions'
+import {menuApiQueryStatus, updateMenuItem, updateMenuRanges, updateMenuVisibility} from '../actions/menuActions'
 import logger from '../../api/loggingApi'
 import getMenu from '../../api/getMenu'
+import getVenue from '../../api/getVenue'
 import noble from 'react-native-ble'
 import {writeToFirehose} from "../../api/firehose"
 
@@ -20,21 +21,26 @@ const selectNode = (nodeId) => (dispatch, getState) => {
     .then(() => Promise.resolve(Actions.tabs()))
     .then(() => {
       const state = getState();
-      return getMenu({venueId: state.activeNode.venueId})
+      console.log('got to the promises');
+      return Promise.all([getMenu({venueId: state.activeNode.venueId}), getVenue({venueId: state.activeNode.venueId})])
     })
     .then(res => {
-      return Promise.all(res.Items.map(item =>
-        Promise.resolve(dispatch(updateMenuItem(
+      res[0].Items.forEach(item =>
+        dispatch(updateMenuItem(
           item.ItemName.S,
           item.ItemDescription.S,
           item.Price.N,
-          tags = item.Tags.SS,
+          item.Tags.SS,
           item.Category.S,
           item.ItemId.S,
           item.VenueId.S,
-          itemOptions = item.ItemOptions ? item.ItemOptions.S : null)))))
-    })
-    .then(res => {
+          itemOptions = item.ItemOptions ? item.ItemOptions.S : null,
+          item.TimeRanges.SS)));
+      res[1].venue.Item.TimeRanges.L.forEach(timeRange =>
+        dispatch(updateMenuRanges(timeRange.M.id.S, timeRange.M.range.S))
+      );
+      dispatch(updateMenuVisibility());
+
       const state = getState(),
         venueId = state.nodes.nodeList.filter(node => node.nodeId === state.activeNode.nodeId)[0].venueId,
         now = Date.now();

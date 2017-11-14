@@ -2,8 +2,8 @@
  * Created by warren on 2/24/17.
  */
 export const UPDATE_MENU_ITEM = 'UPDATE_MENU_ITEM';
-export const updateMenuItem = (itemName, itemDescription, price, tags, category, itemId, venueId, itemOptions) => {
-  return {type: UPDATE_MENU_ITEM, itemName, itemDescription, price, tags, category, itemId, venueId, itemOptions: JSON.parse(itemOptions)}
+export const updateMenuItem = (itemName, itemDescription, price, tags, category, itemId, venueId, itemOptions, timeRanges) => {
+  return {type: UPDATE_MENU_ITEM, itemName, itemDescription, price, tags, category, itemId, venueId, itemOptions: JSON.parse(itemOptions), timeRanges}
 };
 
 export const MENU_API_QUERY_STATUS = 'MENU_API_QUERY_STATUS';
@@ -24,5 +24,15 @@ export const updateActiveItemOptions = (itemOptions, price, allOptionsSelected) 
 export const CLEAR_ACTIVE_ITEM = 'CLEAR_ACTIVE_ITEM';
 export const clearActiveItem = () => {
   return {type: CLEAR_ACTIVE_ITEM, }
+};
+
+export const UPDATE_MENU_RANGES = 'UPDATE_MENU_RANGES';
+export const updateMenuRanges = (id, range) => {
+  return {type: UPDATE_MENU_RANGES, id, range}
+};
+
+export const UPDATE_MENU_VISIBILITY = 'UPDATE_MENU_VISIBILITY';
+export const updateMenuVisibility = () => {
+  return {type: UPDATE_MENU_VISIBILITY, }
 };
 

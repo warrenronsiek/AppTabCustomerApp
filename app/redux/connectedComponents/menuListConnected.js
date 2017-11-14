@@ -10,7 +10,7 @@ import * as _ from 'lodash'
 const mapStateToProps = (state) => {
   const venueId = state.activeNode.venueId;
   return {
-    menuListItems: state.menu,
+    menuListItems: state.menu.visibleMenu,
     selectionsCount: state.numberOfCartItems,
     apiQueried: !!state.menuQueryStatus[venueId],
     defaultCardExists: state.defaultCardExists
