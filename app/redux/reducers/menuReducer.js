@@ -6,51 +6,51 @@ import {
   MENU_API_QUERY_STATUS,
   SET_ACTIVE_ITEM,
   UPDATE_ACTIVE_ITEM_OPTIONS,
-  CLEAR_ACTIVE_ITEM
+  CLEAR_ACTIVE_ITEM,
+  UPDATE_MENU_RANGES,
+  UPDATE_MENU_VISIBILITY
 } from '../actions/menuActions';
 import centsIntToString from '../../common/centsIntToString';
+
 const _ = require('lodash');
 
 /**
  * itemOptions is of shape:
  [
  {
-   "optionSetName": "burger",
+   "optionSetName": "Sides",
+   "optionSetId": 0,
    "data": [
      {
-       "optionName": "rare",
+       "optionName": "Salad",
        "price": 0,
-       "isSelected": false,
-       "optionSetName": "burger"
+       "optionId": 0
      },
      {
-       "optionName": "medium",
+       "optionName": "Slaw",
        "price": 0,
-       "isSelected": false,
-       "optionSetName": "burger"
-     },
-     {
-       "optionName": "well-done",
-       "price": 0,
-       "isSelected": false,
-       "optionSetName": "burger"
+       "optionId": 1
      }
    ]
  },
  {
-   "optionSetName": "avocado",
+   "optionSetName": "Fries",
+   "optionSetId": 1,
    "data": [
      {
-       "optionName": "yes",
-       "price": 200,
-       "isSelected": false,
-       "optionSetName": "avocado"
+       "optionName": "Regular",
+       "price": 0,
+       "optionId": 0
      },
      {
-       "optionName": "no",
-       "price": 0,
-       "isSelected": false,
-       "optionSetName": "avocado"
+       "optionName": "Curley",
+       "price": 200,
+       "optionId": 1
+     },
+     {
+       "optionName": "Garlic",
+       "price": 300,
+       "optionId": 2
      }
    ]
  }
@@ -77,64 +77,96 @@ const _ = require('lodash');
  * ]
  */
 
-const menu = (state = [], action) => {
+const inRange = range => {
+  let now = new Date();
+  let minutesElapsed = now.getHours() * 60 + now.getMinutes();
+  let min, max;
+  [min, max] = range.split('-').map(time => parseInt(time.substring(0, 2)) * 60 + parseInt(time.substring(3, 5)));
+  return (minutesElapsed >= min) && (minutesElapsed < max)
+};
+
+const menu = (state = {allItems: [], visibleMenu: [], menuRanges: {}}, action) => {
   switch (action.type) {
+    case UPDATE_MENU_RANGES:
+      return {
+        ...state,
+        menuRanges: {...state.menuRanges, [action.id]: action.range}
+      };
+    case UPDATE_MENU_VISIBILITY:
+      return {...state, visibleMenu: state.allItems.map(section => {
+          let newData = section.data.filter(item => {
+            let boolList = item.timeRanges.map(timeRangeId => inRange(state.menuRanges[timeRangeId]));
+            return boolList.reduce((accum, bool) => accum || bool, false)
+          });
+          return {...section, data: newData}
+        })};
     case UPDATE_MENU_ITEM:
-      const section = _.find(state, ['category', action.category]);
+      const section = _.find(state.allItems, ['category', action.category]);
       const oldItem = _.find(_.get(section, 'data'), ['itemId', action.itemId]);
       if (oldItem) {
-        return [...state.filter(section => section.category !== action.category),
-          {
-            data: [
-              ...section.data.filter(item => item.itemId !== action.itemId),
-              {
-                itemName: action.itemName,
-                itemDescription: action.itemDescription,
-                itemId: action.itemId,
-                venueId: action.venueId,
-                tags: action.tags,
-                viewablePrice: '$' + centsIntToString(action.price),
-                price: action.price,
-                category: action.category,
-                itemOptions: action.itemOptions
-              }
-            ], category: action.category
-          }
-        ]
+        return {
+          ...state, allItems: [...state.allItems.filter(section => section.category !== action.category),
+            {
+              data: [
+                ...section.data.filter(item => item.itemId !== action.itemId),
+                {
+                  itemName: action.itemName,
+                  itemDescription: action.itemDescription,
+                  itemId: action.itemId,
+                  venueId: action.venueId,
+                  tags: action.tags,
+                  viewablePrice: '$' + centsIntToString(action.price),
+                  price: action.price,
+                  category: action.category,
+                  itemOptions: action.itemOptions,
+                  timeRanges: action.timeRanges
+                }
+              ], category: action.category
+            }
+          ]
+        }
       }
       if (section) {
-        return [...state.filter(section => section.category !== action.category),
+        return {
+          ...state, allItems: [...state.allItems.filter(section => section.category !== action.category),
+            {
+              data: [
+                ...section.data,
+                {
+                  itemName: action.itemName,
+                  itemDescription: action.itemDescription,
+                  itemId: action.itemId,
+                  venueId: action.venueId,
+                  viewablePrice: '$' + centsIntToString(action.price),
+                  tags: action.tags,
+                  price: action.price,
+                  category: action.category,
+                  itemOptions: action.itemOptions,
+                  timeRanges: action.timeRanges
+                }
+              ], category: action.category
+            }
+          ]
+        }
+      }
+      return {
+        ...state, allItems: [...state.allItems,
           {
-            data: [
-              ...section.data,
-              {
-                itemName: action.itemName,
-                itemDescription: action.itemDescription,
-                itemId: action.itemId,
-                venueId: action.venueId,
-                viewablePrice: '$' + centsIntToString(action.price),
-                tags: action.tags,
-                price: action.price,
-                category: action.category,
-                itemOptions: action.itemOptions
-              }
-            ], category: action.category
+            data: [{
+              itemName: action.itemName,
+              itemDescription: action.itemDescription,
+              itemId: action.itemId,
+              venueId: action.venueId,
+              tags: action.tags,
+              price: action.price,
+              viewablePrice: '$' + centsIntToString(action.price),
+              category: action.category,
+              itemOptions: action.itemOptions,
+              timeRanges: action.timeRanges
+            }], category: action.category
           }
         ]
-      }
-      return [...state,
-        {data: [{
-          itemName: action.itemName,
-          itemDescription: action.itemDescription,
-          itemId: action.itemId,
-          venueId: action.venueId,
-          tags: action.tags,
-          price: action.price,
-          viewablePrice: '$' + centsIntToString(action.price),
-          category: action.category,
-          itemOptions: action.itemOptions
-        }], category: action.category}
-      ];
+      };
     default:
       return state
   }
@@ -152,7 +184,10 @@ const activeMenuItem = (state = {}, action) => {
         price: action.price,
         viewablePrice: '$' + centsIntToString(action.price),
         category: action.category,
-        itemOptions: action.itemOptions.map(optionSet => ({...optionSet, data: optionSet.data.map(option => ({...option, isSelected: false, optionSetId: optionSet.optionSetId}))})),
+        itemOptions: action.itemOptions.map(optionSet => ({
+          ...optionSet,
+          data: optionSet.data.map(option => ({...option, isSelected: false, optionSetId: optionSet.optionSetId}))
+        })),
         allOptionsSelected: false,
         oneClickBuy: action.oneClickBuy || false
       };

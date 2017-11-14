@@ -16,7 +16,7 @@ import {SET_ACTIVE_NODE} from '../actions/nodeActions'
 import * as _ from 'lodash'
 import centsIntToString from '../../common/centsIntToString'
 import round from '../../common/round'
-
+import uuid from 'react-native-uuid'
 
 const costsGenerator = (itemArray, tipPct, taxPct) => {
   let totalCart = itemArray
@@ -43,8 +43,16 @@ const costsGenerator = (itemArray, tipPct, taxPct) => {
 const selectedOptionsGetter = optionSets => {
   try {
     return optionSets
-      .map(optionSet => ({...optionSet.data.filter(option => option.isSelected)[0], optionSetName: optionSet.optionSetName, optionSetId: optionSet.optionSetId}))
-      .map(displayOption => ({...displayOption, viewablePrice: '$' + centsIntToString(displayOption.price), key: displayOption.optionSetId.toString() + displayOption.optionId.toString()}));
+      .map(optionSet => ({
+        ...optionSet.data.filter(option => option.isSelected)[0],
+        optionSetName: optionSet.optionSetName,
+        optionSetId: optionSet.optionSetId
+      }))
+      .map(displayOption => ({
+        ...displayOption,
+        viewablePrice: '$' + centsIntToString(displayOption.price),
+        key: displayOption.optionSetId.toString() + displayOption.optionId.toString()
+      }));
   } catch (err) {
     return 'NULL'
   }
@@ -64,7 +72,8 @@ const cart = (state = {
     totalViewableCart: '$0',
     totalViewableCost: '$0'
   },
-  numberOfCartItems: 0
+  numberOfCartItems: 0,
+  transactionId: ''
 }, action) => {
   let inCart = _.find(state.items, item => (action.itemId === item.itemId) && (action.itemOptions === item.itemOptions));
   let filteredState = _.filter(state.items, item => (item.itemId !== action.itemId) || (action.itemOptions !== item.itemOptions));
@@ -93,24 +102,46 @@ const cart = (state = {
         itemOptions: selectedOptionsGetter(action.itemOptions),
         count: 1
       }].sort((a, b) => a.itemName.localeCompare(b.itemName));
-      return Object.assign({}, {items: newItems, costs: costsGenerator(newItems, state.costs.tip, state.costs.tax), numberOfCartItems: newItems.reduce((sum, item) => sum + item.count, 0)});
+      return Object.assign({}, {
+        items: newItems,
+        costs: costsGenerator(newItems, state.costs.tip, state.costs.tax),
+        numberOfCartItems: newItems.reduce((sum, item) => sum + item.count, 0),
+        transactionId: uuid.v4().slice(-12)
+      });
     case INCREMENT_COUNT:
       newItem = {...inCart, count: inCart.count + 1};
       newItems = [...filteredState, newItem].sort((a, b) => a.itemName.localeCompare(b.itemName));
-      return Object.assign({}, {items: newItems, costs: costsGenerator(newItems, state.costs.tip, state.costs.tax), numberOfCartItems: state.numberOfCartItems + 1});
+      return Object.assign({}, {
+        items: newItems,
+        costs: costsGenerator(newItems, state.costs.tip, state.costs.tax),
+        numberOfCartItems: state.numberOfCartItems + 1
+      });
     case DECREMENT_COUNT:
       newItem = {...inCart, count: inCart.count - 1};
       newItems = [...filteredState, newItem].sort((a, b) => a.itemName.localeCompare(b.itemName));
       if (inCart.count > 0) {
-        return Object.assign({}, {items: newItems, costs: costsGenerator(newItems, state.costs.tip, state.costs.tax), numberOfCartItems: newItems.reduce((sum, item) => sum + item.count, 0)});
+        return Object.assign({}, {
+          items: newItems,
+          costs: costsGenerator(newItems, state.costs.tip, state.costs.tax),
+          numberOfCartItems: newItems.reduce((sum, item) => sum + item.count, 0)
+        });
       }
-      return Object.assign({}, {items: filteredState, costs: costsGenerator(filteredState, state.costs.tip, state.costs.tax), numberOfCartItems: filteredState.reduce((sum, item) => sum + item.count, 0)});
+      return Object.assign({}, {
+        items: filteredState,
+        costs: costsGenerator(filteredState, state.costs.tip, state.costs.tax),
+        numberOfCartItems: filteredState.reduce((sum, item) => sum + item.count, 0)
+      });
     case SET_ACTIVE_NODE:
       return {...state, items: [...state.items.filter(item => item.venueId === action.venueId)]};
     case UPDATE_TIP:
       return {...state, costs: costsGenerator(state.items, action.tip, state.costs.tax)};
     case CLEAR_CART:
-      return Object.assign({}, {items: [], costs: costsGenerator([], state.costs.tip, state.costs.tax), numberOfCartItems: 0});
+      return Object.assign({}, {
+        items: [],
+        costs: costsGenerator([], state.costs.tip, state.costs.tax),
+        numberOfCartItems: 0,
+        transactionId: ''
+      });
     case TOGGLE_INCREMENTER:
       newItem = {...inCart, showIncrementer: !inCart.showIncrementer};
       newItems = [...filteredState, newItem].sort((a, b) => a.itemName.localeCompare(b.itemName));
