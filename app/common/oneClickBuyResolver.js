@@ -15,7 +15,8 @@ const resolver = (item) => (dispatch, getState) => {
     cardToken = state.ccTokens.filter(item => item.isSelected)[0].ccToken,
     nodeId = state.activeNode.nodeId,
     customerId = state.auth.customerId,
-    venueId = state.activeNode.venueId;
+    venueId = state.activeNode.venueId,
+    name = state.auth.userName;
 
   Promise.resolve(dispatch(oneClickBuy(item.itemName, item.itemDescription, item.price, item.tags, item.category, item.itemId, item.venueId)))
     .then(res => openTransaction({
@@ -28,7 +29,8 @@ const resolver = (item) => (dispatch, getState) => {
       tax,
       tip,
       itemTotal,
-      venueId
+      venueId,
+      name
     }))
     .then(res => {
       let transaction = res.transaction;
