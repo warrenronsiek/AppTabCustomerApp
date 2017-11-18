@@ -5,6 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import {Text, StyleSheet, View, Image, TouchableHighlight} from 'react-native';
 import OcticonIcon from 'react-native-vector-icons/Octicons'
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 
 const styles = StyleSheet.create({
   container: {
@@ -63,7 +64,7 @@ const paymentListItem = ({ccToken, brand, last4, isSelected, select, expMonth, e
       </View>
       <View style={styles.checkMarkContainer}>
         {isSelected
-          ? <Image source={require('../../assets/images/icon_checkmark.png')}/>
+          ? <MaterialIcon name='check' size={30} color='#fb6821'/>
           : null}
       </View>
     </View>

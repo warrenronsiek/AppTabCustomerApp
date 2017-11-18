@@ -116,7 +116,7 @@ const ccForm = ({
                 }) => (
   <View style={styles.container}>
     <View style={styles.cardImageContainer}>
-      <FontAwesomeIcon name="cc-stripe" size={60} style={{color: '#72BCD4'}}/>
+      <FontAwesomeIcon name="cc-stripe" size={60} style={{color: '#fb6821'}}/>
     </View>
     <View style={styles.formContainer}>
       <View style={styles.numberInputContainer}>

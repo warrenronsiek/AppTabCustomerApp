@@ -19,18 +19,18 @@ const styles = StyleSheet.create({
   cardImageContainer: {
     flex: 1,
     alignItems: 'center',
-    paddingTop: 100,
+    paddingTop: 70,
   },
   listContainer: {
-    flex: 2,
+    flex: 4,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: 'grey',
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: 'grey',
-    maxHeight: 270,
+    maxHeight: 300,
   },
   buttonContainer: {
-    flex: 1,
+    flex: 2,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -39,6 +39,14 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     justifyContent: 'center',
     flex: 1
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: '200',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    textAlign: 'center'
   }
 });
 
@@ -65,7 +73,9 @@ class PaymentMethodSelection extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.cardImageContainer}><Image source={require('../../assets/images/card_front.png')}/></View>
+        <View style={styles.cardImageContainer}>
+          <Text style={styles.headerText}>Please select your credit card.</Text>
+        </View>
         <View style={this.props.paymentListItems.length > 0 ? styles.listContainer : [styles.listContainer, {
           alignItems: 'center',
           justifyContent: 'center'
