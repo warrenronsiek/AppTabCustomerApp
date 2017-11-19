@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {View, Text, StyleSheet} from 'react-native'
-import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome'
+import Order from '../../assets/svgs/order'
 
 const styles = StyleSheet.create({
   iconContainer: {
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
 
 const CartIconWithAlert = ({count}) => (
   <View style={styles.iconContainer}>
-    <FontAwesomeIcons name="shopping-cart" size={30}/>
+    <Order height={28} width={28}/>
     {(count > 0)
       ? <View style={styles.numberCircle}>
         <Text style={{fontSize: 10, color: 'white'}}>{count.toString()}</Text>

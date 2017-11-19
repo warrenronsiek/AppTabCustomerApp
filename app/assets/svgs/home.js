@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 22.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 517.1 288.2" style="enable-background:new 0 0 517.1 288.2;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:#4D4D4D;}
-</style>
-<path class="st0" d="M153.5,144.3c0-8.3-6.7-15-15-15H47.5c-0.6,0-1.1,0.1-1.6,0.2L36.2,24c0-0.4-0.1-0.9-0.2-1.3
+import React from 'react'
+import {View} from 'react-native'
+import Proptypes from 'prop-types'
+import Svg, {Path} from 'react-native-svg'
+
+const Home = ({fill, width, height}) => (
+  <View style={{alignItems: 'center', justifyContent: 'center'}}>
+    <Svg viewBox="0 0 517.1 288.2" width={width} height={height}>
+      <Path fill={fill ? fill : '#4d4d4d'} d="M153.5,144.3c0-8.3-6.7-15-15-15H47.5c-0.6,0-1.1,0.1-1.6,0.2L36.2,24c0-0.4-0.1-0.9-0.2-1.3
 	C34.2,14.7,27,1,11.2,0C5.4-0.3,0.4,4.1,0,9.8c-0.4,5.8,4,10.8,9.8,11.1c3.4,0.2,5,4.4,5.5,5.8l11,120.3c0,0.2,0.1,0.4,0.1,0.6
 	c0,0.2-0.1,0.4-0.1,0.6L14.2,276.7c-0.5,5.8,3.7,10.9,9.5,11.5c0.3,0,0.7,0,1,0c5.4,0,9.9-4.1,10.5-9.5l11.3-119.5
 	c0.3,0,0.7,0.1,1,0.1h75.7l11,119.4c0.5,5.4,5.1,9.5,10.5,9.5c0.3,0,0.7,0,1,0c5.8-0.5,10-5.7,9.5-11.4l-11-118.5
@@ -17,4 +18,13 @@
 	c0.4,0,0.7-0.1,1-0.1L482,278.6c0.5,5.4,5.1,9.5,10.5,9.5c0.3,0,0.7,0,1,0c5.8-0.6,10-5.7,9.5-11.5l-12.2-128.4
 	c0-0.2-0.1-0.4-0.1-0.6c0-0.2,0.1-0.4,0.1-0.6l11-120.2c0.5-1.5,2.1-5.6,5.5-5.8c5.8-0.4,10.2-5.4,9.8-11.1
 	C516.7,4.1,511.7-0.2,505.9,0z"/>
-</svg>
+    </Svg></View>);
+
+Home.propTypes = {
+  fill: Proptypes.string,
+  width: Proptypes.number.isRequired,
+  height: Proptypes.number.isRequired
+};
+
+
+export default Home

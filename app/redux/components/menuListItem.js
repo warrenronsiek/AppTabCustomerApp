@@ -54,11 +54,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
-  },
-  oneClickButtonContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
   }
 });
 
@@ -80,16 +75,10 @@ const menuListItem = ({itemName, itemDescription, itemId, viewablePrice, tags, a
     <View style={styles.priceContainer}>
       <Text>{viewablePrice}</Text>
     </View>
-    <View style={styles.oneClickButtonContainer}>
-      <Button onPress={() => oneClickBuy(itemId)} style={{width: 53}} underlayColor="grey" disabled={!defaultCardExists}
-              iconProps={{iconName: 'plus-one', iconSize: 30, iconLibrary: 'MaterialCommunityIcons'}}
-              title="one tap buy" containerStyle={{flexDirection: 'column'}}
-              textStyle={{fontSize: 8}}/>
-    </View>
     <View style={styles.cartContainer}>
       <Button onPress={() => addToCart(itemId)}
-              iconProps={{iconName: 'cart-plus', iconSize: 30, iconLibrary: 'FontAwesome'}}
-              style={{width: 53, marginLeft: 7, marginRight: 13}} underlayColor="grey"
+              iconProps={{iconName: 'cart-plus', iconSize: 27, iconLibrary: 'Ben'}}
+              style={{width: 70, marginLeft: 7, marginRight: 25}} underlayColor="grey"
               containerStyle={{marginLeft: -2}}/>
     </View>
   </View>

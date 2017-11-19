@@ -21,10 +21,11 @@ import ResetPasswordScene from './app/scenes/passwordResetScene'
 import SimpleIcons from 'react-native-vector-icons/SimpleLineIcons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import transactionActions from './app/redux/actions/trasactionActions'
+import Menu from './app/assets/svgs/menu'
 
 const RouterWithRedux = connect()(Router);
 
-const drink = ({selected}) => <MaterialIcons name="restaurant-menu" size={36} color={selected ? '#6495ED' : 'black'}/>;
+const drink = ({selected}) => <Menu width={35} height={35}/>;
 const options = ({selected}) => <SimpleIcons name="options" size={30} color={selected ? '#6495ED' : 'black'}/>;
 const bell = ({selected}) => <OrderIcon/>;
 const cart = ({selected}) => <CartIcon/>;

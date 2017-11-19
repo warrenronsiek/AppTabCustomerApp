@@ -3,7 +3,6 @@ import {oneClickBuy} from "../redux/actions/cartActions"
 import openTransaction from '../api/openTransaction'
 import {writeToFirehose} from '../api/firehose'
 import transactionActions from '../redux/actions/trasactionActions'
-import * as _ from 'lodash'
 
 const resolver = (item) => (dispatch, getState) => {
   const state = getState(),

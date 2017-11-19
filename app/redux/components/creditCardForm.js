@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import PropTypes from 'prop-types'
-import {View, Text, TextInput, StyleSheet, Image} from 'react-native'
+import {View, TextInput, StyleSheet, Image} from 'react-native'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import Spinner from '../../common/spinner'
 import Button from '../../common/button'

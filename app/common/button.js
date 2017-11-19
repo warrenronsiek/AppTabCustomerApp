@@ -13,6 +13,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Octicons from 'react-native-vector-icons/Octicons'
 import Zocial from 'react-native-vector-icons/Zocial'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
+import Order from '../assets/svgs/order'
 
 
 const styles = StyleSheet.create({
@@ -58,6 +59,10 @@ const GenerateIcon = ({iconName, iconLibrary, iconSize, color}) => {
       return <Zocial color={color} name={iconName} size={iconSize}/>;
     case 'SimpleLineIcons':
       return <SimpleLineIcons color={color} name={iconName} size={iconSize}/>;
+    case 'Ben':
+      return <View style={{marginTop:-3}}>
+        <Order height={iconSize} width={iconSize} fill='white'/>
+      </View>;
     default:
       return <Entypo color={color} name={iconName} size={iconSize}/>
   }

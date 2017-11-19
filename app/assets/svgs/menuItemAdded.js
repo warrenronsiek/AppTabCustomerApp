@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 22.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 387.3 270.4" style="enable-background:new 0 0 387.3 270.4;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:#4D4D4D;}
-</style>
-<path class="st0" d="M45.7,17.3c-2.3,0-4.1,1.8-4.1,4.1V56H29V21.3c0-2.3-1.8-4.1-4.1-4.1s-4.1,1.8-4.1,4.1V56H8.2V21.3
+import React from 'react'
+import {View} from 'react-native'
+import Proptypes from 'prop-types'
+import Svg, {Path} from 'react-native-svg'
+
+const MenuItemAdded = ({fill, width, height}) => (
+  <View style={{alignItems: 'center', justifyContent: 'center'}}>
+    <Svg viewBox="0 0 387.3 270.4" width={width} height={height}>
+      <Path fill={fill ? fill : '#4d4d4d'} d="M45.7,17.3c-2.3,0-4.1,1.8-4.1,4.1V56H29V21.3c0-2.3-1.8-4.1-4.1-4.1s-4.1,1.8-4.1,4.1V56H8.2V21.3
 	c0-2.3-1.8-4.1-4.1-4.1c-2.3,0-4.1,1.8-4.1,4.1v54.1C0,85.4,9.4,94,17.9,98l-3.5,144.7c0,5.8,4.7,10.5,10.5,10.5s10.5-4.7,10.5-10.5
 	L31.9,98c8.5-3.9,17.9-12.6,17.9-22.6V21.3C49.8,19.1,48,17.3,45.7,17.3z M202.2,55.3c-44,0-79.9,35.8-79.9,79.9
 	c0,44.1,35.8,79.9,79.9,79.9c12.9,0,25.7-3.1,37-9.1c3.4-1.8,4.7-6,2.9-9.4c-1.8-3.4-6-4.7-9.4-2.9c-9.4,4.9-19.9,7.5-30.6,7.5
@@ -16,4 +17,14 @@
 	 M387.1,25.5c0,0,0.3-8.3-5.4-8.3c-7.9,0-22.6,21.4-22.8,42.5c-0.1,15.7,0.3,85.8,0.3,85.8s0,8.5,8.3,10.6c-2.1,1.9-3.3,3.6-3.3,6.7
 	l-3.5,80c0,5.8,3,10.5,12.4,10.5c8.6,0,12-4.7,12-10.5v-80c0-2.5-0.9-4.8-2.5-6.7c2.2-2.2,4.2-6,4.4-12.5
 	C387.6,127.9,387.1,25.5,387.1,25.5z"/>
-</svg>
+    </Svg>
+  </View>);
+
+MenuItemAdded.propTypes = {
+  fill: Proptypes.string,
+  width: Proptypes.number.isRequired,
+  height: Proptypes.number.isRequired
+};
+
+
+export default MenuItemAdded

@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Text, StyleSheet, View, FlatList, Image} from 'react-native'
+import {Text, StyleSheet, View, FlatList} from 'react-native'
 import PaymentItem from './paymentListItem'
 import Button from '../../common/button'
 import Spinner from '../../common/spinner'
