@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const menuListItem = ({itemName, itemDescription, itemId, viewablePrice, tags, addToCart, defaultCardExists, oneClickBuy}) => (
+const menuListItem = ({itemName, itemDescription, itemId, viewablePrice, tags, addToCart}) => (
   <View style={styles.container}>
     <View style={styles.textContainer}>
       <Text style={styles.nameStyle}>{itemName}</Text>
@@ -91,8 +91,6 @@ menuListItem.propTypes = {
   viewablePrice: PropTypes.string.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   addToCart: PropTypes.func.isRequired,
-  defaultCardExists: PropTypes.bool.isRequired,
-  oneClickBuy: PropTypes.func.isRequired
 };
 
 export default menuListItem

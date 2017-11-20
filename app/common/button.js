@@ -74,7 +74,7 @@ class Button extends Component {
     iconProps: PropTypes.shape({
       iconName: PropTypes.string.isRequired,
       iconLibrary: PropTypes.oneOf(['Entypo', 'EvilIcons', 'FontAwesome', 'Foundation', 'Ionicons', 'MaterialIcons',
-        'MaterialCommunityIcons', 'Octicons', 'Zocial', 'SimpleLineIcons']),
+        'MaterialCommunityIcons', 'Octicons', 'Zocial', 'SimpleLineIcons', 'Ben']),
       iconSize: PropTypes.number.isRequired,
       iconColor: PropTypes.string
     }),

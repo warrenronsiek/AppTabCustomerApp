@@ -151,23 +151,6 @@ const cart = (state = {
   }
 };
 
-const oneClickBuyItem = (state = {}, action) => {
-  switch (action.type) {
-    case ONE_CLICK_BUY:
-      return {
-        itemId: action.itemId,
-        itemName: action.itemName,
-        itemDescription: action.itemDescription,
-        price: action.price,
-        tags: action.tags,
-        category: action.category,
-        venueId: action.venueId
-      };
-    default:
-      return state
-  }
-};
-
 const cartStatus = (state = {}, action) => {
   switch (action.type) {
     case CHEKING_OUT:
@@ -179,4 +162,4 @@ const cartStatus = (state = {}, action) => {
   }
 };
 
-export {cart, cartStatus, oneClickBuyItem}
+export {cart, cartStatus}

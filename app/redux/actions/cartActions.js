@@ -42,11 +42,6 @@ export const checkingOutComplete = () => {
   return {type: CHECKING_OUT_COMPLETE, }
 };
 
-export const ONE_CLICK_BUY = 'ONE_CLICK_BUY';
-export const oneClickBuy = (itemName, itemDescription, price, tags, category, itemId, venueId) => {
-  return {type: ONE_CLICK_BUY, itemName, itemDescription, price, tags, category, itemId, venueId}
-};
-
 export const TOGGLE_INCREMENTER = 'TOGGLE_INCREMENTER';
 export const toggleIncrementer = (itemId, itemOptions) => {
   return {type: TOGGLE_INCREMENTER, itemId, itemOptions}
