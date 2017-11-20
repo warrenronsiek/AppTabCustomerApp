@@ -1,11 +1,12 @@
 /**
  * Created by warren on 4/2/17.
  */
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types'
 import {Text, StyleSheet, View, Image, TouchableHighlight} from 'react-native';
 import OcticonIcon from 'react-native-vector-icons/Octicons'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
+import PanHandler from '../../common/panHandler'
 
 const styles = StyleSheet.create({
   container: {
@@ -32,7 +33,8 @@ const styles = StyleSheet.create({
   },
   touchable: {
     paddingTop: 12,
-    paddingBottom: 12
+    paddingBottom: 12,
+    flex: 1
   }
 });
 
@@ -53,8 +55,8 @@ const PaymentImage = ({brand}) => {
   }
 };
 
-const paymentListItem = ({ccToken, brand, last4, isSelected, select, expMonth, expYear}) => (
-  <TouchableHighlight onPress={() => select(ccToken)} style={styles.touchable} underlayColor='white'>
+const paymentListItem = ({ccToken, brand, last4, isSelected, select, expMonth, expYear, showDeleteButton, hideDeleteButton, deleteCard}) => (
+  <PanHandler style={styles.touchable} onClick={() => select(ccToken)} onSwipeLeft={() => showDeleteButton(ccToken)} onSwipeRight={() => hideDeleteButton(ccToken)}>
     <View style={styles.container}>
       <View style={styles.iconContainer}>
         <PaymentImage brand={brand}/>
@@ -68,7 +70,7 @@ const paymentListItem = ({ccToken, brand, last4, isSelected, select, expMonth, e
           : null}
       </View>
     </View>
-  </TouchableHighlight>
+  </PanHandler>
 );
 
 paymentListItem.propTypes = {
@@ -78,7 +80,10 @@ paymentListItem.propTypes = {
   isSelected: PropTypes.bool.isRequired,
   select: PropTypes.func.isRequired,
   expMonth: PropTypes.string.isRequired,
-  expYear: PropTypes.string.isRequired
+  expYear: PropTypes.string.isRequired,
+  showDeleteButton: PropTypes.func.isRequired,
+  hideDeleteButton: PropTypes.func.isRequired,
+  deleteCard: PropTypes.func.isRequired
 };
 
 export default paymentListItem

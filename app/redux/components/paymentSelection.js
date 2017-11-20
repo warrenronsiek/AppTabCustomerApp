@@ -67,7 +67,10 @@ class PaymentMethodSelection extends Component {
       failure: PropTypes.bool,
       success: PropTypes.bool,
       processing: PropTypes.bool
-    })
+    }),
+    showDeleteButton: PropTypes.func.isRequired,
+    hideDeleteButton: PropTypes.func.isRequired,
+    deleteCard: PropTypes.func.isRequired
   };
 
   render() {
@@ -86,7 +89,10 @@ class PaymentMethodSelection extends Component {
                         renderItem={({item}) => <PaymentItem brand={item.brand} isSelected={item.isSelected}
                                                              last4={item.last4} ccToken={item.ccToken}
                                                              expMonth={item.expMonth} expYear={item.expYear}
-                                                             select={this.props.selectCard}/>}/>
+                                                             select={this.props.selectCard}
+                                                             showDeleteButton={this.props.showDeleteButton}
+                                                             hideDeleteButton={this.props.hideDeleteButton}
+                                                             deleteCard={this.props.deleteCard}/>}/>
             : <View style={{alignItems: 'center', justifyContent: 'center'}}>
               <Text>Please add a credit card. </Text><Text>You can do that by pressing the Add Card button.</Text>
             </View>
