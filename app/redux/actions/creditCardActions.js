@@ -20,7 +20,7 @@ export default ccActions = createActions({
     ADD: (ccToken, last4, brand, exp_month, exp_year, isDefault) => ({ccToken, last4, brand, exp_month, exp_year, isDefault}),
     DELETE: ccToken => ccToken,
     SET_SELECTED: ccToken => ccToken,
-    TOGGLE_DELETE_BUTTON: (ccToken, bool) => ({ccToken, bool})
+    TOGGLE_DELETE_BUTTON: ({ccToken, bool}) => ({ccToken, bool})
   },
   API_QUERIED: bool => bool,
   PAYMENT: {

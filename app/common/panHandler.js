@@ -17,7 +17,6 @@ class PanHandler extends Component {
       onMoveShouldSetPanResponder: (evt, gestureState) => true,
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
       onPanResponderRelease: (evt, gestureState) => {
-        console.log(gestureState);
         if ((gestureState.dx === 0) && (gestureState.dy === 0)) {
           this.props.onClick()
         } else if ((gestureState.dx <= 0) && (Math.abs(gestureState.dx)/ 10. >= Math.abs(gestureState.dy))) {

@@ -92,7 +92,8 @@ class PaymentMethodSelection extends Component {
                                                              select={this.props.selectCard}
                                                              showDeleteButton={this.props.showDeleteButton}
                                                              hideDeleteButton={this.props.hideDeleteButton}
-                                                             deleteCard={this.props.deleteCard}/>}/>
+                                                             deleteCard={this.props.deleteCard}
+                                                             deleteButton={item.deleteButton}/>}/>
             : <View style={{alignItems: 'center', justifyContent: 'center'}}>
               <Text>Please add a credit card. </Text><Text>You can do that by pressing the Add Card button.</Text>
             </View>

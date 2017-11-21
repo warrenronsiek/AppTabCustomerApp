@@ -21,16 +21,16 @@ const ccTokens = handleActions({
       expMonth: action.payload.exp_month,
       expYear: action.payload.exp_year,
       isSelected: action.payload.isDefault || false,
-      showDeleteButton: false
+      deleteButton: false
     }],
-    [ccActions.token.delete]: (state, action) => state.filter(item => item.ccToken !== action.ccToken),
+    [ccActions.token.delete]: (state, action) => {console.log(action); return [...state.filter(item => item.ccToken !== action.payload)]},
     [ccActions.token.setSelected]: (state, action) => [
       ...state.filter(item => item.ccToken !== action.payload).map(item => ({...item, isSelected: false})),
       {...state.filter(item => item.ccToken === action.payload)[0], isSelected: true}
     ],
     [ccActions.token.toggleDeleteButton]: (state, action) => [
       ...state.filter(item => item.ccToken !== action.payload.ccToken),
-      {...state.filter(item => item.ccToken === action.payload.ccToken)[0], showDeleteButton: action.payload.bool}
+      {...state.filter(item => item.ccToken === action.payload.ccToken)[0], deleteButton: action.payload.bool}
     ]
   }, []
 );

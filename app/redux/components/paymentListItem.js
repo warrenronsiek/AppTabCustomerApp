@@ -7,6 +7,7 @@ import {Text, StyleSheet, View, Image, TouchableHighlight} from 'react-native';
 import OcticonIcon from 'react-native-vector-icons/Octicons'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import PanHandler from '../../common/panHandler'
+import Button from '../../common/button'
 
 const styles = StyleSheet.create({
   container: {
@@ -55,14 +56,17 @@ const PaymentImage = ({brand}) => {
   }
 };
 
-const paymentListItem = ({ccToken, brand, last4, isSelected, select, expMonth, expYear, showDeleteButton, hideDeleteButton, deleteCard}) => (
-  <PanHandler style={styles.touchable} onClick={() => select(ccToken)} onSwipeLeft={() => showDeleteButton(ccToken)} onSwipeRight={() => hideDeleteButton(ccToken)}>
+const paymentListItem = ({ccToken, brand, last4, isSelected, select, expMonth, expYear, showDeleteButton, hideDeleteButton, deleteCard, deleteButton}) => (
+  <View style={styles.container}>
+
+  <PanHandler style={styles.touchable} onClick={() => select(ccToken)} onSwipeLeft={() => showDeleteButton(ccToken)}
+              onSwipeRight={() => hideDeleteButton(ccToken)}>
     <View style={styles.container}>
       <View style={styles.iconContainer}>
         <PaymentImage brand={brand}/>
       </View>
       <View style={styles.textContainer}>
-        <Text> Ending with {last4}.     {expMonth}/{expYear}</Text>
+        <Text> Ending with {last4}.    {expMonth}/{expYear}</Text>
       </View>
       <View style={styles.checkMarkContainer}>
         {isSelected
@@ -71,6 +75,12 @@ const paymentListItem = ({ccToken, brand, last4, isSelected, select, expMonth, e
       </View>
     </View>
   </PanHandler>
+      {deleteButton
+        ? <View>
+          <Button onPress={() => deleteCard(ccToken)} iconProps={{iconLibrary: 'EvilIcons', iconName: 'trash', iconSize: 30}}/>
+        </View>
+        : null}
+  </View>
 );
 
 paymentListItem.propTypes = {
@@ -83,7 +93,8 @@ paymentListItem.propTypes = {
   expYear: PropTypes.string.isRequired,
   showDeleteButton: PropTypes.func.isRequired,
   hideDeleteButton: PropTypes.func.isRequired,
-  deleteCard: PropTypes.func.isRequired
+  deleteCard: PropTypes.func.isRequired,
+  deleteButton: PropTypes.bool.isRequired
 };
 
 export default paymentListItem
