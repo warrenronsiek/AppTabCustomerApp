@@ -8,7 +8,8 @@ import payThunk from '../middleware/payThunk'
 import {sortBy} from 'lodash'
 import selectCard from '../middleware/selectCardThunk'
 import ccActions from '../actions/creditCardActions'
-import {ccTokens} from "../reducers/creditCardReducer";
+import {ccTokens} from "../reducers/creditCardReducer"
+import deleteCardThunk from '../middleware/deleteCardThunk'
 
 const mapStateToProps = (state) => ({
   paymentListItems: sortBy(state.ccTokens, ['expYear', 'expMonth', 'brand', 'last4']),
@@ -21,7 +22,7 @@ const mapDispatchToProps = (dispatch) => ({
   pay: () => dispatch(payThunk()),
   showDeleteButton: (ccToken) => dispatch(ccActions.token.toggleDeleteButton({ccToken, bool: true})),
   hideDeleteButton: (ccToken) => dispatch(ccActions.token.toggleDeleteButton({ccToken, bool: false})),
-  deleteCard: ccToken => dispatch(ccActions.token.delete(ccToken))
+  deleteCard: ccToken => dispatch(deleteCardThunk(ccToken))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(paymentSelection)
