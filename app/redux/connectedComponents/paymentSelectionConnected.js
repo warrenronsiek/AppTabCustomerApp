@@ -5,14 +5,12 @@ import {connect} from 'react-redux'
 import {Actions} from 'react-native-router-flux'
 import paymentSelection from '../components/paymentSelection'
 import payThunk from '../middleware/payThunk'
-import {sortBy} from 'lodash'
 import selectCard from '../middleware/selectCardThunk'
 import ccActions from '../actions/creditCardActions'
-import {ccTokens} from "../reducers/creditCardReducer"
 import deleteCardThunk from '../middleware/deleteCardThunk'
 
 const mapStateToProps = (state) => ({
-  paymentListItems: sortBy(state.ccTokens, ['expYear', 'expMonth', 'brand', 'last4']),
+  paymentListItems: state.ccTokens,
   paymentStatus: state.paymentStatus
 });
 

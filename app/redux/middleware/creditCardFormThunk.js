@@ -6,7 +6,6 @@ import ccActions from '../actions/creditCardActions'
 import stripeCreateCard from '../../api/stripeCreateCard'
 import logger from '../../api/loggingApi'
 import {writeToFirehose} from "../../api/firehose"
-import selectCardThunk from './selectCardThunk'
 
 const creditCardFormThunk = (cardNumber, expMonth, expYear, ccv) => (dispatch, getState) => {
   const state = getState();
@@ -25,7 +24,46 @@ const creditCardFormThunk = (cardNumber, expMonth, expYear, ccv) => (dispatch, g
     .then(res => Actions.pop())
     .then(() => writeToFirehose('AddedCreditCard'))
     .then(res => Promise.resolve(dispatch(ccActions.real.tokenizing(false))))
-    .catch(err => logger('failed to process credit card', err))
+    .catch(err => {
+      let message = JSON.parse(err.message);
+      switch (message.error.code) {
+        case 'card_declined':
+          dispatch(ccActions.real.wipe());
+          dispatch(ccActions.real.tokenizing(false));
+          alert('Credit card declined.\n Please try a different card.');
+          break;
+        case 'incorrect_cvc':
+          dispatch(ccActions.real.tokenizing(false));
+          alert('Card failed CVC check.\n Please verify your cvc number.');
+          break;
+        case 'invalid_cvc':
+          dispatch(ccActions.real.tokenizing(false));
+          alert('Card failed CVC check.\n Please verify your cvc number.');
+          break;
+        case 'invalid_expiry_year':
+          dispatch(ccActions.real.tokenizing(false));
+          alert('Wrong expiry year.\n Please verify your expiry year.');
+          break;
+        case 'incorrect_number':
+          dispatch(ccActions.real.tokenizing(false));
+          alert('Incorrect card number.\n Please verify your card number.');
+          break;
+        case 'invalid_number':
+          dispatch(ccActions.real.tokenizing(false));
+          alert('Incorrect card number.\n Please verify your card number.');
+          break;
+        case 'insufficient_funds':
+          dispatch(ccActions.real.tokenizing(false));
+          dispatch(ccActions.real.wipe());
+          alert('This card has insufficient funds.\n Please use a different card.');
+          break;
+        default:
+          dispatch(ccActions.real.wipe());
+          dispatch(ccActions.real.tokenizing(false));
+          alert('Credit card processing error.\n Please try again or use a different card.')
+      }
+      logger('failed to process credit card', err)
+    })
 };
 
 export default creditCardFormThunk

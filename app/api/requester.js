@@ -30,9 +30,13 @@ const requester = (apiPath, successMessage, errorMessage, responseProcessor, all
       .then(res => {
         if (res.ok) {
           return res._bodyText
-        } else {
+        } else if (res.status.toString().startsWith('5')) {
+          return res._bodyText
+        } else if (res.status.toString().startsWith('4') ) {
           logger(apiPath + ' failed', res);
           throw new NetworkError('failed to fetch url ' + apiPath, res)
+        } else {
+          throw new Error('Misc Error at' + apiPath, res)
         }
       })
       .then(body => {

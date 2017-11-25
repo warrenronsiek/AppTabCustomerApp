@@ -5,11 +5,9 @@ import openTransaction from '../../api/openTransaction'
 import ccActions from '../actions/creditCardActions'
 import transactionActions from '../actions/trasactionActions'
 import {clearCart} from '../actions/cartActions'
-import * as _ from 'lodash'
 import {Actions} from 'react-native-router-flux'
 import logger from '../../api/loggingApi'
 import {writeToFirehose} from '../../api/firehose'
-import round from '../../common/round'
 
 const payThunk = () => (dispatch, getState) => {
   const state = getState();
@@ -43,6 +41,20 @@ const payThunk = () => (dispatch, getState) => {
     .then(res => dispatch(ccActions.payment.reset()))
     .catch(err => {
       dispatch(ccActions.payment.failure());
+      let message = JSON.parse(err.message);
+      switch (message.error.code) {
+        case 'card_declined':
+          alert('This card was declined.\n Please use a different card.');
+          break;
+        case 'withdrawal_count_limit_exceeded':
+          alert('Your withdraw limit has been exceeded.\n Please use a different card.');
+          break;
+        case 'insufficient_funds':
+          alert('This card has insufficient funds.\n Please use a different card.');
+          break;
+        default:
+          alert('Something went wrong with your card.\n Try again or use a different card.')
+      }
       logger('error charging card', err)
     })
 };

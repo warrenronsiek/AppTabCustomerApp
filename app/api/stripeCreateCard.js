@@ -5,6 +5,9 @@ import {stripePublicKey} from '../vars'
 import logger from './loggingApi'
 import requester from './requester'
 // invoke with stripeCreateCard(clientId, stripeToken, '4242 4242 4242 4242', '01', '2020', '123')
+const errorProcessor = err => {
+  throw new Error(JSON.stringify(err));
+};
 
 export default stripeCreateCard = (customerId, stripeToken, cardNumber, expMonth, expYear, cvc) => {
   const stripeUrl = 'https://api.stripe.com/v1/tokens';
@@ -39,7 +42,7 @@ export default stripeCreateCard = (customerId, stripeToken, cardNumber, expMonth
         logger('stripe create card url failed', res, 'stripeCreateCard.js')
       }
       const resBody = JSON.parse(res._bodyText);
-      return requester('/stripe-process-card', 'CardProcessingSuccessful', 'stripe processor failed')({
+      return requester('/stripe-process-card', 'CardProcessingSuccessful', 'stripe processor failed', null, true, errorProcessor)({
         cardToken: resBody.id,
         customerToken: stripeToken,
         customerId: customerId

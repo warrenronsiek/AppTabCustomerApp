@@ -108,7 +108,6 @@ class PaymentMethodSelection extends Component {
           {!this.props.paymentStatus.processing && !this.props.paymentStatus.success ?
             <Button onPress={() => this.props.addCard()} title="Add Card" style={{width: 110}}/> : null
           }
-          {this.props.paymentStatus.failure ? <Text>Something went wrong processing your card.</Text> : null}
           {this.props.paymentStatus.processing ? <View style={styles.spinnerContainer}><Spinner/></View> : null}
         </View>
       </View>
