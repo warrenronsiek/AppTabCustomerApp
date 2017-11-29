@@ -188,8 +188,7 @@ const activeMenuItem = (state = {}, action) => {
           ...optionSet,
           data: optionSet.data.map(option => ({...option, isSelected: false, optionSetId: optionSet.optionSetId}))
         })),
-        allOptionsSelected: false,
-        oneClickBuy: action.oneClickBuy || false
+        allOptionsSelected: false
       };
     case UPDATE_ACTIVE_ITEM_OPTIONS:
       return {

@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import PropTypes from 'prop-types'
-import {View, Text, TextInput, StyleSheet, Image} from 'react-native'
+import {View, TextInput, StyleSheet, Image} from 'react-native'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import Spinner from '../../common/spinner'
 import Button from '../../common/button'
@@ -116,7 +116,7 @@ const ccForm = ({
                 }) => (
   <View style={styles.container}>
     <View style={styles.cardImageContainer}>
-      <FontAwesomeIcon name="cc-stripe" size={60} style={{color: '#72BCD4'}}/>
+      <FontAwesomeIcon name="cc-stripe" size={60} style={{color: '#fb6821'}}/>
     </View>
     <View style={styles.formContainer}>
       <View style={styles.numberInputContainer}>

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {View, Text, StyleSheet} from 'react-native'
-import Ionicon from 'react-native-vector-icons/Ionicons'
+import Home from '../../assets/svgs/home'
 
 const styles = StyleSheet.create({
   iconContainer: {
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
 
 const OrderIconWithAlert = ({count}) => (
   <View style={styles.iconContainer}>
-    <Ionicon name="ios-notifications" size={36}/>
+    <Home width={35} height={35}/>
     {(count > 0)
       ? <View style={styles.numberCircle}>
         <Text style={{fontSize: 10, color: 'white'}}>{count.toString()}</Text>

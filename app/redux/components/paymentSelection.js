@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Text, StyleSheet, View, FlatList, Image} from 'react-native'
+import {Text, StyleSheet, View, FlatList} from 'react-native'
 import PaymentItem from './paymentListItem'
 import Button from '../../common/button'
 import Spinner from '../../common/spinner'
@@ -19,18 +19,18 @@ const styles = StyleSheet.create({
   cardImageContainer: {
     flex: 1,
     alignItems: 'center',
-    paddingTop: 100,
+    paddingTop: 70,
   },
   listContainer: {
-    flex: 2,
+    flex: 4,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: 'grey',
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: 'grey',
-    maxHeight: 270,
+    maxHeight: 300,
   },
   buttonContainer: {
-    flex: 1,
+    flex: 2,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -39,6 +39,14 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     justifyContent: 'center',
     flex: 1
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: '200',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    textAlign: 'center'
   }
 });
 
@@ -59,13 +67,18 @@ class PaymentMethodSelection extends Component {
       failure: PropTypes.bool,
       success: PropTypes.bool,
       processing: PropTypes.bool
-    })
+    }),
+    showDeleteButton: PropTypes.func.isRequired,
+    hideDeleteButton: PropTypes.func.isRequired,
+    deleteCard: PropTypes.func.isRequired
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.cardImageContainer}><Image source={require('../../assets/images/card_front.png')}/></View>
+        <View style={styles.cardImageContainer}>
+          <Text style={styles.headerText}>Please select your credit card.</Text>
+        </View>
         <View style={this.props.paymentListItems.length > 0 ? styles.listContainer : [styles.listContainer, {
           alignItems: 'center',
           justifyContent: 'center'
@@ -76,7 +89,11 @@ class PaymentMethodSelection extends Component {
                         renderItem={({item}) => <PaymentItem brand={item.brand} isSelected={item.isSelected}
                                                              last4={item.last4} ccToken={item.ccToken}
                                                              expMonth={item.expMonth} expYear={item.expYear}
-                                                             select={this.props.selectCard}/>}/>
+                                                             select={this.props.selectCard}
+                                                             showDeleteButton={this.props.showDeleteButton}
+                                                             hideDeleteButton={this.props.hideDeleteButton}
+                                                             deleteCard={this.props.deleteCard}
+                                                             deleteButton={item.deleteButton}/>}/>
             : <View style={{alignItems: 'center', justifyContent: 'center'}}>
               <Text>Please add a credit card. </Text><Text>You can do that by pressing the Add Card button.</Text>
             </View>
@@ -91,7 +108,6 @@ class PaymentMethodSelection extends Component {
           {!this.props.paymentStatus.processing && !this.props.paymentStatus.success ?
             <Button onPress={() => this.props.addCard()} title="Add Card" style={{width: 110}}/> : null
           }
-          {this.props.paymentStatus.failure ? <Text>Something went wrong processing your card.</Text> : null}
           {this.props.paymentStatus.processing ? <View style={styles.spinnerContainer}><Spinner/></View> : null}
         </View>
       </View>

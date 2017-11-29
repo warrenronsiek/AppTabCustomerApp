@@ -2,7 +2,6 @@ import {updateActiveItemOptions} from '../actions/menuActions'
 import {addToCart} from '../actions/cartActions'
 import {find, findIndex} from 'lodash'
 import {Actions} from 'react-native-router-flux'
-import oneClickBuyResolver from '../../common/oneClickBuyResolver'
 
 const menuItemOptionsUpdateThunk = (optionSetId, optionId) => (dispatch, getState) => {
   let activeItem = JSON.parse(JSON.stringify(getState().activeMenuItem));
@@ -21,16 +20,12 @@ const menuItemOptionsUpdateThunk = (optionSetId, optionId) => (dispatch, getStat
 };
 
 const finishedMenuItemOptionsSelectionThunk = () => (dispatch, getState) => {
-  const state = getState(), activeItem = state.activeMenuItem, oneClickBuy = activeItem.oneClickBuy;
+  const state = getState(), activeItem = state.activeMenuItem;
   const newDescription = activeItem.itemOptions.map(optionSet => {
     const selected = find(optionSet.data, ['isSelected', true]);
     return optionSet.optionSetName + ': ' + selected.optionName
   });
-  if (oneClickBuy) {
-    oneClickBuyResolver(activeItem)(dispatch, getState)
-  } else {
-    dispatch(addToCart(activeItem.itemName, newDescription, activeItem.price, activeItem.tags, activeItem.category, activeItem.itemId, activeItem.venueId, activeItem.itemOptions));
-  }
+  dispatch(addToCart(activeItem.itemName, newDescription, activeItem.price, activeItem.tags, activeItem.category, activeItem.itemId, activeItem.venueId, activeItem.itemOptions));
   Actions.pop();
 };
 

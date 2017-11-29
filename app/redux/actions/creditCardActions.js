@@ -2,6 +2,7 @@
  * Created by warren on 4/1/17.
  */
 import {createActions} from 'redux-actions'
+import {ccTokenApiQueried} from "../reducers/creditCardReducer";
 
 export default ccActions = createActions({
   REAL: {
@@ -19,6 +20,7 @@ export default ccActions = createActions({
     ADD: (ccToken, last4, brand, exp_month, exp_year, isDefault) => ({ccToken, last4, brand, exp_month, exp_year, isDefault}),
     DELETE: ccToken => ccToken,
     SET_SELECTED: ccToken => ccToken,
+    TOGGLE_DELETE_BUTTON: ({ccToken, bool}) => ({ccToken, bool})
   },
   API_QUERIED: bool => bool,
   PAYMENT: {

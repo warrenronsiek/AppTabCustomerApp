@@ -2,7 +2,7 @@
  * Created by warren on 5/14/17.
  */
 import React, {PropTypes, Component} from 'react'
-import {View, TouchableHighlight, Text, StyleSheet} from 'react-native'
+import {View, TouchableHighlight, Text, StyleSheet, Image} from 'react-native'
 import Entypo from 'react-native-vector-icons/Entypo'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -13,12 +13,12 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Octicons from 'react-native-vector-icons/Octicons'
 import Zocial from 'react-native-vector-icons/Zocial'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
+import Order from '../assets/svgs/order'
 
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#007AFF',
-    borderRadius: 5,
+    backgroundColor: 'transparent',
     width: 90,
     height: 50,
     alignItems: 'center',
@@ -59,6 +59,10 @@ const GenerateIcon = ({iconName, iconLibrary, iconSize, color}) => {
       return <Zocial color={color} name={iconName} size={iconSize}/>;
     case 'SimpleLineIcons':
       return <SimpleLineIcons color={color} name={iconName} size={iconSize}/>;
+    case 'Ben':
+      return <View style={{marginTop:-3}}>
+        <Order height={iconSize} width={iconSize} fill='white'/>
+      </View>;
     default:
       return <Entypo color={color} name={iconName} size={iconSize}/>
   }
@@ -70,14 +74,13 @@ class Button extends Component {
     iconProps: PropTypes.shape({
       iconName: PropTypes.string.isRequired,
       iconLibrary: PropTypes.oneOf(['Entypo', 'EvilIcons', 'FontAwesome', 'Foundation', 'Ionicons', 'MaterialIcons',
-        'MaterialCommunityIcons', 'Octicons', 'Zocial', 'SimpleLineIcons']),
+        'MaterialCommunityIcons', 'Octicons', 'Zocial', 'SimpleLineIcons', 'Ben']),
       iconSize: PropTypes.number.isRequired,
       iconColor: PropTypes.string
     }),
     style: PropTypes.any,
     onPress: PropTypes.func.isRequired,
     disabled: PropTypes.bool,
-    underlayColor: PropTypes.string,
     containerStyle: PropTypes.any,
     textStyle: PropTypes.any
   };
@@ -93,8 +96,11 @@ class Button extends Component {
         style={!this.props.disabled
           ? [styles.button, this.props.style]
           : [styles.button, this.props.style, {backgroundColor: 'grey'}]}
-        underlayColor={this.props.underlayColor || 'white'}>
+        underlayColor={'transparent'}>
         <View style={[styles.container, this.props.containerStyle]}>
+          {!this.props.disabled
+           ? (<Image style={[styles.container, this.props.containerStyle, {position: 'absolute', width: '100%', height: '100%'}]} source={require('../assets/images/btn-gradient.png')}>
+
           {this.props.iconProps
             ? <GenerateIcon iconName={this.props.iconProps.iconName}
                             iconLibrary={this.props.iconProps.iconLibrary}
@@ -102,6 +108,16 @@ class Button extends Component {
                             color={this.props.iconProps.iconColor || 'white'}/>
             : null}
           {this.props.title ? <Text style={[styles.text, this.props.textStyle]}>{this.props.title}</Text> : null}
+          </Image> )
+          : (<View>
+              {this.props.iconProps
+            ? <GenerateIcon iconName={this.props.iconProps.iconName}
+                            iconLibrary={this.props.iconProps.iconLibrary}
+                            iconSize={this.props.iconProps.iconSize}
+                            color={this.props.iconProps.iconColor || 'white'}/>
+            : null}
+          {this.props.title ? <Text style={[styles.text, this.props.textStyle]}>{this.props.title}</Text> : null}
+            </View>)}
         </View>
       </TouchableHighlight>)
 

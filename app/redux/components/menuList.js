@@ -64,8 +64,6 @@ export default class MenuList extends Component {
     addToCart: PropTypes.func.isRequired,
     selectionsCount: PropTypes.number,
     apiQueried: PropTypes.bool.isRequired,
-    oneClickBuy: PropTypes.func.isRequired,
-    defaultCardExists: PropTypes.bool.isRequired
   };
 
   render() {
@@ -82,8 +80,6 @@ export default class MenuList extends Component {
                                                            itemId={item.itemId}
                                                            viewablePrice={item.viewablePrice} tags={item.tags}
                                                            addToCart={this.props.addToCart}
-                                                           oneClickBuy={this.props.oneClickBuy}
-                                                           defaultCardExists={this.props.defaultCardExists}
                      />}
         />}
       </View>

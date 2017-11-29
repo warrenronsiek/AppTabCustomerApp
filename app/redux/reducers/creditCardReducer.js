@@ -3,6 +3,9 @@
  */
 import ccActions from '../actions/creditCardActions'
 import {handleActions, handleAction} from 'redux-actions'
+import {sortBy} from 'lodash'
+
+const sorter = cardList => sortBy(cardList, ['expYear', 'expMonth', 'brand', 'last4']);
 
 const creditCard = handleActions({
   [ccActions.real.update.number]: (state, action) => ({...state, cardNumber: action.payload}),
@@ -14,19 +17,24 @@ const creditCard = handleActions({
 }, {});
 
 const ccTokens = handleActions({
-    [ccActions.token.add]: (state, action) => [...state, {
+    [ccActions.token.add]: (state, action) => sorter([...state, {
       ccToken: action.payload.ccToken,
       brand: action.payload.brand,
       last4: action.payload.last4,
       expMonth: action.payload.exp_month,
       expYear: action.payload.exp_year,
-      isSelected: action.payload.isDefault || false
-    }],
-    [ccActions.token.delete]: (state, action) => state.filter(item => item.ccToken !== action.ccToken),
-    [ccActions.token.setSelected]: (state, action) => [
+      isSelected: action.payload.isDefault || false,
+      deleteButton: false
+    }]),
+    [ccActions.token.delete]: (state, action) => sorter([...state.filter(item => item.ccToken !== action.payload)]),
+    [ccActions.token.setSelected]: (state, action) => sorter([
       ...state.filter(item => item.ccToken !== action.payload).map(item => ({...item, isSelected: false})),
       {...state.filter(item => item.ccToken === action.payload)[0], isSelected: true}
-    ],
+    ]),
+    [ccActions.token.toggleDeleteButton]: (state, action) => sorter([
+      ...state.filter(item => item.ccToken !== action.payload.ccToken),
+      {...state.filter(item => item.ccToken === action.payload.ccToken)[0], deleteButton: action.payload.bool}
+    ])
   }, []
 );
 

@@ -5,22 +5,22 @@ import {connect} from 'react-redux'
 import {Actions} from 'react-native-router-flux'
 import paymentSelection from '../components/paymentSelection'
 import payThunk from '../middleware/payThunk'
-import {sortBy} from 'lodash'
 import selectCard from '../middleware/selectCardThunk'
+import ccActions from '../actions/creditCardActions'
+import deleteCardThunk from '../middleware/deleteCardThunk'
 
-const mapStateToProps = (state) => {
-  return {
-    paymentListItems: sortBy(state.ccTokens, ['expYear', 'expMonth', 'brand', 'last4']),
-    paymentStatus: state.paymentStatus
-  }
-};
+const mapStateToProps = (state) => ({
+  paymentListItems: state.ccTokens,
+  paymentStatus: state.paymentStatus
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    selectCard: ccToken => dispatch(selectCard(ccToken)),
-    addCard: () => Actions.cardForm(),
-    pay: () => dispatch(payThunk())
-  }
-};
+const mapDispatchToProps = (dispatch) => ({
+  selectCard: ccToken => dispatch(selectCard(ccToken)),
+  addCard: () => Actions.cardForm(),
+  pay: () => dispatch(payThunk()),
+  showDeleteButton: (ccToken) => dispatch(ccActions.token.toggleDeleteButton({ccToken, bool: true})),
+  hideDeleteButton: (ccToken) => dispatch(ccActions.token.toggleDeleteButton({ccToken, bool: false})),
+  deleteCard: ccToken => dispatch(deleteCardThunk(ccToken))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(paymentSelection)
