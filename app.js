@@ -21,6 +21,7 @@ import ResetPasswordScene from './app/scenes/passwordResetScene'
 import SimpleIcons from 'react-native-vector-icons/SimpleLineIcons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import transactionActions from './app/redux/actions/trasactionActions'
+import Venues from './app/scenes/venueScene'
 import Menu from './app/assets/svgs/menu'
 
 const RouterWithRedux = connect()(Router);
@@ -40,6 +41,7 @@ class AppTabCustomerApp extends Component {
       <Provider store={store}>
         <RouterWithRedux>
           <Scene key="root">
+            <Scene key='venue' component={Venues} title='Venues'/>
             <Scene key="login" component={Login} title="Login"/>
             <Scene key="register" component={Register} title="Register"/>
             <Scene key="passwordreset" component={ResetPasswordScene} title="Reset Password"
