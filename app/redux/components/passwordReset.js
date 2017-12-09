@@ -92,7 +92,14 @@ const renderButton = (stage, code, phoneNumber, password, submitPhoneNumber, sub
       return (
         <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
           <Button onPress={() => submitCodePassword(code, password, phoneNumber)} title="Done" style={styles.buttonStyle}
-                  disabled={(!code ? true : !((code.length === 6) && passwordValid && (password === confirmPassword)))}/>
+                  disabled={(() => {
+                    if (!code) {
+                      return true
+                    } else {
+                      console.log(passwordValid);
+                      return !((code.length === 6) && passwordValid.isValid && (password === confirmPassword))
+                    }
+                  })()}/>
           <Button onPress={() => resendCode(phoneNumber)} style={styles.buttonStyle}
                          title="Resend Confirmation Code"/>
         </View>
@@ -160,7 +167,7 @@ const passwordReset = ({
       <View style={styles.buttonSubContainer}>
       {!processing
         ? renderButton(stage, code, phoneNumber, password, submitPhoneNumber, submitCodePassword, resendCode, confirmPassword, passwordValid)
-        : <Spinner style={{marginTop: 20}}/>}
+        : <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}><Spinner style={{marginTop: 20}}/></View>}
       {wrongCodeError
         ? <Text>Looks like you entered the wrong code!</Text>
         : null}
