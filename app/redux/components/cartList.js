@@ -145,7 +145,7 @@ export default class CartList extends Component {
           <View style={styles.checkoutButtonContainer}>
             {this.props.checkingOut
               ? <Spinner/>
-              : <Button onPress={() => this.props.checkout()} title="Checkout" style={{width: 120, marginTop: 20}}/>}
+              : <Button onPress={() => this.props.checkout()} title="Checkout" style={{width: '90%', marginTop: 20}}/>}
           </View>
         </View>
       </View>

@@ -47,6 +47,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
     textAlign: 'center'
+  },
+  buttonStyle: {
+    marginTop: 10,
+    width: '90%'
   }
 });
 
@@ -103,10 +107,10 @@ class PaymentMethodSelection extends Component {
           {!this.props.paymentStatus.processing && !this.props.paymentStatus.success ?
             <Button onPress={() => this.props.pay()} title="Pay"
                     disabled={!_.some(this.props.paymentListItems, 'isSelected')}
-                    style={{marginBottom: 10, width: 110}}/> : null
+                    style={styles.buttonStyle}/> : null
           }
           {!this.props.paymentStatus.processing && !this.props.paymentStatus.success ?
-            <Button onPress={() => this.props.addCard()} title="Add Card" style={{width: 110}}/> : null
+            <Button onPress={() => this.props.addCard()} title="Add Card" style={styles.buttonStyle}/> : null
           }
           {this.props.paymentStatus.processing ? <View style={styles.spinnerContainer}><Spinner/></View> : null}
         </View>
