@@ -3,8 +3,6 @@ import {UPDATE_ACTIVE_VENUE, UPDATE_VENUE} from '../actions/venueActions'
 const venues = (state = [], action) => {
   switch (action.type) {
     case UPDATE_VENUE:
-      console.log('hit the reducer');
-      console.log(state);
       return [...state.filter(venue => venue.venueId !== action.payload.venueId), {...action.payload}].sort((a, b) => a > b);
     default:
       return state

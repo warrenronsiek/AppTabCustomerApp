@@ -2,6 +2,7 @@
  * Created by warren on 1/23/17.
  */
 import {UPDATE_NODE_API, UPDATE_NODE_BLE, SET_ACTIVE_NODE, SET_NODE_QUERIED} from '../actions/nodeActions'
+import {UPDATE_ACTIVE_VENUE} from "../actions/venueActions";
 import uuid from 'react-native-uuid'
 import * as _ from 'lodash'
 import chunk from 'lodash/fp/chunk'
@@ -33,7 +34,7 @@ viewableNodes has a structure of :
  },
 ]
 */
-export const nodes = (state = {nodeList: [], viewableNodes: [], showNodes: false}, action) => {
+export const nodes = (state = {nodeList: [], viewableNodes: [], showNodes: false, activeVenueId: ''}, action) => {
   let updatedNode, oldNode, filteredState;
   switch (action.type) {
     case UPDATE_NODE_BLE:
@@ -83,16 +84,18 @@ export const nodes = (state = {nodeList: [], viewableNodes: [], showNodes: false
         };
         newNodeList = [...filteredState, updatedNode]
       }
-      return {
-        nodeList: newNodeList,
-        viewableNodes: flow(
+      let viewableNodes = flow(
           filter(node => !!node.venueId),
           map(node => _.pick(node, ['venueId', 'nodeId'])),
+          filter(node => node.venueId === state.activeVenueId),
           sortBy(node => node.nodeId.slice(-3)),
           chunk(3),
           map(nodeChunk => ({data: nodeChunk, key: nodeChunk[0].nodeId}))
-        )(newNodeList),
-        showNodes: true
+        )(newNodeList);
+      return {
+        ...state, nodeList: newNodeList,
+        viewableNodes: viewableNodes,
+        showNodes: viewableNodes.length > 0
       };
     case SET_NODE_QUERIED:
       oldNode = _.find(state.nodeList, ['nodeId', action.nodeId]);
@@ -113,6 +116,21 @@ export const nodes = (state = {nodeList: [], viewableNodes: [], showNodes: false
         };
         return {...state, nodeList: [...filteredState, updatedNode], viewableNodes: []}
       }
+    case UPDATE_ACTIVE_VENUE:
+      let viewableNodes2 = flow(
+          filter(node => !!node.venueId),
+          map(node => _.pick(node, ['venueId', 'nodeId'])),
+          filter(node => node.venueId === action.payload.venueId),
+          sortBy(node => node.nodeId.slice(-3)),
+          chunk(3),
+          map(nodeChunk => ({data: nodeChunk, key: nodeChunk[0].nodeId}))
+        )(state.nodeList);
+      return {
+        ...state,
+        activeVenueId: action.payload.venueId,
+        viewableNodes: viewableNodes2,
+        showNodes: viewableNodes2.length > 0
+      };
     default:
       return state
   }

@@ -47,7 +47,7 @@ class AppTabCustomerApp extends Component {
             <Scene key="passwordreset" component={ResetPasswordScene} title="Reset Password"
                    back onBack={() => passwordResetOnBack()}/>
             <Scene key="code" component={ConfirmCodeScene} title="Confirm Code"/>
-            <Scene key="nodes" component={Nodes} title="Table Selection" back/>
+            <Scene key="nodes" component={Nodes} title="Table Selection" back onBack={() => Actions.venue()}/>
             <Scene key="tabs" tabs={true} hideNavBar tabBarIconContainerStyle={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
               <Scene key="orders" component={Request} title="Your Orders" icon={bell}
                      back onBack={() => Actions.nodes()} onEnter={() => store.dispatch(transactionActions.alert.clear())}/>
@@ -60,7 +60,7 @@ class AppTabCustomerApp extends Component {
             </Scene>
             <Scene key="optionsModal" component={OptionsSelectionModal} title="Options" back modal/>
             <Scene key="placeholder" component={Placeholder} title="Placeholder" back/>
-            <Scene key="checkout" component={CheckoutScene} title="Checkout" back/>
+            <Scene key="checkout" component={CheckoutScene} title="Checkout" back onBack={() => Actions.tabs()}/>
             <Scene key="cardForm" component={CardFormScene} title="Card Details" back/>
           </Scene>
         </RouterWithRedux>
