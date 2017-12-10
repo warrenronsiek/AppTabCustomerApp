@@ -96,7 +96,6 @@ const renderButton = (stage, code, phoneNumber, password, submitPhoneNumber, sub
                     if (!code) {
                       return true
                     } else {
-                      console.log(passwordValid);
                       return !((code.length === 6) && passwordValid.isValid && (password === confirmPassword))
                     }
                   })()}/>
@@ -199,7 +198,6 @@ passwordReset.propTypes = {
     hasDigit: PropTypes.bool,
     hasSymbol: PropTypes.bool,
     hasLength: PropTypes.bool,
-    matches: PropTypes.bool
   }),
   wrongCodeError: PropTypes.bool,
   unknownError: PropTypes.bool

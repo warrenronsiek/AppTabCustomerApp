@@ -44,8 +44,6 @@ class AppTabCustomerApp extends Component {
             <Scene key='venue' component={Venues} title='Venues'/>
             <Scene key="login" component={Login} title="Login"/>
             <Scene key="register" component={Register} title="Register"/>
-            <Scene key="passwordreset" component={ResetPasswordScene} title="Reset Password"
-                   back onBack={() => passwordResetOnBack()}/>
             <Scene key="code" component={ConfirmCodeScene} title="Confirm Code"/>
             <Scene key="nodes" component={Nodes} title="Table Selection" back onBack={() => Actions.venue()}/>
             <Scene key="tabs" tabs={true} hideNavBar tabBarIconContainerStyle={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
@@ -58,6 +56,8 @@ class AppTabCustomerApp extends Component {
               <Scene key="options" component={DrawerComponent} title="Options" icon={options}
                      back onBack={() => Actions.nodes()}/>
             </Scene>
+            <Scene key="passwordreset" component={ResetPasswordScene} title="Reset Password"
+                   back onBack={() => passwordResetOnBack()}/>
             <Scene key="optionsModal" component={OptionsSelectionModal} title="Options" back modal/>
             <Scene key="placeholder" component={Placeholder} title="Placeholder" back/>
             <Scene key="checkout" component={CheckoutScene} title="Checkout" back onBack={() => Actions.tabs()}/>
