@@ -8,6 +8,8 @@ import * as _ from "lodash";
 import getNodeInfo from "../api/nodeApi";
 import store from '../redux/store'
 import {updateVenue} from "../redux/actions/venueActions";
+import {BluetoothStatus} from 'react-native-bluetooth-status'
+
 
 const noble = require('react-native-ble');
 
@@ -17,11 +19,18 @@ const componentWillMount = () => {
 
 const componentDidMount = () => {
   const waiter = function () {
-    if (noble.state === 'poweredOn') {
-      noble.startScanning([], true);
-    } else {
-      setTimeout(waiter, 100)
-    }
+    BluetoothStatus.state()
+      .then(res => {
+        if (!res) {
+          alert('Your phone\'s bluetooth is turned off.\nThe app won\'t be able to detect your restaurant until it is turned on.');
+          throw new Error('Bluetooth not turned on.')
+        } else if (noble.state === 'poweredOn') {
+          noble.startScanning([], true);
+        } else {
+          throw new Error('Noble not powered on.')
+        }
+      })
+      .catch(err => setTimeout(waiter, 100));
   };
   waiter()
 };
