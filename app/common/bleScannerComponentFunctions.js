@@ -19,7 +19,9 @@ const componentWillMount = () => {
 
 const componentDidMount = () => {
   BluetoothStatus.state().then(res => {
-    alert('Your phone\'s bluetooth is turned off.\nThe app won\'t be able to detect your restaurant until it is turned on.');
+    if (!res) {
+      alert('Your phone\'s bluetooth is turned off.\nThe app won\'t be able to detect your restaurant until it is turned on.');
+    }
   });
   const waiter = function () {
     if (noble.state === 'poweredOn') {

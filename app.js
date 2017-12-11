@@ -42,8 +42,8 @@ class AppTabCustomerApp extends Component {
         <RouterWithRedux>
           <Scene key="root">
             <Scene key='venue' component={Venues} title='Venues'/>
-            <Scene key="login" component={Login} title="Login"/>
             <Scene key="register" component={Register} title="Register"/>
+            <Scene key="login" component={Login} title="Login"/>
             <Scene key="code" component={ConfirmCodeScene} title="Confirm Code"/>
             <Scene key="nodes" component={Nodes} title="Table Selection" back onBack={() => Actions.venue()}/>
             <Scene key="tabs" tabs={true} hideNavBar tabBarIconContainerStyle={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
