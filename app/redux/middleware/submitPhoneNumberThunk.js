@@ -9,10 +9,8 @@ import {writeToFirehose} from "../../api/firehose";
 const submitUserNameThunk = (phoneNumber) => (dispatch) => {
   Promise.resolve(dispatch(passwordResetActions.processing()))
     .then(res => {
-      console.log('about to send code');
       return sendPasswordResetCode({phoneNumber: phoneFormatter.normalize(phoneNumber)})})
     .then(res => {
-      console.log('sent code');
       return Promise.resolve(dispatch(passwordResetActions.stage.codePassword()))})
     .then(() => writeToFirehose('RequestedPasswordReset'))
     .catch(err => {

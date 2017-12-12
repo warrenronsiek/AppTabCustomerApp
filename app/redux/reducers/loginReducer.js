@@ -54,7 +54,7 @@ export const loginState = (state = {}, action) => {
 };
 
 export const loginParams = (state = __DEV__
-                                ? {password: devData.loginParams.password, phoneNumber: devData.loginParams.phoneNumber510883}
+                                ? {password: devData.loginParams.password, phoneNumber: devData.loginParams.phoneNumber}
                                 : {password: '', phoneNumber: ''}, action) => {
   switch (action.type) {
     case UPDATE_PHONE_NUMBER:

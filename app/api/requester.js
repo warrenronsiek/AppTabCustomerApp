@@ -29,7 +29,6 @@ const requester = (apiPath, successMessage, errorMessage, responseProcessor, all
 
     const desiredFetch = () => fetch(url + apiPath, desiredFetchParams)
       .then(res => {
-        console.log(apiPath, res);
         if (res.ok) {
           return res._bodyText
         } else if (res.status.toString().startsWith('5')) {

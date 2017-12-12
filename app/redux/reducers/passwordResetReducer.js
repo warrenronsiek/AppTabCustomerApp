@@ -9,7 +9,6 @@ import passwordValidator from '../../common/passwordValidator'
 
 const passwordResetData = handleActions({
   [passwordResetActions.update.password]: (state, action) => {
-    console.log(action);
     return {
     ...state,
     password: action.payload,

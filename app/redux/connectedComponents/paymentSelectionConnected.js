@@ -11,7 +11,8 @@ import deleteCardThunk from '../middleware/deleteCardThunk'
 
 const mapStateToProps = (state) => ({
   paymentListItems: state.ccTokens,
-  paymentStatus: state.paymentStatus
+  paymentStatus: state.paymentStatus,
+  gotCreditCards: state.ccTokenApiQueried,
 });
 
 const mapDispatchToProps = (dispatch) => ({
