@@ -18,7 +18,7 @@ if (__DEV__) {
   identityPoolId = 'us-west-2:03e3c8df-0ef1-4b83-a0e2-a4fc652a2815';
   identityPoolName = 'cognito-idp.us-west-2.amazonaws.com/us-west-2_hAAdk6UCT';
   apiKey = 'ZACNEBHeBi6ldZZYb6Dzq5QtM8ADM4Qy2LgcpUO6';
-  useDevData = true;
+  useDevData = false;
   // url = 'https://3qqlpbfcv1.execute-api.us-west-2.amazonaws.com/prod';
   // stripePublicKey = 'pk_live_FHmywJaXessS64PZR8tK5oOG';
   // firehoseName = 'prod-apptab-data-stream';

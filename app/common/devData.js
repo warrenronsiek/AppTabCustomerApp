@@ -1,5 +1,6 @@
 import {useDevData} from '../vars'
 
+console.log(useDevData);
 const devData = useDevData
   ? {
     nodeList: [{
@@ -57,6 +58,11 @@ const devData = useDevData
     activeVenueId: '5913c829b6739ed3b963',
     loginParams: {
       password: 'P@33word', phoneNumber: '(510) 883-4346'
+    },
+    venues: [{venueId: '5913c829b6739ed3b963', address: '1234 Market Street', venueName: 'Stu\'s Stews'}],
+    deviceToken: {
+      token: '9003c821a24020e164201a223162fb1a6ba2a9cc96e6750f2dfdf69cda54e39e',
+      os: 'ios'
     }
   }
   : {
@@ -66,7 +72,8 @@ const devData = useDevData
     loginParams: {
       password: '',
       phoneNumber: '',
-    }
+    },
+    venues: []
   };
 
 export {devData}
