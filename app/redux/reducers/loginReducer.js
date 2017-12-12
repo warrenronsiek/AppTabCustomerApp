@@ -15,6 +15,7 @@ import {
   SET_DEVICE_TOKEN
 } from '../actions/loginActions';
 import phoneNumberHandler from '../../common/phoneNumberHandler'
+import {devData} from "../../common/devData";
 
 export const auth = (state = {}, action) => {
   switch (action.type) {
@@ -53,7 +54,7 @@ export const loginState = (state = {}, action) => {
 };
 
 export const loginParams = (state = __DEV__
-                                ? {password: 'P@33word', phoneNumber: '(510) 883-4346'}
+                                ? {password: devData.loginParams.password, phoneNumber: devData.loginParams.phoneNumber510883}
                                 : {password: '', phoneNumber: ''}, action) => {
   switch (action.type) {
     case UPDATE_PHONE_NUMBER:

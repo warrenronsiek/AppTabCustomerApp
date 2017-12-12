@@ -24,6 +24,7 @@ const selectNode = (nodeId) => (dispatch, getState) => {
       return Promise.all([getMenu({venueId: state.activeNode.venueId}), getVenue({venueId: state.activeNode.venueId})])
     })
     .then(res => {
+      console.log('gotMenu', res);
       res[0].Items.forEach(item => {
         dispatch(updateMenuItem(
           item.ItemName.S,
@@ -47,6 +48,7 @@ const selectNode = (nodeId) => (dispatch, getState) => {
     })
     .then(res => writeToFirehose('NodeSelected'))
     .catch(err => {
+      console.log(err);
       logger('error selecting node', err)})
 };
 

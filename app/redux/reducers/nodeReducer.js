@@ -11,30 +11,13 @@ import filter from 'lodash/fp/filter'
 import map from 'lodash/fp/map'
 import pick from 'lodash/fp/pick'
 import flow from 'lodash/fp/flow'
+import {devData} from "../../common/devData";
 
-/*
-viewableNodes has a structure of :
-[
- {
-  data: [
-    {nodeId, venueId},
-    {nodeId, venueId},
-    {nodeId, venueId}
-  ],
-  key: somekey
- },
- ...
-  {
-  data: [
-    {nodeId, venueId},
-    {nodeId, venueId},
-    {nodeId, venueId}
-  ],
-  key: someotherkey
- },
-]
-*/
-export const nodes = (state = {nodeList: [], viewableNodes: [], showNodes: false, activeVenueId: ''}, action) => {
+export const nodes = (state = {
+  nodeList: __DEV__ ? devData.nodeList : [],
+  viewableNodes: __DEV__ ? devData.viewableNodes : [],
+  showNodes: __DEV__, activeVenueId: __DEV__ ? devData.activeVenueId : ''
+}, action) => {
   let updatedNode, oldNode, filteredState;
   switch (action.type) {
     case UPDATE_NODE_BLE:
@@ -85,13 +68,13 @@ export const nodes = (state = {nodeList: [], viewableNodes: [], showNodes: false
         newNodeList = [...filteredState, updatedNode]
       }
       let viewableNodes = flow(
-          filter(node => !!node.venueId),
-          map(node => _.pick(node, ['venueId', 'nodeId'])),
-          filter(node => node.venueId === state.activeVenueId),
-          sortBy(node => node.nodeId.slice(-3)),
-          chunk(3),
-          map(nodeChunk => ({data: nodeChunk, key: nodeChunk[0].nodeId}))
-        )(newNodeList);
+        filter(node => !!node.venueId),
+        map(node => _.pick(node, ['venueId', 'nodeId'])),
+        filter(node => node.venueId === state.activeVenueId),
+        sortBy(node => node.nodeId.slice(-3)),
+        chunk(3),
+        map(nodeChunk => ({data: nodeChunk, key: nodeChunk[0].nodeId}))
+      )(newNodeList);
       return {
         ...state, nodeList: newNodeList,
         viewableNodes: viewableNodes,
@@ -118,13 +101,13 @@ export const nodes = (state = {nodeList: [], viewableNodes: [], showNodes: false
       }
     case UPDATE_ACTIVE_VENUE:
       let viewableNodes2 = flow(
-          filter(node => !!node.venueId),
-          map(node => _.pick(node, ['venueId', 'nodeId'])),
-          filter(node => node.venueId === action.payload.venueId),
-          sortBy(node => node.nodeId.slice(-3)),
-          chunk(3),
-          map(nodeChunk => ({data: nodeChunk, key: nodeChunk[0].nodeId}))
-        )(state.nodeList);
+        filter(node => !!node.venueId),
+        map(node => _.pick(node, ['venueId', 'nodeId'])),
+        filter(node => node.venueId === action.payload.venueId),
+        sortBy(node => node.nodeId.slice(-3)),
+        chunk(3),
+        map(nodeChunk => ({data: nodeChunk, key: nodeChunk[0].nodeId}))
+      )(state.nodeList);
       return {
         ...state,
         activeVenueId: action.payload.venueId,

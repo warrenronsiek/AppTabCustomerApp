@@ -9,6 +9,7 @@ import decode from 'jwt-decode'
 import store from '../redux/store'
 import {updateAuth} from '../redux/actions/loginActions'
 import {updateCredentials} from "./firehose"
+import {get} from 'lodash'
 
 const requester = (apiPath, successMessage, errorMessage, responseProcessor, allowTokenRefresh = true, errorProcessor) => (postBody) => {
     const state = store.getState();
@@ -20,7 +21,7 @@ const requester = (apiPath, successMessage, errorMessage, responseProcessor, all
       headers: {'x-api-key': apiKey},
       body: JSON.stringify({
         refreshToken: state.auth.refreshToken,
-        userName: phoneFormatter.normalize(state.loginParams.phoneNumber),
+        userName: phoneFormatter.normalize(get(state, 'loginParams.phoneNumber', '')),
         password: state.loginParams.password,
         lastRefresh: state.auth.updateTime
       })
@@ -28,6 +29,7 @@ const requester = (apiPath, successMessage, errorMessage, responseProcessor, all
 
     const desiredFetch = () => fetch(url + apiPath, desiredFetchParams)
       .then(res => {
+        console.log(apiPath, res);
         if (res.ok) {
           return res._bodyText
         } else if (res.status.toString().startsWith('5')) {
