@@ -4,7 +4,7 @@ import Proptypes from 'prop-types'
 import Svg, {Path} from 'react-native-svg'
 
 const Menu = ({fill, width, height}) => (
-  <View style={{alignItems: 'center', justifyContent: 'flex-end', marginLeft: 6, marginBottom: 4}}>
+  <View style={{alignItems: 'center', justifyContent: 'flex-end', marginLeft: 6, marginBottom: -12}}>
     <Svg viewBox="0 0 517.1 288.2" width={width} height={height}>
       <Path fill={fill ? fill : '#4d4d4d'} d="M63.3,354.5h102.1v-13.1H63.3V354.5z M63.3,306h102.1v-13.1H63.3V306z M63.3,257.4h102.1v-13.1H63.3V257.4z
 	 M63.3,208.8h102.1v-13.1H63.3V208.8z M63.3,163.8h102.1v-103H63.3V163.8z M371.5,60.1H269.4v13.1h102.1V60.1z M371.5,201.5H269.4

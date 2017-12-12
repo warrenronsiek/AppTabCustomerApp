@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     minWidth: 40,
     minHeight: 20,
+    marginBottom: 7
   },
   numberCircle: {
     minWidth: 16,

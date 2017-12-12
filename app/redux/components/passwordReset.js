@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 3,
     height: 40,
-    paddingLeft: 40
+    paddingLeft: 40,
+    fontSize: 18
   },
   instructionsContainer: {
     alignItems: 'center',

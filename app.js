@@ -42,11 +42,11 @@ class AppTabCustomerApp extends Component {
         <RouterWithRedux>
           <Scene key="root">
             <Scene key='venue' component={Venues} title='Venues'/>
-            <Scene key="register" component={Register} title="Register"/>
             <Scene key="login" component={Login} title="Login"/>
+            <Scene key="register" component={Register} title="Register"/>
             <Scene key="code" component={ConfirmCodeScene} title="Confirm Code"/>
             <Scene key="nodes" component={Nodes} title="Table Selection" back onBack={() => Actions.venue()}/>
-            <Scene key="tabs" tabs={true} hideNavBar tabBarIconContainerStyle={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
+            <Scene key="tabs" tabs={true} tabBarIconContainerStyle={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
               <Scene key="orders" component={Request} title="Your Orders" icon={bell}
                      back onBack={() => Actions.nodes()} onEnter={() => store.dispatch(transactionActions.alert.clear())}/>
               <Scene key="menu" component={MenuScene} title="Menu" icon={drink} initial={true}

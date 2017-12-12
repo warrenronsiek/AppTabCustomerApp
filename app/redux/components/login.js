@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types'
-import {StyleSheet, Text, View, TextInput, Dimensions} from 'react-native';
+import {StyleSheet, Text, View, TextInput, Dimensions, ScrollView} from 'react-native';
 import Spinner from '../../common/spinner'
 import Button from '../../common/button'
 
@@ -14,7 +14,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    minHeight: 850
   },
   welcomeContainer: {
     alignItems: 'center',
@@ -28,10 +29,10 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 2,
     width: width,
-    maxHeight: 100
+    maxHeight: 100,
   },
   textInputContainer: {
-    flexDirection: 'column',
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     borderTopWidth: StyleSheet.hairlineWidth,
@@ -41,7 +42,8 @@ const styles = StyleSheet.create({
   textInputBox: {
     height: 40,
     flex: 1,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 18
   },
   buttonContainer: {
     marginTop: 10,
@@ -57,7 +59,7 @@ const styles = StyleSheet.create({
 });
 
 const login = ({validationError, networkError, unknownError, loggingIn, phoneNumber, password, updatePhoneNumber, updatePassword, onLogin, navToRegister, navToPasswordReset}) => (
-  <View style={styles.container}>
+  <ScrollView contentContainerStyle={styles.container}>
     <View style={styles.welcomeContainer}>
       <Text style={styles.welcomeHeadline}>
         Please login/register to proceed.
@@ -86,7 +88,7 @@ const login = ({validationError, networkError, unknownError, loggingIn, phoneNum
         ? null
         : <Button onPress={() => navToPasswordReset()} title="Forgot Password" style={styles.buttonStyle}/>}
     </View>
-  </View>
+  </ScrollView>
 );
 
 login.propTypes = {
