@@ -7,9 +7,7 @@ import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
 function configureStore(initialState) {
-  let store = __DEV__
-    ? createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))
-    : createStore(reducer, composeWithDevTools(applyMiddleware(thunk)), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()) ;
+  let store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
 
   if (module.hot) {
     module.hot.accept(() => {

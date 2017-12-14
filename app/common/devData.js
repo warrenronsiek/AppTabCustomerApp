@@ -1,6 +1,5 @@
 import {useDevData} from '../vars'
 
-console.log(useDevData);
 const devData = useDevData
   ? {
     nodeList: [{

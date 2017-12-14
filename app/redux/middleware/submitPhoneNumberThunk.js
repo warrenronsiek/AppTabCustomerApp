@@ -14,7 +14,6 @@ const submitUserNameThunk = (phoneNumber) => (dispatch) => {
       return Promise.resolve(dispatch(passwordResetActions.stage.codePassword()))})
     .then(() => writeToFirehose('RequestedPasswordReset'))
     .catch(err => {
-      console.log(err);
       Promise.resolve(dispatch(passwordResetActions.error()))
     })
 };
