@@ -4,7 +4,7 @@
 import reducer from './reducers/index';
 import {createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
-import {composeWithDevTools} from 'remote-redux-devtools';
+import {composeWithDevTools} from 'redux-devtools-extension';
 
 function configureStore(initialState) {
   let store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));

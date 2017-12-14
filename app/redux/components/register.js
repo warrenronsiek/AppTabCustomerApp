@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import PropTypes from 'prop-types'
-import {View, Text, TextInput, StyleSheet, Dimensions} from 'react-native'
+import {View, Text, TextInput, StyleSheet, Dimensions, ScrollView} from 'react-native'
 import Spinner from '../../common/spinner'
 import Button from '../../common/button'
 import PasswordChecklist from './passwordChecklist'
@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+    minHeight: 800
   },
   textContainer: {
     marginTop: 10,
@@ -26,6 +27,7 @@ const styles = StyleSheet.create({
   },
   checkListContainer: {
     flex: 2,
+    maxHeight: 200,
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -53,7 +55,7 @@ const register = ({
                     name, email, password, confirmPassword, registerUser, networkError, userExistsError, unknownError,
                     registering, passwordValid
                   }) => (
-  <View style={styles.container}>
+  <ScrollView contentContainerStyle={styles.container}>
     <View style={styles.textContainer}>
       <View style={[styles.textInputContainer, {borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: 'grey'} ]}>
         <TextInput style={styles.textInputBox} onChangeText={text => updateName(text)} autoCapitalize='words'
@@ -86,13 +88,15 @@ const register = ({
     <View style={styles.buttonContainer}>
       {registering
         ? <Spinner/>
-        : <Button onPress={() => registerUser(name, email, password, phoneNumber)} title="Register"
-                  disabled={(password !== confirmPassword) || name === undefined || !passwordValid.isValid || phoneNumber.length !== 14}/>}
+        : <View style={{flex:1, flexDirection: 'row'}}>
+        <Button onPress={() => registerUser(name, email, password, phoneNumber)} title="Register" style={{width: '90%'}}
+                  disabled={(password !== confirmPassword) || name === undefined || !passwordValid.isValid || phoneNumber.length !== 14}/>
+      </View>}
       {(networkError && !registering) ? <Text>Networking Error!</Text> : null}
       {(unknownError && !registering) ? <Text>Unknown Error!</Text> : null}
       {(userExistsError && !registering) ? <Text>User Exists Error!</Text> : null}
     </View>
-  </View>
+  </ScrollView>
 );
 
 register.propTypes = {

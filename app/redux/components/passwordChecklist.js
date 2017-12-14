@@ -11,7 +11,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    maxHeight: 200,
   },
   rowContainer: {
     flex: 1,

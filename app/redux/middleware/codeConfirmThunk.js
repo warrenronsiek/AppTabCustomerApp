@@ -35,7 +35,7 @@ const confirmCodeThunk = (confirmationCode) => (dispatch, getState) => {
     })
     .then(res => Promise.resolve(dispatch(updateStripeToken(res.stripeToken))))
     .then(() => dispatch(clearErrors()))
-    .then(() => Actions.nodes())
+    .then(() => Actions.checkout())
     .then(() => dispatch(confirmationCodeProcessingFinished()))
     .then(() => dispatch(registeringFinished()))
     .then(() => writeToFirehose('RegistrationComplete'))

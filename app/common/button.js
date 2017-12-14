@@ -1,7 +1,8 @@
 /**
  * Created by warren on 5/14/17.
  */
-import React, {PropTypes, Component} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {View, TouchableHighlight, Text, StyleSheet, Image} from 'react-native'
 import Entypo from 'react-native-vector-icons/Entypo'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
@@ -60,7 +61,7 @@ const GenerateIcon = ({iconName, iconLibrary, iconSize, color}) => {
     case 'SimpleLineIcons':
       return <SimpleLineIcons color={color} name={iconName} size={iconSize}/>;
     case 'Ben':
-      return <View style={{marginTop:-3}}>
+      return <View style={{marginTop: -3}}>
         <Order height={iconSize} width={iconSize} fill='white'/>
       </View>;
     default:
@@ -99,24 +100,29 @@ class Button extends Component {
         underlayColor={'transparent'}>
         <View style={[styles.container, this.props.containerStyle]}>
           {!this.props.disabled
-           ? (<Image style={[styles.container, this.props.containerStyle, {position: 'absolute', width: '100%', height: '100%'}]} source={require('../assets/images/btn-gradient.png')}>
+            ? (<View style={[styles.container, this.props.containerStyle]}><Image
+              style={[styles.container, this.props.containerStyle, {
+                position: 'absolute',
+                width: '100%',
+                height: '100%'
+              }]} source={require('../assets/images/btn-gradient.png')}/>
 
-          {this.props.iconProps
-            ? <GenerateIcon iconName={this.props.iconProps.iconName}
-                            iconLibrary={this.props.iconProps.iconLibrary}
-                            iconSize={this.props.iconProps.iconSize}
-                            color={this.props.iconProps.iconColor || 'white'}/>
-            : null}
-          {this.props.title ? <Text style={[styles.text, this.props.textStyle]}>{this.props.title}</Text> : null}
-          </Image> )
-          : (<View>
               {this.props.iconProps
-            ? <GenerateIcon iconName={this.props.iconProps.iconName}
-                            iconLibrary={this.props.iconProps.iconLibrary}
-                            iconSize={this.props.iconProps.iconSize}
-                            color={this.props.iconProps.iconColor || 'white'}/>
-            : null}
-          {this.props.title ? <Text style={[styles.text, this.props.textStyle]}>{this.props.title}</Text> : null}
+                ? <GenerateIcon iconName={this.props.iconProps.iconName}
+                                iconLibrary={this.props.iconProps.iconLibrary}
+                                iconSize={this.props.iconProps.iconSize}
+                                color={this.props.iconProps.iconColor || 'white'}/>
+                : null}
+              {this.props.title ? <Text style={[styles.text, this.props.textStyle]}>{this.props.title}</Text> : null}
+            </View>)
+            : (<View>
+              {this.props.iconProps
+                ? <GenerateIcon iconName={this.props.iconProps.iconName}
+                                iconLibrary={this.props.iconProps.iconLibrary}
+                                iconSize={this.props.iconProps.iconSize}
+                                color={this.props.iconProps.iconColor || 'white'}/>
+                : null}
+              {this.props.title ? <Text style={[styles.text, this.props.textStyle]}>{this.props.title}</Text> : null}
             </View>)}
         </View>
       </TouchableHighlight>)

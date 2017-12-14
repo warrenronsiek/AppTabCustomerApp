@@ -32,7 +32,7 @@ export default loginThunk = (phoneNumber, password) => (dispatch, getState) => {
       return Promise.resolve(dispatch(updateAuth(res.accessToken, res.idToken, res.refreshToken, res.userName, res.customerId)))
     })
     .then(() => {
-      Actions.nodes()
+      Actions.checkout()
     })
     .then(() => {
       dispatch(loginComplete())

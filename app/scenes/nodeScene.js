@@ -2,121 +2,14 @@
  * Created by warren on 1/23/17.
  */
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
 import Nodes from '../redux/connectedComponents/nodeListConnected'
-import {updateNodeApi, updateNodeBle, setNodeQueried} from '../redux/actions/nodeActions'
-import getNodeInfo from '../api/nodeApi'
-import BeaconTypeError from '../errors/beaconTypeError'
-import WrongNamespaceError from '../errors/wrongNamespaceError'
-import GetNodeQueriedError from '../errors/getNodeQueriedError'
-import {connect} from 'react-redux'
-import {Buffer} from 'buffer'
-import {Platform} from 'react-native'
-import logger from '../api/loggingApi'
-import * as _ from 'lodash'
-
-const noble = require('react-native-ble');
-
-function parseIntObject(intObject) {
-  const index = Math.max(...Object.keys(intObject).map(i => parseInt(i))) + 1;
-  let arr = [];
-  for (let i = 0; i < index; i++) {
-    arr.push(intObject[i]);
-  }
-  const buff = Buffer.from(arr);
-  const
-    namespace = buff.slice(2, 12).toString('hex'),
-    instance = buff.slice(12, 18).toString('hex'),
-    txPower = buff.readInt8(1);
-  return {namespace, instance, txPower}
-}
-
-//TODO: Make this filter by Eddystone IDs
-function parseBlePacket(item) {
-  return new Promise((resolve, reject) => {
-      if (item.advertisement.localName === 'Kontakt') {
-        const data = parseIntObject(_.filter(item.advertisement.serviceData, {uuid: (Platform.OS === 'ios') ? 'feaa' : '0000feaa00001000800000805f9b34fb'})[0].data);
-        const distance = Math.pow(10, ((data.txPower - item.rssi) - 41) / 20.0);
-        const lastSeen = Math.floor(Date.now() / 1000);
-        resolve({instance: data.instance, namespace: data.namespace, distance, lastSeen})
-      } else {
-        reject(new BeaconTypeError('NotKontaktBeacon'))
-      }
-    }
-  );
-}
+import {componentWillUnmount} from '../common/bleScannerComponentFunctions'
 
 class NodeScene extends Component {
-  static contextTypes = {
-    store: PropTypes.object
-  };
-
-  constructor(props) {
-    super(props);
-  }
-
-  componentWillMount() {
-    noble.on('discover', this._onFound);
-    // noble.on('updated', this._onFound);
-  }
-
-  componentDidMount() {
-    const waiter = function () {
-      if (noble.state === 'poweredOn') {
-        noble.startScanning([], true);
-      } else {
-        setTimeout(waiter, 100)
-      }
-    };
-    waiter()
-  }
 
   componentWillUnmount() {
-    noble.stopScanning();
+    componentWillUnmount()
   }
-
-  //TODO: move this into middleware
-  _onFound = (item) => {
-    parseBlePacket(item)
-      .then(res => {
-        if (res.namespace === 'bc635921402893714ad5') {
-          return Promise.resolve(this.props.dispatch(updateNodeBle(res.distance, res.namespace, res.instance, res.lastSeen)))
-        }
-        else {
-          throw new WrongNamespaceError('node has incorrect namespace')
-        }
-      })
-      .then(res => {
-        const nodeState = _.find(this.context.store.getState().nodes.nodeList, {nodeId: res.nodeId});
-        if (nodeState.apiQueried === undefined) {
-          this.props.dispatch(setNodeQueried(res.nodeId));
-          return getNodeInfo({nodeId: res.nodeId})
-        } else {
-          throw new GetNodeQueriedError('GetNode api already queried for this node')
-        }
-      })
-      .then(res => {
-        const node = res.nodeInfo.Item;
-        const nodeId = node.NodeId.S, nodeName = node.NodeName.S, nodeDescription = node.NodeDescription.S,
-          venueId = node.VenueId.S;
-        return Promise.resolve(this.props.dispatch(updateNodeApi(nodeId, nodeName, nodeDescription, venueId)))
-      })
-      .catch(err => {
-        switch (err.name) {
-          case 'TypeError':
-            break;
-          case 'BeaconTypeError':
-            break;
-          case 'GetNodeQueriedError':
-            break;
-          case 'WrongNamespaceError':
-            break;
-          default:
-            logger('error processing node', err);
-            break;
-        }
-      });
-  };
 
   render() {
     return (
@@ -125,4 +18,4 @@ class NodeScene extends Component {
   }
 }
 
-export default connect()(NodeScene)
+export default NodeScene

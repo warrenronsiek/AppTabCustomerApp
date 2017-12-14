@@ -21,6 +21,7 @@ import ResetPasswordScene from './app/scenes/passwordResetScene'
 import SimpleIcons from 'react-native-vector-icons/SimpleLineIcons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import transactionActions from './app/redux/actions/trasactionActions'
+import Venues from './app/scenes/venueScene'
 import Menu from './app/assets/svgs/menu'
 
 const RouterWithRedux = connect()(Router);
@@ -40,13 +41,12 @@ class AppTabCustomerApp extends Component {
       <Provider store={store}>
         <RouterWithRedux>
           <Scene key="root">
+            <Scene key='venue' component={Venues} title='Venues'/>
             <Scene key="login" component={Login} title="Login"/>
             <Scene key="register" component={Register} title="Register"/>
-            <Scene key="passwordreset" component={ResetPasswordScene} title="Reset Password"
-                   back onBack={() => passwordResetOnBack()}/>
             <Scene key="code" component={ConfirmCodeScene} title="Confirm Code"/>
-            <Scene key="nodes" component={Nodes} title="Table Selection" back/>
-            <Scene key="tabs" tabs={true} hideNavBar tabBarIconContainerStyle={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
+            <Scene key="nodes" component={Nodes} title="Table Selection" back onBack={() => Actions.venue()}/>
+            <Scene key="tabs" tabs={true} tabBarIconContainerStyle={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
               <Scene key="orders" component={Request} title="Your Orders" icon={bell}
                      back onBack={() => Actions.nodes()} onEnter={() => store.dispatch(transactionActions.alert.clear())}/>
               <Scene key="menu" component={MenuScene} title="Menu" icon={drink} initial={true}
@@ -56,9 +56,11 @@ class AppTabCustomerApp extends Component {
               <Scene key="options" component={DrawerComponent} title="Options" icon={options}
                      back onBack={() => Actions.nodes()}/>
             </Scene>
+            <Scene key="passwordreset" component={ResetPasswordScene} title="Reset Password"
+                   back onBack={() => passwordResetOnBack()}/>
             <Scene key="optionsModal" component={OptionsSelectionModal} title="Options" back modal/>
             <Scene key="placeholder" component={Placeholder} title="Placeholder" back/>
-            <Scene key="checkout" component={CheckoutScene} title="Checkout" back/>
+            <Scene key="checkout" component={CheckoutScene} title="Checkout" back onBack={() => Actions.tabs()}/>
             <Scene key="cardForm" component={CardFormScene} title="Card Details" back/>
           </Scene>
         </RouterWithRedux>

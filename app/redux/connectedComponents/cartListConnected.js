@@ -5,8 +5,6 @@ import {connect} from 'react-redux'
 import {incrementCount, decrementCount, updateTip, toggleIncrementer} from '../actions/cartActions'
 import CartList from '../components/cartList'
 import checkoutThunk from '../middleware/checkoutThunk'
-import centsIntToString from '../../common/centsIntToString'
-import * as _ from 'lodash'
 
 const mapStateToProps = (state) => {
   return {

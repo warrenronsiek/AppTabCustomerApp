@@ -47,6 +47,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
     textAlign: 'center'
+  },
+  addCardText: {
+    fontSize: 18,
+    fontWeight: '200'
+  },
+  buttonStyle: {
+    marginTop: 10,
+    width: '90%'
   }
 });
 
@@ -70,7 +78,8 @@ class PaymentMethodSelection extends Component {
     }),
     showDeleteButton: PropTypes.func.isRequired,
     hideDeleteButton: PropTypes.func.isRequired,
-    deleteCard: PropTypes.func.isRequired
+    deleteCard: PropTypes.func.isRequired,
+    gotCreditCards: PropTypes.bool.isRequired
   };
 
   render() {
@@ -83,8 +92,9 @@ class PaymentMethodSelection extends Component {
           alignItems: 'center',
           justifyContent: 'center'
         }]}>
-          {this.props.paymentListItems.length > 0
-            ? <FlatList data={this.props.paymentListItems} automaticallyAdjustContentInsets={false}
+          {(this.props.gotCreditCards)
+            ? (this.props.paymentListItems.length > 0)
+              ? <FlatList data={this.props.paymentListItems} automaticallyAdjustContentInsets={false}
                         keyExtractor={(item, index) => item.ccToken}
                         renderItem={({item}) => <PaymentItem brand={item.brand} isSelected={item.isSelected}
                                                              last4={item.last4} ccToken={item.ccToken}
@@ -94,19 +104,19 @@ class PaymentMethodSelection extends Component {
                                                              hideDeleteButton={this.props.hideDeleteButton}
                                                              deleteCard={this.props.deleteCard}
                                                              deleteButton={item.deleteButton}/>}/>
-            : <View style={{alignItems: 'center', justifyContent: 'center'}}>
-              <Text>Please add a credit card. </Text><Text>You can do that by pressing the Add Card button.</Text>
-            </View>
-          }
+              : <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                <Text style={styles.addCardText}>Please add a credit card.</Text>
+              </View>
+            : <View style={styles.spinnerContainer}><Spinner/></View>}
         </View>
         <View style={styles.buttonContainer}>
           {!this.props.paymentStatus.processing && !this.props.paymentStatus.success ?
             <Button onPress={() => this.props.pay()} title="Pay"
                     disabled={!_.some(this.props.paymentListItems, 'isSelected')}
-                    style={{marginBottom: 10, width: 110}}/> : null
+                    style={styles.buttonStyle}/> : null
           }
           {!this.props.paymentStatus.processing && !this.props.paymentStatus.success ?
-            <Button onPress={() => this.props.addCard()} title="Add Card" style={{width: 110}}/> : null
+            <Button onPress={() => this.props.addCard()} title="Add Card" style={styles.buttonStyle}/> : null
           }
           {this.props.paymentStatus.processing ? <View style={styles.spinnerContainer}><Spinner/></View> : null}
         </View>

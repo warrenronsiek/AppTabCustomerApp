@@ -62,20 +62,24 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 30,
     paddingRight: 30,
+    fontSize: 18,
   },
   ccvInput: {
     flex: 1,
     paddingLeft: 30,
-    paddingRight: 30
+    paddingRight: 30,
+    fontSize: 18
   },
   expMonthInput: {
     flex: 1,
     paddingLeft: 30,
-    paddingRight: 30
+    paddingRight: 30,
+    fontSize: 18
   },
   expYearInput: {
     flex: 2,
-    paddingRight: 30
+    paddingRight: 30,
+    fontSize: 18
   },
   numberInputSubContainer: {
     flex: 4,

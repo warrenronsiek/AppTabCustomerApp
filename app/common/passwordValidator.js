@@ -1,6 +1,7 @@
 /**
  * Created by warren on 7/5/17.
  */
+import {toLength} from 'lodash'
 
 export default function passwordValidator(password) {
   if (password) {
@@ -18,7 +19,5 @@ export default function passwordValidator(password) {
       hasLower,
       isValid
     };
-  } else {
-    return false
   }
 }

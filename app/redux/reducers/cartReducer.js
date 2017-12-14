@@ -8,7 +8,7 @@ import {
   UPDATE_TIP,
   CLEAR_CART,
   CHECKING_OUT_COMPLETE,
-  CHEKING_OUT,
+  CHECKING_OUT,
   ONE_CLICK_BUY,
   TOGGLE_INCREMENTER
 } from '../actions/cartActions'
@@ -153,7 +153,7 @@ const cart = (state = {
 
 const cartStatus = (state = {}, action) => {
   switch (action.type) {
-    case CHEKING_OUT:
+    case CHECKING_OUT:
       return {checkingOut: true};
     case CHECKING_OUT_COMPLETE:
       return {checkingOut: false};

@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types'
-import {StyleSheet, Text, View, TextInput, Dimensions, Image} from 'react-native';
+import {StyleSheet, Text, View, TextInput, Dimensions, ScrollView} from 'react-native';
 import Spinner from '../../common/spinner'
 import Button from '../../common/button'
 
@@ -14,42 +14,25 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white'
-  },
-  welcome: {
-    fontSize: 30,
-    textAlign: 'center',
-    margin: 10,
+    backgroundColor: 'white',
+    minHeight: 850
   },
   welcomeContainer: {
-    flex: 2,
-    marginTop: 60,
     alignItems: 'center',
     justifyContent: 'center',
+    minHeight: 150,
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  welcomeHeadline: {
+    fontSize: 26,
+    fontWeight: "200",
   },
   textContainer: {
     flex: 2,
     width: width,
-    maxHeight: 100
-  },
-  iconContainer: {
-    flexDirection: 'column',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  iconSubContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    maxHeight: 100,
   },
   textInputContainer: {
-    flexDirection: 'column',
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     borderTopWidth: StyleSheet.hairlineWidth,
@@ -59,7 +42,8 @@ const styles = StyleSheet.create({
   textInputBox: {
     height: 40,
     flex: 1,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 18
   },
   buttonContainer: {
     marginTop: 10,
@@ -67,25 +51,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 120
   },
-  buttonSubContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row'
-  },
-  imageContainer: {
-    alignItems: 'center',
-    flex: 1
+  buttonStyle: {
+    marginTop: 10,
+    height: 70,
+    width: '90%'
   }
 });
 
 const login = ({validationError, networkError, unknownError, loggingIn, phoneNumber, password, updatePhoneNumber, updatePassword, onLogin, navToRegister, navToPasswordReset}) => (
-  <View style={styles.container}>
-    <View style={styles.imageContainer}>
-      <Image style={{width: 150, height: 150}} source={require('../../assets/images/apptab_logo_circle.png')}/>
-    </View>
+  <ScrollView contentContainerStyle={styles.container}>
     <View style={styles.welcomeContainer}>
-      <Text style={styles.welcome}>
-        AppTab
+      <Text style={styles.welcomeHeadline}>
+        Please login/register to proceed.
       </Text>
     </View>
     <View style={styles.textContainer}>
@@ -101,21 +78,17 @@ const login = ({validationError, networkError, unknownError, loggingIn, phoneNum
       </View>
     </View>
     <View style={styles.buttonContainer}>
-      <View style={styles.buttonSubContainer}>
-
-      {!loggingIn ?
-        <Button onPress={() => onLogin(phoneNumber, password)} title="Login" style={{marginRight: 10}}/> : null}
-      {!loggingIn ? <Button onPress={navToRegister} title="Register"/> : null}
-      </View>
+      {!loggingIn ? <Button onPress={() => onLogin(phoneNumber, password)} style={styles.buttonStyle} title="Login"/> : null}
+      {!loggingIn ? <Button onPress={navToRegister} style={styles.buttonStyle} title="Register"/> : null}
       {validationError ? <Text>Oops! Wrong username or password!</Text> : null}
       {networkError ? <Text>Networking Error!</Text> : null}
       {unknownError ? <Text>Unknown Error!</Text> : null}
       {loggingIn ? <Spinner style={{marginTop: 20}}/> : null}
       {loggingIn
         ? null
-        : <Button onPress={() => navToPasswordReset()} title="Forgot Password" style={{marginTop: 10, width: 170}}/>}
+        : <Button onPress={() => navToPasswordReset()} title="Forgot Password" style={styles.buttonStyle}/>}
     </View>
-  </View>
+  </ScrollView>
 );
 
 login.propTypes = {

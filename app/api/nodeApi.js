@@ -4,4 +4,4 @@
 import requester from './requester'
 
 // invoke with object of shape {nodeId}
-export default requester('/get-node-info', 'GetNodeInfoSuccessful', 'Get node failure')
+export default requester('/get-node-info', 'GetNodeInfoSuccessful', 'Get node failure', null, false)

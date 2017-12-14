@@ -26,3 +26,13 @@ Running on Android
 Building IOS icon sets
 ----------------------
 run `yo rn-toolbox:assets --icon <path to your icon>`
+
+Installing the debugger
+-----------------------
+`brew cask install react-native-debugger`
+
+Running the debugger
+--------------------
+`open "rndebugger://set-debugger-loc?host=localhost&port=8081"`
+
+set simulator/phone to 'remote debugging'

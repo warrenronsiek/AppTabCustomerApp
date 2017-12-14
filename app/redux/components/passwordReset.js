@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import PropTypes from 'prop-types'
-import {View, Text, TextInput, StyleSheet, Dimensions, Button as BuiltinButton} from 'react-native'
+import {View, Text, TextInput, StyleSheet, Dimensions, ScrollView} from 'react-native'
 import Button from '../../common/button'
 import Spinner from '../../common/spinner'
 import PasswordChecklist from './passwordChecklist'
@@ -12,15 +12,18 @@ const {height, width} = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'flex-start',
+    backgroundColor: 'white',
+    paddingTop: 20,
+    minHeight: 900
   },
   textInputBarContainer: {
     flex: 1,
     flexDirection: 'column',
     marginLeft: width * .3,
-    marginRight: width * .3
+    marginRight: width * .3,
+    maxHeight: 150,
   },
   textInputContainer: {
     flex: 3,
@@ -44,12 +47,19 @@ const styles = StyleSheet.create({
     marginTop: 20,
     flex: 2,
     alignItems: 'center',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    maxHeight: 300
+  },
+  buttonSubContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center'
   },
   textInput: {
     flex: 3,
     height: 40,
-    paddingLeft: 40
+    paddingLeft: 40,
+    fontSize: 18
   },
   instructionsContainer: {
     alignItems: 'center',
@@ -63,24 +73,34 @@ const styles = StyleSheet.create({
     width: width,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: 'grey',
-    maxHeight: 40,
+    maxHeight: 40
   },
+  buttonStyle: {
+    width: '90%',
+    marginTop: 10
+  }
 });
 
 const renderButton = (stage, code, phoneNumber, password, submitPhoneNumber, submitCodePassword, resendCode, confirmPassword, passwordValid) => {
   switch (stage) {
     case 'phoneNumber':
       return (
-        <Button onPress={() => submitPhoneNumber(phoneNumber)}
+        <Button onPress={() => submitPhoneNumber(phoneNumber)} style={styles.buttonStyle}
                 disabled={!phoneNumber ? true : phoneNumber.length !== 14}
                 title="Done"/>
       );
     case 'codePassword':
       return (
-        <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <Button onPress={() => submitCodePassword(code, password, phoneNumber)} title="Done"
-                  disabled={(!code ? true : (code.length !== 6)) || !passwordValid || (password !== confirmPassword)}/>
-          <BuiltinButton onPress={() => resendCode(phoneNumber)} style={{marginTop: 10}}
+        <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
+          <Button onPress={() => submitCodePassword(code, password, phoneNumber)} title="Done" style={styles.buttonStyle}
+                  disabled={(() => {
+                    if (!code) {
+                      return true
+                    } else {
+                      return !((code.length === 6) && passwordValid.isValid && (password === confirmPassword))
+                    }
+                  })()}/>
+          <Button onPress={() => resendCode(phoneNumber)} style={styles.buttonStyle}
                          title="Resend Confirmation Code"/>
         </View>
       )
@@ -92,7 +112,7 @@ const passwordReset = ({
                          submitPhoneNumber, submitCodePassword, stage, resendCode, confirmPassword, updateConfirmPassword,
                          passwordValid, wrongCodeError, unknownError
                        }) => (
-  <View style={styles.container}>
+  <ScrollView contentContainerStyle={styles.container}>
     {stage === 'phoneNumber'
       && <View style={styles.instructionsContainer}>
         <Text>Please enter your phone number</Text>
@@ -124,7 +144,7 @@ const passwordReset = ({
           <View style={[styles.textInputContainer]}>
             <TextInput value={password} placeholder="enter new password" onChangeText={text => updatePassword(text)}
                        autoCapitalize='none' autoCorrect={false} style={styles.textInput} keyboardType='default'
-                       maxLength={30}/>
+                       maxLength={30} secureTextEntry={true}/>
           </View>
         </View>
       )}
@@ -133,7 +153,7 @@ const passwordReset = ({
           <View style={[styles.textInputContainer]}>
             <TextInput value={confirmPassword} placeholder="confirm password" onChangeText={text => updateConfirmPassword(text)}
                        autoCapitalize='none' autoCorrect={false} style={styles.textInput} keyboardType='default'
-                       maxLength={30}/>
+                       maxLength={30} secureTextEntry={true}/>
           </View>
         </View>
       )}
@@ -144,17 +164,19 @@ const passwordReset = ({
                        hasUpper={passwordValid.hasUpper} hasLower={passwordValid.hasLower}/>
     }
     <View style={styles.buttonContainer}>
+      <View style={styles.buttonSubContainer}>
       {!processing
         ? renderButton(stage, code, phoneNumber, password, submitPhoneNumber, submitCodePassword, resendCode, confirmPassword, passwordValid)
-        : <Spinner style={{marginTop: 20}}/>}
+        : <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}><Spinner style={{marginTop: 20}}/></View>}
       {wrongCodeError
         ? <Text>Looks like you entered the wrong code!</Text>
         : null}
       {unknownError
         ? <Text>Unknown error. Please try again.</Text>
         : null}
+      </View>
     </View>
-  </View>
+  </ScrollView>
 );
 
 passwordReset.propTypes = {
@@ -177,7 +199,6 @@ passwordReset.propTypes = {
     hasDigit: PropTypes.bool,
     hasSymbol: PropTypes.bool,
     hasLength: PropTypes.bool,
-    matches: PropTypes.bool
   }),
   wrongCodeError: PropTypes.bool,
   unknownError: PropTypes.bool
