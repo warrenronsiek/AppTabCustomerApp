@@ -68,8 +68,8 @@ const optionsList = ({optionSets, onSelection, done, itemName, allOptionsSelecte
                    style={{flex: 1}}
       />
     </View>
-    <View style={[styles.container, {marginTop: 30}]}>
-      <Button onPress={() => done()} title="Done" disabled={!allOptionsSelected}/>
+    <View style={[styles.container, {marginTop: 30, flexDirection: 'row', flex: 1}]}>
+      <Button onPress={() => done()} style={{width: '90%'}} title="Done" disabled={!allOptionsSelected}/>
     </View>
   </View>
 );

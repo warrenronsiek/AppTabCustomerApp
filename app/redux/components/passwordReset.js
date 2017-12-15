@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import PropTypes from 'prop-types'
-import {View, Text, TextInput, StyleSheet, Dimensions, ScrollView} from 'react-native'
+import {View, Text, TextInput, StyleSheet, Dimensions, ScrollView, Platform} from 'react-native'
 import Button from '../../common/button'
 import Spinner from '../../common/spinner'
 import PasswordChecklist from './passwordChecklist'
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
   textInputContainer: {
     flex: 3,
-    flexDirection: 'column',
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: width,
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: Platform.OS === 'IOS' ? StyleSheet.hairlineWidth : 0,
     borderBottomColor: 'grey',
     maxHeight: 40
   },
@@ -122,7 +122,7 @@ const passwordReset = ({
     <View style={styles.textInputBarContainer}>
 
       {stage === 'phoneNumber' && (
-        <View style={[styles.inputContainer, {borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: 'grey'}]}>
+        <View style={[styles.inputContainer, {borderTopWidth: Platform.OS === 'IOS' ? StyleSheet.hairlineWidth : 0, borderTopColor: 'grey'}]}>
           <View style={styles.textInputContainer}>
             <TextInput value={phoneNumber} placeholder="(123) 456-7890" onChangeText={text => updatePhoneNumber(text)}
                        autoCapitalize='none' autoCorrect={false} style={[styles.textInput, {textAlign: 'center', paddingLeft: 0}]} keyboardType='number-pad'
@@ -131,7 +131,7 @@ const passwordReset = ({
         </View>
       )}
       {stage === 'codePassword' && (
-        <View style={[styles.inputContainer,  {borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: 'grey'}]}>
+        <View style={[styles.inputContainer,  {borderTopWidth: Platform.OS === 'IOS' ? StyleSheet.hairlineWidth : 0, borderTopColor: 'grey'}]}>
           <View style={[styles.textInputContainer]}>
             <TextInput value={code} placeholder="123456 (the code from the sms)" onChangeText={text => updateCode(text)}
                        autoCapitalize='none' autoCorrect={false} style={styles.textInput} keyboardType='number-pad'
