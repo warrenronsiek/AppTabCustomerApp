@@ -79,6 +79,7 @@ export default class MenuList extends Component {
                                                            itemId={item.itemId}
                                                            viewablePrice={item.viewablePrice} tags={item.tags}
                                                            addToCart={this.props.addToCart}
+                                                           imageUrl={item.imageUrl}
                      />}
         />}
       </View>

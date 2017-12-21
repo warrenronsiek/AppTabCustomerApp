@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const menuListItem = ({itemName, itemDescription, itemId, viewablePrice, tags, addToCart}) => (
+const menuListItem = ({imageUrl, itemName, itemDescription, itemId, viewablePrice, tags, addToCart}) => (
   <View style={styles.container}>
     <View style={styles.textContainer}>
       <Text style={styles.nameStyle}>{itemName}</Text>
@@ -76,7 +76,7 @@ const menuListItem = ({itemName, itemDescription, itemId, viewablePrice, tags, a
       <Text>{viewablePrice}</Text>
     </View>
     <View style={styles.cartContainer}>
-      <Button onPress={() => addToCart(itemId)}
+      <Button onPress={() => addToCart(itemId)} imageUrl={imageUrl}
               iconProps={{iconName: 'cart-plus', iconSize: 27, iconLibrary: 'Ben'}}
               style={{width: 70, marginLeft: 7, marginRight: 25}} underlayColor="grey"
               containerStyle={{marginLeft: -2}}/>
@@ -91,6 +91,7 @@ menuListItem.propTypes = {
   viewablePrice: PropTypes.string.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   addToCart: PropTypes.func.isRequired,
+  imageUrl: PropTypes.string
 };
 
 export default menuListItem

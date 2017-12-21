@@ -103,13 +103,9 @@ class Button extends Component {
         {this.props.imageUrl
           ? <View style={[styles.container, this.props.containerStyle]}>
             <Image source={{
-              uri: this.props.imageUrl, method: 'GET',
-              headers: {
-
-              }
-            }}/>
+              uri: this.props.imageUrl
+            }} style={{width: 80, height: 80}}/>
           </View>
-
           : <View style={[styles.container, this.props.containerStyle]}>
             {!this.props.disabled
               ? (<View style={[styles.container, this.props.containerStyle]}><Image
