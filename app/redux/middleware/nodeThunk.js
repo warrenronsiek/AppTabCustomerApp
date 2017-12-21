@@ -8,7 +8,8 @@ import logger from '../../api/loggingApi'
 import getMenu from '../../api/getMenu'
 import getVenue from '../../api/getVenue'
 import noble from 'react-native-ble'
-import {writeToFirehose} from "../../api/firehose"
+import {writeToFirehose} from "../../api/aws"
+import {get} from 'lodash'
 
 const selectNode = (nodeId) => (dispatch, getState) => {
   noble.stopScanning();
@@ -19,33 +20,7 @@ const selectNode = (nodeId) => (dispatch, getState) => {
       dispatch(setActiveNode(nodeId, venueId))
     })
     .then(() => Promise.resolve(Actions.tabs()))
-    .then(() => {
-      const state = getState();
-      return Promise.all([getMenu({venueId: state.activeNode.venueId}), getVenue({venueId: state.activeNode.venueId})])
-    })
-    .then(res => {
-      res[0].Items.forEach(item => {
-        dispatch(updateMenuItem(
-          item.ItemName.S,
-          item.ItemDescription.S,
-          item.Price.N,
-          (JSON.stringify(item.Tags.SS) === JSON.stringify(['NULL'])) ? [] :item.Tags.SS,
-          item.Category.S,
-          item.ItemId.S,
-          item.VenueId.S,
-          itemOptions = item.ItemOptions ? item.ItemOptions.S : null,
-          item.TimeRanges.SS))});
-      res[1].venue.Item.TimeRanges.L.forEach(timeRange =>
-        dispatch(updateMenuRanges(timeRange.M.id.S, timeRange.M.range.S))
-      );
-      dispatch(updateMenuVisibility());
-
-      const state = getState(),
-        venueId = state.nodes.nodeList.filter(node => node.nodeId === state.activeNode.nodeId)[0].venueId,
-        now = Date.now();
-      dispatch(menuApiQueryStatus(venueId, now));
-    })
-    .then(res => writeToFirehose('NodeSelected'))
+    .then(() => writeToFirehose('NodeSelected'))
     .catch(err => {
       logger('error selecting node', err)})
 };

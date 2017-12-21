@@ -4,7 +4,7 @@
 import passwordResetActions from '../actions/passwordResetActions'
 import sendPasswordResetCode from '../../api/sendResetPasswordCode'
 import phoneFormatter from 'phone-formatter'
-import {writeToFirehose} from "../../api/firehose";
+import {writeToFirehose} from "../../api/aws";
 
 const submitUserNameThunk = (phoneNumber) => (dispatch) => {
   Promise.resolve(dispatch(passwordResetActions.processing()))

@@ -4,22 +4,32 @@ import {identityPoolId, firehoseName, identityPoolName} from "../vars"
 import {omit, get} from 'lodash'
 import uuid from 'react-native-uuid'
 
-let firehose;
-AWS.config.region = 'us-west-2';
-AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-  IdentityPoolId: identityPoolId,
+let firehose, s3;
+AWS.config.update({
   region: 'us-west-2',
+  credentials: new AWS.CognitoIdentityCredentials({
+    IdentityPoolId: identityPoolId,
+  })
 });
-firehose = new AWS.Firehose();
+AWS.config.credentials.get(() => {
+  firehose = new AWS.Firehose();
+  s3 = new AWS.S3()
+});
 
 const updateCredentials = () => {
   const auth = store.getState().auth;
-  AWS.config.credentials.Logins = {
-    [identityPoolName]: auth.idToken
-  };
-  AWS.config.credentials.expired = true;
+  AWS.config.update({
+    region: 'us-west-2',
+    credentials: new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: identityPoolId,
+      Logins: {
+        [identityPoolName]: auth.idToken
+      }
+    })
+  });
   AWS.config.credentials.get(() => {
     firehose = new AWS.Firehose();
+    s3 = new AWS.S3()
   });
 };
 
@@ -41,4 +51,4 @@ const writeToFirehose = type => {
   }).promise();
 };
 
-export {writeToFirehose, updateCredentials}
+export {writeToFirehose, updateCredentials, s3}

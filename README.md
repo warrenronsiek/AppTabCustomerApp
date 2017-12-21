@@ -65,3 +65,7 @@ Running the debugger
 `open "rndebugger://set-debugger-loc?host=localhost&port=8081"`
 
 set simulator/phone to 'remote debugging'
+
+Generating icon/apptiles sets
+-----------------------------
+check out `https://www.npmjs.com/package/react-native-icon`

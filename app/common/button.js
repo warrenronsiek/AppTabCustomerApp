@@ -4,6 +4,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {View, TouchableHighlight, Text, StyleSheet, Image} from 'react-native'
+import {credentials} from "../api/aws";
 import Entypo from 'react-native-vector-icons/Entypo'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -83,7 +84,8 @@ class Button extends Component {
     onPress: PropTypes.func.isRequired,
     disabled: PropTypes.bool,
     containerStyle: PropTypes.any,
-    textStyle: PropTypes.any
+    textStyle: PropTypes.any,
+    imageUrl: PropTypes.string
   };
 
   handleOnPress = () => {
@@ -98,33 +100,44 @@ class Button extends Component {
           ? [styles.button, this.props.style]
           : [styles.button, this.props.style, {backgroundColor: 'grey'}]}
         underlayColor={'transparent'}>
-        <View style={[styles.container, this.props.containerStyle]}>
-          {!this.props.disabled
-            ? (<View style={[styles.container, this.props.containerStyle]}><Image
-              style={[styles.container, this.props.containerStyle, {
-                position: 'absolute',
-                width: '100%',
-                height: '100%'
-              }]} source={require('../assets/images/btn-gradient.png')}/>
+        {this.props.imageUrl
+          ? <View style={[styles.container, this.props.containerStyle]}>
+            <Image source={{
+              uri: this.props.imageUrl, method: 'GET',
+              headers: {
 
-              {this.props.iconProps
-                ? <GenerateIcon iconName={this.props.iconProps.iconName}
-                                iconLibrary={this.props.iconProps.iconLibrary}
-                                iconSize={this.props.iconProps.iconSize}
-                                color={this.props.iconProps.iconColor || 'white'}/>
-                : null}
-              {this.props.title ? <Text style={[styles.text, this.props.textStyle]}>{this.props.title}</Text> : null}
-            </View>)
-            : (<View>
-              {this.props.iconProps
-                ? <GenerateIcon iconName={this.props.iconProps.iconName}
-                                iconLibrary={this.props.iconProps.iconLibrary}
-                                iconSize={this.props.iconProps.iconSize}
-                                color={this.props.iconProps.iconColor || 'white'}/>
-                : null}
-              {this.props.title ? <Text style={[styles.text, this.props.textStyle]}>{this.props.title}</Text> : null}
-            </View>)}
-        </View>
+              }
+            }}/>
+          </View>
+
+          : <View style={[styles.container, this.props.containerStyle]}>
+            {!this.props.disabled
+              ? (<View style={[styles.container, this.props.containerStyle]}><Image
+                style={[styles.container, this.props.containerStyle, {
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%'
+                }]} source={require('../assets/images/btn-gradient.png')}/>
+
+                {this.props.iconProps
+                  ? <GenerateIcon iconName={this.props.iconProps.iconName}
+                                  iconLibrary={this.props.iconProps.iconLibrary}
+                                  iconSize={this.props.iconProps.iconSize}
+                                  color={this.props.iconProps.iconColor || 'white'}/>
+                  : null}
+                {this.props.title ? <Text style={[styles.text, this.props.textStyle]}>{this.props.title}</Text> : null}
+              </View>)
+              : (<View>
+                {this.props.iconProps
+                  ? <GenerateIcon iconName={this.props.iconProps.iconName}
+                                  iconLibrary={this.props.iconProps.iconLibrary}
+                                  iconSize={this.props.iconProps.iconSize}
+                                  color={this.props.iconProps.iconColor || 'white'}/>
+                  : null}
+                {this.props.title ? <Text style={[styles.text, this.props.textStyle]}>{this.props.title}</Text> : null}
+              </View>)}
+          </View>
+        }
       </TouchableHighlight>)
 
   }

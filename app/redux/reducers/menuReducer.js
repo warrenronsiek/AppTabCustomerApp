@@ -93,13 +93,15 @@ const menu = (state = {allItems: [], visibleMenu: [], menuRanges: {}}, action) =
         menuRanges: {...state.menuRanges, [action.id]: action.range}
       };
     case UPDATE_MENU_VISIBILITY:
-      return {...state, visibleMenu: state.allItems.map(section => {
+      return {
+        ...state, visibleMenu: state.allItems.map(section => {
           let newData = section.data.filter(item => {
             let boolList = item.timeRanges.map(timeRangeId => inRange(state.menuRanges[timeRangeId]));
             return boolList.reduce((accum, bool) => accum || bool, false)
           });
           return {...section, data: newData}
-        })};
+        })
+      };
     case UPDATE_MENU_ITEM:
       const section = _.find(state.allItems, ['category', action.category]);
       const oldItem = _.find(_.get(section, 'data'), ['itemId', action.itemId]);
@@ -119,7 +121,9 @@ const menu = (state = {allItems: [], visibleMenu: [], menuRanges: {}}, action) =
                   price: action.price,
                   category: action.category,
                   itemOptions: action.itemOptions,
-                  timeRanges: action.timeRanges
+                  timeRanges: action.timeRanges,
+                  extendedDescription: action.extendedDescription,
+                  imageUrl: action.imageUrl
                 }
               ], category: action.category
             }
@@ -142,7 +146,9 @@ const menu = (state = {allItems: [], visibleMenu: [], menuRanges: {}}, action) =
                   price: action.price,
                   category: action.category,
                   itemOptions: action.itemOptions,
-                  timeRanges: action.timeRanges
+                  timeRanges: action.timeRanges,
+                  extendedDescription: action.extendedDescription,
+                  imageUrl: action.imageUrl
                 }
               ], category: action.category
             }
@@ -162,7 +168,9 @@ const menu = (state = {allItems: [], visibleMenu: [], menuRanges: {}}, action) =
               viewablePrice: '$' + centsIntToString(action.price),
               category: action.category,
               itemOptions: action.itemOptions,
-              timeRanges: action.timeRanges
+              timeRanges: action.timeRanges,
+              extendedDescription: action.extendedDescription,
+              imageUrl: action.imageUrl,
             }], category: action.category
           }
         ]
@@ -188,7 +196,9 @@ const activeMenuItem = (state = {}, action) => {
           ...optionSet,
           data: optionSet.data.map(option => ({...option, isSelected: false, optionSetId: optionSet.optionSetId}))
         })),
-        allOptionsSelected: false
+        allOptionsSelected: false,
+        extendedDescription: action.extendedDescription,
+        imageUrl: action.imageUrl,
       };
     case UPDATE_ACTIVE_ITEM_OPTIONS:
       return {

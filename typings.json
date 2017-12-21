@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "aws-sdk": "registry:dt/aws-sdk#0.0.0+20161119044246",
-    "lodash": "registry:dt/lodash#4.14.0+20170324155812"
-  }
-}
