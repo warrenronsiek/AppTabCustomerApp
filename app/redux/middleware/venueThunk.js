@@ -6,10 +6,10 @@ import getVenue from "../../api/getVenue";
 import {menuApiQueryStatus, updateMenuItem, updateMenuRanges, updateMenuVisibility} from "../actions/menuActions";
 import {get} from 'lodash'
 import {imageBucket} from '../../vars'
+import logger from '../../api/loggingApi'
 
 const setActiveVenueThunk = ({venueId, address, venueName}) => (dispatch, getState) => {
   dispatch(updateActiveVenue({venueId, address, venueName}));
-
   const state = getState();
   Promise.all([getMenu({venueId: state.activeVenue.venueId}), getVenue({venueId: state.activeVenue.venueId})])
     .then(res => {
@@ -22,7 +22,7 @@ const setActiveVenueThunk = ({venueId, address, venueName}) => (dispatch, getSta
           item.Category.S,
           item.ItemId.S,
           item.VenueId.S,
-          itemOptions = item.ItemOptions ? item.ItemOptions.S : null,
+          (get(item, 'ItemOptions.S', 'NULL') !== 'NULL') ? get(item, 'ItemOptions.S') : '[]',
           item.TimeRanges.SS,
           get(item, 'ExtendedDescription.S', ''),
           s3.getSignedUrl('getObject', {
@@ -37,7 +37,7 @@ const setActiveVenueThunk = ({venueId, address, venueName}) => (dispatch, getSta
       dispatch(menuApiQueryStatus(venueId, Date.now()));
     })
     .then(() => writeToFirehose('VenueSelected'))
-    .catch(err => console.log(err));
+    .catch(err => {console.log(err);logger('setActiveVenueThunk failed', err)});
   Actions.nodes();
 
 };

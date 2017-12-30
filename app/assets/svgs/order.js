@@ -4,7 +4,7 @@ import Proptypes from 'prop-types'
 import Svg, {Path} from 'react-native-svg'
 
 const Order = ({fill, width, height}) => (
-  <View style={{alignItems: 'center', justifyContent: 'center', marginLeft: 6, marginTop: Platform.OS === 'IOS' ? 6 : 12, }}>
+  <View style={{alignItems: 'center', justifyContent: 'center', marginLeft: 6, marginTop: Platform.OS === 'ios' ? 6 : 12, }}>
 
     <Svg viewBox="0 0 325.6 324" width={width} height={height}>
       <Path fill={fill ? fill : '#4d4d4d'} d="M307.6,40.1c-14.4-5.6-30.8,1.6-36.4,16l-4.7,12l0,0L260.8,83V8.5c0-4.7-3.8-8.5-8.5-8.5H8.5C3.8,0,0,3.8,0,8.5

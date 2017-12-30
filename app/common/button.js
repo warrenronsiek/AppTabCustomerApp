@@ -17,7 +17,6 @@ import Zocial from 'react-native-vector-icons/Zocial'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import Order from '../assets/svgs/order'
 
-
 const styles = StyleSheet.create({
   button: {
     backgroundColor: 'transparent',

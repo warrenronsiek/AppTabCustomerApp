@@ -184,21 +184,22 @@ const activeMenuItem = (state = {}, action) => {
   switch (action.type) {
     case SET_ACTIVE_ITEM:
       return {
-        itemName: action.itemName,
-        itemDescription: action.itemDescription,
-        itemId: action.itemId,
-        venueId: action.venueId,
-        tags: action.tags,
-        price: action.price,
-        viewablePrice: '$' + centsIntToString(action.price),
-        category: action.category,
-        itemOptions: action.itemOptions.map(optionSet => ({
+        itemName: action.payload.itemName,
+        itemDescription: action.payload.itemDescription,
+        itemId: action.payload.itemId,
+        venueId: action.payload.venueId,
+        tags: action.payload.tags,
+        price: action.payload.price,
+        viewablePrice: '$' + centsIntToString(action.payload.price),
+        category: action.payload.category,
+        itemOptions: action.payload.itemOptions.map(optionSet => ({
           ...optionSet,
           data: optionSet.data.map(option => ({...option, isSelected: false, optionSetId: optionSet.optionSetId}))
         })),
         allOptionsSelected: false,
-        extendedDescription: action.extendedDescription,
-        imageUrl: action.imageUrl,
+        extendedDescription: action.payload.extendedDescription,
+        imageUrl: action.payload.imageUrl,
+        count: 1
       };
     case UPDATE_ACTIVE_ITEM_OPTIONS:
       return {

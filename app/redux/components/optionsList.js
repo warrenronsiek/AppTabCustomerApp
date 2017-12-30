@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {View, StyleSheet, Text, FlatList, SectionList, Dimensions} from 'react-native'
+import {View, StyleSheet, Text, Image, SectionList, Dimensions, Platform} from 'react-native'
 import OptionsListItem from './optionsListItem'
 import Button from '../../common/button'
 import centsIntToString from '../../common/centsIntToString'
 
-const {height, width} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -20,9 +20,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderTopColor: 'grey',
-    borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomColor: 'grey',
-    borderBottomWidth: StyleSheet.hairlineWidth,
     backgroundColor: 'white'
   },
   headerText: {
@@ -30,21 +28,43 @@ const styles = StyleSheet.create({
     fontWeight: '100'
   },
   itemNameContainer: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
     paddingTop: 20,
     paddingBottom: 20,
+    width: width,
   },
   itemName: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: 'bold',
+    paddingLeft: 20
   },
   listContainer: {
-    flex: 1,
+    flex: 2,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: 'grey'
+  },
+  imageContainer: {
+    flex: 1,
+    backgroundColor: 'green',
+    flexDirection: 'column',
+    minWidth: width
+  },
+  extendedDescription: {},
+  extendedDescriptionContainer: {
+    paddingLeft: 20,
+    paddingRight: 20,
+    width: width
   }
 });
+
+const disable = (allOptionsSelected, optionSets) => {
+  if (optionSets.length === 0) {
+    return false
+  } else {
+    return !allOptionsSelected
+  }
+};
 
 const OptionSetHeader = ({optionSetName}) => (
   <View style={styles.sectionHeader}>
@@ -52,27 +72,54 @@ const OptionSetHeader = ({optionSetName}) => (
   </View>
 );
 
-const optionsList = ({optionSets, onSelection, done, itemName, allOptionsSelected}) => (
-  <View style={styles.container}>
-    <View style={styles.itemNameContainer}>
-      <Text style={styles.itemName}>{itemName}</Text>
-      <Text style={styles.itemName}>Options</Text>
-    </View>
-    <View style={styles.listContainer}>
-      <SectionList sections={optionSets} keyExtractor={(item, index) => item.optionSetName + item.optionName}
-                   renderItem={({item}) => <OptionsListItem optionName={item.optionName} isSelected={item.isSelected}
-                                                            price={'+$' + centsIntToString(item.price)}
-                                                            onSelection={onSelection} optionSetId={item.optionSetId}
-                                                            optionId={item.optionId}/>}
-                   renderSectionHeader={({section}) => <OptionSetHeader optionSetName={section.optionSetName}/>}
-                   style={{flex: 1}}
-      />
-    </View>
-    <View style={[styles.container, {marginTop: 30, flexDirection: 'row', flex: 1}]}>
-      <Button onPress={() => done()} style={{width: '90%'}} title="Done" disabled={!allOptionsSelected}/>
-    </View>
-  </View>
-);
+class optionsList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {imageSize: {width: 0, height: 0}, imageRef: {}}
+  }
+
+  componentWillMount() {
+    Image.getSize(this.props.imageUrl, (width, height) => this.setState({imageSize: {width, height}}));
+    console.log(Platform.OS)
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={{maxHeight: this.state.imageSize.height}}>
+          <Image source={{uri: this.props.imageUrl}}
+                 style={{height: this.state.imageSize.height, width: width}} />
+        </View>
+        <View style={styles.itemNameContainer}>
+          <Text style={styles.itemName}>{this.props.itemName}</Text>
+        </View>
+        <View style={styles.extendedDescriptionContainer}>
+          <Text style={styles.extendedDescription}>{this.props.extendedDescription}</Text>
+        </View>
+        <View style={styles.listContainer}>
+          <SectionList sections={this.props.optionSets}
+                       keyExtractor={(item, index) => item.optionSetName + item.optionName}
+                       renderItem={({item}) => <OptionsListItem optionName={item.optionName}
+                                                                isSelected={item.isSelected}
+                                                                price={'+$' + centsIntToString(item.price)}
+                                                                onSelection={this.props.onSelection}
+                                                                optionSetId={item.optionSetId}
+                                                                optionId={item.optionId}/>}
+                       renderSectionHeader={({section}) => <OptionSetHeader optionSetName={section.optionSetName}/>}
+                       style={{flex: 1}}
+          />
+        </View>
+        <View>
+
+        </View>
+        <View style={[styles.container, {marginTop: 30, flexDirection: 'row', flex: 1}]}>
+          <Button onPress={() => this.props.done()} style={{width: '90%'}} title="Done"
+                  disabled={disable(this.props.allOptionsSelected, this.props.optionSets)}/>
+        </View>
+      </View>
+    )
+  }
+}
 
 optionsList.propTypes = {
   optionSets: PropTypes.arrayOf(
@@ -92,6 +139,8 @@ optionsList.propTypes = {
       })
     })
   ),
+  imageUrl: PropTypes.string,
+  extendedDescription: PropTypes.string,
   onSelection: PropTypes.func.isRequired,
   done: PropTypes.func.isRequired
 };

@@ -12,8 +12,18 @@ export const menuApiQueryStatus = (venueId, time) => {
 };
 
 export const SET_ACTIVE_ITEM = 'SET_ACTIVE_ITEM';
-export const setActiveItem = (itemName, itemDescription, price, tags, category, itemId, venueId, itemOptions, extendedDescription, imageUrl) => {
-  return {type: SET_ACTIVE_ITEM, itemName, itemDescription, price, tags, category, itemId, venueId, itemOptions, extendedDescription, imageUrl}
+export const setActiveItem = ({itemName, itemDescription, price, tags, category, itemId, venueId, itemOptions, extendedDescription, imageUrl}) => {
+  return {type: SET_ACTIVE_ITEM, payload: {itemName, itemDescription, price, tags, category, itemId, venueId, itemOptions, extendedDescription, imageUrl}}
+};
+
+export const INCREMENT_ACTIVE_ITEM_COUNT = 'INCREMENT_ACTIVE_ITEM_COUNT';
+export const incrementActiveItemCount = () => {
+  return {type: INCREMENT_ACTIVE_ITEM_COUNT, }
+};
+
+export const DECREMENT_ACTIVE_ITEM_COUNT = 'DECREMENT_ACTIVE_ITEM_COUNT';
+export const decrementActiveItemCount = () => {
+  return {type: DECREMENT_ACTIVE_ITEM_COUNT, }
 };
 
 export const UPDATE_ACTIVE_ITEM_OPTIONS = 'UPDATE_ACTIVE_ITEM_OPTIONS';
