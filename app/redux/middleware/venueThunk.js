@@ -37,7 +37,7 @@ const setActiveVenueThunk = ({venueId, address, venueName}) => (dispatch, getSta
       dispatch(menuApiQueryStatus(venueId, Date.now()));
     })
     .then(() => writeToFirehose('VenueSelected'))
-    .catch(err => {console.log(err);logger('setActiveVenueThunk failed', err)});
+    .catch(err => {logger('setActiveVenueThunk failed', err)});
   Actions.nodes();
 
 };

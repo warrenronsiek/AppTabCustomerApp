@@ -25,7 +25,17 @@ const finishedMenuItemOptionsSelectionThunk = () => (dispatch, getState) => {
     const selected = find(optionSet.data, ['isSelected', true]);
     return optionSet.optionSetName + ': ' + selected.optionName
   });
-  dispatch(addToCart(activeItem.itemName, newDescription, activeItem.price, activeItem.tags, activeItem.category, activeItem.itemId, activeItem.venueId, activeItem.itemOptions));
+  dispatch(addToCart({
+    itemName: activeItem.itemName,
+    itemDescription: newDescription,
+    price: activeItem.price,
+    tags: activeItem.tags,
+    category: activeItem.category,
+    itemId: activeItem.itemId,
+    venueId: activeItem.venueId,
+    itemOptions: activeItem.itemOptions,
+    count: activeItem.count
+  }));
   Actions.pop();
 };
 

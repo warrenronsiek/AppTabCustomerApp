@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {View, StyleSheet, Text, Image, SectionList, Dimensions, Platform} from 'react-native'
+import {View, StyleSheet, Text, Image, SectionList, Dimensions} from 'react-native'
 import OptionsListItem from './optionsListItem'
 import Button from '../../common/button'
 import centsIntToString from '../../common/centsIntToString'
@@ -55,6 +55,12 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     width: width
+  },
+  buttonContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    flex: 1,
+    backgroundColor: 'white'
   }
 });
 
@@ -80,7 +86,6 @@ class optionsList extends Component {
 
   componentWillMount() {
     Image.getSize(this.props.imageUrl, (width, height) => this.setState({imageSize: {width, height}}));
-    console.log(Platform.OS)
   }
 
   render() {
@@ -109,11 +114,13 @@ class optionsList extends Component {
                        style={{flex: 1}}
           />
         </View>
-        <View>
-
+        <View style={styles.buttonContainer}>
+          <Button onPress={() => this.props.decrementCount()}/>
+          <View><Text>{this.props.count}</Text></View>
+          <Button onPress={() => this.props.incrementCount()}/>
         </View>
         <View style={[styles.container, {marginTop: 30, flexDirection: 'row', flex: 1}]}>
-          <Button onPress={() => this.props.done()} style={{width: '90%'}} title="Done"
+          <Button onPress={() => this.props.done()} style={{width: '90%'}} title="Add to Order"
                   disabled={disable(this.props.allOptionsSelected, this.props.optionSets)}/>
         </View>
       </View>
@@ -142,7 +149,10 @@ optionsList.propTypes = {
   imageUrl: PropTypes.string,
   extendedDescription: PropTypes.string,
   onSelection: PropTypes.func.isRequired,
-  done: PropTypes.func.isRequired
+  done: PropTypes.func.isRequired,
+  incrementCount: PropTypes.func.isRequired,
+  decrementCount: PropTypes.func.isRequired,
+  count: PropTypes.number.isRequired
 };
 
 

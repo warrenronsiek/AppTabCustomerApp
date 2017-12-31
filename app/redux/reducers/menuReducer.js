@@ -8,7 +8,9 @@ import {
   UPDATE_ACTIVE_ITEM_OPTIONS,
   CLEAR_ACTIVE_ITEM,
   UPDATE_MENU_RANGES,
-  UPDATE_MENU_VISIBILITY
+  UPDATE_MENU_VISIBILITY,
+  INCREMENT_ACTIVE_ITEM_COUNT,
+  DECREMENT_ACTIVE_ITEM_COUNT
 } from '../actions/menuActions';
 import centsIntToString from '../../common/centsIntToString';
 
@@ -209,6 +211,15 @@ const activeMenuItem = (state = {}, action) => {
         viewablePrice: '$' + centsIntToString(action.price),
         allOptionsSelected: action.allOptionsSelected
       };
+    case INCREMENT_ACTIVE_ITEM_COUNT:
+      return {
+        ...state, count: state.count + 1
+      };
+    case DECREMENT_ACTIVE_ITEM_COUNT:
+      if (state.count > 1) {
+        return {...state, count: state.count - 1};
+      }
+      return state;
     case CLEAR_ACTIVE_ITEM:
       return {};
     default:
