@@ -61,6 +61,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1,
     backgroundColor: 'white'
+  },
+  countContainer: {
+    borderWidth: 1,
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  count: {
+    fontWeight: '100',
+    fontSize: 18
   }
 });
 
@@ -115,9 +128,9 @@ class optionsList extends Component {
           />
         </View>
         <View style={styles.buttonContainer}>
-          <Button onPress={() => this.props.decrementCount()}/>
-          <View><Text>{this.props.count}</Text></View>
-          <Button onPress={() => this.props.incrementCount()}/>
+          <Button onPress={() => this.props.decrementCount()} style={{backgroundColor: 'transparent'}} iconProps={{iconName: 'minus', iconLibrary:'MaterialCommunityIcons', iconSize: 30}}/>
+          <View style={styles.countContainer}><Text style={styles.count}>{this.props.count}</Text></View>
+          <Button onPress={() => this.props.incrementCount()} style={{backgroundColor: 'transparent'}} iconProps={{iconName: 'plus', iconLibrary:'MaterialCommunityIcons', iconSize: 30}}/>
         </View>
         <View style={[styles.container, {marginTop: 30, flexDirection: 'row', flex: 1}]}>
           <Button onPress={() => this.props.done()} style={{width: '90%'}} title="Add to Order"
