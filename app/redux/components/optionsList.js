@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {View, StyleSheet, Text, Image, SectionList, Dimensions} from 'react-native'
+import {View, StyleSheet, Text, Image, SectionList, Dimensions, ScrollView} from 'react-native'
 import OptionsListItem from './optionsListItem'
 import Button from '../../common/button'
 import centsIntToString from '../../common/centsIntToString'
@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
   },
   headerText: {
     paddingLeft: 20,
-    fontWeight: '100'
+    fontWeight: 'bold',
+    fontSize: 18
   },
   itemNameContainer: {
     alignItems: 'flex-start',
@@ -41,7 +42,6 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     flex: 2,
-    borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: 'grey'
   },
   imageContainer: {
@@ -54,13 +54,15 @@ const styles = StyleSheet.create({
   extendedDescriptionContainer: {
     paddingLeft: 20,
     paddingRight: 20,
-    width: width
+    width: width,
+    marginBottom: 10
   },
   buttonContainer: {
     alignItems: 'center',
     flexDirection: 'row',
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    marginTop: 20
   },
   countContainer: {
     borderWidth: 1,
@@ -74,6 +76,20 @@ const styles = StyleSheet.create({
   count: {
     fontWeight: '100',
     fontSize: 18
+  },
+  scrollContainer: {
+    alignItems: 'center',
+    flexDirection: 'column',
+    flexGrow: 1,
+    backgroundColor: 'white'
+  },
+  doneButtonContainer: {
+    alignItems: 'center',
+    backgroundColor: 'white',
+    marginTop: 30,
+    flexDirection: 'row',
+    flex: 1,
+    marginBottom: 30,
   }
 });
 
@@ -103,40 +119,44 @@ class optionsList extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={{maxHeight: this.state.imageSize.height}}>
-          <Image source={{uri: this.props.imageUrl}}
-                 style={{height: this.state.imageSize.height, width: width}} />
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.container}>
+          <View style={{maxHeight: this.state.imageSize.height}}>
+            <Image source={{uri: this.props.imageUrl}}
+                   style={{height: this.state.imageSize.height, width: width}}/>
+          </View>
+          <View style={styles.itemNameContainer}>
+            <Text style={styles.itemName}>{this.props.itemName}</Text>
+          </View>
+          <View style={styles.extendedDescriptionContainer}>
+            <Text style={styles.extendedDescription}>{this.props.extendedDescription}</Text>
+          </View>
+          <View style={styles.listContainer}>
+            <SectionList sections={this.props.optionSets}
+                         keyExtractor={(item, index) => item.optionSetName + item.optionName}
+                         renderItem={({item}) => <OptionsListItem optionName={item.optionName}
+                                                                  isSelected={item.isSelected}
+                                                                  price={'+$' + centsIntToString(item.price)}
+                                                                  onSelection={this.props.onSelection}
+                                                                  optionSetId={item.optionSetId}
+                                                                  optionId={item.optionId}/>}
+                         renderSectionHeader={({section}) => <OptionSetHeader optionSetName={section.optionSetName}/>}
+                         style={{flex: 1}}
+            />
+          </View>
+          <View style={styles.buttonContainer}>
+            <Button onPress={() => this.props.decrementCount()} style={{backgroundColor: 'transparent'}}
+                    iconProps={{iconName: 'minus', iconLibrary: 'MaterialCommunityIcons', iconSize: 30}}/>
+            <View style={styles.countContainer}><Text style={styles.count}>{this.props.count}</Text></View>
+            <Button onPress={() => this.props.incrementCount()} style={{backgroundColor: 'transparent'}}
+                    iconProps={{iconName: 'plus', iconLibrary: 'MaterialCommunityIcons', iconSize: 30}}/>
+          </View>
+          <View style={styles.doneButtonContainer}>
+            <Button onPress={() => this.props.done()} style={{width: '90%'}} title="Add to Order"
+                    disabled={disable(this.props.allOptionsSelected, this.props.optionSets)}/>
+          </View>
         </View>
-        <View style={styles.itemNameContainer}>
-          <Text style={styles.itemName}>{this.props.itemName}</Text>
-        </View>
-        <View style={styles.extendedDescriptionContainer}>
-          <Text style={styles.extendedDescription}>{this.props.extendedDescription}</Text>
-        </View>
-        <View style={styles.listContainer}>
-          <SectionList sections={this.props.optionSets}
-                       keyExtractor={(item, index) => item.optionSetName + item.optionName}
-                       renderItem={({item}) => <OptionsListItem optionName={item.optionName}
-                                                                isSelected={item.isSelected}
-                                                                price={'+$' + centsIntToString(item.price)}
-                                                                onSelection={this.props.onSelection}
-                                                                optionSetId={item.optionSetId}
-                                                                optionId={item.optionId}/>}
-                       renderSectionHeader={({section}) => <OptionSetHeader optionSetName={section.optionSetName}/>}
-                       style={{flex: 1}}
-          />
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button onPress={() => this.props.decrementCount()} style={{backgroundColor: 'transparent'}} iconProps={{iconName: 'minus', iconLibrary:'MaterialCommunityIcons', iconSize: 30}}/>
-          <View style={styles.countContainer}><Text style={styles.count}>{this.props.count}</Text></View>
-          <Button onPress={() => this.props.incrementCount()} style={{backgroundColor: 'transparent'}} iconProps={{iconName: 'plus', iconLibrary:'MaterialCommunityIcons', iconSize: 30}}/>
-        </View>
-        <View style={[styles.container, {marginTop: 30, flexDirection: 'row', flex: 1}]}>
-          <Button onPress={() => this.props.done()} style={{width: '90%'}} title="Add to Order"
-                  disabled={disable(this.props.allOptionsSelected, this.props.optionSets)}/>
-        </View>
-      </View>
+      </ScrollView>
     )
   }
 }

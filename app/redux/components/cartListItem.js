@@ -83,7 +83,7 @@ const cartListItem = ({itemName, itemId, viewablePrice, count, incrementCount, d
       <View style={styles.itemDataContainer}>
         <View style={[styles.itemDataRowContainer]}>
           <View style={styles.textContainer}>
-            <Text style={styles.nameStyle}>{itemName}</Text>
+            <Text style={styles.nameStyle}>{itemName}  x{count}</Text>
           </View>
           <Text style={styles.priceStyle}>{viewablePrice}</Text>
         </View>

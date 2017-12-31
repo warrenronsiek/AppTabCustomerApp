@@ -4,6 +4,10 @@ import OrderListItem from './orderListItem'
 import {SectionList, Text, StyleSheet, View} from 'react-native'
 
 const styles = StyleSheet.create({
+  container: {
+    flex:1,
+    backgroundColor: 'white'
+  },
   sectionHeader: {
     minHeight: 30,
     flexDirection: 'row',
@@ -11,7 +15,7 @@ const styles = StyleSheet.create({
     borderTopColor: 'grey',
     borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomColor: 'grey',
-    borderBottomWidth: StyleSheet.hairlineWidth
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   datetimeHeader: {
     flex: 1,
@@ -33,13 +37,11 @@ const OrderListHeader = ({dateTime, amount}) => (
   </View>
 );
 
-const orderList = ({orders}) => {
-  return <SectionList renderItem={({item}) => <OrderListItem quantity={item.count} itemName={item.itemName}/>}
+const orderList = ({orders}) => (<View style={styles.container}><SectionList renderItem={({item}) => <OrderListItem quantity={item.count} itemName={item.itemName}/>}
                       renderSectionHeader={({section}) => <OrderListHeader dateTime={section.displayDate}
                                                                            amount={section.displayAmount}/>}
-                      sections={orders} keyExtractor={(item, index) => item.itemId}
-  />
-};
+                      sections={orders} keyExtractor={(item, index) => item.itemId + JSON.stringify(item.itemDescription)}
+  /></View>);
 
 orderList.propTypes = {
   orders: PropTypes.arrayOf(PropTypes.shape({
