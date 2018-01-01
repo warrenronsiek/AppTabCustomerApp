@@ -21,12 +21,10 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   itemName: {
-    fontWeight: '200',
-    fontSize: 20,
+    fontSize: 14,
   },
   quantity: {
-    fontWeight: '200',
-    fontSize: 20,
+    fontSize: 14,
   }
 });
 

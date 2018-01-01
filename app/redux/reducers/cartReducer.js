@@ -9,7 +9,6 @@ import {
   CLEAR_CART,
   CHECKING_OUT_COMPLETE,
   CHECKING_OUT,
-  ONE_CLICK_BUY,
   TOGGLE_INCREMENTER
 } from '../actions/cartActions'
 import {SET_ACTIVE_NODE} from '../actions/nodeActions'
@@ -75,13 +74,13 @@ const cart = (state = {
   numberOfCartItems: 0,
   transactionId: ''
 }, action) => {
-  let inCart = _.find(state.items, item => (action.itemId === item.itemId) && (action.itemOptions === item.itemOptions));
-  let filteredState = _.filter(state.items, item => (item.itemId !== action.itemId) || (action.itemOptions !== item.itemOptions));
-  let newItem, newItems;
+  let newItem, newItems, inCart, filteredState;
   switch (action.type) {
     case ADD_TO_CART:
+      inCart = _.find(state.items, item => (action.payload.itemId === item.itemId) && (JSON.stringify(action.payload.itemOptions) === JSON.stringify(item.itemOptions)));
+      filteredState = _.filter(state.items, item => (item.itemId !== action.payload.itemId) || (JSON.stringify(action.payload.itemOptions) !== JSON.stringify(item.itemOptions)));
       if (inCart) {
-        newItem = {...inCart, count: inCart.count + 1};
+        newItem = {...inCart, count: inCart.count + action.payload.count};
         newItems = [...filteredState, newItem];
         return Object.assign({}, {
           items: newItems,
@@ -90,17 +89,17 @@ const cart = (state = {
         })
       }
       newItems = [...filteredState, {
-        itemId: action.itemId,
-        itemName: action.itemName,
-        itemDescription: action.itemDescription,
-        viewablePrice: '$' + centsIntToString(action.price),
-        price: action.price,
-        tags: action.tags,
-        category: action.category,
-        venueId: action.venueId,
+        itemId: action.payload.itemId,
+        itemName: action.payload.itemName,
+        itemDescription: action.payload.itemDescription,
+        viewablePrice: '$' + centsIntToString(action.payload.price),
+        price: action.payload.price,
+        tags: action.payload.tags,
+        category: action.payload.category,
+        venueId: action.payload.venueId,
         showIncrementer: false,
-        itemOptions: selectedOptionsGetter(action.itemOptions),
-        count: 1
+        itemOptions: selectedOptionsGetter(action.payload.itemOptions),
+        count: action.payload.count
       }].sort((a, b) => a.itemName.localeCompare(b.itemName));
       return Object.assign({}, {
         items: newItems,
@@ -109,6 +108,8 @@ const cart = (state = {
         transactionId: uuid.v4().slice(-12)
       });
     case INCREMENT_COUNT:
+      inCart = _.find(state.items, item => (action.payload.itemId === item.itemId) && (JSON.stringify(action.payload.itemOptions) === JSON.stringify(item.itemOptions)));
+      filteredState = _.filter(state.items, item => (item.itemId !== action.payload.itemId) || (JSON.stringify(action.payload.itemOptions) !== JSON.stringify(item.itemOptions)));
       newItem = {...inCart, count: inCart.count + 1};
       newItems = [...filteredState, newItem].sort((a, b) => a.itemName.localeCompare(b.itemName));
       return Object.assign({}, {
@@ -117,6 +118,8 @@ const cart = (state = {
         numberOfCartItems: state.numberOfCartItems + 1
       });
     case DECREMENT_COUNT:
+      inCart = _.find(state.items, item => (action.payload.itemId === item.itemId) && (JSON.stringify(action.payload.itemOptions) === JSON.stringify(item.itemOptions)));
+      filteredState = _.filter(state.items, item => (item.itemId !== action.payload.itemId) || (JSON.stringify(action.payload.itemOptions) !== JSON.stringify(item.itemOptions)));
       newItem = {...inCart, count: inCart.count - 1};
       newItems = [...filteredState, newItem].sort((a, b) => a.itemName.localeCompare(b.itemName));
       if (inCart.count > 0) {
@@ -134,7 +137,7 @@ const cart = (state = {
     case SET_ACTIVE_NODE:
       return {...state, items: [...state.items.filter(item => item.venueId === action.venueId)]};
     case UPDATE_TIP:
-      return {...state, costs: costsGenerator(state.items, action.tip, state.costs.tax)};
+      return {...state, costs: costsGenerator(state.items, action.payload.tip, state.costs.tax)};
     case CLEAR_CART:
       return Object.assign({}, {
         items: [],
@@ -143,6 +146,8 @@ const cart = (state = {
         transactionId: ''
       });
     case TOGGLE_INCREMENTER:
+      inCart = _.find(state.items, item => (action.payload.itemId === item.itemId) && (JSON.stringify(action.payload.itemOptions) === JSON.stringify(item.itemOptions)));
+      filteredState = _.filter(state.items, item => (item.itemId !== action.payload.itemId) || (JSON.stringify(action.payload.itemOptions) !== JSON.stringify(item.itemOptions)));
       newItem = {...inCart, showIncrementer: !inCart.showIncrementer};
       newItems = [...filteredState, newItem].sort((a, b) => a.itemName.localeCompare(b.itemName));
       return {...state, items: newItems};

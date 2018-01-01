@@ -3,7 +3,7 @@
  */
 import {Actions} from 'react-native-router-flux'
 import logger from '../../api/loggingApi'
-import {writeToFirehose} from '../../api/firehose'
+import {writeToFirehose} from '../../api/aws'
 import {checkingOutComplete, checkingOut} from '../actions/cartActions'
 import {isEmpty} from 'lodash'
 

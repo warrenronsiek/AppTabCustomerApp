@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types'
-import {StyleSheet, Text, View, TextInput, Dimensions, ScrollView} from 'react-native';
+import {StyleSheet, Text, View, TextInput, Dimensions, ScrollView, Platform} from 'react-native';
 import Spinner from '../../common/spinner'
 import Button from '../../common/button'
 
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopWidth: Platform.OS === 'IOS' ? StyleSheet.hairlineWidth : 0,
     borderTopColor: 'grey',
     flex: 1
   },
@@ -71,7 +71,7 @@ const login = ({validationError, networkError, unknownError, loggingIn, phoneNum
                    autoCorrect={false} keyboardType='phone-pad'
                    onChangeText={(text) => updatePhoneNumber(text)}/>
       </View>
-      <View style={[styles.textInputContainer, {borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: 'grey',}]}>
+      <View style={[styles.textInputContainer, {borderBottomWidth: Platform.OS === 'IOS' ? StyleSheet.hairlineWidth : 0, borderBottomColor: 'grey',}]}>
         <TextInput style={styles.textInputBox} value={password} placeholder="password" autoCapitalize='none'
                    autoCorrect={false} secureTextEntry={true}
                    onChangeText={(text) => updatePassword(text)}/>

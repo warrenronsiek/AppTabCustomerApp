@@ -3,28 +3,28 @@
  */
 
 export const ADD_TO_CART = 'ADD_TO_CART';
-export const addToCart = (itemName, itemDescription, price, tags, category, itemId, venueId, itemOptions) => {
-  return {type: ADD_TO_CART, itemName, itemDescription, price, tags, category, itemId, venueId, itemOptions}
+export const addToCart = ({itemName, itemDescription, price, tags, category, itemId, venueId, itemOptions, count}) => {
+  return {type: ADD_TO_CART, payload: {itemName, itemDescription, price, tags, category, itemId, venueId, itemOptions, count}}
 };
 
 export const INCREMENT_COUNT = 'INCREMENT_COUNT';
 export const incrementCount = (itemId, itemOptions) => {
-  return {type: INCREMENT_COUNT, itemId, itemOptions}
+  return {type: INCREMENT_COUNT, payload: {itemId, itemOptions}}
 };
 
 export const DECREMENT_COUNT = 'DECREMENT_COUNT';
 export const decrementCount = (itemId, itemOptions) => {
-  return {type: DECREMENT_COUNT, itemId, itemOptions}
+  return {type: DECREMENT_COUNT, payload: {itemId, itemOptions}}
 };
 
 export const UPDATE_SALES_TAX = 'UPDATE_SALES_TAX';
 export const updateSalesTax = (tax) => {
-  return {type: UPDATE_SALES_TAX, tax}
+  return {type: UPDATE_SALES_TAX, payload: {tax}}
 };
 
 export const UPDATE_TIP = 'UPDATE_TIP';
 export const updateTip = (tip) => {
-  return {type: UPDATE_TIP, tip}
+  return {type: UPDATE_TIP, payload: {tip}}
 };
 
 export const CLEAR_CART = 'CLEAR_CART';
@@ -44,6 +44,6 @@ export const checkingOutComplete = () => {
 
 export const TOGGLE_INCREMENTER = 'TOGGLE_INCREMENTER';
 export const toggleIncrementer = (itemId, itemOptions) => {
-  return {type: TOGGLE_INCREMENTER, itemId, itemOptions}
+  return {type: TOGGLE_INCREMENTER, payload: {itemId, itemOptions}}
 };
 

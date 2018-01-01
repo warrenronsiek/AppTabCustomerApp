@@ -18,7 +18,7 @@ import {
   clearErrors
 } from '../actions/registerActions'
 import phoneFormatter from 'phone-formatter'
-import {writeToFirehose} from "../../api/firehose";
+import {writeToFirehose} from "../../api/aws";
 
 const confirmCodeThunk = (confirmationCode) => (dispatch, getState) => {
   const state = getState(),

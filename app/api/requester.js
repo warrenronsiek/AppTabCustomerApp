@@ -8,7 +8,7 @@ import {url, apiKey} from '../vars'
 import decode from 'jwt-decode'
 import store from '../redux/store'
 import {updateAuth} from '../redux/actions/loginActions'
-import {updateCredentials} from "./firehose"
+import {updateCredentials} from "./aws"
 import {get} from 'lodash'
 
 const requester = (apiPath, successMessage, errorMessage, responseProcessor, allowTokenRefresh = true, errorProcessor) => (postBody) => {

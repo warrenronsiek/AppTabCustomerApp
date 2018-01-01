@@ -7,7 +7,7 @@ import transactionActions from '../actions/trasactionActions'
 import {clearCart} from '../actions/cartActions'
 import {Actions} from 'react-native-router-flux'
 import logger from '../../api/loggingApi'
-import {writeToFirehose} from '../../api/firehose'
+import {writeToFirehose} from '../../api/aws'
 
 const payThunk = () => (dispatch, getState) => {
   const state = getState();

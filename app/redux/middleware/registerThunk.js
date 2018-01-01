@@ -6,7 +6,7 @@ import {registering, clearErrors, networkError, userExistsError, registeringFini
 import {Actions} from 'react-native-router-flux'
 import logger from '../../api/loggingApi'
 import phoneFormatter from 'phone-formatter'
-import {writeToFirehose} from "../../api/firehose"
+import {writeToFirehose} from "../../api/aws"
 
 export default registerThunk = (name, email, password, phoneNumber) => (dispatch, getState) => {
   const deviceToken = getState().deviceToken;

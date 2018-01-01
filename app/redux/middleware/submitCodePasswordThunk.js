@@ -6,7 +6,7 @@ import resetPassword from '../../api/resetPassword'
 import {Actions} from 'react-native-router-flux'
 import logger from '../../api/loggingApi'
 import phoneFormatter from 'phone-formatter'
-import {writeToFirehose} from "../../api/firehose";
+import {writeToFirehose} from "../../api/aws";
 
 const submitCodePasswordThunk = (confirmationCode, password, phoneNumber) => dispatch => {
   Promise.resolve(dispatch(passwordResetActions.processing()))

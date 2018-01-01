@@ -1,5 +1,5 @@
 import {logout} from '../actions/drawerActions'
-import {writeToFirehose} from "../../api/firehose"
+import {writeToFirehose} from "../../api/aws"
 import {Actions} from 'react-native-router-flux'
 
 const logoutThunk = () => (dispatch, getState) => {

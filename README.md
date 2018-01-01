@@ -5,6 +5,32 @@ Install Instructions
 Go to the node_modules/react-native-router-flux/node_modules and delete the react-native folder therein.
 2. If you get an issue called `unable to resolve module ReactComponentTreeHook` you need to go into package.json and remove the `^` infront of react and react-native. (and then yarn install)
 
+Release Procedure
+------------------
+* Make sure that the vars in vars.js are properly configured.
+* Update info.plist from :
+```
+<key>NSAppTransportSecurity</key>
+<dict>
+    <key>NSAllowsArbitraryLoads</key>
+    <true/>
+    <key>NSAllowsArbitraryLoadsInWebContent</key>
+    <true/>
+    <key>NSAllowsLocalNetworking</key>
+    <true/>
+    <key>NSExceptionDomains</key>
+    <dict/>
+</dict>
+``` 
+to
+```
+<key>NSAppTransportSecurity</key>
+<dict>
+    <key>NSExceptionDomains</key>
+    <dict/>
+</dict>
+```
+
 Possible Explosives
 -------------------
 
@@ -23,6 +49,9 @@ Running on Android
 2. run `adb reverse tcp:8081 tcp:8081`
 3. run `adb logcat | grep ReactNativeJS` to get the logs
 
+Sometimes builds will fail because android packages aren't updated and agreed to. Run `android sdk` to launch the 
+sdk manager and update.
+
 Building IOS icon sets
 ----------------------
 run `yo rn-toolbox:assets --icon <path to your icon>`
@@ -36,3 +65,7 @@ Running the debugger
 `open "rndebugger://set-debugger-loc?host=localhost&port=8081"`
 
 set simulator/phone to 'remote debugging'
+
+Generating icon/apptiles sets
+-----------------------------
+check out `https://www.npmjs.com/package/react-native-icon`

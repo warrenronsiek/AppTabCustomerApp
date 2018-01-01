@@ -18,7 +18,7 @@ import getStripeToken from '../../api/getStripeToken'
 import {Actions} from 'react-native-router-flux'
 import logger from '../../api/loggingApi'
 import phoneFormatter from 'phone-formatter'
-import {updateCredentials, writeToFirehose} from '../../api/firehose'
+import {updateCredentials, writeToFirehose} from '../../api/aws'
 import {get} from 'lodash'
 
 export default loginThunk = (phoneNumber, password) => (dispatch, getState) => {
