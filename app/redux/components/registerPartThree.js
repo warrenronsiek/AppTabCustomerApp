@@ -18,12 +18,12 @@ const styles = StyleSheet.create({
     minHeight: 800
   },
   textContainer: {
-    marginTop: 10,
+    marginTop: 30,
     flex: 3,
     alignItems: 'center',
     justifyContent: 'center',
     maxHeight: 200,
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   checkListContainer: {
     flex: 2,
@@ -33,44 +33,33 @@ const styles = StyleSheet.create({
   },
   textInputContainer: {
     flex: 1,
-    alignItems: 'flex-start',
+    maxHeight: 50,
+    alignItems: 'center',
     justifyContent: 'center',
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: 'grey',
     width: width,
   },
   buttonContainer: {
+    marginTop: 30,
     flex: 3,
     alignItems: 'center',
   },
   textInputBox: {
-    flex: 1,
     height: 40,
-    paddingLeft: 30
+    width: width,
+    textAlign: 'center'
   }
 });
 
 const register = ({
-                    updatePhoneNumber, phoneNumber, updateName, updateEmail, updatePassword, updateConfirmPassword,
-                    name, email, password, confirmPassword, registerUser, networkError, userExistsError, unknownError,
+                    updatePassword, updateConfirmPassword,
+                    password, confirmPassword, registerUser, networkError, userExistsError, unknownError,
                     registering, passwordValid
                   }) => (
   <ScrollView contentContainerStyle={styles.container}>
     <View style={styles.textContainer}>
-      <View style={[styles.textInputContainer, {borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: 'grey'} ]}>
-        <TextInput style={styles.textInputBox} onChangeText={text => updateName(text)} autoCapitalize='words'
-                   autoCorrect={false} value={name} placeholder="First Name (So servers know what to call you.)"/>
-      </View>
-      <View style={styles.textInputContainer}>
-        <TextInput style={styles.textInputBox} onChangeText={text => updatePhoneNumber(text)} autoCapitalize='words'
-                   autoCorrect={false} value={phoneNumber} placeholder="(123) 456-7890" keyboardType='phone-pad'
-                   maxLength={14}/>
-      </View>
-      <View style={styles.textInputContainer}>
-        <TextInput style={styles.textInputBox} onChangeText={text => updateEmail(text)} autoCapitalize='none'
-                   autoCorrect={false} value={email} placeholder="Email (Optional)"/>
-      </View>
-      <View style={styles.textInputContainer}>
+      <View style={[styles.textInputContainer, {borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: 'grey'}]}>
         <TextInput style={styles.textInputBox} onChangeText={text => updatePassword(text)} autoCapitalize='none'
                    autoCorrect={false} value={password} placeholder="Password" secureTextEntry={true}/>
       </View>
@@ -89,8 +78,8 @@ const register = ({
       {registering
         ? <Spinner/>
         : <View style={{flex:1, flexDirection: 'row'}}>
-        <Button onPress={() => registerUser(name, email, password, phoneNumber)} title="Register" style={{width: '90%'}}
-                  disabled={(password !== confirmPassword) || name === undefined || !passwordValid.isValid || phoneNumber.length !== 14}/>
+        <Button onPress={() => registerUser()} title="Register" style={{width: '90%'}}
+                  disabled={(password !== confirmPassword) || !passwordValid.isValid}/>
       </View>}
       {(networkError && !registering) ? <Text>Networking Error!</Text> : null}
       {(unknownError && !registering) ? <Text>Unknown Error!</Text> : null}
@@ -100,12 +89,8 @@ const register = ({
 );
 
 register.propTypes = {
-  updateName: PropTypes.func.isRequired,
-  updateEmail: PropTypes.func.isRequired,
   updatePassword: PropTypes.func.isRequired,
   updateConfirmPassword: PropTypes.func.isRequired,
-  name: PropTypes.string,
-  email: PropTypes.string,
   password: PropTypes.string,
   confirmPassword: PropTypes.string,
   registerUser: PropTypes.func.isRequired,
@@ -113,8 +98,6 @@ register.propTypes = {
   userExistsError: PropTypes.bool,
   unknownError: PropTypes.bool,
   registering: PropTypes.bool,
-  phoneNumber: PropTypes.string,
-  updatePhoneNumber: PropTypes.func.isRequired,
   passwordValid: PropTypes.shape({
     hasLower: PropTypes.bool,
     hasUpper: PropTypes.bool,

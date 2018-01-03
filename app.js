@@ -9,7 +9,7 @@ import OrderIcon from './app/redux/connectedComponents/orderIconWithAlertConnect
 import Login from './app/scenes/loginScene'
 import Placeholder from './app/scenes/placeholder'
 import OptionsSelectionModal from './app/scenes/optionsSelectionModal'
-import Register from './app/scenes/registerScene'
+import Register from './app/scenes/registerPartOneScene'
 import Nodes from './app/scenes/nodeScene'
 import Request from './app/scenes/ordersScene'
 import MenuScene from './app/scenes/menuScene'
@@ -17,9 +17,10 @@ import CheckoutScene from './app/scenes/checkoutScene'
 import CardFormScene from './app/scenes/creditCardFormScene'
 import ConfirmCodeScene from './app/scenes/confirmationCodeEntryScene'
 import CartScene from './app/scenes/cartScene'
+import RegisterTwo from './app/scenes/registerPartTwoScene'
+import RegisterThree from './app/scenes/registerPartThreeScene'
 import ResetPasswordScene from './app/scenes/passwordResetScene'
 import SimpleIcons from 'react-native-vector-icons/SimpleLineIcons'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import transactionActions from './app/redux/actions/trasactionActions'
 import Venues from './app/scenes/venueScene'
 import Menu from './app/assets/svgs/menu'
@@ -44,6 +45,8 @@ class AppTabCustomerApp extends Component {
             <Scene key='venue' component={Venues} title='Venues'/>
             <Scene key="login" component={Login} title="Login"/>
             <Scene key="register" component={Register} title="Register"/>
+            <Scene key="registerPartTwo" component={RegisterTwo} title="Register"/>
+            <Scene key="registerPartThree" component={RegisterThree} title="Register"/>
             <Scene key="code" component={ConfirmCodeScene} title="Confirm Code"/>
             <Scene key="nodes" component={Nodes} title="Table Selection" back onBack={() => Actions.venue()}/>
             <Scene key="tabs" tabs={true} tabBarIconContainerStyle={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
