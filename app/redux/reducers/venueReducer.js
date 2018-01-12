@@ -1,4 +1,4 @@
-import {UPDATE_ACTIVE_VENUE, UPDATE_VENUE} from '../actions/venueActions'
+import {SET_BLUETOOTH_RECONSTRUCTION, UPDATE_ACTIVE_VENUE, UPDATE_VENUE} from '../actions/venueActions'
 import {devData} from "../../common/devData";
 
 const venues = (state = __DEV__ ? devData.venues : [], action) => {
@@ -19,4 +19,13 @@ const activeVenue = (state = {}, action) => {
   }
 };
 
-export {venues, activeVenue}
+const bluetoothReconstruction = (state = true, action) => {
+  switch (action.type) {
+    case SET_BLUETOOTH_RECONSTRUCTION:
+      return action.bool;
+    default:
+      return state
+  }
+};
+
+export {venues, activeVenue, bluetoothReconstruction}

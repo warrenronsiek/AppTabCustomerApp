@@ -1,4 +1,4 @@
-import {updateActiveVenue} from "../actions/venueActions";
+import {setBluetoothReconstruction, updateActiveVenue} from "../actions/venueActions";
 import {Actions} from 'react-native-router-flux'
 import {writeToFirehose, s3} from "../../api/aws";
 import getMenu from "../../api/getMenu";
@@ -7,9 +7,12 @@ import {menuApiQueryStatus, updateMenuItem, updateMenuRanges, updateMenuVisibili
 import {get} from 'lodash'
 import {imageBucket} from '../../vars'
 import logger from '../../api/loggingApi'
+import {stopScanning} from "../../common/bleScannerComponentFunctions";
 
 const setActiveVenueThunk = ({venueId, address, venueName}) => (dispatch, getState) => {
   dispatch(updateActiveVenue({venueId, address, venueName}));
+  dispatch(setBluetoothReconstruction(false));
+  stopScanning();
   const state = getState();
   Promise.all([getMenu({venueId: state.activeVenue.venueId}), getVenue({venueId: state.activeVenue.venueId})])
     .then(res => {

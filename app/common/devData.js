@@ -72,7 +72,8 @@ const devData = useDevData
       password: '',
       phoneNumber: '',
     },
-    venues: []
+    venues: [],
+    deviceToken: ''
   };
 
 export {devData}

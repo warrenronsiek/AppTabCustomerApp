@@ -52,6 +52,8 @@ Running on Android
 Sometimes builds will fail because android packages aren't updated and agreed to. Run `android sdk` to launch the 
 sdk manager and update.
 
+Building android release version:  `cd android && ./gradlew assembleRelease`. Testing android release: `react-native run-android --variant=release`
+
 Building IOS icon sets
 ----------------------
 run `yo rn-toolbox:assets --icon <path to your icon>`
