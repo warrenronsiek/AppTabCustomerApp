@@ -129,7 +129,7 @@ class optionsList extends Component {
             <Text style={styles.itemName}>{this.props.itemName}</Text>
           </View>
           <View style={styles.extendedDescriptionContainer}>
-            <Text style={styles.extendedDescription}>{this.props.extendedDescription}</Text>
+            <Text style={styles.extendedDescription}>{(this.props.extendedDescription === 'NULL') ? null : this.props.extendedDescription }</Text>
           </View>
           <View style={styles.listContainer}>
             <SectionList sections={this.props.optionSets}

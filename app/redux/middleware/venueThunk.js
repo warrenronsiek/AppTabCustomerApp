@@ -9,6 +9,8 @@ import {imageBucket} from '../../vars'
 import logger from '../../api/loggingApi'
 import {stopScanning} from "../../common/bleScannerComponentFunctions";
 
+const keyAccessor = item => get(item, 'Image.M.ImageUrl.S', '').split('/').slice(3).reduce((accum, str) => accum + '/' + str, '');
+
 const setActiveVenueThunk = ({venueId, address, venueName}) => (dispatch, getState) => {
   dispatch(updateActiveVenue({venueId, address, venueName}));
   dispatch(setBluetoothReconstruction(false));
@@ -28,21 +30,21 @@ const setActiveVenueThunk = ({venueId, address, venueName}) => (dispatch, getSta
           (get(item, 'ItemOptions.S', 'NULL') !== 'NULL') ? get(item, 'ItemOptions.S') : '[]',
           item.TimeRanges.SS,
           get(item, 'ExtendedDescription.S', ''),
-          s3.getSignedUrl('getObject', {
+          !!keyAccessor(item) ? s3.getSignedUrl('getObject', {
             Bucket: imageBucket,
-            Key: get(item, 'Image.M.ImageUrl.S', '').split('/').slice(3).reduce((accum, str) => accum + '/' + str)
-          })))
+            Key: keyAccessor(item)
+          }) : null))
       });
       res[1].venue.Item.TimeRanges.L.forEach(timeRange =>
         dispatch(updateMenuRanges(timeRange.M.id.S, timeRange.M.range.S))
       );
+      console.log('got to Dispatches')
       dispatch(updateMenuVisibility());
       dispatch(menuApiQueryStatus(venueId, Date.now()));
     })
     .then(() => writeToFirehose('VenueSelected'))
-    .catch(err => {logger('setActiveVenueThunk failed', err)});
+    .catch(err => {console.log(err);logger('setActiveVenueThunk failed', err)});
   Actions.nodes();
-
 };
 
 export {setActiveVenueThunk}
