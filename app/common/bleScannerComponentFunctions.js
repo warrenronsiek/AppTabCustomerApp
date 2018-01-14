@@ -10,7 +10,6 @@ import store from '../redux/store'
 import {updateVenue} from "../redux/actions/venueActions";
 import {BluetoothStatus} from 'react-native-bluetooth-status'
 
-
 const noble = require('react-native-ble');
 
 const componentWillMount = () => {
@@ -33,8 +32,11 @@ const componentDidMount = () => {
   waiter()
 };
 
+const nobleGetState = () => {
+  return noble.state
+};
 
-const componentWillUnmount = () => {
+const stopScanning = () => {
   noble.stopScanning();
 };
 
@@ -89,4 +91,4 @@ const onFound = (item) => {
     });
 };
 
-export {componentDidMount, componentWillMount, componentWillUnmount}
+export {componentDidMount, componentWillMount, stopScanning, nobleGetState}

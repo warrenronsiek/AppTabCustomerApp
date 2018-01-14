@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'
-import {View, StyleSheet, Text, FlatList, Slider, Dimensions} from 'react-native';
+import {View, StyleSheet, Text, FlatList, Slider, Dimensions, Platform} from 'react-native';
 import CartListItem from './cartListItem';
 import Button from '../../common/button'
 import Spinner from '../../common/spinner'
@@ -122,8 +122,12 @@ export default class CartList extends Component {
             </View>
           </View>
           <View style={styles.sliderContainer}>
-            <Slider maximumValue={50} value={20} onSlidingComplete={value => this.props.updateTip(value / 100.)} thumbTintColor='grey'
+            {Platform === 'ios'
+              ? <Slider maximumValue={50} value={20} onSlidingComplete={value => this.props.updateTip(value / 100.)} thumbTintColor='grey'
                     onValueChange={value => this.props.updateTip(value / 100.)} step={1} minimumTrackTintColor='#fb6821'/>
+              : <Slider maximumValue={50} value={20} onSlidingComplete={value => this.props.updateTip(value / 100.)} thumbTintColor='grey'
+                    onValueChange={value => this.props.updateTip(value / 100.)} step={1} maximumTrackTintColor='#fb6821'/>}
+
             <View style={{paddingLeft: 15}}>
               <Svg width={width - 50} height={20}>
                 <Line x1='0' y1='0' x2={width - 20} y2='0' strokeWidth='1' stroke='black'/>

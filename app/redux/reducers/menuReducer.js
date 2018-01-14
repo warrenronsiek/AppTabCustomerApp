@@ -105,54 +105,54 @@ const menu = (state = {allItems: [], visibleMenu: [], menuRanges: {}}, action) =
         })
       };
     case UPDATE_MENU_ITEM:
-      const section = _.find(state.allItems, ['category', action.category]);
-      const oldItem = _.find(_.get(section, 'data'), ['itemId', action.itemId]);
+      const section = _.find(state.allItems, ['category', action.payload.category]);
+      const oldItem = _.find(_.get(section, 'data'), ['itemId', action.payload.itemId]);
       if (oldItem) {
         return {
-          ...state, allItems: [...state.allItems.filter(section => section.category !== action.category),
+          ...state, allItems: [...state.allItems.filter(section => section.category !== action.payload.category),
             {
               data: [
-                ...section.data.filter(item => item.itemId !== action.itemId),
+                ...section.data.filter(item => item.itemId !== action.payload.itemId),
                 {
-                  itemName: action.itemName,
-                  itemDescription: action.itemDescription,
-                  itemId: action.itemId,
-                  venueId: action.venueId,
-                  tags: action.tags,
-                  viewablePrice: '$' + centsIntToString(action.price),
-                  price: action.price,
-                  category: action.category,
-                  itemOptions: action.itemOptions,
-                  timeRanges: action.timeRanges,
-                  extendedDescription: action.extendedDescription,
-                  imageUrl: action.imageUrl
+                  itemName: action.payload.itemName,
+                  itemDescription: action.payload.itemDescription,
+                  itemId: action.payload.itemId,
+                  venueId: action.payload.venueId,
+                  tags: action.payload.tags,
+                  viewablePrice: '$' + centsIntToString(action.payload.price),
+                  price: action.payload.price,
+                  category: action.payload.category,
+                  itemOptions: action.payload.itemOptions,
+                  timeRanges: action.payload.timeRanges,
+                  extendedDescription: action.payload.extendedDescription,
+                  imageUrl: action.payload.imageUrl
                 }
-              ], category: action.category
+              ], category: action.payload.category
             }
           ]
         }
       }
       if (section) {
         return {
-          ...state, allItems: [...state.allItems.filter(section => section.category !== action.category),
+          ...state, allItems: [...state.allItems.filter(section => section.category !== action.payload.category),
             {
               data: [
                 ...section.data,
                 {
-                  itemName: action.itemName,
-                  itemDescription: action.itemDescription,
-                  itemId: action.itemId,
-                  venueId: action.venueId,
-                  viewablePrice: '$' + centsIntToString(action.price),
-                  tags: action.tags,
-                  price: action.price,
-                  category: action.category,
-                  itemOptions: action.itemOptions,
-                  timeRanges: action.timeRanges,
-                  extendedDescription: action.extendedDescription,
-                  imageUrl: action.imageUrl
+                  itemName: action.payload.itemName,
+                  itemDescription: action.payload.itemDescription,
+                  itemId: action.payload.itemId,
+                  venueId: action.payload.venueId,
+                  viewablePrice: '$' + centsIntToString(action.payload.price),
+                  tags: action.payload.tags,
+                  price: action.payload.price,
+                  category: action.payload.category,
+                  itemOptions: action.payload.itemOptions,
+                  timeRanges: action.payload.timeRanges,
+                  extendedDescription: action.payload.extendedDescription,
+                  imageUrl: action.payload.imageUrl
                 }
-              ], category: action.category
+              ], category: action.payload.category
             }
           ]
         }
@@ -161,19 +161,19 @@ const menu = (state = {allItems: [], visibleMenu: [], menuRanges: {}}, action) =
         ...state, allItems: [...state.allItems,
           {
             data: [{
-              itemName: action.itemName,
-              itemDescription: action.itemDescription,
-              itemId: action.itemId,
-              venueId: action.venueId,
-              tags: action.tags,
-              price: action.price,
-              viewablePrice: '$' + centsIntToString(action.price),
-              category: action.category,
-              itemOptions: action.itemOptions,
-              timeRanges: action.timeRanges,
-              extendedDescription: action.extendedDescription,
-              imageUrl: action.imageUrl,
-            }], category: action.category
+              itemName: action.payload.itemName,
+              itemDescription: action.payload.itemDescription,
+              itemId: action.payload.itemId,
+              venueId: action.payload.venueId,
+              tags: action.payload.tags,
+              price: action.payload.price,
+              viewablePrice: '$' + centsIntToString(action.payload.price),
+              category: action.payload.category,
+              itemOptions: action.payload.itemOptions,
+              timeRanges: action.payload.timeRanges,
+              extendedDescription: action.payload.extendedDescription,
+              imageUrl: action.payload.imageUrl,
+            }], category: action.payload.category
           }
         ]
       };

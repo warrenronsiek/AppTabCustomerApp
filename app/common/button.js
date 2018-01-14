@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {View, TouchableHighlight, Text, StyleSheet, Image} from 'react-native'
+import {View, TouchableHighlight, Text, StyleSheet, Image, Platform} from 'react-native'
 import {credentials} from "../api/aws";
 import Entypo from 'react-native-vector-icons/Entypo'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
@@ -61,7 +61,7 @@ const GenerateIcon = ({iconName, iconLibrary, iconSize, color}) => {
     case 'SimpleLineIcons':
       return <SimpleLineIcons color={color} name={iconName} size={iconSize}/>;
     case 'Ben':
-      return <View style={{marginTop: -3}}>
+      return <View style={{marginTop: Platform.OS === 'ios' ? -3 : -10}}>
         <Order height={iconSize} width={iconSize} fill='white'/>
       </View>;
     default:
@@ -99,7 +99,7 @@ class Button extends Component {
           ? [styles.button, this.props.style]
           : [styles.button, this.props.style, {backgroundColor: 'grey'}]}
         underlayColor={'transparent'}>
-        {this.props.imageUrl
+        {(!!this.props.imageUrl)
           ? <View style={[styles.container, this.props.containerStyle]}>
             <Image source={{
               uri: this.props.imageUrl

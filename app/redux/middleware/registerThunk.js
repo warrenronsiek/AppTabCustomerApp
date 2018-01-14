@@ -2,21 +2,39 @@
  * Created by warren on 1/22/17.
  */
 import registerRequest from '../../api/registerApi'
-import {registering, clearErrors, networkError, userExistsError, registeringFinished, unknownError} from '../actions/registerActions'
+import {
+  registering,
+  clearErrors,
+  networkError,
+  userExistsError,
+  registeringFinished,
+  unknownError
+} from '../actions/registerActions'
 import {Actions} from 'react-native-router-flux'
 import logger from '../../api/loggingApi'
 import phoneFormatter from 'phone-formatter'
 import {writeToFirehose} from "../../api/aws"
+import ccActions from "../actions/creditCardActions";
 
-export default registerThunk = (name, email, password, phoneNumber) => (dispatch, getState) => {
-  const deviceToken = getState().deviceToken;
+export default registerThunk = () => (dispatch, getState) => {
+  const state = getState();
+  const deviceToken = state.deviceToken.token, name = state.registerParams.name, email = state.registerParams.email,
+    password = state.registerParams.password, phoneNumber = state.registerParams.phoneNumber;
+
   Promise.resolve(dispatch(clearErrors()))
     .then(() => Promise.resolve(dispatch(registering())))
     .then(res => {
-      return registerRequest({email, name, password, deviceToken, phoneNumber: '+1' + phoneFormatter.normalize(phoneNumber)})
+      return registerRequest({
+        email,
+        name,
+        password,
+        deviceToken,
+        phoneNumber: '+1' + phoneFormatter.normalize(phoneNumber)
+      })
     })
     .then(() => dispatch(clearErrors()))
     .then(res => Actions.code())
+    .then(res => Promise.resolve(dispatch(ccActions.apiQueried(true))))
     .then(() => dispatch(registeringFinished()))
     .then(() => writeToFirehose('RegistrationStepOne'))
     .catch(err => {

@@ -19,5 +19,14 @@ export default function passwordValidator(password) {
       hasLower,
       isValid
     };
+  } else {
+    return {
+      hasLength: false,
+      hasSymbol: false,
+      hasDigit: false,
+      hasUpper: false,
+      hasLower: false,
+      isValid: false
+    }
   }
 }

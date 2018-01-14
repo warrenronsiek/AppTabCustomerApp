@@ -51,7 +51,7 @@ const buttonGenerator = (processing, resendCode, codeEntryComplete, confirmation
   }
   return (
     <View style={{alignItems: 'center', justifyContent: 'center'}}>
-      <Button onPress={() => codeEntryComplete(confirmationCode)} title="Finished" style={{marginTop: 30, marginBottom: 10}}/>
+      <Button onPress={() => codeEntryComplete(confirmationCode)} title="Finished" style={{marginTop: 30, marginBottom: 10, width: '90%'}}/>
       <BuiltinButton onPress={() => resendCode()} title="Resend Code"/>
     </View>)
 };

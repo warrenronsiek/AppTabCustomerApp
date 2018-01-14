@@ -3,21 +3,15 @@
  */
 import {connect} from 'react-redux'
 import {
-  updatePhoneNumber,
-  updateEmail,
   updatePassword,
   updateConfirmPassword,
-  updateName
 } from '../actions/registerActions'
-import Register from '../components/register'
+import Register from '../components/registerPartThree'
 import registerThunk from '../middleware/registerThunk'
 import phoneHandler from '../middleware/phoneFormatter'
 
 const mapStateToProps = state => ({
-  name: state.registerParams.name,
-  email: state.registerParams.email,
   password: state.registerParams.password,
-  phoneNumber: state.registerParams.phoneNumber,
   confirmPassword: state.registerParams.confirmPassword,
   registering: state.registerState.registering,
   networkError: state.registerState.networkError,
@@ -27,11 +21,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  updateName: name => dispatch(updateName(name)),
-  updateEmail: email => dispatch(updateEmail(email)),
   updatePassword: password => dispatch(updatePassword(password)),
   updateConfirmPassword: confirmPassword => dispatch(updateConfirmPassword(confirmPassword)),
-  registerUser: (name, email, password, phoneNumber) => dispatch(registerThunk(name, email, password, phoneNumber)),
+  registerUser: () => dispatch(registerThunk()),
   updatePhoneNumber: phoneNumber => dispatch(phoneHandler(phoneNumber))
 });
 
