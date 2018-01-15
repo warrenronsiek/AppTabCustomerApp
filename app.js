@@ -2,7 +2,8 @@ import store from './app/redux/store'
 import passwordResetOnBack from './app/common/passwordResetOnBack'
 import React, {Component} from 'react'
 import {Provider, connect} from 'react-redux'
-import {Router, Scene, Actions} from 'react-native-router-flux'
+import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator';
+import {Router, Scene, Actions, Modal} from 'react-native-router-flux'
 import DrawerComponent from './app/redux/connectedComponents/drawerListConnected'
 import CartIcon from './app/redux/connectedComponents/cartIconWithAlertConnected'
 import OrderIcon from './app/redux/connectedComponents/orderIconWithAlertConnected'
@@ -21,6 +22,7 @@ import RegisterTwo from './app/scenes/registerPartTwoScene'
 import RegisterThree from './app/scenes/registerPartThreeScene'
 import ResetPasswordScene from './app/scenes/passwordResetScene'
 import SimpleIcons from 'react-native-vector-icons/SimpleLineIcons'
+import PrivacyScene from './app/scenes/privacyPolicyScene'
 import transactionActions from './app/redux/actions/trasactionActions'
 import Venues from './app/scenes/venueScene'
 import Menu from './app/assets/svgs/menu'
@@ -46,6 +48,7 @@ class AppTabCustomerApp extends Component {
             <Scene key="login" component={Login} title="Login"/>
             <Scene key="register" component={Register} title="Register"/>
             <Scene key="registerPartTwo" component={RegisterTwo} title="Register"/>
+            <Scene key='privacy' component={PrivacyScene} title='Privacy Policy'/>
             <Scene key="registerPartThree" component={RegisterThree} title="Register"/>
             <Scene key="code" component={ConfirmCodeScene} title="Confirm Code"/>
             <Scene key="nodes" component={Nodes} title="Table Selection" back onBack={() => Actions.venue()}/>
