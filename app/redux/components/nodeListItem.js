@@ -54,7 +54,7 @@ const NodeListItem = ({data, selectNode}) => (
   <View style={styles.nodeBlock}>
     {data.map(node => (
       <View style={styles.highlightContainer} key={node.nodeId}>
-        <TouchableHighlight onPress={() => selectNode(node.nodeId)} style={styles.highlight}>
+        <TouchableHighlight onPress={() => selectNode(node.nodeId)} style={styles.highlight} underlayColor='#FB5D1E'>
           <View style={styles.textContainer}>
             <Text style={styles.text}>{node.nodeId.slice(-2)}</Text>
           </View>

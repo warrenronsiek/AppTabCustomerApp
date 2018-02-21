@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {View, StyleSheet, Text, SectionList, Dimensions} from 'react-native'
+import {View, StyleSheet, Text, SectionList, Dimensions, Image} from 'react-native'
 import MenuListItem from './menuListItem'
 import Button from '../../common/button'
 import Spinner from '../../common/spinner'
