@@ -4,6 +4,7 @@ import {componentDidMount, componentWillMount, nobleGetState} from "../common/bl
 import {connect} from 'react-redux';
 import {setDeviceToken} from '../redux/actions/loginActions'
 import PushNotification from 'react-native-push-notification'
+import {Alert} from 'react-native'
 
 class VenueScene extends Component {
   constructor(props) {
@@ -19,6 +20,13 @@ class VenueScene extends Component {
       }
     });
     this.reconstruct();
+    setTimeout(() => {
+      if (this.props.venues.length === 0) {
+        Alert.alert('No Venues in Range',
+          "Looks like you aren't in range of a venue using AppTab. Please consider telling your waiter that they should install our app!",
+          {cancelable: false})
+      }
+    }, 20000)
   }
 
   componentDidMount() {
@@ -42,7 +50,8 @@ class VenueScene extends Component {
 }
 
 const mapStateToProps = state => ({
-  bluetoothReconstruction: state.bluetoothReconstruction
+  bluetoothReconstruction: state.bluetoothReconstruction,
+  venues: state.venues
 });
 
 export default connect(mapStateToProps)(VenueScene)

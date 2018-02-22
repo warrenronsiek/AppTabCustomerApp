@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
   scrollStyle: {
     flex: 1,
     paddingTop: 60,
+    backgroundColor: 'white'
   },
   scrollItem: {
     flex: 1,
@@ -19,6 +20,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
+    backgroundColor: 'white'
   },
   textStyle: {
     fontSize: 20,
@@ -29,7 +31,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: 'white'
   }
 });
 
