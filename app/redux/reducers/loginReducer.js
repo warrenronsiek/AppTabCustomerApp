@@ -75,6 +75,7 @@ export const stripeToken = (state = '', action) => {
   }
 };
 
+// note that devicetoken is of shape {token: asdfasdf, os: IOS/Android}
 export const deviceToken = (state = __DEV__ ? devData.deviceToken : {}, action) => {
   switch (action.type) {
     case SET_DEVICE_TOKEN:

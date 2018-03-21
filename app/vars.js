@@ -2,7 +2,8 @@
  * Created by warren on 5/25/17.
  */
 
-let url, stripePublicKey, firehoseName, identityPoolId, identityPoolName, apiKey, useDevData, imageBucket, loginPage;
+let url, stripePublicKey, firehoseName, identityPoolId, identityPoolName, apiKey, useDevData, imageBucket, loginPage,
+  userpoolUrl, userpoolClientId;
 if (__DEV__) {
   url = 'https://dahtdbe9u5.execute-api.us-west-2.amazonaws.com/dev';
   stripePublicKey = 'pk_test_UHQyJcNcx8C65lXY8h9xZwSN';
@@ -12,7 +13,9 @@ if (__DEV__) {
   apiKey = 'ma7vNxbdMd2V7pmUBh2hE9pxp9SMwYhZ3wBHnTQ4';
   imageBucket = 'dev-apptab-image-bucket';
   useDevData = false;
-  loginPage = 'https://apptabdevuserpool.auth.us-west-2.amazoncognito.com/login?response_type=code&client_id=4lce6hkvpjhf17qqfivp6c5o8m&redirect_uri=apptab://login'
+  loginPage = 'https://apptabdevuserpool.auth.us-west-2.amazoncognito.com/login?response_type=code&client_id=4lce6hkvpjhf17qqfivp6c5o8m&redirect_uri=apptab://login';
+  userpoolUrl = 'https://apptabdevuserpool.auth.us-west-2.amazoncognito.com';
+  userpoolClientId = '4lce6hkvpjhf17qqfivp6c5o8m';
 } else {
   url = 'https://3qqlpbfcv1.execute-api.us-west-2.amazonaws.com/prod';
   stripePublicKey = 'pk_live_FHmywJaXessS64PZR8tK5oOG';
@@ -32,5 +35,7 @@ export {
   apiKey,
   useDevData,
   imageBucket,
-  loginPage
+  loginPage,
+  userpoolUrl,
+  userpoolClientId
 }

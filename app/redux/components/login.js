@@ -62,7 +62,9 @@ const styles = StyleSheet.create({
 class Login extends React.Component {
 
   componentDidMount() {
-    Linking.addEventListener('url', (event) => {console.log(event)})
+    Linking.addEventListener('url', (event) => {
+      this.props.fbLogin(event);
+    });
   }
 
   render() {
@@ -119,7 +121,8 @@ Login.propTypes = {
   updatePassword: PropTypes.func.isRequired,
   onLogin: PropTypes.func.isRequired,
   navToRegister: PropTypes.func.isRequired,
-  navToPasswordReset: PropTypes.func.isRequired
+  navToPasswordReset: PropTypes.func.isRequired,
+  fbLogin: PropTypes.func.isRequired
 };
 
 export default Login

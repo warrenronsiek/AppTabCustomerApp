@@ -6,7 +6,7 @@ import {
   updatePhoneNumber,
   updatePassword
 } from '../actions/loginActions';
-import loginThunk from '../middleware/loginThunk';
+import {loginThunk, fbLoginThunk} from '../middleware/loginThunk';
 import login from '../components/login';
 import {Actions} from 'react-native-router-flux'
 
@@ -27,7 +27,8 @@ const mapDispatchToProps = (dispatch) => {
     updatePassword: (password) => dispatch(updatePassword(password)),
     onLogin: (phoneNumber, password) => dispatch(loginThunk(phoneNumber, password)),
     navToRegister: () => Actions.register(),
-    navToPasswordReset: () => Actions.passwordreset()
+    navToPasswordReset: () => Actions.passwordreset(),
+    fbLogin: (event) => dispatch(fbLoginThunk(event))
   }
 };
 

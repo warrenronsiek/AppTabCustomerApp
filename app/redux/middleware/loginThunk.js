@@ -12,16 +12,19 @@ import {
   clearErrors
 } from '../actions/loginActions'
 import loginRequest from '../../api/loginApi'
+import fbLogin from '../../api/fbLogin'
 import ccActions from '../actions/creditCardActions'
 import getCreditCards from '../../api/getCreditCards'
 import getStripeToken from '../../api/getStripeToken'
 import {Actions} from 'react-native-router-flux'
 import logger from '../../api/loggingApi'
+import jwt from 'jwt-decode'
 import phoneFormatter from 'phone-formatter'
 import {updateCredentials, writeToFirehose} from '../../api/aws'
 import {get} from 'lodash'
+import {userpoolClientId, userpoolUrl} from "../../vars";
 
-export default loginThunk = (phoneNumber, password) => (dispatch, getState) => {
+const loginThunk = (phoneNumber, password) => (dispatch, getState) => {
   let customerId;
   Promise.resolve(dispatch(clearErrors()))
     .then(res => Promise.resolve(dispatch(loggingIn())))
@@ -66,5 +69,35 @@ export default loginThunk = (phoneNumber, password) => (dispatch, getState) => {
           break;
       }
     })
-}
+};
 
+const fbLoginThunk = (event) => (dispatch, getState) => {
+  const state = getState();
+  let code = event.url.match('apptab:\\/\\/login\\?code=([a-z0-9\\-]+)?')[1];
+  let data = {
+    grant_type: 'authorization_code',
+    code: code,
+    client_id: userpoolClientId,
+    redirect_uri: 'apptab://login'
+  };
+  let formBody = Object.keys(data)
+    .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key])).join("&");
+  let fetchOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: formBody
+  };
+  fetch(userpoolUrl + '/oauth2/token', fetchOptions)
+    .then(res => {
+      let resBody = JSON.parse(res._bodyText);
+      let decoded = jwt(resBody.idToken);
+      dispatch(updateAuth(resBody.accessToken, resBody.idToken, resBody.refreshToken, resBody.name, resBody.sub));
+      console.log('res', res);
+      return fbLogin({customerId: resBody.sub, deviceToken: state.deviceToken.token})
+    })
+    .catch(err => console.log('err', err))
+};
+
+export {loginThunk, fbLoginThunk}
