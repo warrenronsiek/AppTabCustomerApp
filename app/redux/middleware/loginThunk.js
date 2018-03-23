@@ -72,7 +72,6 @@ const loginThunk = (phoneNumber, password) => (dispatch, getState) => {
 };
 
 const fbLoginThunk = (event) => (dispatch, getState) => {
-  const state = getState();
   let code = event.url.match('apptab:\\/\\/login\\?code=([a-z0-9\\-]+)?')[1];
   let data = {
     grant_type: 'authorization_code',
@@ -89,15 +88,54 @@ const fbLoginThunk = (event) => (dispatch, getState) => {
     },
     body: formBody
   };
+
+  let customerId;
   fetch(userpoolUrl + '/oauth2/token', fetchOptions)
     .then(res => {
       let resBody = JSON.parse(res._bodyText);
-      let decoded = jwt(resBody.idToken);
-      dispatch(updateAuth(resBody.accessToken, resBody.idToken, resBody.refreshToken, resBody.name, resBody.sub));
-      console.log('res', res);
-      return fbLogin({customerId: resBody.sub, deviceToken: state.deviceToken.token})
+      let decoded = jwt(resBody.id_token);
+      return Promise.resolve(dispatch(updateAuth(resBody.access_token, resBody.id_token, resBody.refresh_token, decoded.name, decoded.sub)));
     })
-    .catch(err => console.log('err', err))
+    .then(res => {
+      const state = getState();
+      return fbLogin({customerId: state.auth.customerId, deviceToken: state.deviceToken.token})
+    })
+    .then(res => Promise.resolve(dispatch(loggingIn())))
+    .then(() => {
+      Actions.checkout()
+    })
+    .then(() => {
+      dispatch(loginComplete())
+    })
+    .then(() => {
+      customerId = getState().auth.customerId;
+      return getStripeToken({customerId})
+    })
+    .then(res => {
+      return Promise.resolve(dispatch(updateStripeToken(res.stripeToken)))
+    })
+    .then(res => getCreditCards({customerId}))
+    .then(res => {
+      return Promise.all(res.Items.map(item => Promise.resolve(dispatch(ccActions.token.add(item.CardId.S, item.Last4.S, item.Brand.S, item.ExpMonth.N, item.ExpYear.N, get(item, 'Default.BOOL', undefined))))))
+    })
+    .then(res => Promise.resolve(dispatch(ccActions.apiQueried(true))))
+    .then(res => Promise.resolve(updateCredentials()))
+    .then(res => writeToFirehose('FBLogin'))
+    .catch(err => {
+      logger('error logging in', err);
+      dispatch(loginComplete());
+      switch (err.name) {
+        case "ValidationError":
+          dispatch(validationError());
+          break;
+        case "NetworkError":
+          dispatch(networkError());
+          break;
+        default:
+          dispatch(unknownError());
+          break;
+      }
+    })
 };
 
 export {loginThunk, fbLoginThunk}

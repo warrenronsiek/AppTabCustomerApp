@@ -13,9 +13,9 @@ import {
   LOGIN_COMPLETE,
   CLEAR_ERRORS,
   SET_DEVICE_TOKEN
-} from '../actions/loginActions';
+} from '../actions/loginActions'
 import phoneNumberHandler from '../../common/phoneNumberHandler'
-import {devData} from "../../common/devData";
+import {devData} from "../../common/devData"
 
 export const auth = (state = {}, action) => {
   switch (action.type) {
