@@ -20,16 +20,17 @@ import CartScene from './app/scenes/cartScene'
 import RegisterTwo from './app/scenes/registerPartTwoScene'
 import RegisterThree from './app/scenes/registerPartThreeScene'
 import ResetPasswordScene from './app/scenes/passwordResetScene'
-import SimpleIcons from 'react-native-vector-icons/SimpleLineIcons'
 import PrivacyScene from './app/scenes/privacyPolicyScene'
 import transactionActions from './app/redux/actions/trasactionActions'
 import Venues from './app/scenes/venueScene'
 import Menu from './app/assets/svgs/menu'
-
+import Options from './app/assets/icons/options'
 const RouterWithRedux = connect()(Router);
 
+
+
 const drink = ({selected}) => <Menu width={35} height={35}/>;
-const options = ({selected}) => <SimpleIcons name="options" size={30} color={selected ? '#6495ED' : 'black'}/>;
+const options = ({selected}) => <Options/>;
 const bell = ({selected}) => <OrderIcon/>;
 const cart = ({selected}) => <CartIcon/>;
 

@@ -49,7 +49,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) does not use camera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) does not use photos</string>
 	<key>UIAppFonts</key>
