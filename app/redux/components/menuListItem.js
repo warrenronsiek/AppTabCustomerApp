@@ -34,7 +34,8 @@ const styles = StyleSheet.create({
   priceContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingRight: 5
   },
   tagContainer: {
     flexDirection: 'row',

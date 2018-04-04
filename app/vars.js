@@ -17,13 +17,17 @@ if (__DEV__) {
   userpoolUrl = 'https://apptabdevuserpool.auth.us-west-2.amazoncognito.com';
   userpoolClientId = '4lce6hkvpjhf17qqfivp6c5o8m';
 } else {
-  url = 'https://3qqlpbfcv1.execute-api.us-west-2.amazonaws.com/prod';
+  url = 'https://jwf0u3k0r5.execute-api.us-west-2.amazonaws.com/prod';
   stripePublicKey = 'pk_live_FHmywJaXessS64PZR8tK5oOG';
   firehoseName = 'prod-apptab-data-stream';
-  identityPoolId = 'us-west-2:2894af0f-10cd-4d69-8d3a-312ad988c289';
-  identityPoolName = 'cognito-idp.us-west-2.amazonaws.com/us-west-2_etDUUXPIB';
-  apiKey = 'VnExuBdEnGav2wK8Hgi1e9jOF4V4H0409CTWzctP';
+  identityPoolId = 'us-west-2:de2417d3-d969-4d8d-8933-a839b732b415';
+  identityPoolName = 'cognito-idp.us-west-2.amazonaws.com/us-west-2_jVwSNIwOV';
+  apiKey = 'Qq6ECRuYbw6RlQ1Ii1tPd8LIkqh5n7or3eV31sEE';
+  imageBucket = 'prod-apptab-image-bucket';
   useDevData = false;
+  loginPage = 'https://apptabproduserpool.auth.us-west-2.amazoncognito.com/login?response_type=code&client_id=4qivpbcdi56i9r46983rmtdhn2&redirect_uri=apptab://login';
+  userpoolUrl = 'https://apptabproduserpool.auth.us-west-2.amazoncognito.com';
+  userpoolClientId = '4qivpbcdi56i9r46983rmtdhn2';
 }
 
 export {

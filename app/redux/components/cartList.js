@@ -122,7 +122,7 @@ export default class CartList extends Component {
             </View>
           </View>
           <View style={styles.sliderContainer}>
-            {Platform === 'ios'
+            {Platform.OS === 'ios'
               ? <Slider maximumValue={50} value={20} onSlidingComplete={value => this.props.updateTip(value / 100.)} thumbTintColor='grey'
                     onValueChange={value => this.props.updateTip(value / 100.)} step={1} minimumTrackTintColor='#fb6821'/>
               : <Slider maximumValue={50} value={20} onSlidingComplete={value => this.props.updateTip(value / 100.)} thumbTintColor='grey'
