@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Options = ({}) => (
+const Options = () => (
   <View style={styles.iconContainer}>
   <SimpleIcons name="options" size={30} color='black'/>
 </View>);
