@@ -1323,15 +1323,6 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-bluetooth-hci-socket@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/bluetooth-hci-socket/-/bluetooth-hci-socket-0.5.1.tgz#efbe21524fc1cf5d3fae5d51365d561d4abbed0b"
-  dependencies:
-    debug "^2.2.0"
-    nan "^2.0.5"
-  optionalDependencies:
-    usb "^1.1.0"
-
 boom@2.x.x:
   version "2.10.1"
   resolved "https://registry.yarnpkg.com/boom/-/boom-2.10.1.tgz#39c8918ceff5799f83f9492a848f625add0c766f"
@@ -1343,10 +1334,6 @@ bplist-creator@0.0.7:
   resolved "https://registry.yarnpkg.com/bplist-creator/-/bplist-creator-0.0.7.tgz#37df1536092824b87c42f957b01344117372ae45"
   dependencies:
     stream-buffers "~2.2.0"
-
-bplist-parser@0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/bplist-parser/-/bplist-parser-0.0.6.tgz#38da3471817df9d44ab3892e27707bbbd75a11b9"
 
 bplist-parser@0.1.1:
   version "0.1.1"
@@ -1381,7 +1368,7 @@ bser@^2.0.0:
   dependencies:
     node-int64 "^0.4.0"
 
-buffer@4.9.1, buffer@^4.6.0:
+buffer@4.9.1:
   version "4.9.1"
   resolved "https://registry.yarnpkg.com/buffer/-/buffer-4.9.1.tgz#6d1bb601b07a4efced97094132093027c95bc298"
   dependencies:
@@ -1677,12 +1664,6 @@ debug@^3.1.0:
   dependencies:
     ms "2.0.0"
 
-debug@~2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-2.2.0.tgz#f87057e995b1a1f6ae6a4960664137bc56f039da"
-  dependencies:
-    ms "0.7.1"
-
 decamelize@^1.0.0, decamelize@^1.1.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
@@ -1845,7 +1826,7 @@ eventemitter3@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.0.1.tgz#4ce66c3fc5b5a6b9f2245e359e1938f1ab10f960"
 
-events@^1.1.0, events@^1.1.1:
+events@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/events/-/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
 
@@ -2341,10 +2322,6 @@ inflight@^1.0.4:
 inherits@2, inherits@2.0.3, inherits@^2.0.3, inherits@~2.0.0, inherits@~2.0.1, inherits@~2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
-
-inherits@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.1.tgz#b17d08d326b4423e568eff719f91b0b1cbdf69f1"
 
 ini@~1.3.0:
   version "1.3.4"
@@ -3427,10 +3404,6 @@ morgan@^1.9.0:
     on-finished "~2.3.0"
     on-headers "~1.0.1"
 
-ms@0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.1.tgz#9cd13c03adbff25b65effde7ce864ee952017098"
-
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
@@ -3445,10 +3418,6 @@ mute-stream@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
 
-nan@^2.0.5, nan@^2.4.0:
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.6.2.tgz#e4ff34e6c95fdfb5aecc08de6596f43605a7db45"
-
 nan@^2.3.0:
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.8.0.tgz#ed715f3fe9de02b57a5e6252d90a96675e1f085a"
@@ -3460,16 +3429,6 @@ natural-compare@^1.4.0:
 negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
-
-noble@^1.5.0:
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/noble/-/noble-1.8.1.tgz#efe880812b7251afaaadb4fe83753c1302a673f6"
-  dependencies:
-    debug "~2.2.0"
-  optionalDependencies:
-    bluetooth-hci-socket "^0.5.1"
-    bplist-parser "0.0.6"
-    xpc-connection "~0.1.4"
 
 node-fetch@1.6.3:
   version "1.6.3"
@@ -3506,20 +3465,6 @@ node-notifier@^5.1.2:
     semver "^5.4.1"
     shellwords "^0.1.1"
     which "^1.3.0"
-
-node-pre-gyp@^0.6.30:
-  version "0.6.36"
-  resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.6.36.tgz#db604112cb74e0d477554e9b505b17abddfab786"
-  dependencies:
-    mkdirp "^0.5.1"
-    nopt "^4.0.1"
-    npmlog "^4.0.2"
-    rc "^1.1.7"
-    request "^2.81.0"
-    rimraf "^2.6.1"
-    semver "^5.3.0"
-    tar "^2.2.1"
-    tar-pack "^3.4.0"
 
 node-pre-gyp@^0.6.39:
   version "0.6.39"
@@ -3978,15 +3923,9 @@ react-native-awesome-card-io@0.7.0:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-ble@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/react-native-ble/-/react-native-ble-1.0.8.tgz#87231c7721e2408f0442558e3e316c0342a4ec35"
-  dependencies:
-    buffer "^4.6.0"
-    debug "^2.2.0"
-    events "^1.1.0"
-    noble "^1.5.0"
-    util "^0.10.3"
+react-native-ble-plx@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/react-native-ble-plx/-/react-native-ble-plx-0.9.0.tgz#1ffa18e73133193d96c3edd7100b87f86d4cb403"
 
 "react-native-bluetooth-status@ 1.1.3":
   version "1.1.3"
@@ -4332,7 +4271,7 @@ replace-ext@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/replace-ext/-/replace-ext-0.0.1.tgz#29bbd92078a739f0bcce2b4ee41e837953522924"
 
-request@2.81.0, request@^2.79.0, request@^2.81.0:
+request@2.81.0, request@^2.79.0:
   version "2.81.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.81.0.tgz#c6928946a0e06c5f8d6f8a9333469ffda46298a0"
   dependencies:
@@ -4908,22 +4847,9 @@ url@0.10.3:
     punycode "1.3.2"
     querystring "0.2.0"
 
-usb@^1.1.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/usb/-/usb-1.2.0.tgz#ab72d9786a047068919a024d08c7a1c5b1e60f47"
-  dependencies:
-    nan "^2.4.0"
-    node-pre-gyp "^0.6.30"
-
 util-deprecate@1.0.2, util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
-
-util@^0.10.3:
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/util/-/util-0.10.3.tgz#7afb1afe50805246489e3db7fe0ed379336ac0f9"
-  dependencies:
-    inherits "2.0.1"
 
 utils-merge@1.0.1:
   version "1.0.1"
@@ -5140,12 +5066,6 @@ xmldoc@^0.4.0:
 xmldom@0.1.x:
   version "0.1.27"
   resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.27.tgz#d501f97b3bdb403af8ef9ecc20573187aadac0e9"
-
-xpc-connection@~0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/xpc-connection/-/xpc-connection-0.1.4.tgz#dcd7faa2aec6b7a6e18cc5ddad042f7a34c77156"
-  dependencies:
-    nan "^2.0.5"
 
 xpipe@^1.0.5:
   version "1.0.5"
