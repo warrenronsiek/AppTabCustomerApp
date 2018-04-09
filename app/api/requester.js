@@ -29,11 +29,10 @@ const requester = (apiPath, successMessage, errorMessage, responseProcessor, all
 
     const desiredFetch = () => fetch(url + apiPath, desiredFetchParams)
       .then(res => {
-        console.log(res);
         if (res.ok) {
           return res.json()
         } else if (res.status.toString().startsWith('5')) {
-          return res._bodyText
+          return res.json()
         } else if (res.status.toString().startsWith('4')) {
           logger(apiPath + ' failed', res);
           throw new NetworkError('failed to fetch url ' + apiPath, res)
@@ -42,17 +41,15 @@ const requester = (apiPath, successMessage, errorMessage, responseProcessor, all
         }
       })
       .then(body => {
-          console.log(body);
-          if (body.message === successMessage) {
-            return responseProcessor ? responseProcessor(body) : body
-          } else if (errorProcessor) {
-            return errorProcessor(body)
-          } else {
-            logger(apiPath + ' wrong response', body);
-            throw new Error(errorMessage, body)
-          }
+        if (body.message === successMessage) {
+          return responseProcessor ? responseProcessor(body) : body
+        } else if (errorProcessor) {
+          return errorProcessor(body)
+        } else {
+          logger(apiPath + ' wrong response', body);
+          throw new Error(errorMessage, body)
         }
-      );
+      });
 
     const tokenRefreshFetch = () => fetch(url + '/refresh-cognito-tokens', tokenRefreshFetchParams)
       .then(res => res.json())

@@ -62,9 +62,18 @@ const styles = StyleSheet.create({
 class Login extends React.Component {
 
   componentDidMount() {
-    Linking.addEventListener('url', (event) => {
-      this.props.fbLogin(event);
-    });
+    if ((Platform.OS === 'android') && this.props.loginComponentMounted) {
+      Linking.getInitialURL().then(url => {
+        if (!!url) {
+          this.props.fbLogin({url: url});
+        }
+      });
+    } else {
+      Linking.addEventListener('url', (event) => {
+        this.props.fbLogin(event);
+      });
+    }
+    this.props.setComponentMounted()
   }
 
   render() {
@@ -86,24 +95,29 @@ class Login extends React.Component {
             borderBottomWidth: Platform.OS === 'IOS' ? StyleSheet.hairlineWidth : 0,
             borderBottomColor: 'grey',
           }]}>
-            <TextInput style={styles.textInputBox} value={this.props.password} placeholder="password" autoCapitalize='none'
+            <TextInput style={styles.textInputBox} value={this.props.password} placeholder="password"
+                       autoCapitalize='none'
                        autoCorrect={false} secureTextEntry={true}
                        onChangeText={(text) => this.props.updatePassword(text)}/>
           </View>
         </View>
         <View style={styles.buttonContainer}>
           {!this.props.loggingIn ?
-            <Button onPress={() => Linking.openURL(loginPage)} style={styles.buttonStyle} title="Facebook Login"/> : null}
+            <Button onPress={() => Linking.openURL(loginPage)} style={styles.buttonStyle}
+                    title="Facebook Login"/> : null}
           {!this.props.loggingIn ?
-            <Button onPress={() => this.props.onLogin(this.props.phoneNumber, this.props.password)} style={styles.buttonStyle} title="Login"/> : null}
-          {!this.props.loggingIn ? <Button onPress={this.props.navToRegister} style={styles.buttonStyle} title="Register"/> : null}
+            <Button onPress={() => this.props.onLogin(this.props.phoneNumber, this.props.password)}
+                    style={styles.buttonStyle} title="Login"/> : null}
+          {!this.props.loggingIn ?
+            <Button onPress={this.props.navToRegister} style={styles.buttonStyle} title="Register"/> : null}
           {this.props.validationError ? <Text>Oops! Wrong username or password!</Text> : null}
           {this.props.networkError ? <Text>Networking Error!</Text> : null}
           {this.props.unknownError ? <Text>Unknown Error!</Text> : null}
           {this.props.loggingIn ? <Spinner style={{marginTop: 20}}/> : null}
           {this.props.loggingIn
             ? null
-            : <Button onPress={() => this.props.navToPasswordReset()} title="Forgot Password" style={styles.buttonStyle}/>}
+            : <Button onPress={() => this.props.navToPasswordReset()} title="Forgot Password"
+                      style={styles.buttonStyle}/>}
         </View>
       </ScrollView>
     )
@@ -122,7 +136,9 @@ Login.propTypes = {
   onLogin: PropTypes.func.isRequired,
   navToRegister: PropTypes.func.isRequired,
   navToPasswordReset: PropTypes.func.isRequired,
-  fbLogin: PropTypes.func.isRequired
+  fbLogin: PropTypes.func.isRequired,
+  loginComponentMounted: PropTypes.bool.isRequired,
+  setComponentMounted: PropTypes.func.isRequired
 };
 
 export default Login

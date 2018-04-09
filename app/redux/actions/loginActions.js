@@ -61,3 +61,8 @@ export const setDeviceToken = (deviceToken) => {
   return {type: SET_DEVICE_TOKEN, deviceToken}
 };
 
+export const LOGIN_COMPONENT_MOUNTED = 'LOGIN_COMPONENT_MOUNTED';
+export const loginComponentMounted = () => {
+  return {type: LOGIN_COMPONENT_MOUNTED, }
+};
+

@@ -91,10 +91,10 @@ const fbLoginThunk = (event) => (dispatch, getState) => {
 
   let customerId;
   fetch(userpoolUrl + '/oauth2/token', fetchOptions)
+    .then(res => res.json())
     .then(res => {
-      let resBody = JSON.parse(res._bodyText);
-      let decoded = jwt(resBody.id_token);
-      return Promise.resolve(dispatch(updateAuth(resBody.access_token, resBody.id_token, resBody.refresh_token, decoded.name, decoded.sub)));
+      let decoded = jwt(res.id_token);
+      return Promise.resolve(dispatch(updateAuth(res.access_token, res.id_token, res.refresh_token, decoded.name, decoded.sub)));
     })
     .then(res => {
       const state = getState();

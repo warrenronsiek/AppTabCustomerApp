@@ -45,7 +45,6 @@ const onFound = (err, item) => {
       }
     })
     .then(res => {
-      console.log(res);
       const node = res.nodeInfo.Item;
       const nodeId = node.NodeId.S, nodeName = node.NodeName.S, nodeDescription = node.NodeDescription.S,
         venueId = node.VenueId.S;

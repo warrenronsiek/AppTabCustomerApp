@@ -1,6 +1,4 @@
 import BeaconTypeError from "../errors/beaconTypeError";
-import * as _ from "lodash";
-import {Platform} from "react-native";
 import {Buffer} from 'buffer';
 
 function parseIntObject(b64string) {

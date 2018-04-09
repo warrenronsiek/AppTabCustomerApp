@@ -12,7 +12,8 @@ import {
   UPDATE_STRIPE_TOKEN,
   LOGIN_COMPLETE,
   CLEAR_ERRORS,
-  SET_DEVICE_TOKEN
+  SET_DEVICE_TOKEN,
+  LOGIN_COMPONENT_MOUNTED
 } from '../actions/loginActions'
 import phoneNumberHandler from '../../common/phoneNumberHandler'
 import {devData} from "../../common/devData"
@@ -34,7 +35,7 @@ export const auth = (state = {}, action) => {
   }
 };
 
-export const loginState = (state = {}, action) => {
+export const loginState = (state = {loginComponentMounted: false}, action) => {
   switch (action.type) {
     case LOGGING_IN:
       return {...state, loggingIn: true};
@@ -48,6 +49,8 @@ export const loginState = (state = {}, action) => {
       return {...state, loggingIn: false};
     case CLEAR_ERRORS:
       return {...state, validationError: false, networkError: false, unknownError: false};
+    case LOGIN_COMPONENT_MOUNTED:
+      return {...state, loginComponentMounted: true};
     default:
       return state
   }

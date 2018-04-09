@@ -1,6 +1,6 @@
 import VenueList from '../redux/connectedComponents/venueListConnected'
 import React, {Component} from "react";
-import {componentDidMount} from "../common/bleScannerComponentFunctions";
+import {componentDidMount, stopScanning} from "../common/bleScannerComponentFunctions";
 import {connect} from 'react-redux';
 import {setDeviceToken} from '../redux/actions/loginActions'
 import PushNotification from 'react-native-push-notification'
@@ -12,19 +12,17 @@ class VenueScene extends Component {
   }
 
   componentWillMount() {
-    console.log('mounted veneuscene');
     let that = this;
     PushNotification.configure({
       onRegister: function (token) {
         that.props.dispatch(setDeviceToken(token))
       }
     });
-    // this.reconstruct();
     setTimeout(() => {
       if (this.props.venues.length === 0) {
-        // Alert.alert('No Venues in Range',
-        //   "Looks like you aren't in range of a venue using AppTab. Please consider telling your waiter that they should install our app!",
-        //   {cancelable: false})
+        Alert.alert('No Venues in Range',
+          "Looks like you aren't in range of a venue using AppTab. Please consider telling your waiter that they should install our app!",
+          [])
       }
     }, 20000)
   }
@@ -33,14 +31,9 @@ class VenueScene extends Component {
     componentDidMount();
   }
 
-  // reconstruct = () => {
-  //   if (this.props.bluetoothReconstruction) {
-  //     setTimeout(this.reconstruct, 2000);
-  //     if (nobleGetState() !== 'poweredOn') {
-  //       componentDidMount();
-  //     }
-  //   }
-  // };
+  componentWillUnmount() {
+    stopScanning()
+  }
 
   render() {
     return (

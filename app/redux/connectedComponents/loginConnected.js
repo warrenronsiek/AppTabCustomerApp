@@ -4,7 +4,8 @@
 import {connect} from 'react-redux';
 import {
   updatePhoneNumber,
-  updatePassword
+  updatePassword,
+  loginComponentMounted
 } from '../actions/loginActions';
 import {loginThunk, fbLoginThunk} from '../middleware/loginThunk';
 import login from '../components/login';
@@ -17,7 +18,8 @@ const mapStateToProps = (state) => {
     unknownError: state.loginState.unknownError,
     loggingIn: state.loginState.loggingIn,
     phoneNumber: state.loginParams.phoneNumber,
-    password: state.loginParams.password
+    password: state.loginParams.password,
+    loginComponentMounted: state.loginState.loginComponentMounted
   }
 };
 
@@ -28,7 +30,8 @@ const mapDispatchToProps = (dispatch) => {
     onLogin: (phoneNumber, password) => dispatch(loginThunk(phoneNumber, password)),
     navToRegister: () => Actions.register(),
     navToPasswordReset: () => Actions.passwordreset(),
-    fbLogin: (event) => dispatch(fbLoginThunk(event))
+    fbLogin: (event) => dispatch(fbLoginThunk(event)),
+    setComponentMounted: () => dispatch(loginComponentMounted())
   }
 };
 
