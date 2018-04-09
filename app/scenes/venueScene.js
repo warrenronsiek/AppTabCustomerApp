@@ -22,9 +22,9 @@ class VenueScene extends Component {
     // this.reconstruct();
     setTimeout(() => {
       if (this.props.venues.length === 0) {
-        Alert.alert('No Venues in Range',
-          "Looks like you aren't in range of a venue using AppTab. Please consider telling your waiter that they should install our app!",
-          {cancelable: false})
+        // Alert.alert('No Venues in Range',
+        //   "Looks like you aren't in range of a venue using AppTab. Please consider telling your waiter that they should install our app!",
+        //   {cancelable: false})
       }
     }, 20000)
   }

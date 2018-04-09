@@ -29,11 +29,12 @@ const requester = (apiPath, successMessage, errorMessage, responseProcessor, all
 
     const desiredFetch = () => fetch(url + apiPath, desiredFetchParams)
       .then(res => {
+        console.log(res);
         if (res.ok) {
-          return res._bodyText
+          return res.json()
         } else if (res.status.toString().startsWith('5')) {
           return res._bodyText
-        } else if (res.status.toString().startsWith('4') ) {
+        } else if (res.status.toString().startsWith('4')) {
           logger(apiPath + ' failed', res);
           throw new NetworkError('failed to fetch url ' + apiPath, res)
         } else {
@@ -41,26 +42,26 @@ const requester = (apiPath, successMessage, errorMessage, responseProcessor, all
         }
       })
       .then(body => {
-          const resBody = JSON.parse(body);
-          if (resBody.message === successMessage) {
-            return responseProcessor ? responseProcessor(resBody) : resBody
+          console.log(body);
+          if (body.message === successMessage) {
+            return responseProcessor ? responseProcessor(body) : body
           } else if (errorProcessor) {
-            return errorProcessor(resBody)
+            return errorProcessor(body)
           } else {
-            logger(apiPath + ' wrong response', resBody);
+            logger(apiPath + ' wrong response', body);
             throw new Error(errorMessage, body)
           }
         }
       );
 
     const tokenRefreshFetch = () => fetch(url + '/refresh-cognito-tokens', tokenRefreshFetchParams)
+      .then(res => res.json())
       .then(res => {
-        const resBody = JSON.parse(res._bodyText);
-        const idVals = decode(resBody['authParameters']['IdToken']);
+        const idVals = decode(res['authParameters']['IdToken']);
         return Promise.resolve({
-          accessToken: resBody['authParameters']['AccessToken'],
-          idToken: resBody['authParameters']['IdToken'],
-          refreshToken: resBody['authParameters']['RefreshToken'],
+          accessToken: res['authParameters']['AccessToken'],
+          idToken: res['authParameters']['IdToken'],
+          refreshToken: res['authParameters']['RefreshToken'],
           userName: idVals['name'],
           customerId: idVals['sub']
         });

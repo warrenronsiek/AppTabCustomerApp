@@ -9,7 +9,6 @@ function parseIntObject(b64string) {
 }
 
 function parseBlePacket(item) {
-  console.log('called ble packet parser', item);
   return new Promise((resolve, reject) => {
       if (item.localName === 'Kontakt') {
         const data = parseIntObject(item.serviceData['0000feaa-0000-1000-8000-00805f9b34fb']);

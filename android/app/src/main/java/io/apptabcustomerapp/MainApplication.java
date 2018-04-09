@@ -8,7 +8,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.geniem.rnble.RNBLEPackage;
+import com.polidea.reactnativeble.BlePackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.solinor.bluetoothstatus.RNBluetoothManagerPackage;
 import com.horcrux.svg.SvgPackage;
@@ -28,7 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
                     new RNCardIOPackage(),
-                    new RNBLEPackage(),
+                    new BlePackage(),
                     new ReactNativePushNotificationPackage(),
                     new RNBluetoothManagerPackage(),
                     new SvgPackage()

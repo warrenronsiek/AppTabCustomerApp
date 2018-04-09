@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="io.apptab.customerapp"
           android:versionCode="3"
-          android:versionName="1.7.0"
+          android:versionName="1.7.1"
           xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -13,13 +13,15 @@
     <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission-sdk-23 android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
 
     <uses-sdk
-        android:minSdkVersion="23"
-        android:targetSdkVersion="23"
-        tools:overrideLibrary="com.geniem.rnble"/>
+        android:minSdkVersion="18"
+        android:targetSdkVersion="23"/>
 
     <application
         android:name=".MainApplication"
