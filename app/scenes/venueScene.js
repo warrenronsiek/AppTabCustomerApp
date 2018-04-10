@@ -4,7 +4,7 @@ import {componentDidMount, stopScanning} from "../common/bleScannerComponentFunc
 import {connect} from 'react-redux';
 import {setDeviceToken} from '../redux/actions/loginActions'
 import PushNotification from 'react-native-push-notification'
-import {Alert} from 'react-native'
+import {Alert, PermissionsAndroid, Platform} from 'react-native'
 
 class VenueScene extends Component {
   constructor(props) {
@@ -18,6 +18,21 @@ class VenueScene extends Component {
         that.props.dispatch(setDeviceToken(token))
       }
     });
+    if (Platform.OS === 'android') {
+      const permissionsMessage = {
+        title: 'Location Permissions',
+        message: 'AppTab uses bluetooth to discover what restaurant you are in. Without this, we cant find your menu.'
+      };
+      PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION)
+        .then(res => {
+          if (!res) {
+            return PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION, permissionsMessage)
+          }
+        })
+        .then(res => componentDidMount())
+        .catch(err => console.log(err));
+    }
+
     setTimeout(() => {
       if (this.props.venues.length === 0) {
         Alert.alert('No Venues in Range',
@@ -28,7 +43,9 @@ class VenueScene extends Component {
   }
 
   componentDidMount() {
-    componentDidMount();
+    if (Platform.OS === 'ios') {
+      componentDidMount();
+    }
   }
 
   componentWillUnmount() {

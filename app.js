@@ -3,6 +3,7 @@ import passwordResetOnBack from './app/common/passwordResetOnBack'
 import React, {Component} from 'react'
 import {Provider, connect} from 'react-redux'
 import {Router, Scene, Actions} from 'react-native-router-flux'
+import {Platform} from 'react-native'
 import DrawerComponent from './app/redux/connectedComponents/drawerListConnected'
 import CartIcon from './app/redux/connectedComponents/cartIconWithAlertConnected'
 import OrderIcon from './app/redux/connectedComponents/orderIconWithAlertConnected'
@@ -45,7 +46,7 @@ class AppTabCustomerApp extends Component {
         <RouterWithRedux>
           <Scene key="root">
             <Scene key='venue' component={Venues} title='Venues'
-                   navigationBarTitleImage={require('./app/assets/images/apptabName80x24.png')}/>
+                   navigationBarTitleImage={require('./app/assets/images/apptabName80x24.png')} navigationBarTitleImageStyle={{marginLeft: Platform.OS === 'android' ? 50 : 0}}/>
             <Scene key="login" component={Login} title="Login"
                    navigationBarTitleImage={require('./app/assets/images/apptabName80x24.png')}/>
             <Scene key="register" component={Register} title="Register"
