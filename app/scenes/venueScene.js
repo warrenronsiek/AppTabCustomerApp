@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {setDeviceToken} from '../redux/actions/loginActions'
 import PushNotification from 'react-native-push-notification'
 import {Alert, PermissionsAndroid, Platform} from 'react-native'
-
+import logger from '../api/loggingApi'
 class VenueScene extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +30,7 @@ class VenueScene extends Component {
           }
         })
         .then(res => componentDidMount())
-        .catch(err => console.log(err));
+        .catch(err => logger('androidBLEError', err))
     }
 
     setTimeout(() => {
