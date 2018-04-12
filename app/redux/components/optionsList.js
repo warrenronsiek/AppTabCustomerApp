@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {View, StyleSheet, Text, Image, SectionList, Dimensions, ScrollView} from 'react-native'
+import {View, StyleSheet, Text, Image, SectionList, Dimensions, ScrollView, TouchableHighlight} from 'react-native'
 import OptionsListItem from './optionsListItem'
 import Button from '../../common/button'
 import centsIntToString from '../../common/centsIntToString'
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const {width, height} = Dimensions.get('window');
 
@@ -72,6 +73,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginLeft: 10,
     marginRight: 10,
+    borderRadius: 7,
   },
   count: {
     fontWeight: '100',
@@ -145,11 +147,17 @@ class optionsList extends Component {
             />
           </View>
           <View style={styles.buttonContainer}>
-            <Button onPress={() => this.props.decrementCount()} style={{backgroundColor: 'transparent'}}
-                    iconProps={{iconName: 'minus', iconLibrary: 'MaterialCommunityIcons', iconSize: 30}}/>
+            <TouchableHighlight onPress={() => this.props.decrementCount()} underlayColor='white'>
+              <View style={[styles.countContainer, {backgroundColor: 'lightgrey', borderWidth: 0}]}>
+                <MaterialIcon name='minus' size={30} color='white'/>
+              </View>
+            </TouchableHighlight>
             <View style={styles.countContainer}><Text style={styles.count}>{this.props.count}</Text></View>
-            <Button onPress={() => this.props.incrementCount()} style={{backgroundColor: 'transparent'}}
-                    iconProps={{iconName: 'plus', iconLibrary: 'MaterialCommunityIcons', iconSize: 30}}/>
+            <TouchableHighlight onPress={() => this.props.incrementCount()}  underlayColor='white'>
+              <View style={[styles.countContainer, {backgroundColor: 'lightgrey', borderWidth: 0}]}>
+                <MaterialIcon name='plus' size={30} color={'white'}/>
+              </View>
+            </TouchableHighlight>
           </View>
           <View style={styles.doneButtonContainer}>
             <Button onPress={() => this.props.done()} style={{width: '90%'}} title="Add to Order"

@@ -13,9 +13,9 @@ import {
   LOGIN_COMPLETE,
   CLEAR_ERRORS,
   SET_DEVICE_TOKEN
-} from '../actions/loginActions';
+} from '../actions/loginActions'
 import phoneNumberHandler from '../../common/phoneNumberHandler'
-import {devData} from "../../common/devData";
+import {devData} from "../../common/devData"
 
 export const auth = (state = {}, action) => {
   switch (action.type) {
@@ -75,6 +75,7 @@ export const stripeToken = (state = '', action) => {
   }
 };
 
+// note that devicetoken is of shape {token: asdfasdf, os: IOS/Android}
 export const deviceToken = (state = __DEV__ ? devData.deviceToken : {}, action) => {
   switch (action.type) {
     case SET_DEVICE_TOKEN:

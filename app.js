@@ -20,15 +20,17 @@ import CartScene from './app/scenes/cartScene'
 import RegisterTwo from './app/scenes/registerPartTwoScene'
 import RegisterThree from './app/scenes/registerPartThreeScene'
 import ResetPasswordScene from './app/scenes/passwordResetScene'
-import SimpleIcons from 'react-native-vector-icons/SimpleLineIcons'
+import PrivacyScene from './app/scenes/privacyPolicyScene'
 import transactionActions from './app/redux/actions/trasactionActions'
 import Venues from './app/scenes/venueScene'
 import Menu from './app/assets/svgs/menu'
-
+import Options from './app/assets/icons/options'
 const RouterWithRedux = connect()(Router);
 
+
+
 const drink = ({selected}) => <Menu width={35} height={35}/>;
-const options = ({selected}) => <SimpleIcons name="options" size={30} color={selected ? '#6495ED' : 'black'}/>;
+const options = ({selected}) => <Options/>;
 const bell = ({selected}) => <OrderIcon/>;
 const cart = ({selected}) => <CartIcon/>;
 
@@ -42,16 +44,28 @@ class AppTabCustomerApp extends Component {
       <Provider store={store}>
         <RouterWithRedux>
           <Scene key="root">
-            <Scene key='venue' component={Venues} title='Venues'/>
-            <Scene key="login" component={Login} title="Login"/>
-            <Scene key="register" component={Register} title="Register"/>
-            <Scene key="registerPartTwo" component={RegisterTwo} title="Register"/>
-            <Scene key="registerPartThree" component={RegisterThree} title="Register"/>
-            <Scene key="code" component={ConfirmCodeScene} title="Confirm Code"/>
-            <Scene key="nodes" component={Nodes} title="Table Selection" back onBack={() => Actions.venue()}/>
-            <Scene key="tabs" tabs={true} tabBarIconContainerStyle={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
+            <Scene key='venue' component={Venues} title='Venues'
+                   navigationBarTitleImage={require('./app/assets/images/apptabName80x24.png')}/>
+            <Scene key="login" component={Login} title="Login"
+                   navigationBarTitleImage={require('./app/assets/images/apptabName80x24.png')}/>
+            <Scene key="register" component={Register} title="Register"
+                   navigationBarTitleImage={require('./app/assets/images/apptabName80x24.png')}/>
+            <Scene key="registerPartTwo" component={RegisterTwo} title="Register"
+                   navigationBarTitleImage={require('./app/assets/images/apptabName80x24.png')}/>
+            <Scene key='privacy' component={PrivacyScene} title='Privacy Policy'
+                   navigationBarTitleImage={require('./app/assets/images/apptabName80x24.png')}/>
+            <Scene key="registerPartThree" component={RegisterThree} title="Register"
+                   navigationBarTitleImage={require('./app/assets/images/apptabName80x24.png')}/>
+            <Scene key="code" component={ConfirmCodeScene} title="Confirm Code"
+                   navigationBarTitleImage={require('./app/assets/images/apptabName80x24.png')}/>
+            <Scene key="nodes" component={Nodes} title="Table Selection" back onBack={() => Actions.venue()}
+                   navigationBarTitleImage={require('./app/assets/images/apptabName80x24.png')}/>
+            <Scene key="tabs" tabs={true}
+                   tabBarIconContainerStyle={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
+                   navigationBarTitleImage={require('./app/assets/images/apptabName80x24.png')}>
               <Scene key="orders" component={Request} title="Your Orders" icon={bell}
-                     back onBack={() => Actions.nodes()} onEnter={() => store.dispatch(transactionActions.alert.clear())}/>
+                     back onBack={() => Actions.nodes()}
+                     onEnter={() => store.dispatch(transactionActions.alert.clear())}/>
               <Scene key="menu" component={MenuScene} title="Menu" icon={drink} initial={true}
                      back onBack={() => Actions.nodes()}/>
               <Scene key="cart" component={CartScene} title="Cart" icon={cart}
@@ -60,11 +74,16 @@ class AppTabCustomerApp extends Component {
                      back onBack={() => Actions.nodes()}/>
             </Scene>
             <Scene key="passwordreset" component={ResetPasswordScene} title="Reset Password"
-                   back onBack={() => passwordResetOnBack()}/>
-            <Scene key="optionsModal" component={OptionsSelectionModal} title="Options" back modal/>
-            <Scene key="placeholder" component={Placeholder} title="Placeholder" back/>
-            <Scene key="checkout" component={CheckoutScene} title="Checkout" back onBack={() => Actions.tabs()}/>
-            <Scene key="cardForm" component={CardFormScene} title="Card Details" back/>
+                   back onBack={() => passwordResetOnBack()}
+                   navigationBarTitleImage={require('./app/assets/images/apptabName80x24.png')}/>
+            <Scene key="optionsModal" component={OptionsSelectionModal} title="Options" back modal
+                   navigationBarTitleImage={require('./app/assets/images/apptabName80x24.png')}/>
+            <Scene key="placeholder" component={Placeholder} title="Placeholder" back
+                   navigationBarTitleImage={require('./app/assets/images/apptabName80x24.png')}/>
+            <Scene key="checkout" component={CheckoutScene} title="Checkout" back onBack={() => Actions.tabs()}
+                   navigationBarTitleImage={require('./app/assets/images/apptabName80x24.png')}/>
+            <Scene key="cardForm" component={CardFormScene} title="Card Details" back
+                   navigationBarTitleImage={require('./app/assets/images/apptabName80x24.png')}/>
           </Scene>
         </RouterWithRedux>
       </Provider>

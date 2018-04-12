@@ -30,6 +30,57 @@ to
     <dict/>
 </dict>
 ```
+* Update the IOS release number in /ios/AppTabCustomerApp/Info.plist. e.g.:
+```
+<key>CFBundleShortVersionString</key>
+<string>1.6</string>
+```
+to
+```
+<key>CFBundleShortVersionString</key>
+<string>1.7</string>
+```
+* Update the android build in /android/app/build.gradle and /android/app/src/main/AndroidManifest.xml
+```
+android {
+    ...
+    defaultConfig {
+        ...
+        versionCode 2
+        versionName "1.6.1"
+        ...
+    }
+    ...
+}
+```
+to
+```
+android {
+    ...
+    defaultConfig {
+        ...
+        versionCode 3
+        versionName "1.7.0"
+        ...
+    }
+    ...
+}
+```
+
+```
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="io.apptab.customerapp"
+          android:versionCode="2"
+          android:versionName="1.6.1"
+```
+to
+```
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="io.apptab.customerapp"
+          android:versionCode="3"
+          android:versionName="1.7.0"
+```
+
 
 Possible Explosives
 -------------------

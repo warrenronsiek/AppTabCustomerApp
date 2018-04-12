@@ -1,8 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {FlatList, Text, StyleSheet, View} from 'react-native'
+import {FlatList, Text, StyleSheet, View, TouchableHighlight} from 'react-native'
 import VenueListItem from './venueListItem'
 import Spinner from '../../common/spinner'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+
 
 const styles = StyleSheet.create({
   container: {
@@ -30,10 +32,25 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  footerContainer: {
+    minHeight: 50,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: 'grey',
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  footerSubContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
+    flexDirection: 'row'
   }
 });
 
-const VenueList = ({venues, selectVenue}) => (
+const VenueList = ({venues, selectVenue, navToPolicy}) => (
   <View style={styles.container}>
     <View style={styles.welcomeContainer}>
       <Text style={styles.welcomeHeadline}>Please select your venue.</Text>
@@ -50,6 +67,14 @@ const VenueList = ({venues, selectVenue}) => (
                                                          select={selectVenue}/>
                   }/>
       </View>}
+    <View style={styles.footerContainer}>
+      <TouchableHighlight onPress={() => navToPolicy()} style={{backgroundColor: 'white'}} underlayColor='white'>
+        <View style={styles.footerSubContainer}>
+          <Ionicons size={30} name='ios-information-circle-outline'/>
+          <Text style={{paddingLeft: 10}}>Privacy Policy</Text>
+        </View>
+      </TouchableHighlight>
+    </View>
   </View>
 );
 
@@ -59,7 +84,8 @@ VenueList.propTypes = {
     address: PropTypes.string,
     venueName: PropTypes.string
   })).isRequired,
-  selectVenue: PropTypes.func.isRequired
+  selectVenue: PropTypes.func.isRequired,
+  navToPolicy: PropTypes.func.isRequired
 };
 
 export default VenueList
