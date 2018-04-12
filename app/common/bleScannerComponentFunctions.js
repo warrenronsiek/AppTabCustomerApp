@@ -8,39 +8,24 @@ import * as _ from "lodash";
 import getNodeInfo from "../api/nodeApi";
 import store from '../redux/store'
 import {updateVenue} from "../redux/actions/venueActions";
-import {BluetoothStatus} from 'react-native-bluetooth-status'
-
-const noble = require('react-native-ble');
-
-const componentWillMount = () => {
-  noble.on('discover', onFound);
-};
+import {BleManager}  from 'react-native-ble-plx'
+const bleManager = new BleManager();
 
 const componentDidMount = () => {
-  BluetoothStatus.state().then(res => {
-    if (!res) {
+  bleManager.state().then(res => {
+    if (res === 'Unauthorized') {
       alert('Your phone\'s bluetooth is turned off.\nThe app won\'t be able to detect your restaurant until it is turned on.');
+    } else if (res === 'PoweredOn') {
+      bleManager.startDeviceScan(null, null, onFound);
     }
   });
-  const waiter = function () {
-    if (noble.state === 'poweredOn') {
-      noble.startScanning([], true);
-    } else {
-      setTimeout(waiter, 100)
-    }
-  };
-  waiter()
-};
-
-const nobleGetState = () => {
-  return noble.state
 };
 
 const stopScanning = () => {
-  noble.stopScanning();
+  bleManager.stopDeviceScan()
 };
 
-const onFound = (item) => {
+const onFound = (err, item) => {
   parseBlePacket(item)
     .then(res => {
       if (res.namespace === 'bc635921402893714ad5') {
@@ -91,4 +76,4 @@ const onFound = (item) => {
     });
 };
 
-export {componentDidMount, componentWillMount, stopScanning, nobleGetState}
+export {componentDidMount, stopScanning}

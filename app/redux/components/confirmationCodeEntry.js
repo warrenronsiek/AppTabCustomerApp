@@ -3,15 +3,18 @@
  */
 import React from 'react'
 import PropTypes from 'prop-types'
-import {View, Text, TextInput, StyleSheet, Button as BuiltinButton} from 'react-native'
+import {View, Text, TextInput, StyleSheet, Button as BuiltinButton, Dimensions} from 'react-native'
 import Spinner from '../../common/spinner'
 import Button from '../../common/button'
+
+const {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'white'
   },
   buttonContainer: {
     flex: 1,
@@ -50,9 +53,12 @@ const buttonGenerator = (processing, resendCode, codeEntryComplete, confirmation
     return <Spinner/>
   }
   return (
-    <View style={{alignItems: 'center', justifyContent: 'center'}}>
-      <Button onPress={() => codeEntryComplete(confirmationCode)} title="Finished" style={{marginTop: 30, marginBottom: 10, width: '90%'}}/>
-      <BuiltinButton onPress={() => resendCode()} title="Resend Code"/>
+    <View style={{alignItems: 'center', justifyContent: 'center', height: 120, width: width}}>
+      <View style={{flex:1, flexDirection: 'row'}}>
+
+        <Button onPress={() => codeEntryComplete(confirmationCode)} title="Finished" style={{marginTop: 30, marginBottom: 10, width: '90%'}}/>
+      </View>
+        <BuiltinButton onPress={() => resendCode()} title="Resend Code"/>
     </View>)
 };
 

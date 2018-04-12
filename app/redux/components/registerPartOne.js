@@ -43,6 +43,11 @@ const styles = StyleSheet.create({
     marginTop: 30,
     flex: 3,
     alignItems: 'center',
+    flexDirection: 'column'
+  },
+  buttonSubContainer: {
+    flex: 1,
+    flexDirection: 'row'
   },
   textInputBox: {
     height: 40,
@@ -67,8 +72,11 @@ const register = ({
       </View>
     </View>
     <View style={styles.buttonContainer}>
+      <View style={styles.buttonSubContainer}>
+
       <Button onPress={() => navToPartTwo()} title="Next" style={{width: '90%'}}
               disabled={phoneNumber === undefined || name === undefined || phoneNumber.length !== 14}/>
+      </View>
     </View>
   </ScrollView>
 );
