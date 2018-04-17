@@ -1,5 +1,5 @@
 import {parseBlePacket} from "./bleUtils";
-import {setBeaconQueried, updateBeaconApi, updateBeaconBle} from "../redux/actions/beaconActions";
+import {setBeaconQueried, updateBeaconBle} from "../redux/actions/beaconActions";
 import logger from "../api/loggingApi";
 import getVenue from '../api/getVenue'
 import GetNodeQueriedError from "../errors/getNodeQueriedError";
@@ -9,7 +9,8 @@ import getBeaconInfo from '../api/getBeaconInfo'
 import {updateNode} from '../redux/actions/nodeActions'
 import store from '../redux/store'
 import {updateVenue} from "../redux/actions/venueActions";
-import {BleManager}  from 'react-native-ble-plx'
+import {BleManager} from 'react-native-ble-plx'
+import NoVenuesError from '../errors/noVenuesError'
 const bleManager = new BleManager();
 
 const componentDidMount = () => {
@@ -47,32 +48,41 @@ const onFound = (err, item) => {
     })
     .then(res => {
       console.log(res);
-      let getVenues = res.Items.reduce((venueIdArray, item) => {
-        if (venueIdArray.includes(item.VenueId.S)) {
-          venueIdArray.push(item.VenueId.S)
-        }
-        return venueIdArray
-      }).map(venueId => getVenue({venueId}));
+      let getVenues;
+      if (res.Items.length > 0) {
+        getVenues = res.Items
+          .map(item => item.VenueId.S)
+          .map(venueId => getVenue({venueId}));
+      } else {
+        throw new NoVenuesError()
+      }
+      console.log('created getvenues', getVenues);
       res.Items.forEach(item => {
-        store.dispatch(updateNode({nodeId: item.NodeId.S, nodeName: item.NodeName.S, venueId: item.VenueId.S, beaconId: item.BeaconId.S}))
+        store.dispatch(updateNode({
+          nodeId: item.NodeId.S,
+          nodeName: item.NodeName.S,
+          venueId: item.VenueId.S,
+          beaconId: item.BeaconId.S
+        }))
       });
-      const node = res.nodeInfo.Item;
-      const nodeId = node.NodeId.S, nodeName = node.NodeName.S, nodeDescription = node.NodeDescription.S,
-        venueId = node.VenueId.S;
-      store.dispatch(updateBeaconApi(nodeId, nodeName, nodeDescription, venueId));
-      return Promise.all([getVenues])
+      return Promise.all([...getVenues])
     })
     .then(res => {
       console.log(res);
-      store.dispatch(updateVenue({
-        venueId: res.venue.Item.VenueId.S,
-        venueName: res.venue.Item.Name.S,
-        address: res.venue.Item.Address.S
-      }));
+      res.forEach(item => {
+        store.dispatch(updateVenue({
+          venueId: item.venue.Item.VenueId.S,
+          venueName: item.venue.Item.Name.S,
+          address: item.venue.Item.Address.S
+        }));
+      });
+
       return Promise.resolve()
     })
     .catch(err => {
       switch (err.name) {
+        case 'NoVenuesError':
+          break;
         case 'TypeError':
           break;
         case 'BeaconTypeError':
@@ -82,6 +92,7 @@ const onFound = (err, item) => {
         case 'WrongNamespaceError':
           break;
         default:
+          console.log(err);
           logger('error processing node', err);
           break;
       }
