@@ -5,7 +5,8 @@ import {LOGOUT} from '../actions/drawerActions'
 import {combineReducers} from 'redux';
 import {auth, loginParams, loginState, stripeToken, deviceToken} from './loginReducer'
 import {registerParams, registerState, confirmationCode} from './registerReducer'
-import {nodes, activeNode} from './nodeReducer'
+import {beacons, activeBeacon} from './beaconReducer'
+import {activeNode, nodes} from './nodeReducer'
 import {menu, menuQueryStatus, activeMenuItem} from './menuReducer'
 import {cart, cartStatus} from './cartReducer'
 import {creditCard, ccTokens, ccTokenApiQueried, paymentStatus, creditCardTokenizing, defaultCardExists} from './creditCardReducer'
@@ -19,8 +20,10 @@ const appReducer = combineReducers({
   loginState,
   registerParams,
   registerState,
-  nodes,
+  beacons,
+  activeBeacon,
   activeNode,
+  nodes,
   menu,
   menuQueryStatus,
   cart,

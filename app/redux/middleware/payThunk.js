@@ -20,13 +20,13 @@ const payThunk = () => (dispatch, getState) => {
     venueId = state.activeNode.venueId,
     stripeToken = state.stripeToken,
     cardToken = state.ccTokens.filter(item => item.isSelected)[0].ccToken,
-    nodeId = state.activeNode.nodeId,
+    nodeId = state.activeNode.beaconId,
     transactionId = state.cart.transactionId,
     customerId = state.auth.customerId,
     name = state.auth.userName;
 
   return Promise.resolve(dispatch(ccActions.payment.processing()))
-    .then(res => openTransaction({amount, stripeToken, cardToken, nodeId, customerId, items: currentCart, tip, tax, itemTotal, venueId, transactionId, name}))
+    .then(res => openTransaction({amount, stripeToken, cardToken, beaconId: nodeId, customerId, items: currentCart, tip, tax, itemTotal, venueId, transactionId, name}))
     .then(res => {
       let transaction = res.transaction;
       return Promise.all([

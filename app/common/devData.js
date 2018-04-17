@@ -2,8 +2,8 @@ import {useDevData} from '../vars'
 
 const devData = useDevData
   ? {
-    nodeList: [{
-      nodeId: '743365397002',
+    beaconList: [{
+      beaconId: '743365397002',
       nodeName: '2',
       nodeDescription: 'Table 2',
       venueId: '0dff75deff5f03cbb6f4',
@@ -14,7 +14,7 @@ const devData = useDevData
       updatedCount: null
     },
       {
-        nodeId: '796834353003',
+        beaconId: '796834353003',
         nodeName: '3',
         nodeDescription: 'Table 3',
         venueId: '0dff75deff5f03cbb6f4',
@@ -25,7 +25,7 @@ const devData = useDevData
         updatedCount: null
       },
       {
-        nodeId: '58496c553001',
+        beaconId: '58496c553001',
         nodeName: '1',
         nodeDescription: 'Table 1',
         venueId: '0dff75deff5f03cbb6f4',
@@ -40,15 +40,15 @@ const devData = useDevData
         data: [
           {
             venueId: '0dff75deff5f03cbb6f4',
-            nodeId: '58496c553001'
+            beaconId: '58496c553001'
           },
           {
             venueId: '0dff75deff5f03cbb6f4',
-            nodeId: '743365397002'
+            beaconId: '743365397002'
           },
           {
             venueId: '0dff75deff5f03cbb6f4',
-            nodeId: '796834353003'
+            beaconId: '796834353003'
           }
         ],
         key: '58496c553001'
@@ -65,7 +65,7 @@ const devData = useDevData
     }
   }
   : {
-    nodeList: [],
+    beaconList: [],
     viewableNodes: [],
     activeVenueId: '',
     loginParams: {

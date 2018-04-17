@@ -11,7 +11,7 @@ import {
   CHECKING_OUT,
   TOGGLE_INCREMENTER
 } from '../actions/cartActions'
-import {SET_ACTIVE_NODE} from '../actions/nodeActions'
+import {SET_ACTIVE_BEACON} from '../actions/beaconActions'
 import * as _ from 'lodash'
 import centsIntToString from '../../common/centsIntToString'
 import round from '../../common/round'
@@ -134,7 +134,7 @@ const cart = (state = {
         costs: costsGenerator(filteredState, state.costs.tip, state.costs.tax),
         numberOfCartItems: filteredState.reduce((sum, item) => sum + item.count, 0)
       });
-    case SET_ACTIVE_NODE:
+    case SET_ACTIVE_BEACON:
       return {...state, items: [...state.items.filter(item => item.venueId === action.venueId)]};
     case UPDATE_TIP:
       return {...state, costs: costsGenerator(state.items, action.payload.tip, state.costs.tax)};

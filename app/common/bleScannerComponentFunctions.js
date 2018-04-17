@@ -1,11 +1,12 @@
 import {parseBlePacket} from "./bleUtils";
-import {setNodeQueried, updateNodeApi, updateNodeBle} from "../redux/actions/nodeActions";
+import {setBeaconQueried, updateBeaconApi, updateBeaconBle} from "../redux/actions/beaconActions";
 import logger from "../api/loggingApi";
 import getVenue from '../api/getVenue'
 import GetNodeQueriedError from "../errors/getNodeQueriedError";
 import WrongNamespaceError from "../errors/wrongNamespaceError";
 import * as _ from "lodash";
-import getNodeInfo from "../api/nodeApi";
+import getBeaconInfo from '../api/getBeaconInfo'
+import {updateNode} from '../redux/actions/nodeActions'
 import store from '../redux/store'
 import {updateVenue} from "../redux/actions/venueActions";
 import {BleManager}  from 'react-native-ble-plx'
@@ -29,29 +30,40 @@ const onFound = (err, item) => {
   parseBlePacket(item)
     .then(res => {
       if (res.namespace === 'bc635921402893714ad5') {
-        return Promise.resolve(store.dispatch(updateNodeBle(res.distance, res.namespace, res.instance, res.lastSeen)))
+        return Promise.resolve(store.dispatch(updateBeaconBle(res.distance, res.namespace, res.instance, res.lastSeen)))
       }
       else {
         throw new WrongNamespaceError('node has incorrect namespace')
       }
     })
     .then(res => {
-      const nodeState = _.find(store.getState().nodes.nodeList, {nodeId: res.nodeId});
-      if (nodeState.apiQueried === undefined) {
-        store.dispatch(setNodeQueried(res.nodeId));
-        return getNodeInfo({nodeId: res.nodeId})
+      const beaconState = _.find(store.getState().beacons.beaconList, {beaconId: res.beaconId});
+      if (beaconState.apiQueried === undefined) {
+        store.dispatch(setBeaconQueried(res.beaconId));
+        return getBeaconInfo({beaconId: res.beaconId})
       } else {
         throw new GetNodeQueriedError('GetNode api already queried for this node')
       }
     })
     .then(res => {
+      console.log(res);
+      let getVenues = res.Items.reduce((venueIdArray, item) => {
+        if (venueIdArray.includes(item.VenueId.S)) {
+          venueIdArray.push(item.VenueId.S)
+        }
+        return venueIdArray
+      }).map(venueId => getVenue({venueId}));
+      res.Items.forEach(item => {
+        store.dispatch(updateNode({nodeId: item.NodeId.S, nodeName: item.NodeName.S, venueId: item.VenueId.S, beaconId: item.BeaconId.S}))
+      });
       const node = res.nodeInfo.Item;
       const nodeId = node.NodeId.S, nodeName = node.NodeName.S, nodeDescription = node.NodeDescription.S,
         venueId = node.VenueId.S;
-      store.dispatch(updateNodeApi(nodeId, nodeName, nodeDescription, venueId));
-      return getVenue({venueId})
+      store.dispatch(updateBeaconApi(nodeId, nodeName, nodeDescription, venueId));
+      return Promise.all([getVenues])
     })
     .then(res => {
+      console.log(res);
       store.dispatch(updateVenue({
         venueId: res.venue.Item.VenueId.S,
         venueName: res.venue.Item.Name.S,

@@ -53,14 +53,13 @@ const styles = StyleSheet.create({
 const NodeListItem = ({data, selectNode}) => (
   <View style={styles.nodeBlock}>
     {data.map(node => (
-      <View style={styles.highlightContainer} key={node.nodeId}>
-        <TouchableHighlight onPress={() => selectNode(node.nodeId)} style={styles.highlight} underlayColor='#FB5D1E'>
+      <View style={styles.highlightContainer} key={node.beaconId}>
+        <TouchableHighlight onPress={() => selectNode(node.beaconId)} style={styles.highlight} underlayColor='#FB5D1E'>
           <View style={styles.textContainer}>
-            <Text style={styles.text}>{node.nodeId.slice(-2)}</Text>
+            <Text style={styles.text}>{node.beaconId.slice(-2)}</Text>
           </View>
         </TouchableHighlight>
       </View>
-
     ))}
   </View>
 );
@@ -69,7 +68,7 @@ const NodeListItem = ({data, selectNode}) => (
 NodeListItem.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape({
     venueId: PropTypes.string,
-    nodeId: PropTypes.string
+    beaconId: PropTypes.string
   })),
   selectNode: PropTypes.func.isRequired,
 };

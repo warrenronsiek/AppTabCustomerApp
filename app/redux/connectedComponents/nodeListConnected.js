@@ -10,7 +10,7 @@ const mapStateToProps = (state) => {
   return {
     nodeListItems: state.nodes.viewableNodes,
     renderNodes: state.nodes.showNodes,
-    activeNode: state.activeNode.nodeId
+    activeNode: state.activeNode.beaconId
   }
 };
 

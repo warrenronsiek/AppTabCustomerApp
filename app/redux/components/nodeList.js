@@ -42,7 +42,7 @@ class NodeList extends Component {
   static propTypes = {
     nodeListItems: PropTypes.arrayOf(PropTypes.shape({
       data: PropTypes.arrayOf(PropTypes.shape({
-        nodeId: PropTypes.string,
+        beaconId: PropTypes.string,
         venueId: PropTypes.string
       })),
       key: PropTypes.string,
