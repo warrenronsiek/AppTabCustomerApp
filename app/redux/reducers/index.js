@@ -12,7 +12,7 @@ import {cart, cartStatus} from './cartReducer'
 import {creditCard, ccTokens, ccTokenApiQueried, paymentStatus, creditCardTokenizing, defaultCardExists} from './creditCardReducer'
 import {passwordResetData, passwordResetStatus} from './passwordResetReducer'
 import {transactions, transactionCount} from "./transactionReducer"
-import {activeVenue, venues, bluetoothReconstruction} from './venueReducer'
+import {activeVenue, venues} from './venueReducer'
 
 const appReducer = combineReducers({
   auth,
@@ -44,7 +44,6 @@ const appReducer = combineReducers({
   activeMenuItem,
   activeVenue,
   venues,
-  bluetoothReconstruction
 });
 
 const rootReducer = (state, action) => {

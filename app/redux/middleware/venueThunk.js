@@ -1,4 +1,4 @@
-import {setBluetoothReconstruction, updateActiveVenue} from "../actions/venueActions";
+import {updateActiveVenue} from "../actions/venueActions";
 import {Actions} from 'react-native-router-flux'
 import {writeToFirehose, s3} from "../../api/aws";
 import getMenu from "../../api/getMenu";
@@ -13,7 +13,6 @@ const keyAccessor = item => reduce(get(item, 'Image.M.ImageUrl.S', '').split('/'
 
 const setActiveVenueThunk = ({venueId, address, venueName}) => (dispatch, getState) => {
   dispatch(updateActiveVenue({venueId, address, venueName}));
-  dispatch(setBluetoothReconstruction(false));
   stopScanning();
   const state = getState();
   Promise.all([getMenu({venueId: state.activeVenue.venueId}), getVenue({venueId: state.activeVenue.venueId})])
