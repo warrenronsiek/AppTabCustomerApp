@@ -47,19 +47,15 @@ const onFound = (err, item) => {
       }
     })
     .then(res => {
-      console.log(res);
       let getVenues;
       if (res.Items.length > 0) {
-        console.log('hit if statement');
         getVenues = res.Items
           .map(item => item.VenueId.S)
           .map(venueId => getVenue({venueId}));
       } else {
         throw new NoVenuesError()
       }
-      console.log('created getvenues', getVenues);
       res.Items.forEach(item => {
-        console.log(item);
         store.dispatch(updateNode({
           nodeId: item.NodeId.S,
           nodeName: item.NodeName.S,
@@ -67,11 +63,9 @@ const onFound = (err, item) => {
           beaconId: item.BeaconId.S
         }))
       });
-      console.log('got past node dispatches');
       return Promise.all(getVenues)
     })
     .then(res => {
-      console.log(res);
       res.forEach(item => {
         store.dispatch(updateVenue({
           venueId: item.venue.Item.VenueId.S,
@@ -79,7 +73,6 @@ const onFound = (err, item) => {
           address: item.venue.Item.Address.S
         }));
       });
-
       return Promise.resolve()
     })
     .catch(err => {

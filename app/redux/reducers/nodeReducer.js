@@ -6,10 +6,10 @@ const nodes = (state = {nodes: [], visibleNodes: [], showNodes: false}, action) 
   switch (action.type) {
     case UPDATE_NODE:
       let oldNode = state.nodes.filter(node => node.nodeId === action.payload.nodeId)[0];
-      if (!!oldNode) {
+      if (!oldNode) {
         return {...state, nodes: [...state.nodes, action.payload]}
       }
-      return [state.filter(node => node.nodeId !== action.payload.nodeId), action.payload];
+      return {...state, nodes: [state.nodes.filter(node => node.nodeId !== action.payload.nodeId), action.payload]};
     case UPDATE_ACTIVE_VENUE:
       let visibleNodes = state.nodes.filter(node => node.venueId === action.payload.venueId);
       return {...state, visibleNodes: visibleNodes, showNodes: true};
