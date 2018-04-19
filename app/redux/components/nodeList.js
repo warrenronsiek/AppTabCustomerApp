@@ -49,7 +49,6 @@ class NodeList extends Component {
     })).isRequired,
     renderNodes: PropTypes.bool.isRequired,
     selectNode: PropTypes.func.isRequired,
-    activeNode: PropTypes.string.isRequired,
   };
 
   render() {

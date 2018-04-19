@@ -4,13 +4,12 @@
 import {connect} from 'react-redux'
 import selectNode from '../middleware/nodeThunk'
 import NodeList from '../components/nodeList'
-import * as _ from 'lodash'
 
 const mapStateToProps = (state) => {
   return {
-    nodeListItems: state.nodes.viewableNodes,
+    nodeListItems: state.nodes.visibleNodes,
     renderNodes: state.nodes.showNodes,
-    activeNode: state.activeNode.beaconId
+    activeNode: state.activeBeacon.beaconId
   }
 };
 

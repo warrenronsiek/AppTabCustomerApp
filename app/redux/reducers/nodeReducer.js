@@ -1,6 +1,12 @@
 import {UPDATE_NODE, SET_ACTIVE_NODE} from "../actions/nodeActions";
 import {UPDATE_ACTIVE_VENUE} from "../actions/venueActions";
 import uuid from "react-native-uuid";
+import chunk from 'lodash/fp/chunk'
+import sortBy from 'lodash/fp/sortBy'
+import filter from 'lodash/fp/filter'
+import map from 'lodash/fp/map'
+import flow from 'lodash/fp/flow'
+import * as _ from 'lodash'
 
 const nodes = (state = {nodes: [], visibleNodes: [], showNodes: false}, action) => {
   switch (action.type) {
@@ -11,7 +17,14 @@ const nodes = (state = {nodes: [], visibleNodes: [], showNodes: false}, action) 
       }
       return {...state, nodes: [state.nodes.filter(node => node.nodeId !== action.payload.nodeId), action.payload]};
     case UPDATE_ACTIVE_VENUE:
-      let visibleNodes = state.nodes.filter(node => node.venueId === action.payload.venueId);
+      let visibleNodes = flow(
+        filter(node => !!node.venueId),
+        filter(node => node.venueId === action.payload.venueId),
+        map(node => _.pick(node, ['venueId', 'beaconId', 'nodeId'])),
+        sortBy(node => node.nodeName),
+        chunk(3),
+        map(beaconChunk => ({data: beaconChunk, key: beaconChunk[0].nodeId}))
+      )(state.nodes);
       return {...state, visibleNodes: visibleNodes, showNodes: true};
     default:
       return state
