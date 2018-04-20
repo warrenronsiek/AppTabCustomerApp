@@ -20,7 +20,7 @@ const nodes = (state = {nodes: [], visibleNodes: [], showNodes: false}, action) 
       let visibleNodes = flow(
         filter(node => !!node.venueId),
         filter(node => node.venueId === action.payload.venueId),
-        map(node => _.pick(node, ['venueId', 'beaconId', 'nodeId'])),
+        map(node => _.pick(node, ['venueId', 'beaconId', 'nodeId', 'nodeName'])),
         sortBy(node => node.nodeName),
         chunk(3),
         map(beaconChunk => ({data: beaconChunk, key: beaconChunk[0].nodeId}))

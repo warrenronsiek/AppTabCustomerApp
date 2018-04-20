@@ -11,9 +11,6 @@ const selectNode = (nodeId) => (dispatch, getState) => {
     .then(() => {
       const state = getState(),
         node = state.nodes.nodes.filter(node => node.nodeId === nodeId)[0];
-      console.log(state.nodes.nodes);
-      console.log(nodeId);
-      console.log(node);
       dispatch(setActiveNode({nodeId: node.nodeId, nodeName: node.nodeName, venueId: node.venueId, beaconId: node.beaconId}))
     })
     .then(() => Promise.resolve(Actions.tabs()))

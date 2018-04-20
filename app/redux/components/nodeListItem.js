@@ -56,7 +56,7 @@ const NodeListItem = ({data, selectNode}) => (
       <View style={styles.highlightContainer} key={node.nodeId}>
         <TouchableHighlight onPress={() => selectNode(node.nodeId)} style={styles.highlight} underlayColor='#FB5D1E'>
           <View style={styles.textContainer}>
-            <Text style={styles.text}>{node.beaconId.slice(-2)}</Text>
+            <Text style={styles.text}>{node.nodeName}</Text>
           </View>
         </TouchableHighlight>
       </View>
@@ -68,7 +68,8 @@ const NodeListItem = ({data, selectNode}) => (
 NodeListItem.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape({
     venueId: PropTypes.string,
-    beaconId: PropTypes.string
+    beaconId: PropTypes.string,
+    nodeName: PropTypes.string
   })),
   selectNode: PropTypes.func.isRequired,
 };
