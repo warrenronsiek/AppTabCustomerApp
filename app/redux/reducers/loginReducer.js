@@ -56,9 +56,7 @@ export const loginState = (state = {loginComponentMounted: false}, action) => {
   }
 };
 
-export const loginParams = (state = __DEV__
-                                ? {password: devData.loginParams.password, phoneNumber: devData.loginParams.phoneNumber}
-                                : {password: '', phoneNumber: ''}, action) => {
+export const loginParams = (state = {password: devData.loginParams.password, phoneNumber: devData.loginParams.phoneNumber}, action) => {
   switch (action.type) {
     case UPDATE_PHONE_NUMBER:
       return {...state, phoneNumber: phoneNumberHandler(action.phoneNumber)};

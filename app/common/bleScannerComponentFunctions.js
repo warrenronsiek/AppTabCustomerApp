@@ -48,7 +48,6 @@ const onFound = (err, item) => {
     })
     .then(res => {
       let getVenues;
-      console.log(res);
       if (res.Items.length > 0) {
         getVenues = res.Items
           .map(item => item.VenueId.S)

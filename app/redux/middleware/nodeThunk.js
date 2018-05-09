@@ -16,7 +16,6 @@ const selectNode = (nodeId) => (dispatch, getState) => {
     .then(() => Promise.resolve(Actions.tabs()))
     .then(() => writeToFirehose('NodeSelected'))
     .catch(err => {
-      console.log(err);
       logger('error selecting node', err)})
 };
 
